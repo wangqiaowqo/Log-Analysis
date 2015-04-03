@@ -13,6 +13,11 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.JavaHadoopRDD;
 import scala.Tuple2;
 
+/**
+ * @author shadowinlife
+ * @since 2014-04-03
+ */
+
 public class App {
 
     static class RDDMultipleTextOutputFormat extends MultipleTextOutputFormat<String, Text> {
@@ -35,8 +40,9 @@ public class App {
         
         JavaPairRDD<String, Text> hadoopFile = fileSplit
                 .mapToPair(f -> new Tuple2<>(f.getKeyName(), new Text(f.getLineValues())));
-      
-        hadoopFile.saveAsHadoopFile(path, String.class, Text.class, RDDMultipleTextOutputFormat.class); 
+
+        hadoopFile.saveAsHadoopFile(path, String.class, Text.class, RDDMultipleTextOutputFormat.class);
+       
         sc.stop();
         sc.close();
 

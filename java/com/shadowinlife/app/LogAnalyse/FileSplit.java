@@ -6,7 +6,6 @@ package com.shadowinlife.app.LogAnalyse;
  * 
  * @author shadowinlife
  * @since 2015-04-01
- * @version 0.1
  */
 
 public class FileSplit {
