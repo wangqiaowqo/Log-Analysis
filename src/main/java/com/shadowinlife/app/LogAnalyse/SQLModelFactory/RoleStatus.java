@@ -43,6 +43,27 @@ public class RoleStatus {
     private int iDepositPoints;
     private int iMoney;
 
+    private RoleStatus(String vTableFlage, String iEventId, String Uin, String dtEventTime,
+            String iRoleId, String vRoleName, String iJobId, String iGender, String iRoleLevel,
+            String iRoleExp, String dtRoleCreateTime, String dtRoleLstSaveTime, String iPoints,
+            String iDepositPoints, String iMoney) {
+        this.vTableFlage = vTableFlage;
+        this.iEventId = iEventId;
+        this.Uin = Uin;
+        this.dtEventTime = Date.valueOf(dtEventTime);
+        this.iRoleId = Integer.valueOf(iRoleId);
+        this.vRoleName = vRoleName;
+        this.iJobId = Integer.valueOf(iJobId);
+        this.iGender = Integer.valueOf(iGender);
+        this.iRoleLevel = Integer.valueOf(iRoleLevel);
+        this.iRoleExp = Integer.valueOf(iRoleExp);
+        this.dtRoleCreateTime = Date.valueOf(dtRoleCreateTime);
+        this.dtRoleLstSaveTime = Date.valueOf(dtRoleLstSaveTime);
+        this.iPoints = Integer.valueOf(iPoints);
+        this.iDepositPoints = Integer.valueOf(iDepositPoints);
+        this.iMoney = Integer.valueOf(iMoney);
+    }
+
     public String getvTableFlage() {
         return vTableFlage;
     }
@@ -163,4 +184,20 @@ public class RoleStatus {
         this.iMoney = iMoney;
     }
 
+    public static RoleStatus parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 15);
+        if (columnList.length == 15) {
+            for (int i = 0; i < 15; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new RoleStatus(columnList[0], columnList[1], columnList[2], columnList[3],
+                    columnList[4], columnList[5], columnList[6], columnList[7], columnList[8],
+                    columnList[9], columnList[10], columnList[11], columnList[12], columnList[13],
+                    columnList[14]);
+        } else {
+            return null;
+        }
+    }
 }

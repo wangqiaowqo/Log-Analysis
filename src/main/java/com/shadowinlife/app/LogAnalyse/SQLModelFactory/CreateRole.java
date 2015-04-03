@@ -33,6 +33,19 @@ public class CreateRole {
     private int iGender;
     private int iLoginWay;
 
+    private CreateRole(String vTableFlage, String iEventId, String iUin, String dtEventTime,
+            String vClientIp, String iRoleId, String vRoleName, String iJobId, String iGender,
+            String iLoginWay) {
+        try{
+        this.vTableFlage=vTableFlage;
+        this.iEventId=iEventId;
+        this.iUin=iUin;
+        this.dtEventTime=Date.valueOf(dtEventTime);
+        } catch(Exception e){
+            
+        }
+    }
+
     public String getvTableFlage() {
         return vTableFlage;
     }
@@ -111,5 +124,21 @@ public class CreateRole {
 
     public void setiLoginWay(int iLoginWay) {
         this.iLoginWay = iLoginWay;
+    }
+
+    public static CreateRole parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 10);
+        if (columnList.length == 10) {
+            for (int i = 0; i < 10; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new CreateRole(columnList[0], columnList[1], columnList[2], columnList[3],
+                    columnList[4], columnList[5], columnList[6], columnList[7], columnList[8],
+                    columnList[9]);
+        } else {
+            return null;
+        }
     }
 }
