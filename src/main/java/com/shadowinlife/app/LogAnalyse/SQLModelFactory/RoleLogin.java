@@ -30,7 +30,7 @@ import java.sql.Date;
  *
  */
 public class RoleLogin {
-    private String vTableFlage;
+
     private String iEventId;
     private String iUin;
     private Date dtEventTime;
@@ -39,6 +39,7 @@ public class RoleLogin {
     private int iRoleId;
     private String vRoleName;
     private int iRoleLevel;
+    private int iRoleExp;
     private int iRoleSpe;
     private int iEnergy;
     private int iMoney;
@@ -47,12 +48,32 @@ public class RoleLogin {
     private int iOnlineTime;
     private int iLoginWay;
 
-    public String getvTableFlage() {
-        return vTableFlage;
-    }
+    private RoleLogin(String iEventId, String iUin, String dtEventTime, String vClientIp,
+            String vZoneId, String iRoleId, String vRoleName, String iRoleLevel, String iRoleExp,
+            String iRoleSpe, String iEnergy, String iMoney, String iGamePoints,
+            String dtCreateTime, String iOnlineTotalTime, String iLoginWay) {
+        try {
 
-    public void setvTableFlage(String vTableFlage) {
-        this.vTableFlage = vTableFlage;
+            this.iEventId = iEventId;
+            this.iUin = iUin;
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.vClientIp = vClientIp;
+            this.vZoneId = vZoneId;
+            this.iRoleId = Integer.valueOf(iRoleId);
+            this.vRoleName = vRoleName;
+            this.iRoleLevel = Integer.valueOf(iRoleLevel);
+            this.setiRoleExp(Integer.valueOf(iRoleExp));
+            this.iRoleSpe = Integer.valueOf(iRoleSpe);
+            this.iEnergy = Integer.valueOf(iEnergy);
+            this.iMoney = Integer.valueOf(iMoney);
+            this.iGamePoints = Integer.valueOf(iGamePoints);
+            this.dtCreateTime = Date.valueOf(dtCreateTime);
+            this.iOnlineTime = Integer.valueOf(iOnlineTotalTime);
+            this.iLoginWay = Integer.valueOf(iLoginWay);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     public String getiEventId() {
@@ -173,5 +194,30 @@ public class RoleLogin {
 
     public void setiLoginWay(int iLoginWay) {
         this.iLoginWay = iLoginWay;
+    }
+
+    public int getiRoleExp() {
+        return iRoleExp;
+    }
+
+    public void setiRoleExp(int iRoleExp) {
+        this.iRoleExp = iRoleExp;
+    }
+
+    public static RoleLogin parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 17);
+        if (columnList.length == 17) {
+            for (int i = 0; i < 17; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
+                    columnList[15], columnList[16]);
+        } else {
+            return null;
+        }
     }
 }

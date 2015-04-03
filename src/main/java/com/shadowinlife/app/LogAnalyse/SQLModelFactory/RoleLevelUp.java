@@ -26,7 +26,6 @@ import java.sql.Date;
  */
 public class RoleLevelUp {
 
-    private String vTableFlage;
     private String iEventId;
     private String iUin;
     private Date dtEventTime;
@@ -35,17 +34,32 @@ public class RoleLevelUp {
     private String vRoleName;
     private int iJobId;
     private int iGender;
-    private int iRoleLEvel;
+    private int iRoleLevel;
     private int iRoleExp;
     private long iTotalOnlineTime;
     private int iReason;
 
-    public String getvTableFlage() {
-        return vTableFlage;
-    }
+    public RoleLevelUp(String iEventId, String iUin, String dtEventTime, String vClientIp,
+            String iRoleId, String vRoleName, String iJobId, String iGender, String iRoleLevel,
+            String iRoleExp, String iTotalOnlineTime, String iReason) {
+        try {
+            this.iEventId = iEventId;
+            this.iUin = iUin;
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.vClientIp = vClientIp;
+            this.iRoleId = Integer.valueOf(iRoleId);
+            this.vRoleName = vRoleName;
+            this.iJobId = Integer.valueOf(iJobId);
+            this.iGender = Integer.valueOf(iGender);
+            this.iRoleLevel = Integer.valueOf(iRoleLevel);
+            this.iRoleExp = Integer.valueOf(iRoleExp);
+            this.iTotalOnlineTime = Long.valueOf(iTotalOnlineTime);
+            this.iReason = Integer.valueOf(iReason);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
 
-    public void setvTableFlage(String vTableFlage) {
-        this.vTableFlage = vTableFlage;
     }
 
     public String getiEventId() {
@@ -113,11 +127,11 @@ public class RoleLevelUp {
     }
 
     public int getiRoleLEvel() {
-        return iRoleLEvel;
+        return iRoleLevel;
     }
 
     public void setiRoleLEvel(int iRoleLEvel) {
-        this.iRoleLEvel = iRoleLEvel;
+        this.iRoleLevel = iRoleLEvel;
     }
 
     public int getiRoleExp() {
@@ -142,5 +156,21 @@ public class RoleLevelUp {
 
     public void setiReason(int iReason) {
         this.iReason = iReason;
+    }
+
+    public static RoleLevelUp parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 15);
+        if (columnList.length == 12) {
+            for (int i = 0; i < 12; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new RoleLevelUp(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12]);
+        } else {
+            return null;
+        }
     }
 }

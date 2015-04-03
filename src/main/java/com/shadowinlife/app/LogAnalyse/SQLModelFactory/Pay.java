@@ -20,6 +20,18 @@ public class Pay {
     private int iRoleLevel;
     private int iMoney;
 
+    private Pay(String dtEventTime, String iUin, String iRoleLevel, String iMoney) {
+        try {
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.iUin = iUin;
+            this.iRoleLevel = Integer.valueOf(iRoleLevel);
+            this.iMoney = Integer.valueOf(iMoney);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+    }
+
     public Date getDtEventTime() {
         return dtEventTime;
     }
@@ -50,5 +62,19 @@ public class Pay {
 
     public void setiMoney(int iMoney) {
         this.iMoney = iMoney;
+    }
+
+    public static Pay parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 10);
+        if (columnList.length == 4) {
+            for (int i = 0; i < 4; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new Pay(columnList[0], columnList[1], columnList[2], columnList[3]);
+        } else {
+            return null;
+        }
     }
 }

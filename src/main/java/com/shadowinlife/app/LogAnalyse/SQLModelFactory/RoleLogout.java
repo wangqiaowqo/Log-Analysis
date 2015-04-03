@@ -29,7 +29,7 @@ import java.sql.Date;
 +-------------+------------------+------+-----+---------+-------+
  */
 public class RoleLogout {
-    private String vTalbeFlage;
+
     private String iEventId;
     private String iUin;
     private Date dtEventTime;
@@ -48,12 +48,32 @@ public class RoleLogout {
     private int iGameTime;
     private int iLoginWay;
 
-    public String getvTalbeFlage() {
-        return vTalbeFlage;
-    }
-
-    public void setvTalbeFlage(String vTalbeFlage) {
-        this.vTalbeFlage = vTalbeFlage;
+    public RoleLogout(String iEventId, String iUin, String dtEventTime, String dtLoginTime,
+            String vClientIp, String vZoneId, String iRoleId, String vRoleName, String iRoleLevel,
+            String iRoleExp, String iRepute, String iMainSpeExp, String iMoney, String iGamePoints,
+            String iOnlineTime, String iGameTime, String iLoginWay) {
+        try {
+            this.iEventId = iEventId;
+            this.iUin = iUin;
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.dtLoginTime = Date.valueOf(dtLoginTime);
+            this.vClientIp = vClientIp;
+            this.vZoneId = vZoneId;
+            this.iRoleId = Integer.valueOf(iRoleId);
+            this.vRoleName = vRoleName;
+            this.iRoleLevel = Integer.valueOf(iRoleLevel);
+            this.iRoleExp = Integer.valueOf(iRoleExp);
+            this.iRepute = Integer.valueOf(iRepute);
+            this.iMainSpeExp = Integer.valueOf(iMainSpeExp);
+            this.iMoney = Integer.valueOf(iMoney);
+            this.iGamePoints = Integer.valueOf(iGamePoints);
+            this.iOnlineTime = Integer.valueOf(iOnlineTime);
+            this.iGameTime = Integer.valueOf(iGameTime);
+            this.iLoginWay = Integer.valueOf(iLoginWay);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     public String getiEventId() {
@@ -190,5 +210,22 @@ public class RoleLogout {
 
     public void setiLoginWay(int iLoginWay) {
         this.iLoginWay = iLoginWay;
+    }
+
+    public static RoleLogout parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 18);
+        if (columnList.length == 18) {
+            for (int i = 0; i < 18; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new RoleLogout(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
+                    columnList[15], columnList[16], columnList[17]);
+        } else {
+            return null;
+        }
     }
 }

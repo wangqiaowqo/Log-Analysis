@@ -27,7 +27,7 @@ import java.sql.Date;
 +--------------------+------------------+------+-----+---------+-------+
  */
 public class RoleStatus {
-    private String vTableFlage;
+
     private String iEventId;
     private String Uin;
     private Date dtEventTime;
@@ -43,33 +43,30 @@ public class RoleStatus {
     private int iDepositPoints;
     private int iMoney;
 
-    private RoleStatus(String vTableFlage, String iEventId, String Uin, String dtEventTime,
-            String iRoleId, String vRoleName, String iJobId, String iGender, String iRoleLevel,
-            String iRoleExp, String dtRoleCreateTime, String dtRoleLstSaveTime, String iPoints,
+    private RoleStatus(String iEventId, String Uin, String dtEventTime, String iRoleId,
+            String vRoleName, String iJobId, String iGender, String iRoleLevel, String iRoleExp,
+            String dtRoleCreateTime, String dtRoleLstSaveTime, String iPoints,
             String iDepositPoints, String iMoney) {
-        this.vTableFlage = vTableFlage;
-        this.iEventId = iEventId;
-        this.Uin = Uin;
-        this.dtEventTime = Date.valueOf(dtEventTime);
-        this.iRoleId = Integer.valueOf(iRoleId);
-        this.vRoleName = vRoleName;
-        this.iJobId = Integer.valueOf(iJobId);
-        this.iGender = Integer.valueOf(iGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleExp = Integer.valueOf(iRoleExp);
-        this.dtRoleCreateTime = Date.valueOf(dtRoleCreateTime);
-        this.dtRoleLstSaveTime = Date.valueOf(dtRoleLstSaveTime);
-        this.iPoints = Integer.valueOf(iPoints);
-        this.iDepositPoints = Integer.valueOf(iDepositPoints);
-        this.iMoney = Integer.valueOf(iMoney);
-    }
+        try {
 
-    public String getvTableFlage() {
-        return vTableFlage;
-    }
-
-    public void setvTableFlage(String vTableFlage) {
-        this.vTableFlage = vTableFlage;
+            this.iEventId = iEventId;
+            this.Uin = Uin;
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.iRoleId = Integer.valueOf(iRoleId);
+            this.vRoleName = vRoleName;
+            this.iJobId = Integer.valueOf(iJobId);
+            this.iGender = Integer.valueOf(iGender);
+            this.iRoleLevel = Integer.valueOf(iRoleLevel);
+            this.iRoleExp = Integer.valueOf(iRoleExp);
+            this.dtRoleCreateTime = Date.valueOf(dtRoleCreateTime);
+            this.dtRoleLstSaveTime = Date.valueOf(dtRoleLstSaveTime);
+            this.iPoints = Integer.valueOf(iPoints);
+            this.iDepositPoints = Integer.valueOf(iDepositPoints);
+            this.iMoney = Integer.valueOf(iMoney);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     public String getiEventId() {
@@ -192,10 +189,9 @@ public class RoleStatus {
                     columnList[i] = "-1";
                 }
             }
-            return new RoleStatus(columnList[0], columnList[1], columnList[2], columnList[3],
-                    columnList[4], columnList[5], columnList[6], columnList[7], columnList[8],
-                    columnList[9], columnList[10], columnList[11], columnList[12], columnList[13],
-                    columnList[14]);
+            return new RoleStatus(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14]);
         } else {
             return null;
         }

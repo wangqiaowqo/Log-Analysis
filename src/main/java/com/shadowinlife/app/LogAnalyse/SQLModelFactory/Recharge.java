@@ -32,7 +32,6 @@ import java.sql.Date;
  */
 public class Recharge {
 
-    private String vTableFlage;
     private Date dtEventTime;
     private int iArea;
     private String srcUin;
@@ -51,12 +50,33 @@ public class Recharge {
     private String vDesc;
     private int iLoginWay;
 
-    public String getvTableFlage() {
-        return vTableFlage;
-    }
+    public Recharge(String dtEventTime, String iArea, String srcUin, String dstUin,
+            String iSourceWay, String vClientIp, String vReMarks, String iRoleId, String vRoleName,
+            String iJobId, String iGender, String iRoleLevel, String iPayBefore, String iPayDelta,
+            String iPayAfter, String vDesc, String iLoginWay) {
+        try {
 
-    public void setvTableFlage(String vTableFlage) {
-        this.vTableFlage = vTableFlage;
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.iArea = Integer.valueOf(iArea);
+            this.srcUin = srcUin;
+            this.dstUin = dstUin;
+            this.iSourceWay = Integer.valueOf(iSourceWay);
+            this.vClientIp = vClientIp;
+            this.vReMarks = vReMarks;
+            this.iRoleId = Integer.valueOf(iRoleId);
+            this.vRoleName = vRoleName;
+            this.iJobId = Integer.valueOf(iJobId);
+            this.iGender = Integer.valueOf(iGender);
+            this.iRoleLevel = Integer.valueOf(iRoleLevel);
+            this.iPayBefore = Integer.valueOf(iPayBefore);
+            this.iPayDelta = Integer.valueOf(iPayDelta);
+            this.iPayAfter = Integer.valueOf(iPayAfter);
+            this.vDesc = vDesc;
+            this.iLoginWay = Integer.valueOf(iLoginWay);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
     }
 
     public Date getDtEventTime() {
@@ -193,5 +213,22 @@ public class Recharge {
 
     public void setiLoginWay(int iLoginWay) {
         this.iLoginWay = iLoginWay;
+    }
+
+    public static Recharge parseFromLogFile(String logline) {
+        String[] columnList = logline.split("\\|", 18);
+        if (columnList.length == 18) {
+            for (int i = 0; i < 18; i++) {
+                if (columnList[i] == null) {
+                    columnList[i] = "-1";
+                }
+            }
+            return new Recharge(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
+                    columnList[15], columnList[16], columnList[17]);
+        } else {
+            return null;
+        }
     }
 }

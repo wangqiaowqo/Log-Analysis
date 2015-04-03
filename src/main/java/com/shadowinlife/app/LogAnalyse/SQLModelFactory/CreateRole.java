@@ -22,7 +22,7 @@ import java.sql.Date;
  */
 
 public class CreateRole {
-    private String vTableFlage;
+
     private String iEventId;
     private String iUin;
     private Date dtEventTime;
@@ -33,25 +33,23 @@ public class CreateRole {
     private int iGender;
     private int iLoginWay;
 
-    private CreateRole(String vTableFlage, String iEventId, String iUin, String dtEventTime,
-            String vClientIp, String iRoleId, String vRoleName, String iJobId, String iGender,
-            String iLoginWay) {
-        try{
-        this.vTableFlage=vTableFlage;
-        this.iEventId=iEventId;
-        this.iUin=iUin;
-        this.dtEventTime=Date.valueOf(dtEventTime);
-        } catch(Exception e){
-            
+    private CreateRole(String iEventId, String iUin, String dtEventTime, String vClientIp,
+            String iRoleId, String vRoleName, String iJobId, String iGender, String iLoginWay) {
+        try {
+
+            this.iEventId = iEventId;
+            this.iUin = iUin;
+            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.vClientIp = vClientIp;
+            this.iRoleId = Integer.valueOf(iRoleId);
+            this.vRoleName = vRoleName;
+            this.iJobId = Integer.valueOf(iJobId);
+            this.iGender = Integer.valueOf(iGender);
+            this.iLoginWay = Integer.valueOf(iLoginWay);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
         }
-    }
-
-    public String getvTableFlage() {
-        return vTableFlage;
-    }
-
-    public void setvTableFlage(String vTableFlage) {
-        this.vTableFlage = vTableFlage;
     }
 
     public String getiEventId() {
@@ -134,9 +132,8 @@ public class CreateRole {
                     columnList[i] = "-1";
                 }
             }
-            return new CreateRole(columnList[0], columnList[1], columnList[2], columnList[3],
-                    columnList[4], columnList[5], columnList[6], columnList[7], columnList[8],
-                    columnList[9]);
+            return new CreateRole(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9]);
         } else {
             return null;
         }
