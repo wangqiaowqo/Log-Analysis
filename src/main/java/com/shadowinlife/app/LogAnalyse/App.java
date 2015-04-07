@@ -23,15 +23,17 @@ public class App {
     static class RDDMultipleTextOutputFormat extends MultipleTextOutputFormat<String, Text> {
         @Override
         protected String generateFileNameForKeyValue(String key, Text value, String name) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH");
-            return key.toString() + "/" + dateFormat.format(new Date()) + "/" + name;
+            
+            return key.toString() + "/" + name;
         }
     }
 
     public static void main(String[] args) {
         String targetFile = args[0];
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH");
         String path = args[1];
-
+        path+="/" + dateFormat.format(new Date()); 
+        
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
@@ -45,6 +47,5 @@ public class App {
        
         sc.stop();
         sc.close();
-
     }
 }
