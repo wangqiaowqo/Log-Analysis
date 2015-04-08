@@ -1,6 +1,7 @@
 package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
-import java.sql.Date;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * 
@@ -29,13 +30,15 @@ import java.sql.Date;
 +--------------+------------------+------+-----+---------+-------+
  *
  */
-public class RoleLogin {
-
+public class RoleLogin implements Serializable {
+   
+    private static final long serialVersionUID = -5208592223307470669L;
+    
     private String iEventId;
     private String iUin;
-    private Date dtEventTime;
+    private Timestamp dtEventTime;
     private String vClientIp;
-    private String vZoneId;
+    private String vZoneId; 
     private int iRoleId;
     private String vRoleName;
     private int iRoleLevel;
@@ -44,36 +47,31 @@ public class RoleLogin {
     private int iEnergy;
     private int iMoney;
     private int iGamePoints;
-    private Date dtCreateTime;
+    private Timestamp dtCreateTime;
     private int iOnlineTime;
     private int iLoginWay;
 
     private RoleLogin(String iEventId, String iUin, String dtEventTime, String vClientIp,
             String vZoneId, String iRoleId, String vRoleName, String iRoleLevel, String iRoleExp,
             String iRoleSpe, String iEnergy, String iMoney, String iGamePoints,
-            String dtCreateTime, String iOnlineTotalTime, String iLoginWay) {
-        try {
-
+            String dtCreateTime, String iOnlineTime, String iLoginWay) {
+        
             this.iEventId = iEventId;
             this.iUin = iUin;
-            this.dtEventTime = Date.valueOf(dtEventTime);
+            this.dtEventTime = Timestamp.valueOf(dtEventTime);
             this.vClientIp = vClientIp;
             this.vZoneId = vZoneId;
             this.iRoleId = Integer.valueOf(iRoleId);
             this.vRoleName = vRoleName;
             this.iRoleLevel = Integer.valueOf(iRoleLevel);
-            this.setiRoleExp(Integer.valueOf(iRoleExp));
+            this.iRoleExp = Integer.valueOf(iRoleExp);
             this.iRoleSpe = Integer.valueOf(iRoleSpe);
             this.iEnergy = Integer.valueOf(iEnergy);
             this.iMoney = Integer.valueOf(iMoney);
             this.iGamePoints = Integer.valueOf(iGamePoints);
-            this.dtCreateTime = Date.valueOf(dtCreateTime);
-            this.iOnlineTime = Integer.valueOf(iOnlineTotalTime);
+            this.dtCreateTime = Timestamp.valueOf(dtCreateTime);
+            this.iOnlineTime = Integer.valueOf(iOnlineTime);
             this.iLoginWay = Integer.valueOf(iLoginWay);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
     }
 
     public String getiEventId() {
@@ -92,11 +90,11 @@ public class RoleLogin {
         this.iUin = iUin;
     }
 
-    public Date getDtEventTime() {
+    public Timestamp getDtEventTime() {
         return dtEventTime;
     }
 
-    public void setDtEventTime(Date dtEventTime) {
+    public void setDtEventTime(Timestamp dtEventTime) {
         this.dtEventTime = dtEventTime;
     }
 
@@ -172,11 +170,11 @@ public class RoleLogin {
         this.iGamePoints = iGamePoints;
     }
 
-    public Date getDtCreateTime() {
+    public Timestamp getDtCreateTime() {
         return dtCreateTime;
     }
 
-    public void setDtCreateTime(Date dtCreateTime) {
+    public void setDtCreateTime(Timestamp dtCreateTime) {
         this.dtCreateTime = dtCreateTime;
     }
 
@@ -205,19 +203,22 @@ public class RoleLogin {
     }
 
     public static RoleLogin parseFromLogFile(String logline) {
-        String[] columnList = logline.split("\\|", 17);
-        if (columnList.length == 17) {
-            for (int i = 0; i < 17; i++) {
-                if (columnList[i] == null) {
-                    columnList[i] = "-1";
-                }
-            }
+        String[] columnList = logline.split("\\|");
+        if (columnList.length >0) {
             return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
                     columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
                     columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
-                    columnList[15], columnList[16]);
+                    columnList[15], "0");
         } else {
             return null;
         }
+    }
+    @Override
+    public String toString(){
+        return String.format("%s %s %s %s %s %s %s %s %s %s %s %s %s  %s  %s  %s",
+                iEventId, iUin, dtEventTime,  vClientIp,
+                vZoneId, iRoleId,  vRoleName,  iRoleLevel,  iRoleExp,
+                 iRoleSpe,  iEnergy,  iMoney,  iGamePoints,
+                 dtCreateTime,  iOnlineTime,  iLoginWay);
     }
 }

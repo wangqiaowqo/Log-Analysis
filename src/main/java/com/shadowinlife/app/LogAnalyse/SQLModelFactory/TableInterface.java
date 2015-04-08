@@ -1,8 +1,8 @@
 package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
+import java.sql.Struct;
 import java.util.List;
 
-import org.apache.spark.sql.types.StructType;
 
 /**
  * @author shadowinlife
@@ -15,7 +15,7 @@ public interface TableInterface {
     /**
      * Construct a SQL Table From configure file
      */
-    public StructType structOfTable();
+    public Struct structOfTable();
 
     /**
      * Get the columnNames of This SQL Table
