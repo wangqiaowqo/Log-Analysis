@@ -1,5 +1,9 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
 import org.apache.spark.SparkConf;
@@ -25,13 +29,27 @@ public class LoginProcessTable {
         String logFile = args[0];
         JavaRDD<RoleLogin> accessLogs = sc.textFile(logFile).map(RoleLogin::parseFromLogFile);
         JavaSchemaRDD schemaRDD = sqlContext.applySchema(accessLogs, RoleLogin.class);
-        schemaRDD.registerTempTable("logs");
-        sqlContext.sqlContext().cacheTable("logs");
-        List<Row> list = sqlContext.sql("SELECT iUin FROM logs GROUP BY iUin").collect();
-        for (Row r : list) {
-            System.out.println(r.getString(0));
-        }
+        schemaRDD.registerTempTable("tbLogin");
 
+        sqlContext.sqlContext().cacheTable("tbLogin");
+        List<Row> list = sqlContext.sql(CONSTANT.tblogin_process_table_sql).collect();
+        
+        /**
+         * insert every row to the HIVE
+         */
+        try {
+            Class.forName("org.apache.hadoop.hive.jdbc.HiveDriver");
+            Connection con = DriverManager.getConnection("jdbc:hive://localhost:10000/dbProcess", "",
+                    "");
+            Statement stmt = con.createStatement();
+            
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         sc.stop();
         sc.close();
     }

@@ -3,6 +3,8 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
+
 /**
  * 
  * @author shadowinlife
@@ -37,7 +39,7 @@ public class RoleLogin implements Serializable {
     private String iEventId;
     private String iUin;
     private Timestamp dtEventTime;
-    private String vClientIp;
+    private long vClientIp;
     private String vZoneId; 
     private int iRoleId;
     private String vRoleName;
@@ -59,7 +61,7 @@ public class RoleLogin implements Serializable {
             this.iEventId = iEventId;
             this.iUin = iUin;
             this.dtEventTime = Timestamp.valueOf(dtEventTime);
-            this.vClientIp = vClientIp;
+            this.vClientIp = CONSTANT.ipToLong(vClientIp);
             this.vZoneId = vZoneId;
             this.iRoleId = Integer.valueOf(iRoleId);
             this.vRoleName = vRoleName;
@@ -98,11 +100,11 @@ public class RoleLogin implements Serializable {
         this.dtEventTime = dtEventTime;
     }
 
-    public String getvClientIp() {
+    public long getvClientIp() {
         return vClientIp;
     }
 
-    public void setvClientIp(String vClientIp) {
+    public void setvClientIp(long vClientIp) {
         this.vClientIp = vClientIp;
     }
 
