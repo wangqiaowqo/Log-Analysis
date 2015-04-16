@@ -6,6 +6,11 @@ public class CONSTANT {
 
     public static String tbpay_process_table_sql = "SELECT iUin,MIN(dtEventTime),iRoleLevel,SUM(iMoney),COUNT(1) FROM tbPay GROUP BY iUin";
 
+    public static String tbRolestatus_process_table_sql="SELECT iUin,iRoleId,iJobId,iGender,iRoleLevel,dtRoleCreateTime,dtRoleLastSaveTime,iPoints,iMoney from tbRoleStatus";
+    
+    public static String tbRecharge_process_tabble_sql="select SrcUin,DstUin,dtEventTime,sum(iPayDelta) iPayDelta,count(1)"
+            +" from tbRecharge "
+            +" group by DstUin";
     /**
      * Convert IP to Long
      * @param ipAddress
