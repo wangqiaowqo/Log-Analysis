@@ -35,7 +35,7 @@ public class FileSplit {
     }
 
     public static FileSplit parseFromLogFile(String logline) {
-        String[] splitIndex = logline.split("\\|");
+        String[] splitIndex = logline.split("\\|", 25);
         if (splitIndex.length > 0) {
             return new FileSplit(splitIndex[0], logline);
         } else {

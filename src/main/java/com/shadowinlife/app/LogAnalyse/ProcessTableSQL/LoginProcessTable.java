@@ -1,24 +1,23 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
-import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.SaveMode;
+import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin;
 
 public class LoginProcessTable {
 
     public static boolean process(JavaSparkContext sc, JavaRDD<String> logFile) {
-        // Initialize the Spark context.
+       
         try {
             SQLContext sqlContext = new SQLContext(sc);
+            HiveContext hiveContext = new HiveContext(sc.sc());
 
             JavaRDD<RoleLogin> accessLogs = logFile.map(new Function<String, RoleLogin>() {
                 /**
@@ -38,13 +37,21 @@ public class LoginProcessTable {
                 }
 
             });
+            // convert all the values into the spark table
             DataFrame schemaRDD = sqlContext.createDataFrame(accessLogs, RoleLogin.class);
+            // Register a temple table to execute analysis sql
             schemaRDD.registerTempTable("tbLogin");
-            sqlContext.cacheTable("tbLogin");  
-            sqlContext.sql(CONSTANT.tblogin_process_table_sql).saveAsTable("Rolelogin_Process_Table");
+
+            // execute the analysis sql
+            DataFrame login_Temp_RDD = sqlContext.sql(CONSTANT.tblogin_process_table_sql);
+
+            // Register the result rdd into hive
+            hiveContext.registerDataFrameAsTable(login_Temp_RDD, "loginProcessTable");
+            // Persist data into hive table
+            hiveContext.sql("INSERT INTO TABLE dbprocess.test2 SELECT * FROM loginProcessTable");
+
             return true;
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return false;
         }

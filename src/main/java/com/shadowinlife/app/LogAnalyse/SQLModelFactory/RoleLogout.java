@@ -52,7 +52,7 @@ public class RoleLogout {
             String vClientIp, String vZoneId, String iRoleId, String vRoleName, String iRoleLevel,
             String iRoleExp, String iRepute, String iMainSpeExp, String iMoney, String iGamePoints,
             String iOnlineTime, String iGameTime, String iLoginWay) {
-        try {
+        
             this.iEventId = iEventId;
             this.iUin = iUin;
             this.dtEventTime = Date.valueOf(dtEventTime);
@@ -70,10 +70,7 @@ public class RoleLogout {
             this.iOnlineTime = Integer.valueOf(iOnlineTime);
             this.iGameTime = Integer.valueOf(iGameTime);
             this.iLoginWay = Integer.valueOf(iLoginWay);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+       
     }
 
     public String getiEventId() {
