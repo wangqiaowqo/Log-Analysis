@@ -11,9 +11,9 @@ package com.shadowinlife.app.LogAnalyse;
 public class FileSplit {
 
     private String keyName = "Default";
-    private String lineValues = "Default";
+    private String[] lineValues;
 
-    private FileSplit(String keyName, String lineValues) {
+    private FileSplit(String keyName, String[] lineValues) {
         this.keyName = keyName;
         this.lineValues = lineValues;
     }
@@ -26,20 +26,20 @@ public class FileSplit {
         this.keyName = keyName;
     }
 
-    public String getLineValues() {
+    public String[] getLineValues() {
         return lineValues;
     }
 
-    public void setLineValues(String lineValues) {
+    public void setLineValues(String[] lineValues) {
         this.lineValues = lineValues;
     }
 
     public static FileSplit parseFromLogFile(String logline) {
         String[] splitIndex = logline.split("\\|", 25);
         if (splitIndex.length > 0) {
-            return new FileSplit(splitIndex[0], logline);
+            return new FileSplit(splitIndex[0], splitIndex);
         } else {
-            return null;
+            return new FileSplit("null", null);
         }
     }
 }

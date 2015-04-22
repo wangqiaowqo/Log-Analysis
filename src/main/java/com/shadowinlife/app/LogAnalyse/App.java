@@ -12,13 +12,15 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
 
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.LoginProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 
 import scala.Tuple2;
 
 /**
  * @author shadowinlife
  * @since 2014-04-03
+ * 
+ *        Main class of the analyse app
  */
 
 public class App {
@@ -32,59 +34,65 @@ public class App {
     }
 
     public static void main(String[] args) {
-        
+        //Assemble path of the origin log files
         SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd/HH");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
         Date now = new Date();
         String targetFile = "hdfs://10-4-18-185:8020/logdata/" + formatter.format(now);
-      
+
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         try {
             System.out.println(targetFile);
-            // READ LOG FILE
+            // Read origin log file
             JavaRDD<String> logLines = sc.textFile(targetFile);
-            JavaRDD<FileSplit> fileSplit = logLines.map(new Function<String, FileSplit>() {
 
-                private static final long serialVersionUID = 1L;
+            // TODO The algorithm used to split the file should be changed
 
-                @Override
-                public FileSplit call(String line) throws Exception {
-                    return FileSplit.parseFromLogFile(line);
-                }
-            }).cache();
-
-            JavaPairRDD<String, String> hadoopFile = fileSplit
-                    .mapToPair(new PairFunction<FileSplit, String, String>() {
-
+            // Split origin file into key-value model
+            JavaPairRDD<String, String[]> hadoopFile = logLines
+                    .mapToPair(new PairFunction<String, String, String[]>() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
-                        public Tuple2<String, String> call(FileSplit fileSplit) throws Exception {
-                            return new Tuple2<String, String>(fileSplit.getKeyName(), fileSplit
+                        public Tuple2<String, String[]> call(String line) throws Exception {
+                            FileSplit temp = FileSplit.parseFromLogFile(line);
+                            return new Tuple2<String, String[]>(temp.getKeyName(), temp
                                     .getLineValues());
                         }
                     });
-            hadoopFile.groupByKey();
-            
-            JavaRDD<String> roleLoginRDD = hadoopFile.filter(
-                    new Function<Tuple2<String, String>, Boolean>() {
+
+            // Filter origin file into different RDD
+            JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
+                    new Function<Tuple2<String, String[]>, Boolean>() {
 
                         private static final long serialVersionUID = 1L;
 
                         @Override
-                        public Boolean call(Tuple2<String, String> f) throws Exception {
-                            // split log file and get the values header by --
+                        public Boolean call(Tuple2<String, String[]> f) throws Exception {
                             if (f._1.equalsIgnoreCase("RoleLogin")) {
                                 return true;
                             } else {
                                 return false;
                             }
                         }
-
                     }).values();
 
-            LoginProcessTable.process(sc, roleLoginRDD);
+            JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
+                    new Function<Tuple2<String, String[]>, Boolean>() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public Boolean call(Tuple2<String, String[]> f) throws Exception {
+                            if (f._1.equalsIgnoreCase("RoleLogout")) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }).values();
+
+            AcountProcessTable.process(sc, roleLoginRDD, roleLogoutRDD);
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {

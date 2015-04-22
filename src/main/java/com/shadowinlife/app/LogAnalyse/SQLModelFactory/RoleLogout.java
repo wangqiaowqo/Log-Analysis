@@ -2,31 +2,27 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
 import java.sql.Date;
 
+import jodd.util.StringUtil;
+
 /**
  * 
  * @author shadowinlife
-+-------------+------------------+------+-----+---------+-------+
-| Field       | Type             | Null | Key | Default | Extra |
-+-------------+------------------+------+-----+---------+-------+
-| vTableFlage | varchar(64)      | NO   |     |         |       |
-| iEventId    | varchar(64)      | NO   |     |         |       |
-| iUin        | varchar(64)      | NO   |     |         |       |
-| dtEventTime | datetime         | YES  |     | NULL    |       |
-| dtLoginTime | datetime         | YES  |     | NULL    |       |
-| vClientIp   | varchar(32)      | NO   |     |         |       |
-| vZoneId     | varchar(8)       | NO   |     |         |       |
-| iRoleId     | int(11) unsigned | NO   |     | 0       |       |
-| vRoleName   | varchar(32)      | NO   |     |         |       |
-| iRoleLevel  | int(11) unsigned | NO   |     | 0       |       |
-| iRoleExp    | int(11) unsigned | NO   |     | 0       |       |
-| iRepute     | int(11) unsigned | NO   |     | 0       |       |
-| iMainSpeExp | int(11) unsigned | NO   |     | 0       |       |
-| iMoney      | int(11) unsigned | NO   |     | 0       |       |
-| iGamePoints | int(11) unsigned | NO   |     | 0       |       |
-| iOnlineTime | int(11) unsigned | NO   |     | 0       |       |
-| iGameTime   | int(11) unsigned | NO   |     | 0       |       |
-| iLoginWay   | int(11) unsigned | NO   |     | 0       |       |
-+-------------+------------------+------+-----+---------+-------+
+ *         +-------------+------------------+------+-----+---------+-------+ |
+ *         Field | Type | Null | Key | Default | Extra |
+ *         +-------------+------------------+------+-----+---------+-------+ |
+ *         vTableFlage | varchar(64) | NO | | | | | iEventId | varchar(64) | NO
+ *         | | | | | iUin | varchar(64) | NO | | | | | dtEventTime | datetime |
+ *         YES | | NULL | | | dtLoginTime | datetime | YES | | NULL | | |
+ *         vClientIp | varchar(32) | NO | | | | | vZoneId | varchar(8) | NO | |
+ *         | | | iRoleId | int(11) unsigned | NO | | 0 | | | vRoleName |
+ *         varchar(32) | NO | | | | | iRoleLevel | int(11) unsigned | NO | | 0 |
+ *         | | iRoleExp | int(11) unsigned | NO | | 0 | | | iRepute | int(11)
+ *         unsigned | NO | | 0 | | | iMainSpeExp | int(11) unsigned | NO | | 0 |
+ *         | | iMoney | int(11) unsigned | NO | | 0 | | | iGamePoints | int(11)
+ *         unsigned | NO | | 0 | | | iOnlineTime | int(11) unsigned | NO | | 0 |
+ *         | | iGameTime | int(11) unsigned | NO | | 0 | | | iLoginWay | int(11)
+ *         unsigned | NO | | 0 | |
+ *         +-------------+------------------+------+-----+---------+-------+
  */
 public class RoleLogout {
 
@@ -52,25 +48,25 @@ public class RoleLogout {
             String vClientIp, String vZoneId, String iRoleId, String vRoleName, String iRoleLevel,
             String iRoleExp, String iRepute, String iMainSpeExp, String iMoney, String iGamePoints,
             String iOnlineTime, String iGameTime, String iLoginWay) {
-        
-            this.iEventId = iEventId;
-            this.iUin = iUin;
-            this.dtEventTime = Date.valueOf(dtEventTime);
-            this.dtLoginTime = Date.valueOf(dtLoginTime);
-            this.vClientIp = vClientIp;
-            this.vZoneId = vZoneId;
-            this.iRoleId = Integer.valueOf(iRoleId);
-            this.vRoleName = vRoleName;
-            this.iRoleLevel = Integer.valueOf(iRoleLevel);
-            this.iRoleExp = Integer.valueOf(iRoleExp);
-            this.iRepute = Integer.valueOf(iRepute);
-            this.iMainSpeExp = Integer.valueOf(iMainSpeExp);
-            this.iMoney = Integer.valueOf(iMoney);
-            this.iGamePoints = Integer.valueOf(iGamePoints);
-            this.iOnlineTime = Integer.valueOf(iOnlineTime);
-            this.iGameTime = Integer.valueOf(iGameTime);
-            this.iLoginWay = Integer.valueOf(iLoginWay);
-       
+
+        this.iEventId = iEventId;
+        this.iUin = iUin;
+        this.dtEventTime = Date.valueOf(dtEventTime);
+        this.dtLoginTime = Date.valueOf(dtLoginTime);
+        this.vClientIp = vClientIp;
+        this.vZoneId = vZoneId;
+        this.iRoleId = Integer.valueOf(iRoleId);
+        this.vRoleName = vRoleName;
+        this.iRoleLevel = Integer.valueOf(iRoleLevel);
+        this.iRoleExp = Integer.valueOf(iRoleExp);
+        this.iRepute = Integer.valueOf(iRepute);
+        this.iMainSpeExp = Integer.valueOf(iMainSpeExp);
+        this.iMoney = Integer.valueOf(iMoney);
+        this.iGamePoints = Integer.valueOf(iGamePoints);
+        this.iOnlineTime = Integer.valueOf(iOnlineTime);
+        this.iGameTime = Integer.valueOf(iGameTime);
+        this.iLoginWay = Integer.valueOf(iLoginWay);
+
     }
 
     public String getiEventId() {
@@ -209,11 +205,11 @@ public class RoleLogout {
         this.iLoginWay = iLoginWay;
     }
 
-    public static RoleLogout parseFromLogFile(String logline) {
-        String[] columnList = logline.split("\\|", 18);
+    public static RoleLogout parseFromLogFile(String[] array) {
+        String[] columnList = array;
         if (columnList.length == 18) {
             for (int i = 0; i < 18; i++) {
-                if (columnList[i] == null) {
+                if (StringUtil.isEmpty(columnList[i])) {
                     columnList[i] = "-1";
                 }
             }

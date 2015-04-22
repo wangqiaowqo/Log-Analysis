@@ -3,6 +3,8 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import jodd.util.StringUtil;
+
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
 
 /**
@@ -204,13 +206,19 @@ public class RoleLogin implements Serializable {
         this.iRoleExp = iRoleExp;
     }
 
-    public static RoleLogin parseFromLogFile(String logline) {
-        String[] columnList = logline.split("\\|");
-        if (columnList.length >0) {
+    public static RoleLogin parseFromLogFile(String[] array) {
+        String[] columnList = array;
+        //TODO Some column may be null,should handle it
+        if (columnList.length == 16) {
+            for (int i = 0; i < 16; i++) {
+                if (StringUtil.isEmpty(columnList[i])) {
+                    columnList[i] = "-1";
+                }
+            }
             return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
                     columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
                     columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
-                    columnList[15], "0");
+                    columnList[15], columnList[16]);
         } else {
             return null;
         }
