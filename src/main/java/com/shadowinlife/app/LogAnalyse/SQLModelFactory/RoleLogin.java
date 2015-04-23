@@ -209,8 +209,8 @@ public class RoleLogin implements Serializable {
     public static RoleLogin parseFromLogFile(String[] array) {
         String[] columnList = array;
         //TODO Some column may be null,should handle it
-        if (columnList.length == 16) {
-            for (int i = 0; i < 16; i++) {
+        if (columnList.length == 17) {
+            for (int i = 0; i < 17; i++) {
                 if (StringUtil.isEmpty(columnList[i])) {
                     columnList[i] = "-1";
                 }

@@ -1,11 +1,16 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
+import java.util.List;
+
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.hive.HiveContext;
+
+import static org.apache.spark.sql.functions.*;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin;
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout;
@@ -24,8 +29,7 @@ public class AcountProcessTable {
 
         try {
             // Initialization SparkSQL
-            SQLContext sqlContext = new SQLContext(sc);
-            HiveContext hiveContext = new HiveContext(sc.sc());
+            HiveContext sqlContext = new HiveContext(sc.sc());
 
             // Create RDD from login FILES
             JavaRDD<RoleLogin> loginLogs = loginFile.map(new Function<String[], RoleLogin>() {
@@ -34,12 +38,9 @@ public class AcountProcessTable {
 
                 @Override
                 public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin call(String[] line) {
-                    try {
-                        return RoleLogin.parseFromLogFile(line);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return null;
-                    }
+
+                    return RoleLogin.parseFromLogFile(line);
+
                 }
 
             });
@@ -51,12 +52,9 @@ public class AcountProcessTable {
 
                 @Override
                 public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout call(String[] line) {
-                    try {
-                        return RoleLogout.parseFromLogFile(line);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        return null;
-                    }
+
+                    return RoleLogout.parseFromLogFile(line);
+
                 }
 
             });
@@ -65,18 +63,35 @@ public class AcountProcessTable {
             DataFrame schemaLoginRDD = sqlContext.createDataFrame(loginLogs, RoleLogin.class);
             DataFrame schemaLogoutRDD = sqlContext.createDataFrame(logoutLogs, RoleLogout.class);
 
+            // Dump out the group data of user login and logout
+            DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
+                    max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
+                    max(col("vClientIp")).as("tbLogin_vClientIp"),
+                    count(col("iUin")).as("in_times"));
+            DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
+                    sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
+                    max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
+                    max(col("vClientIp")).as("tbLogout_vClientIp"),
+                    count(col("iUin")).as("out_times"));
+
             // Register temple tables to execute analysis SQL
-            schemaLoginRDD.registerTempTable("tbLogin");
-            schemaLogoutRDD.registerTempTable("tbLogout");
+            userLogin.registerTempTable("tbLogin");
+            userLogout.registerTempTable("tbLogout");
 
             // Execute the analysis SQL
-            DataFrame login_Temp_RDD = sqlContext.sql(CONSTANT.tblogin_process_table_sql);
-
+            DataFrame login_Temp_RDD = sqlContext.sql(CONSTANT.tbUser_process_table_sql);
+            Row[] a = login_Temp_RDD.collect();
+            for (Row r : a) {
+                System.out.println(r.get(0).toString() + " " + r.get(1).toString() + " "
+                        + r.get(2).toString() + " " + r.get(3).toString() + " "
+                        + r.get(4).toString() + " " + r.get(5).toString());
+            }
             // Register the result RDD into hive
-            hiveContext.registerDataFrameAsTable(login_Temp_RDD, "loginProcessTable");
+            // sqlContext.registerDataFrameAsTable(login_Temp_RDD,
+            // "loginProcessTable");
 
             // Persist data into hive table
-            hiveContext.sql("INSERT INTO TABLE dbprocess.test2 SELECT * FROM loginProcessTable");
+            // sqlContext.sql("INSERT INTO TABLE dbprocess.test2 SELECT * FROM loginProcessTable");
 
             return true;
         } catch (Exception e) {

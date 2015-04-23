@@ -1,6 +1,10 @@
 package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
+
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
 
 import jodd.util.StringUtil;
 
@@ -24,13 +28,13 @@ import jodd.util.StringUtil;
  *         unsigned | NO | | 0 | |
  *         +-------------+------------------+------+-----+---------+-------+
  */
-public class RoleLogout {
+public class RoleLogout implements Serializable{
 
     private String iEventId;
     private String iUin;
-    private Date dtEventTime;
-    private Date dtLoginTime;
-    private String vClientIp;
+    private Timestamp dtEventTime;
+    private Timestamp dtLoginTime;
+    private long vClientIp;
     private String vZoneId;
     private int iRoleId;
     private String vRoleName;
@@ -51,9 +55,9 @@ public class RoleLogout {
 
         this.iEventId = iEventId;
         this.iUin = iUin;
-        this.dtEventTime = Date.valueOf(dtEventTime);
-        this.dtLoginTime = Date.valueOf(dtLoginTime);
-        this.vClientIp = vClientIp;
+        this.dtEventTime = Timestamp.valueOf(dtEventTime);
+        this.dtLoginTime = Timestamp.valueOf(dtLoginTime);
+        this.vClientIp = CONSTANT.ipToLong(vClientIp);
         this.vZoneId = vZoneId;
         this.iRoleId = Integer.valueOf(iRoleId);
         this.vRoleName = vRoleName;
@@ -85,27 +89,27 @@ public class RoleLogout {
         this.iUin = iUin;
     }
 
-    public Date getDtEventTime() {
+    public Timestamp getDtEventTime() {
         return dtEventTime;
     }
 
-    public void setDtEventTime(Date dtEventTime) {
+    public void setDtEventTime(Timestamp dtEventTime) {
         this.dtEventTime = dtEventTime;
     }
 
-    public Date getDtLoginTime() {
+    public Timestamp getDtLoginTime() {
         return dtLoginTime;
     }
 
-    public void setDtLoginTime(Date dtLoginTime) {
+    public void setDtLoginTime(Timestamp dtLoginTime) {
         this.dtLoginTime = dtLoginTime;
     }
 
-    public String getvClientIp() {
+    public long getvClientIp() {
         return vClientIp;
     }
 
-    public void setvClientIp(String vClientIp) {
+    public void setvClientIp(long vClientIp) {
         this.vClientIp = vClientIp;
     }
 
@@ -205,6 +209,10 @@ public class RoleLogout {
         this.iLoginWay = iLoginWay;
     }
 
+    /**
+     * @param array
+     * @return
+     */
     public static RoleLogout parseFromLogFile(String[] array) {
         String[] columnList = array;
         if (columnList.length == 18) {
@@ -218,7 +226,15 @@ public class RoleLogout {
                     columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
                     columnList[15], columnList[16], columnList[17]);
         } else {
+            
             return null;
         }
+    }
+    public String toString(){
+        return String.format("%s %s %s %s %s %s %s %s %s %s %s %s %s  %s  %s  %s",
+                iEventId, iUin, dtEventTime,  vClientIp,
+                vZoneId, iRoleId,  vRoleName,  iRoleLevel,  iRoleExp,
+                 iRepute,  iMainSpeExp,  iMoney,  iGamePoints,
+                 iGameTime,  iOnlineTime,  iLoginWay);
     }
 }

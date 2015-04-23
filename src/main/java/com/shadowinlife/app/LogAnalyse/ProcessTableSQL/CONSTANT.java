@@ -1,18 +1,28 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
 public class CONSTANT {
-   
-    public static String tblogin_process_table_sql = "SELECT iUin,MIN(dtEventTime),SUM(iOnlineTime),MAX(iRoleLevel),MAX(vClientIp) FROM tbLogin GROUP BY iUin";
 
-    public static String tbpay_process_table_sql = "SELECT iUin,MIN(dtEventTime),iRoleLevel,SUM(iMoney),COUNT(1) FROM tbPay GROUP BY iUin";
+    public static String tbUser_process_table_sql = "SELECT "
+            + "IF(logout_id is null, login_id, logout_id), "
+            + "IF(tbLogout_iOnlineTime is null, 0, tbLogout_iOnlineTime),"
+            + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel), "
+            + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp), "
+            + "IF(in_times is null, 0, in_times),"
+            + "IF(out_times is null, 0, out_times) "
+            + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
 
-    public static String tbRolestatus_process_table_sql="SELECT iUin,iRoleId,iJobId,iGender,iRoleLevel,dtRoleCreateTime,dtRoleLastSaveTime,iPoints,iMoney from tbRoleStatus";
-    
-    public static String tbRecharge_process_tabble_sql="select SrcUin,DstUin,dtEventTime,sum(iPayDelta) iPayDelta,count(1)"
-            +" from tbRecharge "
-            +" group by DstUin";
+    public static String tbpay_process_table_sql = "SELECT iUin,MIN(dtEventTime),iRoleLevel,"
+            + "SUM(iMoney),COUNT(1) FROM tbPay GROUP BY iUin";
+
+    public static String tbRolestatus_process_table_sql = "SELECT iUin,iRoleId,iJobId,iGender,"
+            + "iRoleLevel,dtRoleCreateTime,dtRoleLastSaveTime,iPoints,iMoney from tbRoleStatus";
+
+    public static String tbRecharge_process_tabble_sql = "select SrcUin,DstUin,dtEventTime,sum(iPayDelta) iPayDelta,count(1)"
+            + " from tbRecharge " + " group by DstUin";
+
     /**
      * Convert IP to Long
+     * 
      * @param ipAddress
      * @return
      */
@@ -26,8 +36,10 @@ public class CONSTANT {
         }
         return result;
     }
+
     /**
      * Convert Long to IP
+     * 
      * @param ip
      * @return
      */

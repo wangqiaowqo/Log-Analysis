@@ -34,7 +34,7 @@ public class App {
     }
 
     public static void main(String[] args) {
-        //Assemble path of the origin log files
+        // Assemble path of the origin log files
         SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd/HH");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
         Date now = new Date();
@@ -43,7 +43,6 @@ public class App {
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         try {
-            System.out.println(targetFile);
             // Read origin log file
             JavaRDD<String> logLines = sc.textFile(targetFile);
 
