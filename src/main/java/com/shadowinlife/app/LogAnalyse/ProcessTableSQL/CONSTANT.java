@@ -8,7 +8,11 @@ public class CONSTANT {
             + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel), "
             + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp), "
             + "IF(in_times is null, 0, in_times),"
-            + "IF(out_times is null, 0, out_times) "
+            + "IF(out_times is null, 0, out_times),"
+            + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
+            + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
+            + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
+            + "ELSE login_dtEventTime END) "
             + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
 
     public static String tbpay_process_table_sql = "SELECT iUin,MIN(dtEventTime),iRoleLevel,"

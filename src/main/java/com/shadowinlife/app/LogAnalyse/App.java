@@ -35,10 +35,10 @@ public class App {
 
     public static void main(String[] args) {
         // Assemble path of the origin log files
-        SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd/HH");
+        SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
         Date now = new Date();
-        String targetFile = "hdfs://10-4-18-185:8020/logdata/" + formatter.format(now);
+        String targetFile = "hdfs://10-4-18-185:8020/logdata/15-04-23/*/*";
 
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);

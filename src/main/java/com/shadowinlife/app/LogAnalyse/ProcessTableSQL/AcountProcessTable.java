@@ -67,32 +67,28 @@ public class AcountProcessTable {
             DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
                     max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogin_vClientIp"),
-                    count(col("iUin")).as("in_times"));
+                    count(col("iUin")).as("in_times"),max(col("dtEventTime")).as("login_dtEventTime"));
+            
             DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
                     sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
                     max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogout_vClientIp"),
-                    count(col("iUin")).as("out_times"));
+                    count(col("iUin")).as("out_times"),
+                    max(col("dtEventTime")).as("logout_dtEventTime"));
 
             // Register temple tables to execute analysis SQL
             userLogin.registerTempTable("tbLogin");
             userLogout.registerTempTable("tbLogout");
-
+         
             // Execute the analysis SQL
-            DataFrame login_Temp_RDD = sqlContext.sql(CONSTANT.tbUser_process_table_sql);
-            Row[] a = login_Temp_RDD.collect();
-            for (Row r : a) {
-                System.out.println(r.get(0).toString() + " " + r.get(1).toString() + " "
-                        + r.get(2).toString() + " " + r.get(3).toString() + " "
-                        + r.get(4).toString() + " " + r.get(5).toString());
-            }
+            DataFrame temp_RDD = sqlContext.sql(CONSTANT.tbUser_process_table_sql);
+            
             // Register the result RDD into hive
-            // sqlContext.registerDataFrameAsTable(login_Temp_RDD,
-            // "loginProcessTable");
+            sqlContext.registerDataFrameAsTable(temp_RDD, "loginProcessTable");
 
             // Persist data into hive table
-            // sqlContext.sql("INSERT INTO TABLE dbprocess.test2 SELECT * FROM loginProcessTable");
-
+             sqlContext.sql("INSERT INTO TABLE dbprocess.test3 SELECT * FROM loginProcessTable");
+             
             return true;
         } catch (Exception e) {
             e.printStackTrace();
