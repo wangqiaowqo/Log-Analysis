@@ -23,7 +23,7 @@ import scala.Tuple2;
  *        Main class of the analyse app
  */
 
-public class App {
+public class ShiftLeft {
 
     static class RDDMultipleTextOutputFormat extends MultipleTextOutputFormat<String, String> {
         @Override
