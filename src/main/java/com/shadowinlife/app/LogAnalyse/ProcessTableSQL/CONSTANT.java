@@ -1,28 +1,39 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
 public class CONSTANT {
-
+    // create daily user act table
     public static String tbUser_process_table_sql = "SELECT "
-            + "IF(logout_id is null, login_id, logout_id), "
-            + "IF(tbLogout_iOnlineTime is null, 0, tbLogout_iOnlineTime),"
-            + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel), "
-            + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp), "
-            + "IF(in_times is null, 0, in_times),"
-            + "IF(out_times is null, 0, out_times),"
+            + "IF(logout_id is null, login_id, logout_id) AS id, "
+            + "IF(tbLogout_iOnlineTime is null, 0, tbLogout_iOnlineTime) AS iOnlineTime,"
+            + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel) AS iRoleLevel, "
+            + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp) AS ip, "
+            + "IF(in_times is null, 0, in_times)," + "IF(out_times is null, 0, out_times),"
             + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
             + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
-            + "ELSE login_dtEventTime END) "
+            + "ELSE login_dtEventTime END) AS acttime"
             + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
 
-    public static String tbpay_process_table_sql = "SELECT iUin,MIN(dtEventTime),iRoleLevel,"
-            + "SUM(iMoney),COUNT(1) FROM tbPay GROUP BY iUin";
+    // Add user define function to hive function list
+    public static String udf = "CREATE FUNCTION shiftleft AS 'com.shadowinlife.app.UserACT.ShiftLeft' "
+            + "USING JAR 'hdfs://10-4-18-185:8020//udf.jar'";
 
-    public static String tbRolestatus_process_table_sql = "SELECT iUin,iRoleId,iJobId,iGender,"
-            + "iRoleLevel,dtRoleCreateTime,dtRoleLastSaveTime,iPoints,iMoney from tbRoleStatus";
+    // USER NOT ACTIVITY
+    public static String tbUser_unact_account_table = "INSERT OVERWRITE TABLE test_account "
+            + "SELECT unix_timestamp(), iaccount, suin, igameid,"
+            + " iworldid, irole, iregtime, ilastacttime,"
+            + "shiftleft(idayacti), shiftleft(iweekacti), shiftleft(imonthacti),"
+            + " igroup, ilevel, iviplevel, itimes, ionlinetime "
+            + " FROM test_account LEFT JOIN loginProcessTable ON test_account.suin = loginProcessTable.id "
+            + "WHERE loginProcessTable.id IS NULL";
 
-    public static String tbRecharge_process_tabble_sql = "select SrcUin,DstUin,dtEventTime,sum(iPayDelta) iPayDelta,count(1)"
-            + " from tbRecharge " + " group by DstUin";
+    // USER ACTIVITY 
+    public static String tbUser_act_account_table = "INSERT INTO TABLE test_account "
+            + "SELECT unix_timestamp(), 1, loginProcessTable.id, 1, 1, 1, null, "
+            + "loginProcessTable.acttime, ShiftAct(test_account.idayacti), ShiftAct(test_account.iweekacti),"
+            + "ShiftAct(test_account.imonthacti), null, loginProcessTable.iRoleLevel, "
+            + "1, 1, loginProcessTable.iOnlinetime FROM loginProcessTable LEFT JOIN test_account "
+            + "ON loginProcessTable.id=test_account.suin";
 
     /**
      * Convert IP to Long

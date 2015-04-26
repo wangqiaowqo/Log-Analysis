@@ -1,13 +1,9 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
-import java.util.List;
-
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.hive.HiveContext;
 
 import static org.apache.spark.sql.functions.*;
@@ -67,8 +63,9 @@ public class AcountProcessTable {
             DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
                     max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogin_vClientIp"),
-                    count(col("iUin")).as("in_times"),max(col("dtEventTime")).as("login_dtEventTime"));
-            
+                    count(col("iUin")).as("in_times"),
+                    max(col("dtEventTime")).as("login_dtEventTime"));
+
             DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
                     sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
                     max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
@@ -79,16 +76,21 @@ public class AcountProcessTable {
             // Register temple tables to execute analysis SQL
             userLogin.registerTempTable("tbLogin");
             userLogout.registerTempTable("tbLogout");
-         
+
             // Execute the analysis SQL
             DataFrame temp_RDD = sqlContext.sql(CONSTANT.tbUser_process_table_sql);
-            
+
             // Register the result RDD into hive
             sqlContext.registerDataFrameAsTable(temp_RDD, "loginProcessTable");
 
             // Persist data into hive table
-             sqlContext.sql("INSERT INTO TABLE dbprocess.test3 SELECT * FROM loginProcessTable");
-             
+            sqlContext.sql("use dbprocess");
+            sqlContext.sql("ADD JAR hdfs://10-4-18-185:8020//udf.jar");
+            sqlContext.sql("INSERT INTO TABLE test3 SELECT * FROM loginProcessTable");
+
+            // Shiftleft all user on the column 'dayact' 'weekact' 'monthact'
+            sqlContext.sql(CONSTANT.tbUser_unact_account_table);
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,35 +1,42 @@
 package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
 
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
-
 import jodd.util.StringUtil;
+
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
 
 /**
  * 
  * @author shadowinlife
- *         +-------------+------------------+------+-----+---------+-------+ |
- *         Field | Type | Null | Key | Default | Extra |
- *         +-------------+------------------+------+-----+---------+-------+ |
- *         vTableFlage | varchar(64) | NO | | | | | iEventId | varchar(64) | NO
- *         | | | | | iUin | varchar(64) | NO | | | | | dtEventTime | datetime |
- *         YES | | NULL | | | dtLoginTime | datetime | YES | | NULL | | |
- *         vClientIp | varchar(32) | NO | | | | | vZoneId | varchar(8) | NO | |
- *         | | | iRoleId | int(11) unsigned | NO | | 0 | | | vRoleName |
- *         varchar(32) | NO | | | | | iRoleLevel | int(11) unsigned | NO | | 0 |
- *         | | iRoleExp | int(11) unsigned | NO | | 0 | | | iRepute | int(11)
- *         unsigned | NO | | 0 | | | iMainSpeExp | int(11) unsigned | NO | | 0 |
- *         | | iMoney | int(11) unsigned | NO | | 0 | | | iGamePoints | int(11)
- *         unsigned | NO | | 0 | | | iOnlineTime | int(11) unsigned | NO | | 0 |
- *         | | iGameTime | int(11) unsigned | NO | | 0 | | | iLoginWay | int(11)
- *         unsigned | NO | | 0 | |
- *         +-------------+------------------+------+-----+---------+-------+
++-------------+------------------+------+-----+---------+-------+
+| Field       | Type             | Null | Key | Default | Extra |
++-------------+------------------+------+-----+---------+-------+
+| vTableFlage | varchar(64)      | NO   |     |         |       |
+| iEventId    | varchar(64)      | NO   |     |         |       |
+| iUin        | varchar(64)      | NO   |     |         |       |
+| dtEventTime | datetime         | YES  |     | NULL    |       |
+| dtLoginTime | datetime         | YES  |     | NULL    |       |
+| vClientIp   | varchar(32)      | NO   |     |         |       |
+| vZoneId     | varchar(8)       | NO   |     |         |       |
+| iRoleId     | int(11) unsigned | NO   |     | 0       |       |
+| vRoleName   | varchar(32)      | NO   |     |         |       |
+| iRoleLevel  | int(11) unsigned | NO   |     | 0       |       |
+| iRoleExp    | int(11) unsigned | NO   |     | 0       |       |
+| iRepute     | int(11) unsigned | NO   |     | 0       |       |
+| iMainSpeExp | int(11) unsigned | NO   |     | 0       |       |
+| iMoney      | int(11) unsigned | NO   |     | 0       |       |
+| iGamePoints | int(11) unsigned | NO   |     | 0       |       |
+| iOnlineTime | int(11) unsigned | NO   |     | 0       |       |
+| iGameTime   | int(11) unsigned | NO   |     | 0       |       |
+| iLoginWay   | int(11) unsigned | NO   |     | 0       |       |
++-------------+------------------+------+-----+---------+-------+
  */
 public class RoleLogout implements Serializable{
-
+  
+    private static final long serialVersionUID = -8150457539320394072L;
+    
     private String iEventId;
     private String iUin;
     private Timestamp dtEventTime;
