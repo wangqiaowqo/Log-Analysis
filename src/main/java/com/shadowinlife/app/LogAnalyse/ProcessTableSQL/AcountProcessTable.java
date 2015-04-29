@@ -83,14 +83,15 @@ public class AcountProcessTable {
             // Register the result RDD into hive
             sqlContext.registerDataFrameAsTable(temp_RDD, "loginProcessTable");
 
-            // Persist data into hive table
+            // Initialization hive UDF
             sqlContext.sql("use dbprocess");
-            sqlContext.sql("ADD JAR hdfs://10-4-18-185:8020//udf.jar");
-            sqlContext.sql("INSERT INTO TABLE test3 SELECT * FROM loginProcessTable");
+            sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
+            
+            //sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
 
             // Shiftleft all user on the column 'dayact' 'weekact' 'monthact'
             sqlContext.sql(CONSTANT.tbUser_unact_account_table);
-
+            sqlContext.sql(CONSTANT.tbUser_act_account_table);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

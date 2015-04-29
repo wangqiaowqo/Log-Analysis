@@ -38,7 +38,7 @@ public class MainAPP {
         SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
         formatter.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
         Date now = new Date();
-        String targetFile = "hdfs://10-4-18-185:8020/logdata/15-04-24/*/*";
+        String targetFile = "hdfs://10-4-28-24:8020/logdata/15-04-29/*/*";
         //+formatter.format(now)+"/*/*";
 
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
