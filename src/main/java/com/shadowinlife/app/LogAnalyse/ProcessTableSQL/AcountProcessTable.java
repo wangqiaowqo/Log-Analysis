@@ -20,7 +20,28 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout;
  * @author shadowinlife
  * @since 2015-4-22
  * 
- *        Execute every hour to produce the account process table
+ *        Execute every hour to produce the fat_tbaccount
++---------------+-----------------------------------+----------+--+
+|   col_name    |             data_type             | comment  |
++---------------+-----------------------------------+----------+--+
+| dtstatdate    | date                              |          |
+| iaccounttype  | int                               |          |
+| suin          | string                            |          |
+| igameid       | int                               |          |
+| iworld        | int                               |          |
+| iroleid       | int                               |          |
+| iregtime      | timestamp                         |          |
+| ilastacttime  | timestamp                         |          |
+| idayacti      | struct<header:int,tailer:bigint>  |          |
+| iweekacti     | struct<header:int,tailer:bigint>  |          |
+| imonthacti    | struct<header:int,tailer:bigint>  |          |
+| igroup        | int                               |          |
+| ilevel        | bigint                            |          |
+| iviplevel     | bigint                            |          |
+| itimes        | bigint                            |          |
+| ionlinetime   | bigint                            |          |
++---------------+-----------------------------------+----------+--+
+
  */
 public class AcountProcessTable {
 

@@ -1,0 +1,9 @@
+#In a period how many user lost  group by level
+select ilevel,count(userlost(idayacti,%period)) from fat_tbaccount where dtstatdate='%date' AND userlost(idayacti,%period) group by ilevel;
+
+#In a period how many user comeback group by level
+ select ilevel,count(ilevel) from fat_tbaccount where dtstatdate='%date' AND usercomeback(idayacti,%period) group by ilevel;
+ 
+#In a period how man user is activity group by level
+ select ilevel,count(ilevel) from fat_tbaccount where dtstatdate='%date' AND (idayacti.tailer&1)=1 group by ilevel;
+  
