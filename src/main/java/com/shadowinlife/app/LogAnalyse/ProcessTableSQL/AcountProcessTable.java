@@ -91,6 +91,7 @@ public class AcountProcessTable {
             sqlContext.sql("use dbprocess");
             sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
 
+            //create a temp table with every hour data
             // sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
 
             // Shiftleft all user on the column 'dayact' 'weekact' 'monthact'
