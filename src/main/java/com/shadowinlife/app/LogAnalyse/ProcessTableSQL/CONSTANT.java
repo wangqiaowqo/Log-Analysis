@@ -27,7 +27,7 @@ public class CONSTANT {
 
     // USER NOT ACTIVITY
     public static String tbUser_unact_account_table = "INSERT INTO TABLE fat_tbaccount "
-            + "SELECT FROM_UNIXTIME(unix_timestamp(),'yyyy-mm-dd'), "
+            + "SELECT '%s', "
             + "iaccounttype,"
             + "suin,"
             + "igameid,"
@@ -48,7 +48,7 @@ public class CONSTANT {
 
     // USER ACTIVITY 
     public static String tbUser_act_account_table = "INSERT INTO TABLE fat_tbaccount "
-            + "SELECT FROM_UNIXTIME(unix_timestamp(),'yyyy-mm-dd'),"
+            + "SELECT '%s',"
             + "1,"
             + "loginProcessTable.id,"
             + "1, 1, 1, null, "

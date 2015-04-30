@@ -1,5 +1,9 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
@@ -23,6 +27,9 @@ public class AcountProcessTable {
     public static boolean process(JavaSparkContext sc, JavaRDD<String[]> loginFile,
             JavaRDD<String[]> logoutFile) {
 
+        SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
+        formatter.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
+        String date = formatter.format(new Date());
         try {
             // Initialization SparkSQL
             HiveContext sqlContext = new HiveContext(sc.sc());
@@ -86,12 +93,13 @@ public class AcountProcessTable {
             // Initialization hive UDF
             sqlContext.sql("use dbprocess");
             sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-            
-            //sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
+
+            // sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
 
             // Shiftleft all user on the column 'dayact' 'weekact' 'monthact'
-            sqlContext.sql(CONSTANT.tbUser_unact_account_table);
-            sqlContext.sql(CONSTANT.tbUser_act_account_table);
+            
+            sqlContext.sql(String.format(CONSTANT.tbUser_unact_account_table, date));
+            sqlContext.sql(String.format(CONSTANT.tbUser_act_account_table, date));
             return true;
         } catch (Exception e) {
             e.printStackTrace();
