@@ -25,11 +25,8 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout;
 public class AcountProcessTable {
 
     public static boolean process(JavaSparkContext sc, JavaRDD<String[]> loginFile,
-            JavaRDD<String[]> logoutFile) {
+            JavaRDD<String[]> logoutFile, String date) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yy-MM-dd");
-        formatter.setTimeZone(TimeZone.getTimeZone("GMT+7:00"));
-        String date = formatter.format(new Date());
         try {
             // Initialization SparkSQL
             HiveContext sqlContext = new HiveContext(sc.sc());

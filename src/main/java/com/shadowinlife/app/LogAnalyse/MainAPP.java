@@ -88,7 +88,7 @@ public class MainAPP {
                         }
                     }).values();
 
-            AcountProcessTable.process(sc, roleLoginRDD, roleLogoutRDD);
+            AcountProcessTable.process(sc, roleLoginRDD, roleLogoutRDD, "20"+args[0]);
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {
