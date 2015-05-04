@@ -27,10 +27,11 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout;
 | dtstatdate    | date                              |          |
 | iaccounttype  | int                               |          |
 | suin          | string                            |          |
-| igameid       | int                               |          |
-| iworld        | int                               |          |
-| iroleid       | int                               |          |
 | iregtime      | timestamp                         |          |
+| igameid       | int                               |          |
+| iworldid      | int                               |          |
+| iroleid       | int                               |          |
+| iroleregtime  | timestamp                         |          |
 | ilastacttime  | timestamp                         |          |
 | idayacti      | struct<header:int,tailer:bigint>  |          |
 | iweekacti     | struct<header:int,tailer:bigint>  |          |
@@ -41,17 +42,71 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout;
 | itimes        | bigint                            |          |
 | ionlinetime   | bigint                            |          |
 +---------------+-----------------------------------+----------+--+
-
  */
-public class AcountProcessTable {
 
-    public static boolean process(JavaSparkContext sc, JavaRDD<String[]> loginFile,
+public class AcountProcessTable {
+    // create daily user act table
+    private static String tbUser_process_table_sql = 
+            "SELECT "
+            + "IF(logout_id is null, login_id, logout_id) AS id, "
+            + "IF(tbLogout_iOnlineTime is null, 0, tbLogout_iOnlineTime) AS iOnlineTime,"
+            + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel) AS iRoleLevel, "
+            + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp) AS ip, "
+            + "IF(in_times is null, 0, in_times) AS intime," 
+            + "IF(out_times is null, 0, out_times) AS outtime,"
+            + "login_regTime AS regTime,"
+            + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
+            + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
+            + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
+            + "ELSE login_dtEventTime END) AS acttime "
+            + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
+    // USER NOT ACTIVITY
+    private static String tbUser_unact_account_table = "INSERT INTO TABLE fat_tbaccount "
+            + "SELECT '%s', "
+            + "iaccounttype,"
+            + "suin,"
+            + "iregtime,"
+            + "igameid,"
+            + "iworldid,"
+            + "iroleid,"
+            + "iroleregtime,"
+            + "ilastacttime,"
+            + "shiftleft(idayacti),"
+            + "shiftleft(iweekacti),"
+            + "shiftleft(imonthacti),"
+            + "igroup,"
+            + "ilevel,"
+            + "iviplevel,"
+            + "itimes,"
+            + "loginProcessTable.ionlinetime "
+            + "FROM fat_tbaccount LEFT JOIN loginProcessTable ON fat_tbaccount.suin = loginProcessTable.id "
+            + "WHERE loginProcessTable.id IS NULL";
+
+    // USER ACTIVITY 
+    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_tbaccount "
+            + "SELECT '%s',"
+            + "1,"
+            + "loginProcessTable.id,"
+            + "IF(iregtime IS NULL, loginProcessTable.regTime, iregtime),"
+            + "1,"
+            + "1,"
+            + "1,"
+            + "null, "
+            + "loginProcessTable.acttime,"
+            + "shiftact(fat_tbaccount.idayacti),"
+            + "shiftact(fat_tbaccount.iweekacti),"
+            + "shiftact(fat_tbaccount.imonthacti),"
+            + "null,"
+            + "loginProcessTable.iRoleLevel, "
+            + "1,"
+            + "IF(outtime is null, intime, outtime),"
+            + "loginProcessTable.iOnlinetime FROM loginProcessTable LEFT JOIN fat_tbaccount "
+            + "ON loginProcessTable.id=fat_tbaccount.suin";
+
+    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> loginFile,
             JavaRDD<String[]> logoutFile, String date) {
 
         try {
-            // Initialization SparkSQL
-            HiveContext sqlContext = new HiveContext(sc.sc());
-
             // Create RDD from login FILES
             JavaRDD<RoleLogin> loginLogs = loginFile.map(new Function<String[], RoleLogin>() {
 
@@ -89,7 +144,8 @@ public class AcountProcessTable {
                     max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogin_vClientIp"),
                     count(col("iUin")).as("in_times"),
-                    max(col("dtEventTime")).as("login_dtEventTime"));
+                    max(col("dtEventTime")).as("login_dtEventTime"),
+                    min(col("dtEventTime")).as("login_regTime"));
 
             DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
                     sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
@@ -103,7 +159,7 @@ public class AcountProcessTable {
             userLogout.registerTempTable("tbLogout");
 
             // Execute the analysis SQL
-            DataFrame temp_RDD = sqlContext.sql(CONSTANT.tbUser_process_table_sql);
+            DataFrame temp_RDD = sqlContext.sql(tbUser_process_table_sql);
 
             // Register the result RDD into hive
             sqlContext.registerDataFrameAsTable(temp_RDD, "loginProcessTable");
@@ -117,8 +173,11 @@ public class AcountProcessTable {
 
             // Shiftleft all user on the column 'dayact' 'weekact' 'monthact'
             
-            sqlContext.sql(String.format(CONSTANT.tbUser_unact_account_table, date));
-            sqlContext.sql(String.format(CONSTANT.tbUser_act_account_table, date));
+            sqlContext.sql(String.format(tbUser_unact_account_table, date));
+            sqlContext.sql(String.format(tbUser_act_account_table, date));
+            sqlContext.dropTempTable("loginProcessTable");
+            sqlContext.dropTempTable("tbLogin");
+            sqlContext.dropTempTable("tbLogout");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,6 +11,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 
@@ -87,8 +88,8 @@ public class MainAPP {
                             }
                         }
                     }).values();
-
-            AcountProcessTable.process(sc, roleLoginRDD, roleLogoutRDD, "20"+args[0]);
+            HiveContext sqlContext = new HiveContext(sc.sc());
+            AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, "20"+args[0]);
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {
