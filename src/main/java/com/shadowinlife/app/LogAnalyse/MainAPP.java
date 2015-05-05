@@ -1,9 +1,5 @@
 package com.shadowinlife.app.LogAnalyse;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-
 import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
