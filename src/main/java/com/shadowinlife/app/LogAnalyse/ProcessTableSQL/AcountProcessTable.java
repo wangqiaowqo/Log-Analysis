@@ -1,5 +1,9 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
@@ -49,54 +53,63 @@ public class AcountProcessTable {
             + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp) AS ip, "
             + "IF(in_times is null, 0, in_times) AS intime," 
             + "IF(out_times is null, 0, out_times) AS outtime,"
-            + "login_regTime AS regTime,"
+            
+            + "(CASE WHEN login_regTime IS NULL THEN logout_regTime "
+            + "WHEN logout_regTime IS NULL THEN login_regTime "
+            + "WHEN login_regTime<logout_regTime THEN login_regTime "
+            + "ELSE logout_regTime END) AS regTime,"
+            
             + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
             + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
             + "ELSE login_dtEventTime END) AS acttime "
+            
             + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
     // USER NOT ACTIVITY
     private static String tbUser_unact_account_table = "INSERT INTO TABLE fat_tbaccount "
             + "SELECT '%s', "
-            + "iaccounttype,"
-            + "suin,"
-            + "iregtime,"
-            + "igameid,"
-            + "iworldid,"
-            + "iroleid,"
-            + "iroleregtime,"
-            + "ilastacttime,"
-            + "shiftleft(idayacti),"
-            + "shiftleft(iweekacti),"
-            + "shiftleft(imonthacti),"
-            + "igroup,"
-            + "ilevel,"
-            + "iviplevel,"
-            + "itimes,"
-            + "loginProcessTable.ionlinetime "
-            + "FROM fat_tbaccount LEFT JOIN loginProcessTable ON fat_tbaccount.suin = loginProcessTable.id "
-            + "WHERE loginProcessTable.id IS NULL";
+            + "T1.iaccounttype,"
+            + "T1.suin,"
+            + "T1.iregtime,"
+            + "T1.igameid,"
+            + "T1.iworldid,"
+            + "T1.iroleid,"
+            + "T1.iroleregtime,"
+            + "T1.ilastacttime,"
+            + "shiftleft(T1.idayacti),"
+            + "T1.iweekacti," //TODO
+            + "T1.imonthacti," //TODO
+            + "T1.igroup,"
+            + "T1.ilevel,"
+            + "T1.iviplevel,"
+            + "0,"
+            + "0 "
+            + "FROM (SELECT * FROM fat_tbaccount WHERE dtStatDate=date_add('%s',-1)) T1 LEFT JOIN "
+            + "loginProcessTable T2 ON T1.suin = T2.id "
+            + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
     private static String tbUser_act_account_table = "INSERT INTO TABLE fat_tbaccount "
             + "SELECT '%s',"
             + "1,"
-            + "loginProcessTable.id,"
-            + "IF(iregtime IS NULL, loginProcessTable.regTime, iregtime),"
+            + "T1.id,"
+            + "IF(T2.iregtime IS NULL, T1.regTime, T2.iregtime),"
             + "1,"
             + "1,"
             + "1,"
             + "null, "
-            + "loginProcessTable.acttime,"
-            + "shiftact(fat_tbaccount.idayacti),"
-            + "shiftact(fat_tbaccount.iweekacti),"
-            + "shiftact(fat_tbaccount.imonthacti),"
-            + "null,"
-            + "loginProcessTable.iRoleLevel, "
+            + "T1.acttime,"
+            + "shiftact(T2.idayacti),"
+            + "T2.iweekacti,"
+            + "T2.imonthacti,"
+            + "0,"
+            + "T1.iRoleLevel, "
             + "1,"
-            + "IF(outtime is null, intime, outtime),"
-            + "loginProcessTable.iOnlinetime FROM loginProcessTable LEFT JOIN fat_tbaccount "
-            + "ON loginProcessTable.id=fat_tbaccount.suin";
+            + "IF(T1.outtime is null, T1.intime, T1.outtime),"
+            + "T1.iOnlinetime "
+            + "FROM loginProcessTable T1 LEFT JOIN "
+            + "(SELECT * FROM fat_tbaccount WHERE dtStatDate=date_add('%s',-1)) T2 "
+            + "ON T1.id=T2.suin";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> loginFile,
             JavaRDD<String[]> logoutFile, String date) {
@@ -147,7 +160,8 @@ public class AcountProcessTable {
                     max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogout_vClientIp"),
                     count(col("iUin")).as("out_times"),
-                    max(col("dtEventTime")).as("logout_dtEventTime"));
+                    max(col("dtEventTime")).as("logout_dtEventTime"),
+                    min(col("dtEventTime")).as("logout_regtime"));
 
             // Register temple tables to execute analysis SQL
             userLogin.registerTempTable("tbLogin");
@@ -166,10 +180,9 @@ public class AcountProcessTable {
             //create a temp table with every hour data
             // sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
 
-            // Shiftleft all user on the column 'dayact' 'weekact' 'monthact'
-            
-            sqlContext.sql(String.format(tbUser_unact_account_table, date));
-            sqlContext.sql(String.format(tbUser_act_account_table, date));
+            // Shiftleft all user on the column 'dayact' 'weekact' 'monthact' 
+            sqlContext.sql(String.format(tbUser_unact_account_table, date, date));
+            sqlContext.sql(String.format(tbUser_act_account_table, date, date));
             sqlContext.dropTempTable("loginProcessTable");
             sqlContext.dropTempTable("tbLogin");
             sqlContext.dropTempTable("tbLogout");
@@ -179,5 +192,32 @@ public class AcountProcessTable {
             return false;
         }
 
+    }
+    
+    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
+        String hql = "INSERT INTO TABLE fat_tbaccount "
+                + "SELECT '%s', "
+                + "iaccounttype,"
+                + "suin,"
+                + "iregtime,"
+                + "igameid,"
+                + "iworldid,"
+                + "iroleid,"
+                + "iroleregtime,"
+                + "ilastacttime,"
+                + "shiftleft(idayacti),"
+                + "shiftleft(iweekacti),"
+                + "shiftleft(imonthacti),"
+                + "igroup,"
+                + "ilevel,"
+                + "iviplevel,"
+                + "0,"
+                + "0 "
+                + "FROM fat_tbaccount WHERE dtStatDate=date_add('%s',-1)";
+        
+        // Initialization hive UDF
+        sqlContext.sql("use dbprocess");
+        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
+        sqlContext.sql(String.format(hql, date, date));
     }
 }

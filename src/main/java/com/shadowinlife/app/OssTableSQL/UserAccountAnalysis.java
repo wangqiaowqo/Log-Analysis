@@ -1,5 +1,7 @@
 package com.shadowinlife.app.OssTableSQL;
 
+import org.apache.spark.sql.hive.HiveContext;
+
 
 public class UserAccountAnalysis {
     /* 
@@ -210,4 +212,8 @@ public class UserAccountAnalysis {
             + "from fat_tbaccount "
             + "where '%s' " //TODO
             + "group by igameid,iaccounttype,iworldid,datediff(dtstatdate, %s) grouping sets((igameid,iaccounttype,iworldid,datediff(dtstatdate, %s)))";
+    
+    public static void create_tbRegisterUser(HiveContext sqlContext,int Mode,String[] args){
+        
+    }
 }

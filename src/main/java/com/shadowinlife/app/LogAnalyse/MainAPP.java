@@ -1,5 +1,13 @@
 package com.shadowinlife.app.LogAnalyse;
 
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -36,6 +44,23 @@ public class MainAPP {
 
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
+        HiveContext sqlContext = new HiveContext(sc.sc());
+
+        // check log file path to alter if the file existed
+        try {
+            Configuration hdfsConf = new Configuration(true);
+            FileSystem fs = FileSystem.get(hdfsConf);
+            Path logfile_Path = new Path("hdfs://10-4-28-24:8020/logdata/" + args[0]);
+ 
+            if (!fs.isDirectory(logfile_Path)) {
+                AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, "20" + args[0]);
+                return;
+            }
+        } catch (IOException e1) {
+            // TODO ERROR LOG
+            e1.printStackTrace();
+        }
+
         try {
             // Read origin log file
             JavaRDD<String> logLines = sc.textFile(targetFile);
@@ -84,10 +109,10 @@ public class MainAPP {
                             }
                         }
                     }).values();
-            HiveContext sqlContext = new HiveContext(sc.sc());
-            AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, "20"+args[0]);
+
+            AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, "20" + args[0]);
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            AcountProcessTable.process(sqlContext, null, null, "20" + args[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }
