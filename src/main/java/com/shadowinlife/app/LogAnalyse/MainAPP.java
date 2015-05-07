@@ -1,14 +1,10 @@
 package com.shadowinlife.app.LogAnalyse;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -29,14 +25,6 @@ import scala.Tuple2;
  */
 
 public class MainAPP {
-
-    static class RDDMultipleTextOutputFormat extends MultipleTextOutputFormat<String, String> {
-        @Override
-        protected String generateFileNameForKeyValue(String key, String value, String name) {
-
-            return key.toString() + "/" + name;
-        }
-    }
 
     public static void main(String[] args) {
         // Assemble path of the origin log files
@@ -79,7 +67,7 @@ public class MainAPP {
                                     .getLineValues());
                         }
                     });
-
+            
             // Filter origin file into different RDD
             JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
                     new Function<Tuple2<String, String[]>, Boolean>() {
@@ -109,7 +97,7 @@ public class MainAPP {
                             }
                         }
                     }).values();
-
+            
             AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, "20" + args[0]);
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, "20" + args[0]);
