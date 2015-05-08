@@ -1,8 +1,8 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
+
+import java.sql.Date;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.TimeZone;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
@@ -66,7 +66,8 @@ public class AcountProcessTable {
             
             + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
     // USER NOT ACTIVITY
-    private static String tbUser_unact_account_table = "INSERT INTO TABLE fat_tbaccount "
+    private static String tbUser_unact_account_table = "INSERT INTO TABLE fat_login_user "
+            + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s', "
             + "T1.iaccounttype,"
             + "T1.suin,"
@@ -77,39 +78,48 @@ public class AcountProcessTable {
             + "T1.iroleregtime,"
             + "T1.ilastacttime,"
             + "shiftleft(T1.idayacti),"
-            + "T1.iweekacti," //TODO
-            + "T1.imonthacti," //TODO
+            + "%s," // iWeekacti
+            + "%s," //iMonthacti
             + "T1.igroup,"
             + "T1.ilevel,"
             + "T1.iviplevel,"
-            + "0,"
-            + "0 "
-            + "FROM (SELECT * FROM fat_tbaccount WHERE dtStatDate=date_add('%s',-1)) T1 LEFT JOIN "
+            + "0," // times
+            + "0," //onlinetime
+            + "T1.iaccounttype AS index_iaccounttype,"
+            + "DATE2LONG('%s') AS index_dtstatdate,"
+            + "T1.igameid AS index_igameid,"
+            + "T1.iworldid AS index_iworldid "
+            + "FROM (SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 LEFT JOIN "
             + "loginProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
-    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_tbaccount "
+    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_login_user "
+            + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
-            + "1,"
-            + "T1.id,"
-            + "IF(T2.iregtime IS NULL, T1.regTime, T2.iregtime),"
-            + "1,"
-            + "1,"
-            + "1,"
-            + "null, "
-            + "T1.acttime,"
-            + "shiftact(T2.idayacti),"
-            + "T2.iweekacti,"
-            + "T2.imonthacti,"
-            + "0,"
-            + "T1.iRoleLevel, "
-            + "1,"
-            + "IF(T1.outtime is null, T1.intime, T1.outtime),"
-            + "T1.iOnlinetime "
-            + "FROM loginProcessTable T1 LEFT JOIN "
-            + "(SELECT * FROM fat_tbaccount WHERE dtStatDate=date_add('%s',-1)) T2 "
-            + "ON T1.id=T2.suin";
+            + "1," //acounttype
+            + "T2.id,"
+            + "IF(T1.iregtime IS NULL, T2.regTime, T1.iregtime),"
+            + "1," //gameid
+            + "1," //worldid
+            + "1," //roleid
+            + "null, " //roleregtime
+            + "T2.acttime,"
+            + "shiftact(T1.idayacti),"
+            + "%s," //iWeekacti
+            + "%s," //iMonthacti
+            + "0," //group
+            + "T2.iRoleLevel, "
+            + "1," //iviplevel
+            + "IF(T2.outtime is null, T2.intime, T2.outtime),"
+            + "T2.iOnlinetime,"
+            + "1 AS index_iaccounttype,"
+            + "DATE2LONG('%s') AS index_dtstatdate,"
+            + "1 AS index_igameid,"
+            + "1 AS index_iworldid "
+            + "FROM loginProcessTable T2 LEFT JOIN "
+            + "(SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
+            + "ON T2.id=T1.suin";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> loginFile,
             JavaRDD<String[]> logoutFile, String date) {
@@ -180,9 +190,30 @@ public class AcountProcessTable {
             //create a temp table with every hour data
             // sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
 
-            // Shiftleft all user on the column 'dayact' 'weekact' 'monthact' 
-            sqlContext.sql(String.format(tbUser_unact_account_table, date, date));
-            sqlContext.sql(String.format(tbUser_act_account_table, date, date));
+            /*
+             * IF the day is Sunday,check last 7days of user iactivity and shift iweekacti 
+             * IF the day is last day of month, check daycount of last month
+             */
+            Calendar c = Calendar.getInstance();
+            c.setTime(Date.valueOf(date));
+            int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+            c.add(Calendar.DATE, 1);
+            String iWeekActi = "T1.iweekacti";
+            String iMonthActi = "T1.imonthacti";
+            
+            if(dayOfWeek == 1) {
+                iWeekActi = "IF(useractivity(iDayActi,7)=1,shiftact(iweekacti),shiftleft(iweekacti))";
+            }
+            
+            if(c.get(Calendar.DAY_OF_MONTH) == 1){
+                iMonthActi = String.format(
+                        "IF(useractivity(iDayActi,%s)=1,shiftact(imonthacti),shiftleft(imonthacti))",
+                        dayOfMonth);
+            }
+            
+            sqlContext.sql(String.format(tbUser_unact_account_table, date, iWeekActi, iMonthActi, date, date));
+            sqlContext.sql(String.format(tbUser_act_account_table, date, iWeekActi, iMonthActi, date, date));
             sqlContext.dropTempTable("loginProcessTable");
             sqlContext.dropTempTable("tbLogin");
             sqlContext.dropTempTable("tbLogout");
@@ -195,7 +226,8 @@ public class AcountProcessTable {
     }
     
     public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
-        String hql = "INSERT INTO TABLE fat_tbaccount "
+        String hql = "INSERT INTO TABLE fat_login_user "
+                + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
                 + "iaccounttype,"
                 + "suin,"
@@ -206,18 +238,40 @@ public class AcountProcessTable {
                 + "iroleregtime,"
                 + "ilastacttime,"
                 + "shiftleft(idayacti),"
-                + "shiftleft(iweekacti),"
-                + "shiftleft(imonthacti),"
+                + "%s,"
+                + "%s,"
                 + "igroup,"
                 + "ilevel,"
                 + "iviplevel,"
-                + "0,"
-                + "0 "
-                + "FROM fat_tbaccount WHERE dtStatDate=date_add('%s',-1)";
+                + "0," //times
+                + "0," //onlinetime
+                + "iaccounttype AS index_iaccounttype,"
+                + "DATE2LONG('%s') AS index_dtstatdate,"
+                + "igameid AS index_igameid,"
+                + "iworldid AS index_iworldid "
+                + "FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)";
         
+        Calendar c = Calendar.getInstance();
+        c.setTime(Date.valueOf(date));
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        int dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        c.add(Calendar.DATE, 1);
+        String iWeekActi = "iweekacti";
+        String iMonthActi = "imonthacti";
+        
+        if(dayOfWeek == 1) {
+            iWeekActi = "IF(useractivity(iDayActi,7)=1,shiftact(iweekacti),shiftleft(iweekacti))";
+        }
+        
+        if(c.get(Calendar.DAY_OF_MONTH) == 1){
+            iMonthActi = String.format(
+                    "IF(useractivity(iDayActi,%s)=1,shiftact(imonthacti),shiftleft(imonthacti))",
+                    dayOfMonth);
+        }
         // Initialization hive UDF
         sqlContext.sql("use dbprocess");
         sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-        sqlContext.sql(String.format(hql, date, date));
+        
+        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date));
     }
 }
