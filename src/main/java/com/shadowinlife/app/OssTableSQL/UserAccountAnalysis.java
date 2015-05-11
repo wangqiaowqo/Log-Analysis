@@ -47,19 +47,19 @@ public class UserAccountAnalysis {
             + "IF(index_iaccounttype IS NULL,-1,index_iaccounttype) as index_iaccounttype,"
             + "IF(index_iworldid is null,-1, index_iworldid) as index_iworldid,"
             + "count(DISTINCT suin) AS newcount, "
-            + "sum(useractivity(%s, %s)) AS useractivitynum,"
-            + "sum(userlost(%s, %s)) AS userlostnum,"
-            + "sum(usercomeback(%s,%s)) AS usercomebacknum,"
-            + "sum(itimes) AS itimes,"
+            + "sum(useractivity(%s, %s)) AS useractivitynum," //strTable //period
+            + "sum(userlost(%s, %s)) AS userlostnum," //strTable //period
+            + "sum(usercomeback(%s,%s)) AS usercomebacknum," //strTable period
+            + "sum(itimes) AS itimes," 
             + "sum(ionlinetime) AS ionlinetime "
-            + "FROM fat_%s_user WHERE index_dtstatdate=DATE2LONG('%s') "
+            + "FROM fat_%s_user WHERE index_dtstatdate=DATE2LONG('%s') " //strMode Table name
             + "group by index_igameid,index_iaccounttype,index_iworldid with cube) T1  "
             
             + "LEFT JOIN (SELECT IF(index_igameid IS NULL,-1,index_igameid) AS index_igameid,"
             + "IF(index_iaccounttype IS NULL,-1,index_iaccounttype) AS index_iaccounttype,"
             + "IF(index_iworldid is null,-1, index_iworldid) AS index_iworldid,"
             + "COUNT(DISTINCT suin) AS oldcount "
-            + "FROM fat_%s_user WHERE index_dtstatdate=(DATE2LONG('%s')-%s) "
+            + "FROM fat_%s_user WHERE index_dtstatdate=(DATE2LONG('%s')-%s) " //strMode date period
             + "GROUP BY index_igameid,index_iaccounttype,index_iworldid with cube) T2 "
             
             + "ON T1.index_igameid=T2.index_igameid AND T1.index_iaccounttype=T2.index_iaccounttype "

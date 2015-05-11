@@ -14,6 +14,7 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
+import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
 
 import scala.Tuple2;
 
@@ -99,6 +100,8 @@ public class MainAPP {
                     }).values();
             
             AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, "20" + args[0]);
+            UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", "20" + args[0]);
+            
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, "20" + args[0]);
         } catch (Exception e) {
