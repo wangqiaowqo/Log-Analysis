@@ -1,12 +1,7 @@
 package com.shadowinlife.app.LogAnalyse;
 
-import java.io.IOException;
 import java.util.Calendar;
-import java.util.Date;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;

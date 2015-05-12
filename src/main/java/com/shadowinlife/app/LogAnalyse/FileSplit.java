@@ -1,9 +1,4 @@
 package com.shadowinlife.app.LogAnalyse;
-
-import java.util.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 /**
  * FileSplit is used as the Map Class split log into different Files Based on
  * the eventTAG Login/Logout/Levelup

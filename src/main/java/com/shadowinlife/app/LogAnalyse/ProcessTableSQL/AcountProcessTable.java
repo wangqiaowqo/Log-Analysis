@@ -55,10 +55,7 @@ public class AcountProcessTable {
             + "IF(in_times is null, 0, in_times) AS intime," 
             + "IF(out_times is null, 0, out_times) AS outtime,"
             
-            + "(CASE WHEN login_regTime IS NULL THEN logout_regTime "
-            + "WHEN logout_regTime IS NULL THEN login_regTime "
-            + "WHEN login_regTime<logout_regTime THEN login_regTime "
-            + "ELSE logout_regTime END) AS regTime,"
+            + "(login_regTime) AS regTime,"
             
             + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
@@ -153,32 +150,29 @@ public class AcountProcessTable {
                 }
 
             });
-
+            
             // Convert all the values into the spark table
             DataFrame schemaLoginRDD = sqlContext.createDataFrame(loginLogs, RoleLogin.class);
             DataFrame schemaLogoutRDD = sqlContext.createDataFrame(logoutLogs, RoleLogout.class);
             
-            for(Row r:schemaLoginRDD.collect()){
-                System.out.println("gongmeng"+r.toString());
-            }
-            for(Row r:schemaLogoutRDD.collect()){
-                System.out.println("gongmeng"+r.toString());
-            }
+            schemaLoginRDD.registerTempTable("loginLog");
+            schemaLoginRDD.registerTempTable("logoutLog");
+            
             // Dump out the group data of user login and logout
             DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
                     max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogin_vClientIp"),
                     count(col("iUin")).as("in_times"),
                     max(col("dtEventTime")).as("login_dtEventTime"),
-                    min(col("dtEventTime")).as("login_regTime"));
+                    min(col("dtCreateTime")).as("login_regTime"));
 
             DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
                     sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
                     max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogout_vClientIp"),
                     count(col("iUin")).as("out_times"),
-                    max(col("dtEventTime")).as("logout_dtEventTime"),
-                    min(col("dtEventTime")).as("logout_regtime"));
+                    max(col("dtEventTime")).as("logout_dtEventTime")
+                    );
             
             
             // Register temple tables to execute analysis SQL

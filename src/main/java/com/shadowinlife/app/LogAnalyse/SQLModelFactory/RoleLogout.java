@@ -68,9 +68,9 @@ public class RoleLogout implements Serializable{
 
     private RoleLogout(String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
-            String iRoleVipLevel, String iRepuLevel, String v1, String v2, String vClientIp,
+            String iRoleVipLevel, String iRepuLevel, String v1, String v2, String dtLoginTime, String vClientIp,
             String vZoneId, String iRoleExp, String iReputation, String iEnergy, String iMoney,
-            String dtLoginTime, String iOnlineTime, String iLoginWay) {
+            String iOnlineTime, String iLoginWay) {
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
         this.version = version;

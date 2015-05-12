@@ -39,30 +39,23 @@ public class MainAPP {
         String mode = args[1];
         String tableName = args[2];
         String date = args[3];
-        final String key = tableName + date;
         String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
-        System.out.println("gongmeng "+targetFile);
+        System.out.println("gongmeng " + targetFile);
         // check log file path to alter if the file existed
-     /*
-      * 
-      
-        try {
-            Configuration hdfsConf = new Configuration(true);
-            FileSystem fs = FileSystem.get(hdfsConf);
-            Path logfile_Path = new Path("");
-            
-            if (!fs.isDirectory(logfile_Path)) {
-                System.out.println("gongmeng 1");
-                AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
-                return;
-            }
-        } catch (IOException e1) {   
-            e1.printStackTrace();
-        }
-*/
+        /*
+         * 
+         * 
+         * try { Configuration hdfsConf = new Configuration(true); FileSystem fs
+         * = FileSystem.get(hdfsConf); Path logfile_Path = new Path("");
+         * 
+         * if (!fs.isDirectory(logfile_Path)) {
+         * System.out.println("gongmeng 1");
+         * AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext,
+         * date); return; } } catch (IOException e1) { e1.printStackTrace(); }
+         */
         try {
             // Read origin log file
             JavaRDD<String> logLines = sc.textFile(targetFile);
@@ -81,8 +74,9 @@ public class MainAPP {
                                     .getLineValues());
                         }
                     });
-           
+
             // Filter origin file into different RDD
+            
             JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
                     new Function<Tuple2<String, String[]>, Boolean>() {
 
@@ -90,13 +84,14 @@ public class MainAPP {
 
                         @Override
                         public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                            if (f._1.contains("RoleLogin")) {
+                            if (!f._1.contains("RoleLogout")) {
                                 return true;
                             } else {
                                 return false;
                             }
                         }
                     }).values();
+            
             
             JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
                     new Function<Tuple2<String, String[]>, Boolean>() {
@@ -114,7 +109,7 @@ public class MainAPP {
             
             AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
 
-            //UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
+            UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
 
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, date);
