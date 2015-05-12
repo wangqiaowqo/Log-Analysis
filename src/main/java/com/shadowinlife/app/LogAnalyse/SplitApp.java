@@ -1,6 +1,8 @@
 package com.shadowinlife.app.LogAnalyse;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -27,7 +29,17 @@ public class SplitApp {
     public static void main(String[] args) {
         String targetFile = args[0];
         String path = args[1];
-
+        
+        // 1) create a java calendar instance
+        Calendar calendar = Calendar.getInstance();
+         
+        // 2) get a java.util.Date from the calendar instance.
+        //    this date will represent the current instant, or "now".
+        java.util.Date now = calendar.getTime();
+         
+        // 3) a java current time (now) instance
+        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+        path = path + "/" + currentTimestamp.getTime();
         SparkConf conf = new SparkConf().setAppName("Log Filter");
         JavaSparkContext sc = new JavaSparkContext(conf);
         if (args.length < 2) {

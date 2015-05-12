@@ -10,90 +10,116 @@ import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
 /**
  * 
  * @author shadowinlife
-+-------------+------------------+------+-----+---------+-------+
-| Field       | Type             | Null | Key | Default | Extra |
-+-------------+------------------+------+-----+---------+-------+
-| vTableFlage | varchar(64)      | NO   |     |         |       |
-| iEventId    | varchar(64)      | NO   |     |         |       |
-| iUin        | varchar(64)      | NO   |     |         |       |
-| dtEventTime | datetime         | YES  |     | NULL    |       |
-| dtLoginTime | datetime         | YES  |     | NULL    |       |
-| vClientIp   | varchar(32)      | NO   |     |         |       |
-| vZoneId     | varchar(8)       | NO   |     |         |       |
-| iRoleId     | int(11) unsigned | NO   |     | 0       |       |
-| vRoleName   | varchar(32)      | NO   |     |         |       |
-| iRoleLevel  | int(11) unsigned | NO   |     | 0       |       |
-| iRoleExp    | int(11) unsigned | NO   |     | 0       |       |
-| iRepute     | int(11) unsigned | NO   |     | 0       |       |
-| iMainSpeExp | int(11) unsigned | NO   |     | 0       |       |
-| iMoney      | int(11) unsigned | NO   |     | 0       |       |
-| iGamePoints | int(11) unsigned | NO   |     | 0       |       |
-| iOnlineTime | int(11) unsigned | NO   |     | 0       |       |
-| iGameTime   | int(11) unsigned | NO   |     | 0       |       |
-| iLoginWay   | int(11) unsigned | NO   |     | 0       |       |
-+-------------+------------------+------+-----+---------+-------+
++--------------+------------------+------+-----+---------+-------+
+| Field        | Type             | Null | Key | Default | Extra |
++--------------+------------------+------+-----+---------+-------+
+| vTableFlage  | varchar(64)      | NO   |     |         |       |
+| dtEventTime  | datetime         | YES  |     | NULL    |       |
+| iEventId     | varchar(64)      | NO   |     |         |       |
+| version      | varchar(64)      | NO   |     |         |       |
+| iUin         | varchar(64)      | NO   |     |         |       |
+| iRoleId      | int(11) unsigned | NO   |     | 0       |       |
+| vRoleName    | varchar(32)      | NO   |     |         |       |
+| iRoleJob     | int(11) unsigned | NO   |     | 0       |       |
+| iRoleSex     | int(11) unsigned | NO   |     | 0       |       |
+| iRoleLevel   | int(11) unsigned | NO   |     | 0       |       |
+| iRoleVipLevel| int(11) unsigned | NO   |     | 0       |       |
+| iRepuLevel   | int(11) unsigned | NO   |     | 0       |       |
+| v1           | varchar(32)      | NO   |     |         |       |
+| v2           | varchar(32)      | NO   |     |         |       |
+| vClientIp    | long             | NO   |     |         |       |
+| vZoneId      | varchar(8)       | NO   |     |         |       |
+| iRoleExp     | int(11) unsigned | NO   |     | 0       |       |
+| iReputation  | int(11) unsigned | NO   |     | 0       |       |
+| iEnergy      | int(11) unsigned | NO   |     | 0       |       |
+| iMoney       | "json"           | NO   |     | 0       |       |
+| dtLoginTime  | datetime         | YES  |     | NULL    |       |
+| iOnlineTime  | int(11) unsigned | NO   |     | 0       |       |
+| iLoginWay    | String           | NO   |     | 0       |       |
++--------------+------------------+------+-----+---------+-------+
  */
 public class RoleLogout implements Serializable{
   
     private static final long serialVersionUID = -8150457539320394072L;
     
-    private String iEventId;
-    private String iUin;
     private Timestamp dtEventTime;
-    private Timestamp dtLoginTime;
-    private long vClientIp;
-    private String vZoneId;
+    private String iEventId;
+    private String version;
+    private String iUin;
     private int iRoleId;
     private String vRoleName;
+    private int iRoleJob;
+    private int iRoleSex;
     private int iRoleLevel;
-    private int iRoleExp;
-    private int iRepute;
-    private int iMainSpeExp;
-    private int iMoney;
-    private int iGamePoints;
-    private int iOnlineTime;
-    private int iGameTime;
-    private int iLoginWay;
+    private int iRoleVipLevel;
+    private int iRepuLevel;
+    private String v1;
+    private String v2;
 
-    public RoleLogout(String iEventId, String iUin, String dtEventTime, String dtLoginTime,
-            String vClientIp, String vZoneId, String iRoleId, String vRoleName, String iRoleLevel,
-            String iRoleExp, String iRepute, String iMainSpeExp, String iMoney, String iGamePoints,
-            String iOnlineTime, String iGameTime, String iLoginWay) {
+    private long vClientIp;
+    private String vZoneId;
+    private long iRoleExp;
+    private long iReputation;
+    private long iEnergy;
+    private String iMoney;
+    private Timestamp dtLoginTime;
+    private Long iOnlineTime;
+    private String iLoginWay;
 
-        this.iEventId = iEventId;
-        this.iUin = iUin;
+    private RoleLogout(String dtEventTime, String iEventId, String version, String iUin,
+            String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
+            String iRoleVipLevel, String iRepuLevel, String v1, String v2, String vClientIp,
+            String vZoneId, String iRoleExp, String iReputation, String iEnergy, String iMoney,
+            String dtLoginTime, String iOnlineTime, String iLoginWay) {
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
-        this.dtLoginTime = Timestamp.valueOf(dtLoginTime);
-        this.vClientIp = CONSTANT.ipToLong(vClientIp);
-        this.vZoneId = vZoneId;
+        this.iEventId = iEventId;
+        this.version = version;
+        this.iUin = iUin;
         this.iRoleId = Integer.valueOf(iRoleId);
         this.vRoleName = vRoleName;
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleExp = Integer.valueOf(iRoleExp);
-        this.iRepute = Integer.valueOf(iRepute);
-        this.iMainSpeExp = Integer.valueOf(iMainSpeExp);
-        this.iMoney = Integer.valueOf(iMoney);
-        this.iGamePoints = Integer.valueOf(iGamePoints);
-        this.iOnlineTime = Integer.valueOf(iOnlineTime);
-        this.iGameTime = Integer.valueOf(iGameTime);
-        this.iLoginWay = Integer.valueOf(iLoginWay);
-
+        this.iRoleJob = Integer.valueOf(iRoleJob);
+        this.iRoleSex = Integer.valueOf(iRoleSex);
+        this.iRoleLevel=Integer.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
+        this.iRepuLevel = Integer.valueOf(iRepuLevel);
+        this.v1 = v1;
+        this.v2 = v2;
+        this.vClientIp = CONSTANT.ipToLong(vClientIp);
+        this.vZoneId=vZoneId;
+        this.iRoleExp=Long.valueOf(iRoleExp);
+        this.iReputation=Long.valueOf(iReputation);
+        this.iEnergy = Long.valueOf(iEnergy);
+        this.iMoney = iMoney;
+        this.setDtLoginTime(Timestamp.valueOf(dtLoginTime));
+        this.iOnlineTime=Long.valueOf(iOnlineTime);
+        this.iLoginWay=iLoginWay;             
     }
 
-    public String getiEventId() {
-        return iEventId;
+    public static RoleLogout parseFromLogFile(String[] array) {
+        String[] columnList = array;
+        // TODO Some column may be null,should handle it
+        if (columnList.length == 23) {
+            for (int i = 0; i < 17; i++) {
+                if (StringUtil.isEmpty(columnList[i])) {
+                    columnList[i] = "0";
+                }
+            }
+            return new RoleLogout(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
+                    columnList[15], columnList[16], columnList[17], columnList[18], columnList[19],
+                    columnList[20], columnList[21], columnList[22]);
+        } else {
+            return null;
+        }
     }
 
-    public void setiEventId(String iEventId) {
-        this.iEventId = iEventId;
-    }
-
-    public String getiUin() {
-        return iUin;
-    }
-
-    public void setiUin(String iUin) {
-        this.iUin = iUin;
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %s %s %s %s %s %s %s %s %s %s  %s  %s  %s", getiEventId(),
+                getiUin(), getDtEventTime(), getvClientIp(), getvZoneId(), getiRoleId(),
+                getvRoleName(), getiRoleLevel(), getiRoleExp(), getiReputation(), getiEnergy(),
+                getiMoney(), getDtLoginTime(), getiOnlineTime(), getiLoginWay());
     }
 
     public Timestamp getDtEventTime() {
@@ -104,28 +130,28 @@ public class RoleLogout implements Serializable{
         this.dtEventTime = dtEventTime;
     }
 
-    public Timestamp getDtLoginTime() {
-        return dtLoginTime;
+    public String getiEventId() {
+        return iEventId;
     }
 
-    public void setDtLoginTime(Timestamp dtLoginTime) {
-        this.dtLoginTime = dtLoginTime;
+    public void setiEventId(String iEventId) {
+        this.iEventId = iEventId;
     }
 
-    public long getvClientIp() {
-        return vClientIp;
+    public String getVersion() {
+        return version;
     }
 
-    public void setvClientIp(long vClientIp) {
-        this.vClientIp = vClientIp;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
-    public String getvZoneId() {
-        return vZoneId;
+    public String getiUin() {
+        return iUin;
     }
 
-    public void setvZoneId(String vZoneId) {
-        this.vZoneId = vZoneId;
+    public void setiUin(String iUin) {
+        this.iUin = iUin;
     }
 
     public int getiRoleId() {
@@ -144,6 +170,22 @@ public class RoleLogout implements Serializable{
         this.vRoleName = vRoleName;
     }
 
+    public int getiRoleJob() {
+        return iRoleJob;
+    }
+
+    public void setiRoleJob(int iRoleJob) {
+        this.iRoleJob = iRoleJob;
+    }
+
+    public int getiRoleSex() {
+        return iRoleSex;
+    }
+
+    public void setiRoleSex(int iRoleSex) {
+        this.iRoleSex = iRoleSex;
+    }
+
     public int getiRoleLevel() {
         return iRoleLevel;
     }
@@ -152,96 +194,108 @@ public class RoleLogout implements Serializable{
         this.iRoleLevel = iRoleLevel;
     }
 
-    public int getiRoleExp() {
+    public int getiRoleVipLevel() {
+        return iRoleVipLevel;
+    }
+
+    public void setiRoleVipLevel(int iRoleVipLevel) {
+        this.iRoleVipLevel = iRoleVipLevel;
+    }
+
+    public int getiRepuLevel() {
+        return iRepuLevel;
+    }
+
+    public void setiRepuLevel(int iRepuLevel) {
+        this.iRepuLevel = iRepuLevel;
+    }
+
+    public String getV1() {
+        return v1;
+    }
+
+    public void setV1(String v1) {
+        this.v1 = v1;
+    }
+
+    public String getV2() {
+        return v2;
+    }
+
+    public void setV2(String v2) {
+        this.v2 = v2;
+    }
+
+    public long getvClientIp() {
+        return vClientIp;
+    }
+
+    public void setvClientIp(long vClientIp) {
+        this.vClientIp = vClientIp;
+    }
+
+    public String getvZoneId() {
+        return vZoneId;
+    }
+
+    public void setvZoneId(String vZoneId) {
+        this.vZoneId = vZoneId;
+    }
+
+    public long getiRoleExp() {
         return iRoleExp;
     }
 
-    public void setiRoleExp(int iRoleExp) {
+    public void setiRoleExp(long iRoleExp) {
         this.iRoleExp = iRoleExp;
     }
 
-    public int getiRepute() {
-        return iRepute;
+    public long getiReputation() {
+        return iReputation;
     }
 
-    public void setiRepute(int iRepute) {
-        this.iRepute = iRepute;
+    public void setiReputation(long iReputation) {
+        this.iReputation = iReputation;
     }
 
-    public int getiMainSpeExp() {
-        return iMainSpeExp;
+    public long getiEnergy() {
+        return iEnergy;
     }
 
-    public void setiMainSpeExp(int iMainSpeExp) {
-        this.iMainSpeExp = iMainSpeExp;
+    public void setiEnergy(long iEnergy) {
+        this.iEnergy = iEnergy;
     }
 
-    public int getiMoney() {
+    public String getiMoney() {
         return iMoney;
     }
 
-    public void setiMoney(int iMoney) {
+    public void setiMoney(String iMoney) {
         this.iMoney = iMoney;
     }
 
-    public int getiGamePoints() {
-        return iGamePoints;
-    }
 
-    public void setiGamePoints(int iGamePoints) {
-        this.iGamePoints = iGamePoints;
-    }
-
-    public int getiOnlineTime() {
+    public long getiOnlineTime() {
         return iOnlineTime;
     }
 
-    public void setiOnlineTime(int iOnlineTime) {
+    public void setiOnlineTime(long iOnlineTime) {
         this.iOnlineTime = iOnlineTime;
     }
 
-    public int getiGameTime() {
-        return iGameTime;
-    }
-
-    public void setiGameTime(int iGameTime) {
-        this.iGameTime = iGameTime;
-    }
-
-    public int getiLoginWay() {
+    public String getiLoginWay() {
         return iLoginWay;
     }
 
-    public void setiLoginWay(int iLoginWay) {
+    public void setiLoginWay(String iLoginWay) {
         this.iLoginWay = iLoginWay;
     }
 
-    /**
-     * @param array
-     * @return
-     */
-    public static RoleLogout parseFromLogFile(String[] array) {
-        String[] columnList = array;
-        if (columnList.length == 18) {
-            for (int i = 0; i < 18; i++) {
-                if (StringUtil.isEmpty(columnList[i])) {
-                    columnList[i] = "-1";
-                }
-            }
-            return new RoleLogout(columnList[1], columnList[2], columnList[3], columnList[4],
-                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
-                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
-                    columnList[15], columnList[16], columnList[17]);
-        } else {
-            
-            return null;
-        }
+    public Timestamp getDtLoginTime() {
+        return dtLoginTime;
     }
-    public String toString(){
-        return String.format("%s %s %s %s %s %s %s %s %s %s %s %s %s  %s  %s  %s",
-                iEventId, iUin, dtEventTime,  vClientIp,
-                vZoneId, iRoleId,  vRoleName,  iRoleLevel,  iRoleExp,
-                 iRepute,  iMainSpeExp,  iMoney,  iGamePoints,
-                 iGameTime,  iOnlineTime,  iLoginWay);
+
+    public void setDtLoginTime(Timestamp dtLoginTime) {
+        this.dtLoginTime = dtLoginTime;
     }
 }

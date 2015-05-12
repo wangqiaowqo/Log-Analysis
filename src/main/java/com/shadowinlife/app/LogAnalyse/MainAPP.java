@@ -1,6 +1,7 @@
 package com.shadowinlife.app.LogAnalyse;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -28,28 +29,40 @@ import scala.Tuple2;
 public class MainAPP {
 
     public static void main(String[] args) {
-        // Assemble path of the origin log files
-        String targetFile = "hdfs://10-4-28-24:8020/logdata/" + args[0] + "/*/*";
+        if (args.length < 4) {
+            System.out
+                    .println("args[0]---FileTarget \n args[1]----mode \n args[2]---TableName \n  args[3]----date");
+        }
 
+        // Assemble path of the origin log files
+        String nameNode = args[0]; /* hdfs://namenode:8020/ */
+        String mode = args[1];
+        String tableName = args[2];
+        String date = args[3];
+        final String key = tableName + date;
+        String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
-
+        System.out.println("gongmeng "+targetFile);
         // check log file path to alter if the file existed
+     /*
+      * 
+      
         try {
             Configuration hdfsConf = new Configuration(true);
             FileSystem fs = FileSystem.get(hdfsConf);
-            Path logfile_Path = new Path("hdfs://10-4-28-24:8020/logdata/" + args[0]);
- 
+            Path logfile_Path = new Path("");
+            
             if (!fs.isDirectory(logfile_Path)) {
-                AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, "20" + args[0]);
+                System.out.println("gongmeng 1");
+                AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
                 return;
             }
-        } catch (IOException e1) {
-            // TODO ERROR LOG
+        } catch (IOException e1) {   
             e1.printStackTrace();
         }
-
+*/
         try {
             // Read origin log file
             JavaRDD<String> logLines = sc.textFile(targetFile);
@@ -68,7 +81,7 @@ public class MainAPP {
                                     .getLineValues());
                         }
                     });
-            
+           
             // Filter origin file into different RDD
             JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
                     new Function<Tuple2<String, String[]>, Boolean>() {
@@ -77,21 +90,21 @@ public class MainAPP {
 
                         @Override
                         public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                            if (f._1.equalsIgnoreCase("RoleLogin")) {
+                            if (f._1.contains("RoleLogin")) {
                                 return true;
                             } else {
                                 return false;
                             }
                         }
                     }).values();
-
+            
             JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
                     new Function<Tuple2<String, String[]>, Boolean>() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
                         public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                            if (f._1.equalsIgnoreCase("RoleLogout")) {
+                            if (f._1.contains("RoleLogout")) {
                                 return true;
                             } else {
                                 return false;
@@ -99,11 +112,12 @@ public class MainAPP {
                         }
                     }).values();
             
-            AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, "20" + args[0]);
-            UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", "20" + args[0]);
-            
+            AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
+
+            //UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
+
         } catch (NullPointerException e) {
-            AcountProcessTable.process(sqlContext, null, null, "20" + args[0]);
+            AcountProcessTable.process(sqlContext, null, null, date);
         } catch (Exception e) {
             e.printStackTrace();
         }

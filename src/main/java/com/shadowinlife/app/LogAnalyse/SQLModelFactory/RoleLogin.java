@@ -15,83 +15,113 @@ import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
 | Field        | Type             | Null | Key | Default | Extra |
 +--------------+------------------+------+-----+---------+-------+
 | vTableFlage  | varchar(64)      | NO   |     |         |       |
-| iEventId     | varchar(64)      | NO   |     |         |       |
-| iUin         | varchar(64)      | NO   |     |         |       |
 | dtEventTime  | datetime         | YES  |     | NULL    |       |
-| vClientIp    | varchar(32)      | NO   |     |         |       |
-| vZoneId      | varchar(8)       | NO   |     |         |       |
+| iEventId     | varchar(64)      | NO   |     |         |       |
+| version      | varchar(64)      | NO   |     |         |       |
+| iUin         | varchar(64)      | NO   |     |         |       |
 | iRoleId      | int(11) unsigned | NO   |     | 0       |       |
 | vRoleName    | varchar(32)      | NO   |     |         |       |
+| iRoleJob     | int(11) unsigned | NO   |     | 0       |       |
+| iRoleSex     | int(11) unsigned | NO   |     | 0       |       |
 | iRoleLevel   | int(11) unsigned | NO   |     | 0       |       |
+| iRoleVipLevel| int(11) unsigned | NO   |     | 0       |       |
+| iRepuLevel   | int(11) unsigned | NO   |     | 0       |       |
+| v1           | varchar(32)      | NO   |     |         |       |
+| v2           | varchar(32)      | NO   |     |         |       |
+| vClientIp    | long             | NO   |     |         |       |
+| vZoneId      | varchar(8)       | NO   |     |         |       |
 | iRoleExp     | int(11) unsigned | NO   |     | 0       |       |
-| iRoleSpe     | int(11) unsigned | NO   |     | 0       |       |
+| iReputation  | int(11) unsigned | NO   |     | 0       |       |
 | iEnergy      | int(11) unsigned | NO   |     | 0       |       |
-| iMoney       | int(11) unsigned | NO   |     | 0       |       |
-| iGamePoints  | int(11) unsigned | NO   |     | 0       |       |
+| iMoney       | "json"           | NO   |     | 0       |       |
 | dtCreateTime | datetime         | YES  |     | NULL    |       |
 | iOnlineTime  | int(11) unsigned | NO   |     | 0       |       |
-| iLoginWay    | int(11) unsigned | NO   |     | 0       |       |
+| iLoginWay    | String           | NO   |     | 0       |       |
 +--------------+------------------+------+-----+---------+-------+
  *
  */
 public class RoleLogin implements Serializable {
-   
+
     private static final long serialVersionUID = -5208592223307470669L;
-    
-    private String iEventId;
-    private String iUin;
+
     private Timestamp dtEventTime;
-    private long vClientIp;
-    private String vZoneId; 
+    private String iEventId;
+    private String version;
+    private String iUin;
     private int iRoleId;
     private String vRoleName;
+    private int iRoleJob;
+    private int iRoleSex;
     private int iRoleLevel;
-    private int iRoleExp;
-    private int iRoleSpe;
-    private int iEnergy;
-    private int iMoney;
-    private int iGamePoints;
+    private int iRoleVipLevel;
+    private int iRepuLevel;
+    private String v1;
+    private String v2;
+
+    private long vClientIp;
+    private String vZoneId;
+    private long iRoleExp;
+    private long iReputation;
+    private long iEnergy;
+    private String iMoney;
     private Timestamp dtCreateTime;
-    private int iOnlineTime;
-    private int iLoginWay;
+    private Long iOnlineTime;
+    private String iLoginWay;
 
-    private RoleLogin(String iEventId, String iUin, String dtEventTime, String vClientIp,
-            String vZoneId, String iRoleId, String vRoleName, String iRoleLevel, String iRoleExp,
-            String iRoleSpe, String iEnergy, String iMoney, String iGamePoints,
+    private RoleLogin(String dtEventTime, String iEventId, String version, String iUin,
+            String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
+            String iRoleVipLevel, String iRepuLevel, String v1, String v2, String vClientIp,
+            String vZoneId, String iRoleExp, String iReputation, String iEnergy, String iMoney,
             String dtCreateTime, String iOnlineTime, String iLoginWay) {
-        
-            this.iEventId = iEventId;
-            this.iUin = iUin;
-            this.dtEventTime = Timestamp.valueOf(dtEventTime);
-            this.vClientIp = CONSTANT.ipToLong(vClientIp);
-            this.vZoneId = vZoneId;
-            this.iRoleId = Integer.valueOf(iRoleId);
-            this.vRoleName = vRoleName;
-            this.iRoleLevel = Integer.valueOf(iRoleLevel);
-            this.iRoleExp = Integer.valueOf(iRoleExp);
-            this.iRoleSpe = Integer.valueOf(iRoleSpe);
-            this.iEnergy = Integer.valueOf(iEnergy);
-            this.iMoney = Integer.valueOf(iMoney);
-            this.iGamePoints = Integer.valueOf(iGamePoints);
-            this.dtCreateTime = Timestamp.valueOf(dtCreateTime);
-            this.iOnlineTime = Integer.valueOf(iOnlineTime);
-            this.iLoginWay = Integer.valueOf(iLoginWay);
-    }
-
-    public String getiEventId() {
-        return iEventId;
-    }
-
-    public void setiEventId(String iEventId) {
+        this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
-    }
-
-    public String getiUin() {
-        return iUin;
-    }
-
-    public void setiUin(String iUin) {
+        this.version = version;
         this.iUin = iUin;
+        this.iRoleId = Integer.valueOf(iRoleId);
+        this.vRoleName = vRoleName;
+        this.iRoleJob = Integer.valueOf(iRoleJob);
+        this.iRoleSex = Integer.valueOf(iRoleSex);
+        this.iRoleLevel=Integer.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
+        this.iRepuLevel = Integer.valueOf(iRepuLevel);
+        this.v1 = v1;
+        this.v2 = v2;
+        this.vClientIp = CONSTANT.ipToLong(vClientIp);
+        this.vZoneId=vZoneId;
+        this.iRoleExp=Long.valueOf(iRoleExp);
+        this.iReputation=Long.valueOf(iReputation);
+        this.iEnergy = Long.valueOf(iEnergy);
+        this.iMoney = iMoney;
+        this.dtCreateTime=Timestamp.valueOf(dtCreateTime);
+        this.iOnlineTime=Long.valueOf(iOnlineTime);
+        this.iLoginWay=iLoginWay;             
+    }
+
+    public static RoleLogin parseFromLogFile(String[] array) {
+        String[] columnList = array;
+        // TODO Some column may be null,should handle it
+        if (columnList.length == 23) {
+            for (int i = 0; i < 17; i++) {
+                if (StringUtil.isEmpty(columnList[i])) {
+                    columnList[i] = "0";
+                }
+            }
+            return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
+                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
+                    columnList[15], columnList[16], columnList[17], columnList[18], columnList[19],
+                    columnList[20], columnList[21], columnList[22]);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s %s %s %s %s %s %s %s %s %s %s %s  %s  %s  %s", getiEventId(),
+                getiUin(), getDtEventTime(), getvClientIp(), getvZoneId(), getiRoleId(),
+                getvRoleName(), getiRoleLevel(), getiRoleExp(), getiReputation(), getiEnergy(),
+                getiMoney(), getDtCreateTime(), getiOnlineTime(), getiLoginWay());
     }
 
     public Timestamp getDtEventTime() {
@@ -102,20 +132,28 @@ public class RoleLogin implements Serializable {
         this.dtEventTime = dtEventTime;
     }
 
-    public long getvClientIp() {
-        return vClientIp;
+    public String getiEventId() {
+        return iEventId;
     }
 
-    public void setvClientIp(long vClientIp) {
-        this.vClientIp = vClientIp;
+    public void setiEventId(String iEventId) {
+        this.iEventId = iEventId;
     }
 
-    public String getvZoneId() {
-        return vZoneId;
+    public String getVersion() {
+        return version;
     }
 
-    public void setvZoneId(String vZoneId) {
-        this.vZoneId = vZoneId;
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getiUin() {
+        return iUin;
+    }
+
+    public void setiUin(String iUin) {
+        this.iUin = iUin;
     }
 
     public int getiRoleId() {
@@ -134,6 +172,22 @@ public class RoleLogin implements Serializable {
         this.vRoleName = vRoleName;
     }
 
+    public int getiRoleJob() {
+        return iRoleJob;
+    }
+
+    public void setiRoleJob(int iRoleJob) {
+        this.iRoleJob = iRoleJob;
+    }
+
+    public int getiRoleSex() {
+        return iRoleSex;
+    }
+
+    public void setiRoleSex(int iRoleSex) {
+        this.iRoleSex = iRoleSex;
+    }
+
     public int getiRoleLevel() {
         return iRoleLevel;
     }
@@ -142,36 +196,84 @@ public class RoleLogin implements Serializable {
         this.iRoleLevel = iRoleLevel;
     }
 
-    public int getiRoleSpe() {
-        return iRoleSpe;
+    public int getiRoleVipLevel() {
+        return iRoleVipLevel;
     }
 
-    public void setiRoleSpe(int iRoleSpe) {
-        this.iRoleSpe = iRoleSpe;
+    public void setiRoleVipLevel(int iRoleVipLevel) {
+        this.iRoleVipLevel = iRoleVipLevel;
     }
 
-    public int getiEnergy() {
+    public int getiRepuLevel() {
+        return iRepuLevel;
+    }
+
+    public void setiRepuLevel(int iRepuLevel) {
+        this.iRepuLevel = iRepuLevel;
+    }
+
+    public String getV1() {
+        return v1;
+    }
+
+    public void setV1(String v1) {
+        this.v1 = v1;
+    }
+
+    public String getV2() {
+        return v2;
+    }
+
+    public void setV2(String v2) {
+        this.v2 = v2;
+    }
+
+    public long getvClientIp() {
+        return vClientIp;
+    }
+
+    public void setvClientIp(long vClientIp) {
+        this.vClientIp = vClientIp;
+    }
+
+    public String getvZoneId() {
+        return vZoneId;
+    }
+
+    public void setvZoneId(String vZoneId) {
+        this.vZoneId = vZoneId;
+    }
+
+    public long getiRoleExp() {
+        return iRoleExp;
+    }
+
+    public void setiRoleExp(long iRoleExp) {
+        this.iRoleExp = iRoleExp;
+    }
+
+    public long getiReputation() {
+        return iReputation;
+    }
+
+    public void setiReputation(long iReputation) {
+        this.iReputation = iReputation;
+    }
+
+    public long getiEnergy() {
         return iEnergy;
     }
 
-    public void setiEnergy(int iEnergy) {
+    public void setiEnergy(long iEnergy) {
         this.iEnergy = iEnergy;
     }
 
-    public int getiMoney() {
+    public String getiMoney() {
         return iMoney;
     }
 
-    public void setiMoney(int iMoney) {
+    public void setiMoney(String iMoney) {
         this.iMoney = iMoney;
-    }
-
-    public int getiGamePoints() {
-        return iGamePoints;
-    }
-
-    public void setiGamePoints(int iGamePoints) {
-        this.iGamePoints = iGamePoints;
     }
 
     public Timestamp getDtCreateTime() {
@@ -182,53 +284,19 @@ public class RoleLogin implements Serializable {
         this.dtCreateTime = dtCreateTime;
     }
 
-    public int getiOnlineTime() {
+    public long getiOnlineTime() {
         return iOnlineTime;
     }
 
-    public void setiOnlineTime(int iOnlineTime) {
+    public void setiOnlineTime(long iOnlineTime) {
         this.iOnlineTime = iOnlineTime;
     }
 
-    public int getiLoginWay() {
+    public String getiLoginWay() {
         return iLoginWay;
     }
 
-    public void setiLoginWay(int iLoginWay) {
+    public void setiLoginWay(String iLoginWay) {
         this.iLoginWay = iLoginWay;
-    }
-
-    public int getiRoleExp() {
-        return iRoleExp;
-    }
-
-    public void setiRoleExp(int iRoleExp) {
-        this.iRoleExp = iRoleExp;
-    }
-
-    public static RoleLogin parseFromLogFile(String[] array) {
-        String[] columnList = array;
-        //TODO Some column may be null,should handle it
-        if (columnList.length == 17) {
-            for (int i = 0; i < 17; i++) {
-                if (StringUtil.isEmpty(columnList[i])) {
-                    columnList[i] = "-1";
-                }
-            }
-            return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
-                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
-                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
-                    columnList[15], columnList[16]);
-        } else {
-            return null;
-        }
-    }
-    @Override
-    public String toString(){
-        return String.format("%s %s %s %s %s %s %s %s %s %s %s %s %s  %s  %s  %s",
-                iEventId, iUin, dtEventTime,  vClientIp,
-                vZoneId, iRoleId,  vRoleName,  iRoleLevel,  iRoleExp,
-                 iRoleSpe,  iEnergy,  iMoney,  iGamePoints,
-                 dtCreateTime,  iOnlineTime,  iLoginWay);
     }
 }

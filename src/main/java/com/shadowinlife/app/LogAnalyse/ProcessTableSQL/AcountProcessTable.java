@@ -7,6 +7,7 @@ import java.util.Calendar;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 import static org.apache.spark.sql.functions.*;
@@ -156,7 +157,13 @@ public class AcountProcessTable {
             // Convert all the values into the spark table
             DataFrame schemaLoginRDD = sqlContext.createDataFrame(loginLogs, RoleLogin.class);
             DataFrame schemaLogoutRDD = sqlContext.createDataFrame(logoutLogs, RoleLogout.class);
-
+            
+            for(Row r:schemaLoginRDD.collect()){
+                System.out.println("gongmeng"+r.toString());
+            }
+            for(Row r:schemaLogoutRDD.collect()){
+                System.out.println("gongmeng"+r.toString());
+            }
             // Dump out the group data of user login and logout
             DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
                     max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
@@ -172,7 +179,8 @@ public class AcountProcessTable {
                     count(col("iUin")).as("out_times"),
                     max(col("dtEventTime")).as("logout_dtEventTime"),
                     min(col("dtEventTime")).as("logout_regtime"));
-
+            
+            
             // Register temple tables to execute analysis SQL
             userLogin.registerTempTable("tbLogin");
             userLogout.registerTempTable("tbLogout");
