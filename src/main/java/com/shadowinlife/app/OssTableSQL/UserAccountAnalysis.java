@@ -95,7 +95,7 @@ public class UserAccountAnalysis {
     | iregnum       | bigint     |          |
     +---------------+------------+----------+--+
      */
-    private static String tbRegisterUserPeTypeDis = "INSERT INTO TABLE oss_dm_%s_tbRegisterUserPeTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbRegisterUserTypeDis = "INSERT INTO TABLE oss_dm_%s_tbRegisterUserTypeDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "'Level'," //sType:level
             + "'%s'," //iPeroid
@@ -137,6 +137,7 @@ public class UserAccountAnalysis {
     private static String tbDayNewRegTypeDis = "INSERT INTO TABLE oss_dm_%s_tbDayNewRegTypeDis PARTITION(index_dtstatdate=%s) "
 	    + "SELECT '%s'," //date
             + "'%s'," //sType:level
+            + "%s," //iperiod
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
@@ -175,7 +176,7 @@ public class UserAccountAnalysis {
      | ibacknum      | bigint     |          |
      +---------------+------------+----------+--+
      */
-    private static String tbUserActivityPeTypeDis = "INSERT INTO TABLE osss_tbUserActivityPeTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbUserActivityTypeDis = "INSERT INTO TABLE osss_tbUserActivityTypeDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "%s," //sType:level
             + "'%s'," //sTypeValue : levelvalue
@@ -211,8 +212,9 @@ public class UserAccountAnalysis {
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "maxlevel," //sTypeValue : levelvalue
-            + "count(*) " //period
+            + "if(maxlevel is null,-1,maxlevel)," 
+            + "count(*),"
+            + "DATE2LONG('%s')" //date
             + "from "
             
             + "(select "
@@ -221,9 +223,9 @@ public class UserAccountAnalysis {
             + "index_iworldid,"
             + "suin,"
             + "max(ilevel) maxlevel "
-            + "from fat_%s_user "
+            + "from fat_%s_user " //strMode
             + "WHERE "
-            + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
+            + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 " //date
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
             + "group by index_igameid,index_iaccounttype,index_iworldid,maxlevel with cube";
@@ -327,7 +329,7 @@ public class UserAccountAnalysis {
             String strBeforeWeekDate = sdf.format(time.getTime());
             String str = "and iregtime >= '" + strBeforeWeekDate + "' and iregtime < date_add('"
                     + strDate + "',1) ";
-            strSql = String.format(tbRegisterUserPeTypeDis, strMode, CONSTANT.date2Long(strDate),
+            strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
         }
@@ -354,7 +356,7 @@ public class UserAccountAnalysis {
             String strBeforeWeekDate = sdf.format(time.getTime());
             String str = "and iregtime >= '" + strMothFirstDay + "' and iregtime < date_add('"
                     + strDate + "',1) ";
-            strSql = String.format(tbRegisterUserPeTypeDis, strMode, CONSTANT.date2Long(strDate),
+            strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
         }
@@ -371,19 +373,19 @@ public class UserAccountAnalysis {
             String str;
             // stat tbRegisterUserPeTypeDis
             str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
-            strSql = String.format(tbRegisterUserPeTypeDis, strMode, CONSTANT.date2Long(strDate),
+            strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
 
             // stat tbDayNewRegTypeDis
             str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
-            strSql = String.format(tbDayNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, iPeriod, strMode, strDate, str);
+            strSql = String.format(tbDayNewRegTypeDis, strMode,  CONSTANT.date2Long(strDate),
+                    strDate, "Level",iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
 
             // stat tbDayUserActivityTypeDis
             strSql = String.format(tbDayUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "Level", strMode, strDate);
+                    strDate, "Level", strDate, strMode, strDate);
             sqlContext.sql(strSql);
         }
 
@@ -397,7 +399,7 @@ public class UserAccountAnalysis {
 
             // stat tbRegisterUserPeTypeDis
             String str = "";
-            strSql = String.format(tbRegisterUserPeTypeDis, strMode, CONSTANT.date2Long(strDate),
+            strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
         }
