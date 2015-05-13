@@ -4,7 +4,7 @@ package com.shadowinlife.app.LogAnalyse;
  * the eventTAG Login/Logout/Levelup
  * 
  * @author shadowinlife
- * @since 2015-04-01
+ * @since 2015-04-05
  */
 
 public class FileSplit {
