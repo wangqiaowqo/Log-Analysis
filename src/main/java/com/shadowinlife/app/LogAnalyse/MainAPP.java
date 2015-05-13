@@ -38,7 +38,7 @@ public class MainAPP {
         String nameNode = args[0]; /* hdfs://namenode:8020/ */
         String mode = args[1];
         String tableName = args[2];
-        String date = args[3];
+        String date = "20" + args[3];
         String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
