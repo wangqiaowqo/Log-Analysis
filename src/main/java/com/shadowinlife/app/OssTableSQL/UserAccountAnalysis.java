@@ -308,7 +308,6 @@ public class UserAccountAnalysis {
      | iworld        | int        |          |
      | ilevel        | bigint     |          |
      | ilookday      | bigint     |          |
-     | iallnum       | bigint     |          |
      | iactivitynum  | bigint     |          |
      +---------------+------------+----------+--+
 
@@ -320,8 +319,8 @@ public class UserAccountAnalysis {
             + "index_igameid,"
             + "index_iaccounttype,"
             + "index_iworldid,"
-            + "maxLevel," 
-            + "dayNum," //TODO  Look day
+            + "if(maxLevel is null,-1,maxLevel)," 
+            + "if(dayNum is null,-1,dayNum)," //TODO  Look day
             + "count(*),"
             + "DATE2LONG('%s') "
             + "from "
