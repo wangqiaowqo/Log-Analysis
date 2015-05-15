@@ -60,6 +60,7 @@ public class SplitApp {
                                     .getFileValue());
                         }
                     });
+            System.out.println("gongmeng:"+logLines.count());
             List<String> keys=hadoopFile.keys().distinct().collect();
             for(String key:keys) {
                 System.out.println(key);

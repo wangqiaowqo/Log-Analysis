@@ -93,7 +93,6 @@ public class MainAPP {
                         }
                     }).values();
             
-            
             JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
                     new Function<Tuple2<String, String[]>, Boolean>() {
                         private static final long serialVersionUID = 1L;

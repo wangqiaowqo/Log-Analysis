@@ -76,8 +76,8 @@ public class AcountProcessTable {
             + "T1.iroleregtime,"
             + "T1.ilastacttime,"
             + "shiftleft(T1.idayacti),"
-            + "%s," // iWeekacti
-            + "%s," //iMonthacti
+            + "T1.iWeekActi," // iWeekacti
+            + "T1.iMonthActi," //iMonthacti
             + "T1.igroup,"
             + "T1.ilevel,"
             + "T1.iviplevel,"
@@ -104,8 +104,8 @@ public class AcountProcessTable {
             + "null, " //roleregtime
             + "T2.acttime,"
             + "shiftact(T1.idayacti),"
-            + "%s," //iWeekacti
-            + "%s," //iMonthacti
+            + "T1.iWeekActi," //iWeekacti
+            + "T1.iMonthActi," //iMonthacti
             + "0," //group
             + "T2.iRoleLevel, "
             + "1," //iviplevel
@@ -118,11 +118,36 @@ public class AcountProcessTable {
             + "FROM loginProcessTable T2 LEFT JOIN "
             + "(SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
             + "ON T2.id=T1.suin";
+    
+    private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_login_user "
+            + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
+            + "SELECT T1.dtstatdate, "
+            + "T1.iaccounttype,"
+            + "T1.suin,"
+            + "T1.iregtime,"
+            + "T1.igameid,"
+            + "T1.iworldid,"
+            + "T1.iroleid,"
+            + "T1.iroleregtime,"
+            + "T1.ilastacttime,"
+            + "T1.idayacti,"
+            + "%s," // iWeekacti
+            + "%s," //iMonthacti
+            + "T1.igroup,"
+            + "T1.ilevel,"
+            + "T1.iviplevel,"
+            + "T1.iTimes," // times
+            + "T1.ionlinetime," //onlinetime
+            + "T1.index_iaccounttype,"
+            + "T1.index_dtstatdate,"
+            + "T1.index_igameid,"
+            + "T1.index_iworldid FROM fat_login_user T1 WHERE index_dtstatdate=date2long('%s')";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> loginFile,
             JavaRDD<String[]> logoutFile, String date) {
-
+        
         try {
+            
             // Create RDD from login FILES
             JavaRDD<RoleLogin> loginLogs = loginFile.map(new Function<String[], RoleLogin>() {
 
@@ -130,7 +155,7 @@ public class AcountProcessTable {
 
                 @Override
                 public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin call(String[] line) {
-
+                    
                     return RoleLogin.parseFromLogFile(line);
 
                 }
@@ -203,19 +228,21 @@ public class AcountProcessTable {
             c.add(Calendar.DATE, 1);
             String iWeekActi = "T1.iweekacti";
             String iMonthActi = "T1.imonthacti";
+
+            sqlContext.sql(String.format(tbUser_unact_account_table, date, date, date));
+            sqlContext.sql(String.format(tbUser_act_account_table, date, date, date));
             
             if(dayOfWeek == 1) {
-                iWeekActi = "IF(useractivity(iDayActi,7)=1,shiftact(iweekacti),shiftleft(iweekacti))";
+                iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
             }
             
             if(c.get(Calendar.DAY_OF_MONTH) == 1){
                 iMonthActi = String.format(
-                        "IF(useractivity(iDayActi,%s)=1,shiftact(imonthacti),shiftleft(imonthacti))",
+                        "IF(useractivity(T1.iDayActi,%s)=1,shiftact(T1.imonthacti),shiftleft(T1.imonthacti))",
                         dayOfMonth);
             }
+            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date));
             
-            sqlContext.sql(String.format(tbUser_unact_account_table, date, iWeekActi, iMonthActi, date, date));
-            sqlContext.sql(String.format(tbUser_act_account_table, date, iWeekActi, iMonthActi, date, date));
             sqlContext.dropTempTable("loginProcessTable");
             sqlContext.dropTempTable("tbLogin");
             sqlContext.dropTempTable("tbLogout");

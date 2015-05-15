@@ -383,16 +383,17 @@ public class UserAccountAnalysis {
             strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
-            
+
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "Level",iPeriod, strDate, strTableField,strTableField,strTableField,strMode, strDate, strBeforeWeekDate);
+                    strDate, "Level", iPeriod, strTableField, strTableField,
+                    strTableField, strDate, strMode, strDate, strBeforeWeekDate);
             sqlContext.sql(strSql);
-            
-         // stat tbActivityScaleDis
+
+            // stat tbActivityScaleDis
             int iMask = 7;
             strSql = String.format(tbActivityScaleDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "WeekActi",iPeriod, strDate, iMask,strMode,strDate,strTableField);
+                    strDate, "WeekActi", iPeriod, strDate, iMask, strMode, strDate, strTableField);
             sqlContext.sql(strSql);
         }
 
@@ -420,15 +421,16 @@ public class UserAccountAnalysis {
             strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
-            
-         // stat tbUserActivityTypeDis
+
+            // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "Level",iPeriod, strDate, strTableField,strTableField,strTableField,strMode, strDate, strMothFirstDay);
+                    strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
+                    strDate, strMode, strDate, strMothFirstDay);
             sqlContext.sql(strSql);
-            
-         // stat tbActivityScaleDis
+
+            // stat tbActivityScaleDis
             strSql = String.format(tbActivityScaleDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "MonthActi",iPeriod, strDate, iMask,strMode,strDate,strTableField);
+                    strDate, "MonthActi", iPeriod, strDate, iMask, strMode, strDate, strTableField);
             sqlContext.sql(strSql);
         }
 
@@ -458,10 +460,10 @@ public class UserAccountAnalysis {
             strSql = String.format(tbDayUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate),
                     strDate, "Level", strDate, strMode, strDate);
             sqlContext.sql(strSql);
-            
+
             // stat tbStayScaleDis
-            strSql = String.format(tbStayScaleDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "DayReg", 90, strDate, strDate, strMode, strDate, strDate);
+            strSql = String.format(tbStayScaleDis, strMode, CONSTANT.date2Long(strDate), strDate,
+                    "DayReg", 90, strDate, strDate, strMode, strDate, strDate);
             sqlContext.sql(strSql);
         }
 

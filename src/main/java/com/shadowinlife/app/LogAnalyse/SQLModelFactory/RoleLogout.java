@@ -99,7 +99,7 @@ public class RoleLogout implements Serializable{
         String[] columnList = array;
         // TODO Some column may be null,should handle it
         if (columnList.length == 23) {
-            for (int i = 0; i < 17; i++) {
+            for (int i = 0; i < 23; i++) {
                 if (StringUtil.isEmpty(columnList[i])) {
                     columnList[i] = "0";
                 }
