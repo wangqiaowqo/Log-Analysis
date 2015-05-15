@@ -64,7 +64,7 @@ public class AcountProcessTable {
             
             + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
     // USER NOT ACTIVITY
-    private static String tbUser_unact_account_table = "INSERT INTO TABLE fat_login_user "
+    private static String tbUser_unact_account_table = "INSERT OVERWRITE TABLE fat_login_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s', "
             + "T1.iaccounttype,"
@@ -92,7 +92,7 @@ public class AcountProcessTable {
             + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
-    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_login_user "
+    private static String tbUser_act_account_table = "INSERT OVERWRITE TABLE fat_login_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
             + "1," //acounttype
@@ -228,7 +228,7 @@ public class AcountProcessTable {
     }
     
     public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
-        String hql = "INSERT INTO TABLE fat_login_user "
+        String hql = "INSERT OVERWRITE TABLE fat_login_user "
                 + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
                 + "iaccounttype,"

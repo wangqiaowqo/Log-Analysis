@@ -29,7 +29,7 @@ public class UserAccountAnalysis {
     | ionlinetime   | bigint     |          |
     +---------------+------------+----------+--+
      */
-    private static String tbRegisterUser = "INSERT INTO TABLE oss_dm_%s_tbRegisterUser PARTITION(index_dtstatdate=%s) "
+    private static String tbRegisterUser = "INSERT OVERWRITE TABLE oss_dm_%s_tbRegisterUser PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date 
             + "%s,"  //period
             + "IF(T1.index_igameid IS NULL,-1,T1.index_igameid),"
@@ -65,7 +65,7 @@ public class UserAccountAnalysis {
             + "ON T1.index_igameid=T2.index_igameid AND T1.index_iaccounttype=T2.index_iaccounttype "
             + "AND T1.index_iworldid=T2.index_iworldid";
     
-    private static String tbRegisterUser_TotalRegUser = "INSERT INTO TABLE oss_dm_%s_tbRegisterUser PARTITION(index_dtstatdate=%s) "
+    private static String tbRegisterUser_TotalRegUser = "INSERT OVERWRITE TABLE oss_dm_%s_tbRegisterUser PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date 
             + "%s,"  //period
             + "IF(index_igameid IS NULL,-1,index_igameid) AS index_igameid,"
@@ -95,7 +95,7 @@ public class UserAccountAnalysis {
     | iregnum       | bigint     |          |
     +---------------+------------+----------+--+
      */
-    private static String tbRegisterUserTypeDis = "INSERT INTO TABLE oss_dm_%s_tbRegisterUserTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbRegisterUserTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbRegisterUserTypeDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "'Level'," //sType:level
             + "'%s'," //iPeroid
@@ -134,7 +134,7 @@ public class UserAccountAnalysis {
      | iregnum       | bigint     |          |
      +---------------+------------+----------+--+
      */
-    private static String tbDayNewRegTypeDis = "INSERT INTO TABLE oss_dm_%s_tbDayNewRegTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbDayNewRegTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayNewRegTypeDis PARTITION(index_dtstatdate=%s) "
 	    + "SELECT '%s'," //date
             + "'%s'," //sType:level
             + "if(index_igameid is null,-1,index_igameid),"
@@ -176,7 +176,7 @@ public class UserAccountAnalysis {
      | ibacknum      | bigint     |          |
      +---------------+------------+----------+--+
      */
-    private static String tbUserActivityTypeDis = "INSERT INTO TABLE oss_dm_%s_tbUserActivityTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbUserActivityTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbUserActivityTypeDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "'%s'," //sType:level
             + "if(maxlevel is null,-1,maxlevel)," //sTypeValue : levelvalue
@@ -218,7 +218,7 @@ public class UserAccountAnalysis {
      | idayactivitynum  | bigint     |          |
      +------------------+------------+----------+--+
      */
-    private static String tbDayUserActivityTypeDis = "INSERT INTO TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbDayUserActivityTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "'%s'," //sType:level
             + "if(index_igameid is null,-1,index_igameid),"
@@ -258,7 +258,7 @@ public class UserAccountAnalysis {
 
      */
     
-    private static String tbActivityScaleDis = "INSERT INTO TABLE oss_dm_%s_tbActivityScaleDis PARTITION(index_dtstatdate=%s) "
+    private static String tbActivityScaleDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbActivityScaleDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "'%s'," //ssourceuser : DAY WEEK MONTH DOUBLE WEEK
             + "'%s'," //iPeroid
@@ -312,7 +312,7 @@ public class UserAccountAnalysis {
      +---------------+------------+----------+--+
 
      */
-    private static String tbStayScaleDis = "INSERT INTO TABLE oss_dm_%s_tbStayScaleDis PARTITION(index_dtstatdate=%s) "
+    private static String tbStayScaleDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbStayScaleDis PARTITION(index_dtstatdate=%s) "
             + "SELECT '%s'," //date
             + "'%s'," //ssourceuser : DAYACTI  DAYREGISTER
             + "'%s'," //iPeroid

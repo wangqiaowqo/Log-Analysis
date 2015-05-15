@@ -1,6 +1,7 @@
 package com.shadowinlife.app.LogAnalyse;
 
 import java.util.Calendar;
+import java.util.List;
 
 import org.apache.hadoop.mapred.lib.MultipleTextOutputFormat;
 import org.apache.spark.SparkConf;
@@ -59,6 +60,10 @@ public class SplitApp {
                                     .getFileValue());
                         }
                     });
+            List<String> keys=hadoopFile.keys().distinct().collect();
+            for(String key:keys) {
+                System.out.println(key);
+            }
             hadoopFile.saveAsHadoopFile(path, String.class, String.class,
                     RDDMultipleTextOutputFormat.class);
             sc.stop();

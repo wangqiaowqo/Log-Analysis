@@ -15,6 +15,7 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
+import com.shadowinlife.app.OssTableSQL.DataMigrateToMysql;
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
 
 import scala.Tuple2;
@@ -38,7 +39,7 @@ public class MainAPP {
         String nameNode = args[0]; /* hdfs://namenode:8020/ */
         String mode = args[1];
         String tableName = args[2];
-        String date = "20" + args[3];
+        String date = args[3];
         String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
@@ -110,7 +111,9 @@ public class MainAPP {
             AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
 
             UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-
+            
+            DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date);
+            
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, date);
         } catch (Exception e) {
