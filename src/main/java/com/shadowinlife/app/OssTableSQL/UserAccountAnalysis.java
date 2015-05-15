@@ -224,7 +224,7 @@ public class UserAccountAnalysis {
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "maxlevel," //sTypeValue : levelvalue
+            + "if(maxlevel is null, -1, maxlevel)," //sTypeValue : levelvalue
             + "count(*)," //period
             + "DATE2LONG('%s') "
             + "from "

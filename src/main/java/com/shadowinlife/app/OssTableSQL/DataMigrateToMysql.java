@@ -44,7 +44,7 @@ public class DataMigrateToMysql {
         
         try {
             DataFrame oss_dm_login_tbDayNewRegTypeDis = sqlContext
-                    .sql("select dtstatdate,stype,iperiod,igameid,iaccounttype,iworld,stypevalue,iregnum "
+                    .sql("select dtstatdate,stype,igameid,iaccounttype,iworld,stypevalue,iregnum "
                             + "from oss_dm_login_tbdaynewregtypedis" + strWhere);
             oss_dm_login_tbDayNewRegTypeDis.insertIntoJDBC(mySqlURL,
                     "oss_dm_dajian_login_tbDayNewRegTypeDis", false);
@@ -91,7 +91,7 @@ public class DataMigrateToMysql {
         try {
             DataFrame oss_dm_login_tbuseractivitytypedis = sqlContext
                     .sql("select dtstatdate,stype,stypevalue,iperiod,igameid,iaccounttype,iworld,"
-                            + "iregnum,iactivity,ilostnum,ibacknum from oss_dm_login_tbuseractivitytypedis"
+                            + "iactivitynum,ilostnum,ibacknum from oss_dm_login_tbuseractivitytypedis"
                             + strWhere);
             oss_dm_login_tbuseractivitytypedis.insertIntoJDBC(mySqlURL,
                     "oss_dm_dajian_login_tbUserActivityTypeDis", false);
