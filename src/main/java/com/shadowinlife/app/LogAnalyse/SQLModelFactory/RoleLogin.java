@@ -99,20 +99,30 @@ public class RoleLogin implements Serializable {
 
     public static RoleLogin parseFromLogFile(String[] array) {
         String[] columnList = array;
-        // TODO Some column may be null,should handle it
-        if (columnList.length == 23) {
-            for (int i = 0; i < 23; i++) {
-                if (StringUtil.isEmpty(columnList[i])) {
-                    columnList[i] = "0";
+        try {
+            // TODO Some column may be null,should handle it
+            if (columnList.length == 23) {
+                for (int i = 0; i < 23; i++) {
+                    if (StringUtil.isEmpty(columnList[i])) {
+                        columnList[i] = "0";
+                    }
                 }
+                return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
+                        columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
+                        columnList[10], columnList[11], columnList[12], columnList[13],
+                        columnList[14], columnList[15], columnList[16], columnList[17],
+                        columnList[18], columnList[19], columnList[20], columnList[21],
+                        columnList[22]);
+            } else {
+                return new RoleLogin("1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
+                        "0", "0", "0", "0", "0", " ", " ", "0.0.0.0", " ", "0", "0", "0", " ",
+                        "1970-01-01 00:00:00", "0", " ");
             }
-            return new RoleLogin(columnList[1], columnList[2], columnList[3], columnList[4],
-                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
-                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
-                    columnList[15], columnList[16], columnList[17], columnList[18], columnList[19],
-                    columnList[20], columnList[21], columnList[22]);
-        } else {
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new RoleLogin("1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
+                    "0", "0", "0", "0", "0", " ", " ", "0.0.0.0", " ", "0", "0", "0", " ",
+                    "1970-01-01 00:00:00", "0", " ");
         }
     }
 

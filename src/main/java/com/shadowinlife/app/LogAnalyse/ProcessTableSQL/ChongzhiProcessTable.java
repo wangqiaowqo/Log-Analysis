@@ -1,5 +1,10 @@
 package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 
+import static org.apache.spark.sql.functions.col;
+import static org.apache.spark.sql.functions.count;
+import static org.apache.spark.sql.functions.max;
+import static org.apache.spark.sql.functions.min;
+import static org.apache.spark.sql.functions.sum;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -7,45 +12,13 @@ import java.util.Calendar;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
-
-import static org.apache.spark.sql.functions.*;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin;
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout;
 
-/**
- * 
- * @author shadowinlife
- * @since 2015-4-22
- * 
- *        Execute every hour to produce the fat_tbaccount
-+---------------+-----------------------------------+----------+--+
-|   col_name    |             data_type             | comment  |
-+---------------+-----------------------------------+----------+--+
-| dtstatdate    | date                              |          |
-| iaccounttype  | int                               |          |
-| suin          | string                            |          |
-| iregtime      | timestamp                         |          |
-| igameid       | int                               |          |
-| iworldid      | int                               |          |
-| iroleid       | int                               |          |
-| iroleregtime  | timestamp                         |          |
-| ilastacttime  | timestamp                         |          |
-| idayacti      | struct<header:int,tailer:bigint>  |          |
-| iweekacti     | struct<header:int,tailer:bigint>  |          |
-| imonthacti    | struct<header:int,tailer:bigint>  |          |
-| igroup        | int                               |          |
-| ilevel        | bigint                            |          |
-| iviplevel     | bigint                            |          |
-| itimes        | bigint                            |          |
-| ionlinetime   | bigint                            |          |
-+---------------+-----------------------------------+----------+--+
- */
-
-public class AcountProcessTable {
-    // create daily user act table
+public class ChongzhiProcessTable {
+ // create daily user act table
     private static String tbUser_process_table_sql = 
             "SELECT "
             + "IF(logout_id is null, login_id, logout_id) AS id, "
@@ -92,7 +65,7 @@ public class AcountProcessTable {
             + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
-    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_login_user "
+    private static String tbUser_act_account_table = "INSERT OVERWRITE TABLE fat_login_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
             + "1," //acounttype
@@ -161,27 +134,11 @@ public class AcountProcessTable {
                 }
 
             });
-
-            // Create RDD from logout FILES
-            JavaRDD<RoleLogout> logoutLogs = logoutFile.map(new Function<String[], RoleLogout>() {
-
-                private static final long serialVersionUID = 9145640452810492525L;
-
-                @Override
-                public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout call(String[] line) {
-
-                    return RoleLogout.parseFromLogFile(line);
-
-                }
-
-            });
             
             // Convert all the values into the spark table
             DataFrame schemaLoginRDD = sqlContext.createDataFrame(loginLogs, RoleLogin.class);
-            DataFrame schemaLogoutRDD = sqlContext.createDataFrame(logoutLogs, RoleLogout.class);
             
             schemaLoginRDD.registerTempTable("loginLog");
-            schemaLoginRDD.registerTempTable("logoutLog");
             
             // Dump out the group data of user login and logout
             DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
@@ -189,20 +146,10 @@ public class AcountProcessTable {
                     max(col("vClientIp")).as("tbLogin_vClientIp"),
                     count(col("iUin")).as("in_times"),
                     max(col("dtEventTime")).as("login_dtEventTime"),
-                    min(col("dtCreateTime")).as("login_regTime"));
-
-            DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
-                    sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
-                    max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
-                    max(col("vClientIp")).as("tbLogout_vClientIp"),
-                    count(col("iUin")).as("out_times"),
-                    max(col("dtEventTime")).as("logout_dtEventTime")
-                    );
-            
+                    min(col("dtCreateTime")).as("login_regTime"));         
             
             // Register temple tables to execute analysis SQL
             userLogin.registerTempTable("tbLogin");
-            userLogout.registerTempTable("tbLogout");
 
             // Execute the analysis SQL
             DataFrame temp_RDD = sqlContext.sql(tbUser_process_table_sql);
@@ -245,7 +192,7 @@ public class AcountProcessTable {
             
             sqlContext.dropTempTable("loginProcessTable");
             sqlContext.dropTempTable("tbLogin");
-            sqlContext.dropTempTable("tbLogout");
+            
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -288,16 +235,14 @@ public class AcountProcessTable {
         String iWeekActi = "iweekacti";
         String iMonthActi = "imonthacti";
         
-        //We read data from HDFS parallels , iDayActi may shiftleft before translate to $iWeekActi as a parameter
-        //iDayActi<<0, iDayActi.charat(length-1)=0, we check iperiod-1 in idayacti will be ok.
         if(dayOfWeek == 1) {
-            iWeekActi = "IF(useractivity(iDayActi,6)=1,shiftact(iweekacti),shiftleft(iweekacti))";
+            iWeekActi = "IF(useractivity(iDayActi,7)=1,shiftact(iweekacti),shiftleft(iweekacti))";
         }
         
         if(c.get(Calendar.DAY_OF_MONTH) == 1){
             iMonthActi = String.format(
                     "IF(useractivity(iDayActi,%s)=1,shiftact(imonthacti),shiftleft(imonthacti))",
-                    dayOfMonth-1);
+                    dayOfMonth);
         }
         // Initialization hive UDF
         sqlContext.sql("use dbprocess");

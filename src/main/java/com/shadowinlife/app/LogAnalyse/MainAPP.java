@@ -40,79 +40,83 @@ public class MainAPP {
         String mode = args[1];
         String tableName = args[2];
         String date = args[3];
+        String oozie= args[4];
+        
         String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
         System.out.println("gongmeng " + targetFile);
-        // check log file path to alter if the file existed
-        /*
-         * 
-         * 
-         * try { Configuration hdfsConf = new Configuration(true); FileSystem fs
-         * = FileSystem.get(hdfsConf); Path logfile_Path = new Path("");
-         * 
-         * if (!fs.isDirectory(logfile_Path)) {
-         * System.out.println("gongmeng 1");
-         * AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext,
-         * date); return; } } catch (IOException e1) { e1.printStackTrace(); }
-         */
+        
+        if(oozie.equalsIgnoreCase("1")){
+            SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata/"+date+"/*/*", "/logsplit");
+        }
+        date = "20" + date;
         try {
-            // Read origin log file
-            JavaRDD<String> logLines = sc.textFile(targetFile);
 
-            // TODO The algorithm used to split the file should be changed
+            RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)"+tableName+date+"(.*)");
+            Path path = new Path(nameNode + "/logsplit/");
+            if (!regexPathFilter.accept(path)) {
+                AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
+            } else {
+                // Read origin log file
+                JavaRDD<String> logLines = sc.textFile(targetFile);
 
-            // Split origin file into key-value model
-            JavaPairRDD<String, String[]> hadoopFile = logLines
-                    .mapToPair(new PairFunction<String, String, String[]>() {
-                        private static final long serialVersionUID = 1L;
+                // TODO The algorithm used to split the file should be changed
 
-                        @Override
-                        public Tuple2<String, String[]> call(String line) throws Exception {
-                            FileSplit temp = FileSplit.parseFromLogFile(line);
-                            return new Tuple2<String, String[]>(temp.getKeyName(), temp
-                                    .getLineValues());
-                        }
-                    });
+                // Split origin file into key-value model
+                JavaPairRDD<String, String[]> hadoopFile = logLines
+                        .mapToPair(new PairFunction<String, String, String[]>() {
+                            private static final long serialVersionUID = 1L;
 
-            // Filter origin file into different RDD
-            
-            JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
-                    new Function<Tuple2<String, String[]>, Boolean>() {
-
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                            if (!f._1.contains("RoleLogout")) {
-                                return true;
-                            } else {
-                                return false;
+                            @Override
+                            public Tuple2<String, String[]> call(String line) throws Exception {
+                                FileSplit temp = FileSplit.parseFromLogFile(line);
+                                return new Tuple2<String, String[]>(temp.getKeyName(), temp
+                                        .getLineValues());
                             }
-                        }
-                    }).values();
-            
-            JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
-                    new Function<Tuple2<String, String[]>, Boolean>() {
-                        private static final long serialVersionUID = 1L;
+                        });
 
-                        @Override
-                        public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                            if (f._1.contains("RoleLogout")) {
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    }).values();
-            
-            AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
+                if (tableName.equalsIgnoreCase("RoleLogin")) {
+                    // Filter origin file into different RDD
+                    JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
+                            new Function<Tuple2<String, String[]>, Boolean>() {
 
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public Boolean call(Tuple2<String, String[]> f) throws Exception {
+                                    if (!f._1.contains("RoleLogout")) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            }).values();
+
+                    JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
+                            new Function<Tuple2<String, String[]>, Boolean>() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public Boolean call(Tuple2<String, String[]> f) throws Exception {
+                                    if (f._1.contains("RoleLogout")) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                            }).values();
+
+                    AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
+                } else {
+                    // T
+                }
+            }
             UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-            
+
             DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date);
-            
+
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, date);
         } catch (Exception e) {
