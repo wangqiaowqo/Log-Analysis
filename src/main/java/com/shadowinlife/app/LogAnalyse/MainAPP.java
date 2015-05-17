@@ -30,9 +30,9 @@ import scala.Tuple2;
 public class MainAPP {
 
     public static void main(String[] args) {
-        if (args.length < 4) {
+        if (args.length < 5) {
             System.out
-                    .println("args[0]---FileTarget \n args[1]----mode \n args[2]---TableName \n  args[3]----date");
+                    .println("args[0]---FileTarget \n args[1]----mode \n args[2]---TableName \n  args[3]----date\n args[4]---1 for split file");
         }
 
         // Assemble path of the origin log files
@@ -42,13 +42,12 @@ public class MainAPP {
         String date = args[3];
         String oozie= args[4];
         
-        String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
+        
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
-        System.out.println("gongmeng " + targetFile);
         
-        if(oozie.equalsIgnoreCase("1")){
+        if(oozie!=null&&oozie.equalsIgnoreCase("1")){
             SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata/"+date+"/*/*", "/logsplit");
         }
         date = "20" + date;
@@ -60,9 +59,8 @@ public class MainAPP {
                 AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
             } else {
                 // Read origin log file
-                JavaRDD<String> logLines = sc.textFile(targetFile);
-
-                // TODO The algorithm used to split the file should be changed
+            	String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
+                JavaRDD<String> logLines = sc.textFile(targetFile);              
 
                 // Split origin file into key-value model
                 JavaPairRDD<String, String[]> hadoopFile = logLines
