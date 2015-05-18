@@ -303,7 +303,9 @@ public class UserAccountAnalysis {
             
             + "group by index_iaccounttype,index_igameid,index_iworldid,maxlevel,iactiDays "
             + "grouping sets((index_iaccounttype,index_igameid,index_iworldid),"
-            + "(index_iaccounttype,index_igameid,index_iworldid,maxlevel,iactiDays))";
+            + "(index_iaccounttype,index_igameid,index_iworldid,maxlevel,iactiDays),"
+            + "(index_iaccounttype,index_igameid,index_iworldid,maxlevel),"
+            + "(index_iaccounttype,index_igameid,index_iworldid,iactiDays))";
     /*
      +---------------+------------+----------+--+
      |   col_name    | data_type  | comment  |
