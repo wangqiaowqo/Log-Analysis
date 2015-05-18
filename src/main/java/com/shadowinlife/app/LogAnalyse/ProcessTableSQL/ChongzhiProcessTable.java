@@ -57,21 +57,25 @@ public class ChongzhiProcessTable {
 	
  // create daily user chongzhi table
     private static String tbChongZhi_process_table_sql = 
-            "SELECT "
+            "SELECT iUin AS id,"
+            + "MIN(dtEventTime) AS FirstTime,"
+            + "MAX(dtEventTime) AS ActTime,"
+            + "SUM(*) AS iTimes,"
+            + "SUM(iPayDelta) AS TotalPay,"
             
             
-            + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
+            + "FROM ChongZhiLog GROUP BY suin";
     // USER NOT ACTIVITY 
     private static String tbChongZhi_unact_account_table = "INSERT OVERWRITE TABLE fat_chongzhi_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s', "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.iregtime,"
+            + "T1.ifirstTime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.iroleregtime,"
+            + "T1.irolefirstTime,"
             + "T1.ilastacttime,"
             + "shiftleft(T1.idayacti),"
             + "T1.iWeekActi," // iWeekacti
@@ -95,11 +99,11 @@ public class ChongzhiProcessTable {
             + "SELECT '%s',"
             + "1," //acounttype
             + "T2.id,"
-            + "IF(T1.iregtime IS NULL, T2.regTime, T1.iregtime),"
+            + "IF(T1.ifirstTime IS NULL, T2.firstTime, T1.ifirstTime),"
             + "1," //gameid
             + "1," //worldid
             + "1," //roleid
-            + "null, " //roleregtime
+            + "null, " //rolefirstTime
             + "T2.acttime,"
             + "shiftact(T1.idayacti),"
             + "T1.iWeekActi," //iWeekacti
