@@ -338,7 +338,7 @@ public class UserAccountAnalysis {
             + "if(index_igameid is null,-1,index_igameid) as index_igameid,"
             + "if(index_iworldid is null,-1,index_iworldid) as index_iworldid,"
             + "suin,"
-            + "datediff('%s',iregtime) dayNum,"
+            + "datediff('%s',to_date(iregtime)) dayNum,"
             + "max(ilevel) maxLevel "
             + "from fat_%s_user "
             + "WHERE index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 and iregtime >= date_add('%s',-90) "
@@ -350,7 +350,7 @@ public class UserAccountAnalysis {
             
             + "group by index_iaccounttype,index_igameid,index_iworldid,maxLevel,dayNum "
             + "grouping sets((index_iaccounttype,index_igameid,index_iworldid,maxLevel,dayNum),"
-            + "(index_iaccounttype,index_igameid,index_iworldid))";
+            + "(index_iaccounttype,index_igameid,index_iworldid,dayNum))";
 
     public static void create_tbRegisterUser(HiveContext sqlContext, String strMode, String strDate) {
 
