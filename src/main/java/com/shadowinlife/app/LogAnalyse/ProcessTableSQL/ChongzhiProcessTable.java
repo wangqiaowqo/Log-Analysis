@@ -57,26 +57,26 @@ public class ChongzhiProcessTable {
 	
  // create daily user chongzhi table
     private static String tbChongZhi_process_table_sql = 
-            "SELECT iUin AS id,"
-            + "MIN(dtEventTime) AS FirstTime,"
-            + "MAX(dtEventTime) AS ActTime,"
-            + "SUM(*) AS iTimes,"
-            + "SUM(iPayDelta) AS TotalPay,"
-            
-            
-            + "FROM ChongZhiLog GROUP BY suin";
+            "SELECT `iUin` AS id,"
+            + "MAX(`iRoleId`) AS iRoleId,"
+            + "MIN(`dtEventTime`) AS FirstTime,"
+            + "MAX(`dtEventTime`) AS ActTime,"
+            + "COUNT(`iUin`) AS iTimes,"
+            + "SUM(`iPayDelta`) AS TotalPay,"
+            + "MAX(`iRoleLevel`) AS iRoleLevel,"
+            + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
+            + "FROM ChongZhiLog GROUP BY `iUin`";
     // USER NOT ACTIVITY 
     private static String tbChongZhi_unact_account_table = "INSERT OVERWRITE TABLE fat_chongzhi_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s', "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstTime,"
+            + "T1.ifirstchongzhitime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.irolefirstTime,"
-            + "T1.ilastacttime,"
+            + "T1.ilastchongzhitime,"
             + "shiftleft(T1.idayacti),"
             + "T1.iWeekActi," // iWeekacti
             + "T1.iMonthActi," //iMonthacti
@@ -94,25 +94,24 @@ public class ChongzhiProcessTable {
             + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
-    private static String tbChongZhi_act_account_table = "INSERT OVERWRITE TABLE fat_chongzhi_user "
+    private static String tbChongZhi_act_account_table = "INSERT INTO TABLE fat_chongzhi_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
             + "1," //acounttype
             + "T2.id,"
-            + "IF(T1.ifirstTime IS NULL, T2.firstTime, T1.ifirstTime),"
+            + "IF(T1.ifirstchongzhitime is null, T2.FirstTime, T1.ifirstchongzhitime),"
             + "1," //gameid
             + "1," //worldid
-            + "1," //roleid
-            + "null, " //rolefirstTime
-            + "T2.acttime,"
+            + "T2.iRoleId," //roleid
+            + "T2.ActTime,"
             + "shiftact(T1.idayacti),"
             + "T1.iWeekActi," //iWeekacti
             + "T1.iMonthActi," //iMonthacti
             + "0," //group
             + "T2.iRoleLevel, "
-            + "1," //iviplevel
-            + "IF(T2.outtime is null, T2.intime, T2.outtime),"
-            + "T2.iOnlinetime,"
+            + "T2.iRoleVipLevel," //iviplevel
+            + "T2.iTimes,"
+            + "T2.TotalPay,"
             + "1 AS index_iaccounttype,"
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "1 AS index_igameid,"
@@ -164,9 +163,9 @@ public class ChongzhiProcessTable {
             });
             
             // Convert all the values into the spark table
-            DataFrame schemaLoginRDD = sqlContext.createDataFrame(chongZhiLogs, ChongZhi.class);
-            
-            schemaLoginRDD.registerTempTable("ChongZhiLog");
+            DataFrame schemaChongZhiRDD = sqlContext.createDataFrame(chongZhiLogs, ChongZhi.class);
+            sqlContext.registerDataFrameAsTable(schemaChongZhiRDD, "ChongZhiLog");
+           
 
             // Execute the daily analysis SQL
             DataFrame temp_RDD = sqlContext.sql(tbChongZhi_process_table_sql);
@@ -205,7 +204,7 @@ public class ChongzhiProcessTable {
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date));
             
             sqlContext.dropTempTable("ChongZhiProcessTable");
-            sqlContext.dropTempTable("tbLogin");
+            sqlContext.dropTempTable("ChongZhiLog");
             
             return true;
         } catch (Exception e) {

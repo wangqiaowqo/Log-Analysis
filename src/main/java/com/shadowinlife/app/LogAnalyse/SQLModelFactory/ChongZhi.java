@@ -100,7 +100,7 @@ public class ChongZhi implements Serializable {
         String[] columnList = array;
 
         if (columnList.length == 24) {
-            for (int i = 0; i < 25; i++) {
+            for (int i = 0; i < 24; i++) {
                 if (StringUtil.isEmpty(columnList[i])) {
                     columnList[i] = "0";
                 }

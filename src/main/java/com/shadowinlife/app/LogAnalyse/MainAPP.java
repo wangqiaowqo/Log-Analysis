@@ -1,10 +1,5 @@
 package com.shadowinlife.app.LogAnalyse;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -15,6 +10,7 @@ import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.OssTableSQL.DataMigrateToMysql;
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
 
@@ -40,27 +36,27 @@ public class MainAPP {
         String mode = args[1];
         String tableName = args[2];
         String date = args[3];
-        String oozie= args[4];
-        
-        
+        String oozie = args[4];
+
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
-        
-        if(oozie!=null&&oozie.equalsIgnoreCase("1")){
-            SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata/"+date+"/*/*", "/logsplit");
+
+        if (oozie != null && oozie.equalsIgnoreCase("1")) {
+            SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata/" + date + "/*/*", "/logsplit");
         }
         date = "20" + date;
         try {
 
-            RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)"+tableName+date+"(.*)");
+            RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
+                    + "(.*)");
             Path path = new Path(nameNode + "/logsplit/");
             if (!regexPathFilter.accept(path)) {
                 AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
             } else {
                 // Read origin log file
-            	String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
-                JavaRDD<String> logLines = sc.textFile(targetFile);              
+                String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
+                JavaRDD<String> logLines = sc.textFile(targetFile);
 
                 // Split origin file into key-value model
                 JavaPairRDD<String, String[]> hadoopFile = logLines
@@ -107,14 +103,14 @@ public class MainAPP {
                             }).values();
 
                     AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
+                   
                 } else {
-                    // T
+                    JavaRDD<String[]> chongZhiRDD = hadoopFile.values();
+                    ChongzhiProcessTable.process(sqlContext, chongZhiRDD, date);
                 }
             }
             UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-
-            DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date);
-
+            DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date, mode);
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, date);
         } catch (Exception e) {
