@@ -11,8 +11,12 @@ import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
 import com.shadowinlife.app.OssTableSQL.DataMigrateToMysql;
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
+import com.shadowinlife.app.Tools.FileSplit;
+import com.shadowinlife.app.Tools.RegexPathFilter;
+import com.shadowinlife.app.Tools.SplitAction;
 
 import scala.Tuple2;
 
@@ -28,7 +32,7 @@ public class MainAPP {
     public static void main(String[] args) {
         if (args.length < 5) {
             System.out
-                    .println("args[0]---FileTarget \n args[1]----mode \n args[2]---TableName \n  args[3]----date\n args[4]---1 for split file");
+                    .println("args[0]---FileTarget \n args[1]----Mode \n args[2]---vFlagName \n  args[3]----Date\n args[4]---1 for split file");
         }
 
         // Assemble path of the origin log files
@@ -51,6 +55,7 @@ public class MainAPP {
             RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
                     + "(.*)");
             Path path = new Path(nameNode + "/logsplit/");
+
             if (!regexPathFilter.accept(path)) {
                 AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
             } else {
@@ -70,8 +75,8 @@ public class MainAPP {
                                         .getLineValues());
                             }
                         });
-
-                if (tableName.equalsIgnoreCase("RoleLogin")) {
+                switch (tableName) {
+                case "RoleLogin": {
                     // Filter origin file into different RDD
                     JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
                             new Function<Tuple2<String, String[]>, Boolean>() {
@@ -103,10 +108,19 @@ public class MainAPP {
                             }).values();
 
                     AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
-                   
-                } else {
+
+                }
+                
+                case "ChongZhi": {
                     JavaRDD<String[]> chongZhiRDD = hadoopFile.values();
                     ChongzhiProcessTable.process(sqlContext, chongZhiRDD, date);
+                }
+                
+                case "MoneyFlow": {
+                    JavaRDD<String[]> moneyFlowRDD = hadoopFile.values();
+                    MoneyFlowProcessTable.process(sqlContext, moneyFlowRDD, date);
+                }
+                
                 }
             }
             UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);

@@ -1,4 +1,4 @@
-package com.shadowinlife.app.LogAnalyse;
+package com.shadowinlife.app.Tools;
 /**
  * FileSplit is used as the Map Class split log into different Files Based on
  * the eventTAG Login/Logout/Levelup

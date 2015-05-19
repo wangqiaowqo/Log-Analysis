@@ -33,7 +33,7 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
+import com.shadowinlife.app.Tools.CONSTANT;
 
 import jodd.util.StringUtil;
 

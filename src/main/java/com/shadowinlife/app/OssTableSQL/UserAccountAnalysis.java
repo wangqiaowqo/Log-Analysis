@@ -7,7 +7,7 @@ import java.util.Date;
 
 import org.apache.spark.sql.hive.HiveContext;
 
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
+import com.shadowinlife.app.Tools.CONSTANT;
 
 
 public class UserAccountAnalysis {

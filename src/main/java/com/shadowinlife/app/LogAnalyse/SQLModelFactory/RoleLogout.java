@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 import jodd.util.StringUtil;
 
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.CONSTANT;
+import com.shadowinlife.app.Tools.CONSTANT;
 
 /**
  * 

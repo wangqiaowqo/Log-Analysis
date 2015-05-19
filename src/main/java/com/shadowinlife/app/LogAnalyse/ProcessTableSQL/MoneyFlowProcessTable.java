@@ -8,7 +8,8 @@ import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.hive.HiveContext;
 
-import com.shadowinlife.app.LogAnalyse.SQLModelFactory.ChongZhi;
+import com.shadowinlife.app.LogAnalyse.SQLModelFactory.MoneyFlow;
+
 
 /**
 +--------------------------+-----------------------------------+-----------------------+--+
@@ -17,11 +18,11 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.ChongZhi;
 | dtstatdate               | date                              |                       |
 | iaccounttype             | int                               |                       |
 | suin                     | string                            |                       |
-| ifirstchongzhitime       | timestamp                         |                       |
+| ifirstPaytime            | timestamp                         |                       |
 | igameid                  | int                               |                       |
 | iworldid                 | int                               |                       |
 | iroleid                  | int                               |                       |
-| ilastchongzhitime        | timestamp                         |                       |
+| ilastPaytime             | timestamp                         |                       |
 | idayacti                 | struct<header:int,tailer:bigint>  |                       |
 | iweekacti                | struct<header:int,tailer:bigint>  |                       |
 | imonthacti               | struct<header:int,tailer:bigint>  |                       |
@@ -29,7 +30,7 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.ChongZhi;
 | ilevel                   | bigint                            |                       |
 | iviplevel                | bigint                            |                       |
 | itimes                   | bigint                            |                       |
-| ichongzhisum             | bigint                            |                       |
+| iPaysum                  | bigint                            |                       |
 | index_iaccounttype       | int                               |                       |
 | index_dtstatdate         | bigint                            |                       |
 | index_igameid            | int                               |                       |
@@ -46,32 +47,32 @@ import com.shadowinlife.app.LogAnalyse.SQLModelFactory.ChongZhi;
 
  */
 
-public class ChongzhiProcessTable {
-	
-	
-	
- // create daily user chongzhi table
-    private static String tbChongZhi_process_table_sql = 
+public class MoneyFlowProcessTable {
+    
+    
+    
+ // create daily user Pay table
+    private static String tbPay_process_table_sql = 
             "SELECT `iUin` AS id,"
             + "MAX(`iRoleId`) AS iRoleId,"
             + "MIN(`dtEventTime`) AS FirstTime,"
             + "MAX(`dtEventTime`) AS ActTime,"
             + "COUNT(`iUin`) AS iTimes,"
-            + "SUM(`iPayDelta`) AS TotalPay,"
+            + "SUM(`iMoney`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
-            + "FROM ChongZhiLog GROUP BY `iUin`";
+            + "FROM PayLog WHERE `iFlowType`=2 GROUP BY `iUin`";
     // USER NOT ACTIVITY 
-    private static String tbChongZhi_unact_account_table = "INSERT OVERWRITE TABLE fat_deposit_user "
+    private static String tbPay_unact_account_table = "INSERT OVERWRITE TABLE fat_pay_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s', "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstchongzhitime,"
+            + "T1.ifirstPaytime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.ilastchongzhitime,"
+            + "T1.ilastPaytime,"
             + "shiftleft(T1.idayacti),"
             + "T1.iWeekActi," // iWeekacti
             + "T1.iMonthActi," //iMonthacti
@@ -84,17 +85,17 @@ public class ChongzhiProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
-            + "FROM (SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 LEFT JOIN "
-            + "ChongZhiProcessTable T2 ON T1.suin = T2.id "
+            + "FROM (SELECT * FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 LEFT JOIN "
+            + "PayProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
-    private static String tbChongZhi_act_account_table = "INSERT INTO TABLE fat_deposit_user "
+    private static String tbPay_act_account_table = "INSERT INTO TABLE fat_pay_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
             + "1," //acounttype
             + "T2.id,"
-            + "IF(T1.ifirstchongzhitime is null, T2.FirstTime, T1.ifirstchongzhitime),"
+            + "IF(T1.ifirstPaytime is null, T2.FirstTime, T1.ifirstPaytime),"
             + "1," //gameid
             + "1," //worldid
             + "T2.iRoleId," //roleid
@@ -111,20 +112,20 @@ public class ChongzhiProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "1 AS index_igameid,"
             + "1 AS index_iworldid "
-            + "FROM ChongZhiProcessTable T2 LEFT JOIN "
-            + "(SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
+            + "FROM PayProcessTable T2 LEFT JOIN "
+            + "(SELECT * FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
             + "ON T2.id=T1.suin";
     //Shift iweek in sunday, shift imonth in last day of month
-    private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_deposit_user "
+    private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_pay_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT T1.dtstatdate, "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstchongzhitime,"
+            + "T1.ifirstPaytime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.ilastchongzhitime,"
+            + "T1.ilastPaytime,"
             + "T1.idayacti,"
             + "%s," // iWeekacti
             + "%s," //iMonthacti
@@ -132,41 +133,41 @@ public class ChongzhiProcessTable {
             + "T1.ilevel,"
             + "T1.iviplevel,"
             + "T1.iTimes," // times
-            + "T1.ichongzhisum," 
+            + "T1.iPaysum," 
             + "T1.index_iaccounttype,"
             + "T1.index_dtstatdate,"
             + "T1.index_igameid,"
-            + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s')";
+            + "T1.index_iworldid FROM fat_pay_user T1 WHERE index_dtstatdate=date2long('%s')";
 
-    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> chongZhiFile,
+    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> PayFile,
             String date) {
         
         try {
             
             // Create RDD from login FILES
-            JavaRDD<ChongZhi> chongZhiLogs = chongZhiFile.map(new Function<String[], ChongZhi>() {
+            JavaRDD<MoneyFlow> PayLogs = PayFile.map(new Function<String[], MoneyFlow>() {
 
-				private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = 1L;
 
-				@Override
-                public ChongZhi call(String[] line) {
+                @Override
+                public MoneyFlow call(String[] line) {
                     
-                    return ChongZhi.parseFromLogFile(line);
+                    return MoneyFlow.parseFromLogFile(line);
 
                 }
 
             });
             
             // Convert all the values into the spark table
-            DataFrame schemaChongZhiRDD = sqlContext.createDataFrame(chongZhiLogs, ChongZhi.class);
-            sqlContext.registerDataFrameAsTable(schemaChongZhiRDD, "ChongZhiLog");
+            DataFrame schemaPayRDD = sqlContext.createDataFrame(PayLogs, MoneyFlow.class);
+            sqlContext.registerDataFrameAsTable(schemaPayRDD, "PayLog");
            
 
             // Execute the daily analysis SQL
-            DataFrame temp_RDD = sqlContext.sql(tbChongZhi_process_table_sql);
+            DataFrame temp_RDD = sqlContext.sql(tbPay_process_table_sql);
 
             // Register the result RDD into hive
-            sqlContext.registerDataFrameAsTable(temp_RDD, "ChongZhiProcessTable");
+            sqlContext.registerDataFrameAsTable(temp_RDD, "PayProcessTable");
 
             // Initialization hive UDF
             sqlContext.sql("use dbprocess");
@@ -184,8 +185,8 @@ public class ChongzhiProcessTable {
             String iWeekActi = "T1.iweekacti";
             String iMonthActi = "T1.imonthacti";
 
-            sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date));
-            sqlContext.sql(String.format(tbChongZhi_act_account_table, date, date, date));
+            sqlContext.sql(String.format(tbPay_unact_account_table, date, date, date));
+            sqlContext.sql(String.format(tbPay_act_account_table, date, date, date));
             
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
@@ -198,8 +199,8 @@ public class ChongzhiProcessTable {
             }
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date));
             
-            sqlContext.dropTempTable("ChongZhiProcessTable");
-            sqlContext.dropTempTable("ChongZhiLog");
+            sqlContext.dropTempTable("PayProcessTable");
+            sqlContext.dropTempTable("PayLog");
             
             return true;
         } catch (Exception e) {
@@ -210,16 +211,16 @@ public class ChongzhiProcessTable {
     }
     
     public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
-        String hql = "INSERT OVERWRITE TABLE fat_deposit_user "
+        String hql = "INSERT OVERWRITE TABLE fat_pay_user "
                 + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
                 + "iaccounttype,"
                 + "suin,"
-                + "ifirstchongzhitime,"
+                + "ifirstPaytime,"
                 + "igameid,"
                 + "iworldid,"
                 + "iroleid,"
-                + "ilastchongzhitime,"	
+                + "ilastPaytime,"  
                 + "shiftleft(idayacti),"
                 + "%s,"
                 + "%s,"
@@ -227,12 +228,12 @@ public class ChongzhiProcessTable {
                 + "ilevel,"
                 + "iviplevel,"
                 + "0," //times
-                + "0," //chongzhisum
+                + "0," //Paysum
                 + "iaccounttype AS index_iaccounttype,"
                 + "DATE2LONG('%s') AS index_dtstatdate,"
                 + "igameid AS index_igameid,"
                 + "iworldid AS index_iworldid "
-                + "FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)";
+                + "FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)";
         
         Calendar c = Calendar.getInstance();
         c.setTime(Date.valueOf(date));

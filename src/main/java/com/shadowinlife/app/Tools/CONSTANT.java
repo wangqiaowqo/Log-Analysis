@@ -1,4 +1,4 @@
-package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
+package com.shadowinlife.app.Tools;
 
 import java.sql.Timestamp;
 import java.util.Date;
