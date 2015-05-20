@@ -68,11 +68,11 @@ public class MoneyFlowProcessTable {
             + "SELECT '%s', "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstPaytime,"
+            + "T1.iregtime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.ilastPaytime,"
+            + "T1.ilastacttime,"
             + "shiftleft(T1.idayacti),"
             + "T1.iWeekActi," // iWeekacti
             + "T1.iMonthActi," //iMonthacti
@@ -85,7 +85,7 @@ public class MoneyFlowProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
-            + "FROM (SELECT * FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 LEFT JOIN "
+            + "FROM (SELECT * FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 LEFT JOIN "
             + "PayProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
 
@@ -95,9 +95,9 @@ public class MoneyFlowProcessTable {
             + "SELECT '%s',"
             + "1," //acounttype
             + "T2.id,"
-            + "IF(T1.ifirstPaytime is null, T2.FirstTime, T1.ifirstPaytime),"
+            + "IF(T1.iregtime is null, T2.FirstTime, T1.iregtime),"
             + "1," //gameid
-            + "1," //worldid
+            + "%s," //worldid
             + "T2.iRoleId," //roleid
             + "T2.ActTime,"
             + "shiftact(T1.idayacti),"
@@ -111,9 +111,9 @@ public class MoneyFlowProcessTable {
             + "1 AS index_iaccounttype,"
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "1 AS index_igameid,"
-            + "1 AS index_iworldid "
+            + "%s AS index_iworldid "
             + "FROM PayProcessTable T2 LEFT JOIN "
-            + "(SELECT * FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
+            + "(SELECT * FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
             + "ON T2.id=T1.suin";
     //Shift iweek in sunday, shift imonth in last day of month
     private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_pay_user "
@@ -121,11 +121,11 @@ public class MoneyFlowProcessTable {
             + "SELECT T1.dtstatdate, "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstPaytime,"
+            + "T1.iregtime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.ilastPaytime,"
+            + "T1.ilastacttime,"
             + "T1.idayacti,"
             + "%s," // iWeekacti
             + "%s," //iMonthacti
@@ -133,14 +133,14 @@ public class MoneyFlowProcessTable {
             + "T1.ilevel,"
             + "T1.iviplevel,"
             + "T1.iTimes," // times
-            + "T1.iPaysum," 
+            + "T1.ionlinetime," 
             + "T1.index_iaccounttype,"
             + "T1.index_dtstatdate,"
             + "T1.index_igameid,"
-            + "T1.index_iworldid FROM fat_pay_user T1 WHERE index_dtstatdate=date2long('%s')";
+            + "T1.index_iworldid FROM fat_pay_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> PayFile,
-            String date) {
+            String date, String iworldid) {
         
         try {
             
@@ -185,8 +185,8 @@ public class MoneyFlowProcessTable {
             String iWeekActi = "T1.iweekacti";
             String iMonthActi = "T1.imonthacti";
 
-            sqlContext.sql(String.format(tbPay_unact_account_table, date, date, date));
-            sqlContext.sql(String.format(tbPay_act_account_table, date, date, date));
+            sqlContext.sql(String.format(tbPay_unact_account_table, date, date, date, iworldid));
+            sqlContext.sql(String.format(tbPay_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
@@ -197,7 +197,7 @@ public class MoneyFlowProcessTable {
                         "IF(useractivity(T1.iDayActi,%s)=1,shiftact(T1.imonthacti),shiftleft(T1.imonthacti))",
                         dayOfMonth);
             }
-            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date));
+            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("PayProcessTable");
             sqlContext.dropTempTable("PayLog");
@@ -210,17 +210,17 @@ public class MoneyFlowProcessTable {
 
     }
     
-    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
+    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date, String iworldid){
         String hql = "INSERT OVERWRITE TABLE fat_pay_user "
                 + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
                 + "iaccounttype,"
                 + "suin,"
-                + "ifirstPaytime,"
+                + "iregtime,"
                 + "igameid,"
                 + "iworldid,"
                 + "iroleid,"
-                + "ilastPaytime,"  
+                + "ilastacttime,"  
                 + "shiftleft(idayacti),"
                 + "%s,"
                 + "%s,"
@@ -228,12 +228,12 @@ public class MoneyFlowProcessTable {
                 + "ilevel,"
                 + "iviplevel,"
                 + "0," //times
-                + "0," //Paysum
+                + "0," //ionlinetime
                 + "iaccounttype AS index_iaccounttype,"
                 + "DATE2LONG('%s') AS index_dtstatdate,"
                 + "igameid AS index_igameid,"
                 + "iworldid AS index_iworldid "
-                + "FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)";
+                + "FROM fat_pay_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s";
         
         Calendar c = Calendar.getInstance();
         c.setTime(Date.valueOf(date));
@@ -256,6 +256,6 @@ public class MoneyFlowProcessTable {
         sqlContext.sql("use dbprocess");
         sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         
-        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date));
+        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date, iworldid));
     }
 }

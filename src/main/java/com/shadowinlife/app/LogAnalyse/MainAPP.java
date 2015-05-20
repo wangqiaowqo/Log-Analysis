@@ -14,7 +14,8 @@ import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
 import com.shadowinlife.app.OssTableSQL.DataMigrateToMysql;
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
-import com.shadowinlife.app.Tools.FileSplit;
+import com.shadowinlife.app.Scheduler.CreateProcessTable;
+import com.shadowinlife.app.Tools.LogLineSplit;
 import com.shadowinlife.app.Tools.RegexPathFilter;
 import com.shadowinlife.app.Tools.SplitAction;
 
@@ -31,8 +32,9 @@ public class MainAPP {
 
     public static void main(String[] args) {
         if (args.length < 5) {
-            System.out
-                    .println("args[0]---FileTarget \n args[1]----Mode \n args[2]---vFlagName \n  args[3]----Date\n args[4]---1 for split file");
+            System.out.println("args[0]---FileTarget \n " + "args[1]----Mode \n "
+                    + "args[2]---vFlagName \n  " + "args[3]----Date\n "
+                    + "args[4]---1 for split file" + "args[5]---iworldid");
         }
 
         // Assemble path of the origin log files
@@ -41,7 +43,7 @@ public class MainAPP {
         String tableName = args[2];
         String date = args[3];
         String oozie = args[4];
-
+        String iworldid = args[5];
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
@@ -57,7 +59,7 @@ public class MainAPP {
             Path path = new Path(nameNode + "/logsplit/");
 
             if (!regexPathFilter.accept(path)) {
-                AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date);
+                CreateProcessTable.FatTableWithoutFile(sqlContext, tableName, date, iworldid);
             } else {
                 // Read origin log file
                 String targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
@@ -70,61 +72,16 @@ public class MainAPP {
 
                             @Override
                             public Tuple2<String, String[]> call(String line) throws Exception {
-                                FileSplit temp = FileSplit.parseFromLogFile(line);
+                                LogLineSplit temp = LogLineSplit.parseFromLogFile(line);
                                 return new Tuple2<String, String[]>(temp.getKeyName(), temp
                                         .getLineValues());
                             }
                         });
-                switch (tableName) {
-                case "RoleLogin": {
-                    // Filter origin file into different RDD
-                    JavaRDD<String[]> roleLoginRDD = hadoopFile.filter(
-                            new Function<Tuple2<String, String[]>, Boolean>() {
-
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                                    if (!f._1.contains("RoleLogout")) {
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                }
-                            }).values();
-
-                    JavaRDD<String[]> roleLogoutRDD = hadoopFile.filter(
-                            new Function<Tuple2<String, String[]>, Boolean>() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                                    if (f._1.contains("RoleLogout")) {
-                                        return true;
-                                    } else {
-                                        return false;
-                                    }
-                                }
-                            }).values();
-
-                    AcountProcessTable.process(sqlContext, roleLoginRDD, roleLogoutRDD, date);
-
-                }
-                
-                case "ChongZhi": {
-                    JavaRDD<String[]> chongZhiRDD = hadoopFile.values();
-                    ChongzhiProcessTable.process(sqlContext, chongZhiRDD, date);
-                }
-                
-                case "MoneyFlow": {
-                    JavaRDD<String[]> moneyFlowRDD = hadoopFile.values();
-                    MoneyFlowProcessTable.process(sqlContext, moneyFlowRDD, date);
-                }
-                
-                }
+                // Create Fat Process Table
+                CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date, iworldid);
             }
             UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-            DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date, mode);
+            DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date, mode, iworldid);
         } catch (NullPointerException e) {
             AcountProcessTable.process(sqlContext, null, null, date);
         } catch (Exception e) {

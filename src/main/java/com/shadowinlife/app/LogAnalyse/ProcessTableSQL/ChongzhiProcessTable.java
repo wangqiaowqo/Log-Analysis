@@ -84,7 +84,8 @@ public class ChongzhiProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
-            + "FROM (SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 LEFT JOIN "
+            + "FROM (SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
+            + "LEFT JOIN "
             + "ChongZhiProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
 
@@ -96,7 +97,7 @@ public class ChongzhiProcessTable {
             + "T2.id,"
             + "IF(T1.ifirstchongzhitime is null, T2.FirstTime, T1.ifirstchongzhitime),"
             + "1," //gameid
-            + "1," //worldid
+            + "%s," //worldid
             + "T2.iRoleId," //roleid
             + "T2.ActTime,"
             + "shiftact(T1.idayacti),"
@@ -110,9 +111,9 @@ public class ChongzhiProcessTable {
             + "1 AS index_iaccounttype,"
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "1 AS index_igameid,"
-            + "1 AS index_iworldid "
-            + "FROM ChongZhiProcessTable T2 LEFT JOIN "
-            + "(SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
+            + "%s AS index_iworldid "
+            + "FROM ChongZhiProcessTable T2  LEFT JOIN "
+            + "(SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
             + "ON T2.id=T1.suin";
     //Shift iweek in sunday, shift imonth in last day of month
     private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_deposit_user "
@@ -132,14 +133,14 @@ public class ChongzhiProcessTable {
             + "T1.ilevel,"
             + "T1.iviplevel,"
             + "T1.iTimes," // times
-            + "T1.ichongzhisum," 
+            + "T1.ionlinetime," 
             + "T1.index_iaccounttype,"
             + "T1.index_dtstatdate,"
             + "T1.index_igameid,"
-            + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s')";
+            + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> chongZhiFile,
-            String date) {
+            String date, String iworldid) {
         
         try {
             
@@ -184,8 +185,8 @@ public class ChongzhiProcessTable {
             String iWeekActi = "T1.iweekacti";
             String iMonthActi = "T1.imonthacti";
 
-            sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date));
-            sqlContext.sql(String.format(tbChongZhi_act_account_table, date, date, date));
+            sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date, iworldid));
+            sqlContext.sql(String.format(tbChongZhi_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
@@ -196,7 +197,7 @@ public class ChongzhiProcessTable {
                         "IF(useractivity(T1.iDayActi,%s)=1,shiftact(T1.imonthacti),shiftleft(T1.imonthacti))",
                         dayOfMonth);
             }
-            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date));
+            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("ChongZhiProcessTable");
             sqlContext.dropTempTable("ChongZhiLog");
@@ -209,17 +210,17 @@ public class ChongzhiProcessTable {
 
     }
     
-    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
+    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date, String iworldid){
         String hql = "INSERT OVERWRITE TABLE fat_deposit_user "
                 + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
                 + "iaccounttype,"
                 + "suin,"
-                + "ifirstchongzhitime,"
+                + "iregtime,"
                 + "igameid,"
                 + "iworldid,"
                 + "iroleid,"
-                + "ilastchongzhitime,"	
+                + "ilastacttime,"	
                 + "shiftleft(idayacti),"
                 + "%s,"
                 + "%s,"
@@ -227,12 +228,12 @@ public class ChongzhiProcessTable {
                 + "ilevel,"
                 + "iviplevel,"
                 + "0," //times
-                + "0," //chongzhisum
+                + "0," //ionlinetime
                 + "iaccounttype AS index_iaccounttype,"
                 + "DATE2LONG('%s') AS index_dtstatdate,"
                 + "igameid AS index_igameid,"
                 + "iworldid AS index_iworldid "
-                + "FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)";
+                + "FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s";
         
         Calendar c = Calendar.getInstance();
         c.setTime(Date.valueOf(date));
@@ -255,6 +256,6 @@ public class ChongzhiProcessTable {
         sqlContext.sql("use dbprocess");
         sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         
-        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date));
+        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date, iworldid));
     }
 }

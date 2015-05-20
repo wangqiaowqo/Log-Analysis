@@ -48,7 +48,7 @@ public class SplitAction {
 
                         @Override
                         public Tuple2<String, String> call(String line) throws Exception {
-                            FileSplit temp = FileSplit.parseLogFileToKV(line);
+                            LogLineSplit temp = LogLineSplit.parseLogFileToKV(line);
                             return new Tuple2<String, String>(temp.getDtEvetnTime(), temp
                                     .getFileValue());
                         }

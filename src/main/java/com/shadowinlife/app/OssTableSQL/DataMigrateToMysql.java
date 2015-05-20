@@ -15,10 +15,10 @@ public class DataMigrateToMysql {
         sc.close();
     }
 
-    public static void iHive_TO_Mysql(HiveContext sqlContext, String date, String mode) {
+    public static void iHive_TO_Mysql(HiveContext sqlContext, String date, String mode, String iworldid) {
         sqlContext.sql("use dbprocess");
         sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-        String strWhere = " WHERE index_dtstatdate=DATE2LONG('" + date + "')";
+        String strWhere = " WHERE index_dtstatdate=DATE2LONG('" + date + "') AND iworldid="+iworldid;
         String mySqlURL = "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss";
 
         try {

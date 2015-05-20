@@ -55,7 +55,7 @@ public class AcountProcessTable {
             + "IF(in_times is null, 0, in_times) AS intime," 
             + "IF(out_times is null, 0, out_times) AS outtime,"
             
-            + "(login_regTime) AS regTime,"
+            + "IF(login_regTime is null, tbLogout_dtEventTime, login_regTime) AS regTime,"
             
             + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
@@ -87,7 +87,8 @@ public class AcountProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
-            + "FROM (SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 LEFT JOIN "
+            + "FROM (SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
+            + "LEFT JOIN "
             + "loginProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
 
@@ -99,7 +100,7 @@ public class AcountProcessTable {
             + "T2.id,"
             + "IF(T1.iregtime IS NULL, T2.regTime, T1.iregtime),"
             + "1," //gameid
-            + "1," //worldid
+            + "%s," //worldid
             + "1," //roleid
             + "null, " //roleregtime
             + "T2.acttime,"
@@ -114,9 +115,9 @@ public class AcountProcessTable {
             + "1 AS index_iaccounttype,"
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "1 AS index_igameid,"
-            + "1 AS index_iworldid "
+            + "%s AS index_iworldid "
             + "FROM loginProcessTable T2 LEFT JOIN "
-            + "(SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)) T1 "
+            + "(SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
             + "ON T2.id=T1.suin";
     
     private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_login_user "
@@ -141,10 +142,10 @@ public class AcountProcessTable {
             + "T1.index_iaccounttype,"
             + "T1.index_dtstatdate,"
             + "T1.index_igameid,"
-            + "T1.index_iworldid FROM fat_login_user T1 WHERE index_dtstatdate=date2long('%s')";
+            + "T1.index_iworldid FROM fat_login_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> loginFile,
-            JavaRDD<String[]> logoutFile, String date) {
+            JavaRDD<String[]> logoutFile, String date, String iworldid) {
         
         try {
             
@@ -229,8 +230,8 @@ public class AcountProcessTable {
             String iWeekActi = "T1.iweekacti";
             String iMonthActi = "T1.imonthacti";
 
-            sqlContext.sql(String.format(tbUser_unact_account_table, date, date, date));
-            sqlContext.sql(String.format(tbUser_act_account_table, date, date, date));
+            sqlContext.sql(String.format(tbUser_unact_account_table, date, date, date, iworldid));
+            sqlContext.sql(String.format(tbUser_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
@@ -241,7 +242,7 @@ public class AcountProcessTable {
                         "IF(useractivity(T1.iDayActi,%s)=1,shiftact(T1.imonthacti),shiftleft(T1.imonthacti))",
                         dayOfMonth);
             }
-            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date));
+            sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("loginProcessTable");
             sqlContext.dropTempTable("tbLogin");
@@ -254,7 +255,7 @@ public class AcountProcessTable {
 
     }
     
-    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date){
+    public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date, String iworldid){
         String hql = "INSERT OVERWRITE TABLE fat_login_user "
                 + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
@@ -278,7 +279,7 @@ public class AcountProcessTable {
                 + "DATE2LONG('%s') AS index_dtstatdate,"
                 + "igameid AS index_igameid,"
                 + "iworldid AS index_iworldid "
-                + "FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1)";
+                + "FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s";
         
         Calendar c = Calendar.getInstance();
         c.setTime(Date.valueOf(date));
@@ -303,6 +304,6 @@ public class AcountProcessTable {
         sqlContext.sql("use dbprocess");
         sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         
-        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date));
+        sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date, iworldid));
     }
 }

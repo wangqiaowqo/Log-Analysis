@@ -10,7 +10,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
 
-import com.shadowinlife.app.Tools.FileSplit;
+import com.shadowinlife.app.Tools.LogLineSplit;
 
 import scala.Tuple2;
 
@@ -57,7 +57,7 @@ public class SplitApp {
 
                         @Override
                         public Tuple2<String, String> call(String line) throws Exception {
-                            FileSplit temp = FileSplit.parseLogFileToKV(line);
+                            LogLineSplit temp = LogLineSplit.parseLogFileToKV(line);
                             return new Tuple2<String, String>(temp.getDtEvetnTime(), temp
                                     .getFileValue());
                         }

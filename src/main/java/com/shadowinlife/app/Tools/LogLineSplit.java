@@ -7,20 +7,20 @@ package com.shadowinlife.app.Tools;
  * @since 2015-04-05
  */
 
-public class FileSplit {
+public class LogLineSplit {
 
     private String keyName = "Default";
     private String[] lineValues;
     private String dtEvetnTime;
     private String fileValue;
 
-    private FileSplit(String keyName, String[] lineValues) {
+    private LogLineSplit(String keyName, String[] lineValues) {
         this.keyName = keyName;
         this.lineValues = lineValues;
 
     }
 
-    private FileSplit(String dtEventTime, String fileValue) {
+    private LogLineSplit(String dtEventTime, String fileValue) {
         this.dtEvetnTime = dtEventTime;
         this.fileValue = fileValue;
     }
@@ -49,22 +49,22 @@ public class FileSplit {
         this.dtEvetnTime = dtEvetnTime;
     }
 
-    public static FileSplit parseFromLogFile(String logline) {
+    public static LogLineSplit parseFromLogFile(String logline) {
         String[] splitIndex = logline.split("\\|", 25);
         if (splitIndex.length > 2) {
 
-            return new FileSplit(splitIndex[0], splitIndex);
+            return new LogLineSplit(splitIndex[0], splitIndex);
 
         } else {
-            return new FileSplit("null", logline);
+            return new LogLineSplit("null", logline);
         }
     }
 
-    public static FileSplit parseLogFileToKV(String logline) {
+    public static LogLineSplit parseLogFileToKV(String logline) {
         String[] splitIndex = logline.split("\\|", 25);
         if (splitIndex.length > 2) {
             if (splitIndex[1].length() < 10) {
-                return new FileSplit(splitIndex[0] + "0000-00-00", logline);
+                return new LogLineSplit(splitIndex[0] + "0000-00-00", logline);
             }
             String tmp_key = splitIndex[0];
             if (splitIndex[0].equalsIgnoreCase("RoleLogin")
@@ -72,10 +72,10 @@ public class FileSplit {
                 tmp_key = "RoleLogin";
             }
             String key = tmp_key + splitIndex[1].substring(0, 10);
-            return new FileSplit(key, logline);
+            return new LogLineSplit(key, logline);
 
         } else {
-            return new FileSplit("null", logline);
+            return new LogLineSplit("null", logline);
         }
     }
 
