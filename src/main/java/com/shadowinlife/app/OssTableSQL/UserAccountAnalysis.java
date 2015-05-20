@@ -68,19 +68,29 @@ public class UserAccountAnalysis {
     
     private static String tbRegisterUser_TotalRegUser = "INSERT OVERWRITE TABLE oss_dm_%s_tbRegisterUser "
             + "PARTITION(index_dtstatdate=%s,index_iperiod='%s') "
-            + "SELECT '%s'," //date 
-            + "%s,"  //period
-            + "IF(index_igameid IS NULL,-1,index_igameid) AS index_igameid,"
-            + "IF(index_iaccounttype IS NULL,-1,index_iaccounttype) as index_iaccounttype,"
-            + "IF(index_iworldid is null,-1, index_iworldid) as index_iworldid,"
-            + "count(DISTINCT suin) AS newcount, "
-            + "0,"
-            + "0,"
-            + "0,"
-            + "sum(itimes) AS itimes,"
-            + "sum(ionlinetime) AS ionlinetime "
+    		+ "SELECT T1.dtStatDate,T1.iPeriod,T1.iGameId,T1.iAccountType,T1.iWorldId,T1.iRegNum,T1.iActivityNum,T1.iLostNum,"
+    		+ "T1.iBackNum,if(T2.iTimes is null,T1.iTimes,T1.iTimes+T2.iTimes),if(T2.iOnlineTime is null,T1.iOnlineTime,T1.iOnlineTime+T2.iOnlineTime) "
+    		+ "FROM "
+    		
+            + "(SELECT '%s' AS dtStatDate," //date 
+            + "%s AS iPeriod,"  //period
+            + "IF(index_igameid IS NULL,-1,index_igameid) AS iGameId,"
+            + "IF(index_iaccounttype IS NULL,-1,index_iaccounttype) as iAccountType,"
+            + "IF(index_iworldid is null,-1, index_iworldid) as iWorldId,"
+            + "count(DISTINCT suin) AS iRegNum, "
+            + "0 AS iActivityNum,"
+            + "0 AS iLostNum,"
+            + "0 AS iBackNum,"
+            + "sum(itimes) AS iTimes,"
+            + "sum(ionlinetime) AS iOnlineTime "
             + "FROM fat_%s_user WHERE index_dtstatdate=DATE2LONG('%s') " //tablename  date
-            + "group by index_igameid,index_iaccounttype,index_iworldid with cube";
+            + "group by index_igameid,index_iaccounttype,index_iworldid with cube) T1 "
+            + "LEFT JOIN "
+            + "(select igameid,iaccounttype,iworld,itimes AS iTimes,ionlinetime AS iOnlineTime "
+            + "from oss_dm_%s_tbregisteruser "
+            + "where index_dtstatdate=DATE2LONG(date_add('%s',-1)) and index_iperiod = %s) T2 "
+            
+            + "ON T1.iGameId = T2.igameid and T1.iAccountType = T2.iaccounttype and T1.iWorldId = T2.iworld";
     
     /*
      * tbRegisterUserTypeDis
@@ -483,7 +493,7 @@ public class UserAccountAnalysis {
         {
             // stat tbRegisterUser
             strSql = String.format(tbRegisterUser_TotalRegUser, strMode,
-                    CONSTANT.date2Long(strDate), iPeriod, strDate, iPeriod, strMode, strDate);
+                    CONSTANT.date2Long(strDate), iPeriod, strDate, iPeriod, strMode, strDate,strMode,strDate,iPeriod);
             sqlContext.sql(strSql);
 
             // stat tbRegisterUserTypeDis
