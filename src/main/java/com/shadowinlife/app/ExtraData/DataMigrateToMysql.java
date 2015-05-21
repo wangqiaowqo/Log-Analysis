@@ -25,8 +25,10 @@ public class DataMigrateToMysql {
             }
             if (args[i].contains("help")) {
                 System.out.println("--CONF Read configuration file and ignore other parameters\n"
-                        + "--DB  DataBase name of Hive\n" + "--URL url for MySql\n"
-                        + "--DATE Index Field Date\n" + "--GAMEID Index Filed Gameid\n"
+                        + "--DB  DataBase name of Hive\n" 
+                        + "--URL url for MySql\n"
+                        + "--DATE Index Field Date\n"   
+                        + "--GAMEID Index Filed Gameid\n"
                         + "--WORLDID Index Filed WORLDID\n"
                         + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n" 
                         + "--MODE Mode of table\n"
@@ -34,6 +36,9 @@ public class DataMigrateToMysql {
                 return;
             }
             switch (args[i]) {
+            case "CONF":
+                String confFile = args[i+1];
+                break;
             case "DB":
                 databaseName = args[i + 1];
                 break;
@@ -64,6 +69,10 @@ public class DataMigrateToMysql {
                 break;
 
             }
+        }
+        if(date==null || (mode==null&table==null)){
+            System.out.println("DATE CAN NOT BE NULL\n  MODE OR TABLE CAN NOT BE NULL");
+            return;
         }
         SparkConf conf = new SparkConf().setAppName("Extra Data");
         JavaSparkContext sc = new JavaSparkContext(conf);
