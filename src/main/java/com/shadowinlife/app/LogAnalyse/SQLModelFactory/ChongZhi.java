@@ -55,7 +55,7 @@ public class ChongZhi implements Serializable {
 
     private long iArea;
     private String DstUin;
-    private int iSourceWay;
+    private String iSourceWay;
     private Long vClientIp;
     private String vRemark;
     private int iPayBefore;
@@ -86,7 +86,7 @@ public class ChongZhi implements Serializable {
 
         this.iArea = Long.valueOf(iArea);
         this.DstUin = DstUin;
-        this.iSourceWay = Integer.valueOf(iSourceWay);
+        this.iSourceWay = iSourceWay;
         this.vClientIp = CONSTANT.ipToLong(vClientIp);
         this.vRemark = vRemark;
         this.iPayBefore = Integer.valueOf(iPayBefore);
@@ -235,11 +235,11 @@ public class ChongZhi implements Serializable {
         DstUin = dstUin;
     }
 
-    public int getiSourceWay() {
+    public String getiSourceWay() {
         return iSourceWay;
     }
 
-    public void setiSourceWay(int iSourceWay) {
+    public void setiSourceWay(String iSourceWay) {
         this.iSourceWay = iSourceWay;
     }
 

@@ -55,14 +55,14 @@ public class AcountProcessTable {
             + "IF(in_times is null, 0, in_times) AS intime," 
             + "IF(out_times is null, 0, out_times) AS outtime,"
             
-            + "IF(login_regTime is null, tbLogout_dtEventTime, login_regTime) AS regTime,"
+            + "IF(login_regTime is null, logout_regtime, login_regTime) AS regTime,"
             
             + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
             + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
             + "ELSE login_dtEventTime END) AS acttime "
             
-            + "FROM tbLogin FULL OUTER JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
+            + "FROM tbLogin FULL JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
     // USER NOT ACTIVITY
     private static String tbUser_unact_account_table = "INSERT OVERWRITE TABLE fat_login_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
@@ -197,8 +197,8 @@ public class AcountProcessTable {
                     max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
                     max(col("vClientIp")).as("tbLogout_vClientIp"),
                     count(col("iUin")).as("out_times"),
-                    max(col("dtEventTime")).as("logout_dtEventTime")
-                    );
+                    max(col("dtEventTime")).as("logout_dtEventTime"),
+                    min(col("dtLoginTime")).as("logout_regtime"));
             
             
             // Register temple tables to execute analysis SQL
@@ -207,7 +207,7 @@ public class AcountProcessTable {
 
             // Execute the analysis SQL
             DataFrame temp_RDD = sqlContext.sql(tbUser_process_table_sql);
-
+            
             // Register the result RDD into hive
             sqlContext.registerDataFrameAsTable(temp_RDD, "loginProcessTable");
 

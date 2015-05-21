@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.ChongZhi;
@@ -67,11 +68,11 @@ public class ChongzhiProcessTable {
             + "SELECT '%s', "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstchongzhitime,"
+            + "T1.iregtime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.ilastchongzhitime,"
+            + "T1.ilastacttime,"
             + "shiftleft(T1.idayacti),"
             + "T1.iWeekActi," // iWeekacti
             + "T1.iMonthActi," //iMonthacti
@@ -84,7 +85,7 @@ public class ChongzhiProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
-            + "FROM (SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
+            + "FROM (SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND index_iworldid=%s) T1 "
             + "LEFT JOIN "
             + "ChongZhiProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
@@ -95,7 +96,7 @@ public class ChongzhiProcessTable {
             + "SELECT '%s',"
             + "1," //acounttype
             + "T2.id,"
-            + "IF(T1.ifirstchongzhitime is null, T2.FirstTime, T1.ifirstchongzhitime),"
+            + "IF(T1.iregtime is null, T2.FirstTime, T1.iregtime),"
             + "1," //gameid
             + "%s," //worldid
             + "T2.iRoleId," //roleid
@@ -113,7 +114,7 @@ public class ChongzhiProcessTable {
             + "1 AS index_igameid,"
             + "%s AS index_iworldid "
             + "FROM ChongZhiProcessTable T2  LEFT JOIN "
-            + "(SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
+            + "(SELECT * FROM fat_deposit_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND index_iworldid=%s) T1 "
             + "ON T2.id=T1.suin";
     //Shift iweek in sunday, shift imonth in last day of month
     private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_deposit_user "
@@ -121,11 +122,11 @@ public class ChongzhiProcessTable {
             + "SELECT T1.dtstatdate, "
             + "T1.iaccounttype,"
             + "T1.suin,"
-            + "T1.ifirstchongzhitime,"
+            + "T1.iregtime,"
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
-            + "T1.ilastchongzhitime,"
+            + "T1.ilastacttime,"
             + "T1.idayacti,"
             + "%s," // iWeekacti
             + "%s," //iMonthacti
@@ -137,7 +138,7 @@ public class ChongzhiProcessTable {
             + "T1.index_iaccounttype,"
             + "T1.index_dtstatdate,"
             + "T1.index_igameid,"
-            + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
+            + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s') AND index_iworldid=%s";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> chongZhiFile,
             String date, String iworldid) {
@@ -165,7 +166,8 @@ public class ChongzhiProcessTable {
 
             // Execute the daily analysis SQL
             DataFrame temp_RDD = sqlContext.sql(tbChongZhi_process_table_sql);
-
+            
+ 
             // Register the result RDD into hive
             sqlContext.registerDataFrameAsTable(temp_RDD, "ChongZhiProcessTable");
 
@@ -186,6 +188,10 @@ public class ChongzhiProcessTable {
             String iMonthActi = "T1.imonthacti";
 
             sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date, iworldid));
+            DataFrame tmp=sqlContext.sql("select * from fat_deposit_user where dtstatdate='"+date+"' and iworldid="+iworldid);
+            for(Row r:tmp.collect()){
+                System.out.println("log2:"+r.mkString());
+            }
             sqlContext.sql(String.format(tbChongZhi_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
             if(dayOfWeek == 1) {
