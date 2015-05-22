@@ -150,11 +150,11 @@ public class UserAccountAnalysis {
      */
     private static String tbDayNewRegTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayNewRegTypeDis PARTITION(index_dtstatdate=%s) "
 	    + "SELECT '%s'," //date
-            + "'%s'," //sType:level
+            + "'%s'," //sType:ActivityTimeDis
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "if(totaltimes is null,-1,totaltimes)," //sTypeValue : levelvalue
+            + "if(totaltimes is null,-1,totaltimes)," //sTypeValue : ActivityTimeDis value
             + "count(*),"
             + "DATE2LONG('%s') "
             + "from "
@@ -474,7 +474,7 @@ public class UserAccountAnalysis {
             // stat tbDayNewRegTypeDis
             str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
             strSql = String.format(tbDayNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, iPeriod, strDate, strMode, strDate, str);
+                    strDate, "ActivityTimeDis", strDate, strMode, strDate, str);
             sqlContext.sql(strSql);
 
             // stat tbDayUserActivityTypeDis
