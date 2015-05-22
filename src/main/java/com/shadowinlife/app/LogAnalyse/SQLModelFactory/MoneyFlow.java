@@ -3,8 +3,6 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 import java.sql.Timestamp;
 
 import jodd.util.StringUtil;
-
-import com.shadowinlife.app.Tools.CONSTANT;
 /**
 +--------------+------------------+------+-----+---------+-------+
 | Field        | Type             | Null | Key | Default | Extra |

@@ -39,6 +39,9 @@ import jodd.util.StringUtil;
 
 public class ChongZhi implements Serializable {
 
+   
+    private static final long serialVersionUID = 1L;
+   
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;

@@ -2,7 +2,6 @@ package com.shadowinlife.app.ExtraData;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -12,14 +11,15 @@ import org.apache.spark.sql.hive.HiveContext;
 
 public class DeliveryDataToMysql {
 
-    public void insertIntoMysql(HiveContext sqlContext, String mySqlURL, String strTable,
-            List<String> columnNames, String strWhere) {
-        sqlContext.sql("use dbprocess");
-        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-
+    public void insertIntoMysql(HiveContext sqlContext, String mySqlURL, String strTable, String mTable,
+            List<String> columnNames, String strWhere, String mySQLWhere) {
         Connection conn;
         String sql;
         Statement stmt;
+        
+        if(mTable==null)
+            return;
+        
         try {
             conn = DriverManager.getConnection(mySqlURL);
             stmt = conn.createStatement();
@@ -29,10 +29,9 @@ public class DeliveryDataToMysql {
         }
 
         try {
-            sql = "SELECT mTableName FROM NAMECONFIG WHERE hTableName="+strTable;
-            ResultSet rs = stmt.executeQuery(sql);
-            String mTable = rs.getString(0);
-            sql = "DELETE FROM " + mTable + strWhere;
+            
+            sql = "DELETE FROM " + mTable + mySQLWhere;
+            System.out.println(sql);
             stmt.executeUpdate(sql);
             stmt.close();
             conn.close();

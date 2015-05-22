@@ -5,14 +5,9 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.hive.HiveContext;
 
-import com.shadowinlife.app.ExtraData.DataMigrateToMysql;
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
 import com.shadowinlife.app.Scheduler.CreateProcessTable;
 import com.shadowinlife.app.Tools.LogLineSplit;
@@ -91,7 +86,6 @@ public class MainAPP {
                 CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date, iworldid);
             }
             UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-            //DataMigrateToMysql.iHive_TO_Mysql(sqlContext, date, mode, iworldid);
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {

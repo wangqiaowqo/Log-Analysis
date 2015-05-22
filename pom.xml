@@ -4,7 +4,7 @@
 
 	<groupId>com.shadowinlife.app</groupId>
 	<artifactId>LogAnalyse</artifactId>
-	<version>0.3</version>
+	<version>0.4</version>
 	<packaging>jar</packaging>
 
 	<name>LogAnalyse</name>
