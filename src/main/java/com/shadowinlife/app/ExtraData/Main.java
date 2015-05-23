@@ -88,8 +88,9 @@ public class Main {
 
             }
         }
-        if(date==null || confFile==null||(mode==null&table==null)){
-            System.out.println(" date  NOT be NULL\n  mode OR table NOT be NULL");
+        if(date==null && confFile==null || (mode==null && table==null && databaseName==null)){
+            System.out.println(" date  NOT be NULL\n OR confFile Not be NUll\n"
+                    + "OR mode OR table NOT be NULL");
             return;
         }
         
@@ -101,6 +102,7 @@ public class Main {
                 String[] kv = line.split(" ");
                 confMap.put(kv[0], kv[1]);
             }
+            
             
             // Always close files.
             bufferedReader.close();

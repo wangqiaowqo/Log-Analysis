@@ -52,10 +52,8 @@ public class AcountProcessTable {
             + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel) AS iRoleLevel, "
             + "IF(tbLogout_vClientIp is null, tbLogin_vClientIp, tbLogout_vClientIp) AS ip, "
             + "IF(in_times is null, 0, in_times) AS intime," 
-            + "IF(out_times is null, 0, out_times) AS outtime,"
-            
-            + "IF(login_regTime is null, logout_regtime, login_regTime) AS regTime,"
-            
+            + "IF(out_times is null, 0, out_times) AS outtime,"  
+            + "IF(login_regTime is null, logout_regtime, login_regTime) AS regTime,"    
             + "(CASE WHEN logout_dtEventTime IS NULL THEN login_dtEventTime "
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
             + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
@@ -189,7 +187,7 @@ public class AcountProcessTable {
                     max(col("vClientIp")).as("tbLogin_vClientIp"),
                     count(col("iUin")).as("in_times"),
                     max(col("dtEventTime")).as("login_dtEventTime"),
-                    min(col("dtCreateTime")).as("login_regTime"));
+                    min(col("dtEventTime")).as("login_regTime"));
 
             DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
                     sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
