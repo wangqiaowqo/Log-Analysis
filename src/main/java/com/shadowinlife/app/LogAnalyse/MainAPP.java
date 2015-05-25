@@ -85,7 +85,8 @@ public class MainAPP {
                 // Create Fat Process Table
                 CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date, iworldid);
             }
-            UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
+            if(!mode.equalsIgnoreCase("NULL"))
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {

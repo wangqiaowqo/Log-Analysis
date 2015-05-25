@@ -50,7 +50,7 @@ public class LogLineSplit {
     }
 
     public static LogLineSplit parseFromLogFile(String logline) {
-        String[] splitIndex = logline.split("\\|", 25);
+        String[] splitIndex = logline.split("\\|", 31);
         if (splitIndex.length > 2) {
 
             return new LogLineSplit(splitIndex[0], splitIndex);
@@ -61,17 +61,29 @@ public class LogLineSplit {
     }
 
     public static LogLineSplit parseLogFileToKV(String logline) {
-        String[] splitIndex = logline.split("\\|", 25);
+        String[] splitIndex = logline.split("\\|", 31);
         if (splitIndex.length > 2) {
             if (splitIndex[1].length() < 10) {
                 return new LogLineSplit(splitIndex[0] + "0000-00-00", logline);
             }
-            String tmp_key = splitIndex[0];
-            if (splitIndex[0].equalsIgnoreCase("RoleLogin")
-                    || splitIndex[0].equalsIgnoreCase("RoleLogout")) {
-                tmp_key = "RoleLogin";
+            String key = null;
+            switch(splitIndex[0]){
+            case "RoleLogin":
+                key = "RoleLogin" + splitIndex[1].substring(0, 10);
+                break;
+            case "RoleLogout":
+                key = "RoleLogin" + splitIndex[1].substring(0, 10);
+                break;
+            case "TaskStart":
+                key = "Task" + splitIndex[1].substring(0, 10);
+                break;
+            case "TaskFinished":
+                key = "Task" + splitIndex[1].substring(0, 10);
+                break;
+            default:
+                key = splitIndex[0] + splitIndex[1].substring(0, 10);
             }
-            String key = tmp_key + splitIndex[1].substring(0, 10);
+            
             return new LogLineSplit(key, logline);
 
         } else {
