@@ -77,7 +77,10 @@ public class TaskFinished {
 
     public static TaskFinished parseFromLogFile(String[] array) {
         String[] columnList = array;
-      
+        for (int i = 0; i < columnList.length; i++){
+            if (columnList[i].equalsIgnoreCase(" ")){
+                columnList[i] = "0";}
+        }
             // TODO Some column may be null,should handle it      
                 return new TaskFinished(columnList[1], columnList[2], columnList[3], columnList[4],
                         columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
