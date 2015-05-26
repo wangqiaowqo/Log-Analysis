@@ -150,11 +150,11 @@ public class UserAccountAnalysis {
      */
     private static String tbDayNewRegTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayNewRegTypeDis PARTITION(index_dtstatdate=%s) "
 	    + "SELECT '%s'," //date
-            + "'%s'," //sType:ActivityTimeDis
+            + "'%s'," //sType:ActivityTimesDis
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "if(totaltimes is null,-1,totaltimes)," //sTypeValue : ActivityTimeDis value
+            + "if(totaltimes is null,-1,totaltimes)," //sTypeValue : ActivityTimesDis value
             + "count(*),"
             + "DATE2LONG('%s') "
             + "from "
@@ -234,15 +234,15 @@ public class UserAccountAnalysis {
      | idayactivitynum  | bigint     |          |
      +------------------+------------+----------+--+
      */
-    private static String tbDayUserActivityTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s) "
+    private static String tbDayUserActivityTypeDis_ActivityTimesDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s,index_sType='ActivityTimesDis') "
             + "SELECT '%s'," //date
-            + "'%s'," //sType:level
+            + "'%s'," //sType:ActivityTimesDis
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "if(maxlevel is null, -1, maxlevel)," //sTypeValue : levelvalue
-            + "count(*)," //period
-            + "DATE2LONG('%s') "
+            + "IF(itimes is null,-1,CASE WHEN itimes < 100 THEN itimes ELSE round(itimes/100,0)*100 END) itimes," //sTypeValue : ActivityTimesDis value
+            + "count(*) " 
+            //+ "DATE2LONG('%s') "
             + "from "
             
             + "(select "
@@ -250,13 +250,37 @@ public class UserAccountAnalysis {
             + "index_igameid,"
             + "index_iworldid,"
             + "suin,"
-            + "max(ilevel) maxlevel "
+            + "sum(itimes) itimes "
             + "from fat_%s_user "
             + "WHERE "
             + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
-            + "group by index_igameid,index_iaccounttype,index_iworldid,maxlevel with cube";
+            + "group by index_igameid,index_iaccounttype,index_iworldid,itimes with cube";
+    
+    private static String tbDayUserActivityTypeDis_ActivityTimeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s,index_sType='ActivityTimeDis') "
+            + "SELECT '%s'," //date
+            + "'%s'," //sType:ActivityTimeDis
+            + "if(index_igameid is null,-1,index_igameid),"
+            + "if(index_iaccounttype is null,-1,index_iaccounttype),"
+            + "if(index_iworldid is null,-1,index_iworldid),"
+            + "%s,"//"IF(ionlinetime is null,-1,round(ionlinetime/300,0)*5) ionlinetimedis," //sTypeValue : ActivityTimeDis value
+            + "count(*) " 
+            //+ "DATE2LONG('%s') "
+            + "from "
+            
+            + "(select "
+            + "index_iaccounttype,"
+            + "index_igameid,"
+            + "index_iworldid,"
+            + "suin,"
+            + "sum(ionlinetime) ionlinetime "
+            + "from fat_%s_user "
+            + "WHERE "
+            + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
+            + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
+            
+            + "group by index_igameid,index_iaccounttype,index_iworldid,ionlinetime with cube";
     /*
      * tbActivityScaleDis
      +---------------+------------+----------+--+
@@ -474,12 +498,36 @@ public class UserAccountAnalysis {
             // stat tbDayNewRegTypeDis
             str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
             strSql = String.format(tbDayNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "ActivityTimeDis", strDate, strMode, strDate, str);
+                    strDate, "ActivityTimesDis", strDate, strMode, strDate, str);
             sqlContext.sql(strSql);
 
+           // stat tbUserActivityTypeDis
+            strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
+                    strDate, strMode, strDate, strDate);
+            sqlContext.sql(strSql);
+            
             // stat tbDayUserActivityTypeDis
-            strSql = String.format(tbDayUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "Level", strDate, strMode, strDate);
+            strSql = String.format(tbDayUserActivityTypeDis_ActivityTimesDis, strMode, CONSTANT.date2Long(strDate),
+                    strDate, "ActivityTimesDis", strMode, strDate);
+            sqlContext.sql(strSql);
+            
+            String strRange = new String();
+            if(strMode.equalsIgnoreCase("login")){
+            	strRange = "IF(ionlinetime is null,-1,round(ionlinetime/300,0)*5) ionlinetime";
+            }
+            else if(strMode.equalsIgnoreCase("deposit")){
+            	strRange = "IF(ionlinetime is null,-1,round(ionlinetime/500,0)*5) ionlinetime";
+            }
+            else if(strMode.equalsIgnoreCase("pay")){
+            	strRange = "IF(ionlinetime is null,-1,round(ionlinetime/100,0)*1) ionlinetime";
+            }
+            else{
+            	
+            }
+            
+            strSql = String.format(tbDayUserActivityTypeDis_ActivityTimeDis, strMode, CONSTANT.date2Long(strDate),
+                    strDate, "ActivityTimeDis", strRange, strMode, strDate);
             sqlContext.sql(strSql);
 
             // stat tbStayScaleDis
