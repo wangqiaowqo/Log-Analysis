@@ -30,7 +30,7 @@ public class DeliveryHiveDB {
                 break;
             columnList.add(r.getString(0));
         }
-
+        
         DeliveryDataToMysql Process = new DeliveryDataToMysql();
         Process.insertIntoMysql(sqlContext, url, tableName, map.get(tableName.trim()), columnList,
                 strWhere, mySQLWhere);

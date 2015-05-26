@@ -61,15 +61,6 @@ public class TaskProcessTable {
 
         try {
 
-            sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {
-                @Override
-                public Integer call(Integer value) throws Exception {
-                    if (value == null)
-                        return -1;
-                    return value;
-                }
-
-            }, DataTypes.IntegerType);
             // Create RDD from login FILES
             JavaRDD<TaskStart> tbTaskStart = rddTaskStart.map(new Function<String[], TaskStart>() {
 

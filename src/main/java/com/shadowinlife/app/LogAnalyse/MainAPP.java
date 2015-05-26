@@ -6,7 +6,9 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
+import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.types.DataTypes;
 
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
 import com.shadowinlife.app.Scheduler.CreateProcessTable;
@@ -50,6 +52,7 @@ public class MainAPP {
             path = new Path(nameNode + "/logsplit/");
             targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         }
+        
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
@@ -59,7 +62,17 @@ public class MainAPP {
         }
         
         try {
-
+            //Regist Memory UDF for spark sql. Convert null to -1
+            sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {     
+                private static final long serialVersionUID = 1L;
+                @Override
+                public Integer call(Integer value) throws Exception {
+                    if (value == null)
+                        return -1;
+                    return value;
+                }
+            }, DataTypes.IntegerType);
+            
             RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
                     + "(.*)");
             
@@ -82,6 +95,7 @@ public class MainAPP {
                                         .getLineValues());
                             }
                         });
+                
                 // Create Fat Process Table
                 CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date, iworldid);
             }
