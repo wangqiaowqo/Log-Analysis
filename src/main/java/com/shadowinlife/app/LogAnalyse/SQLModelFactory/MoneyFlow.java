@@ -47,7 +47,7 @@ public class MoneyFlow {
     private long iBeforeMoney;
     private long iAfterMoney;
     private int iMoneyType;
-    private long iMoney;
+    private Long iMoney;
     private int iFlowType;
     private int iAction;
     
@@ -69,7 +69,6 @@ public class MoneyFlow {
         this.iRepuLevel = Integer.valueOf(iRepuLevel);
         this.v1 = v1;
         this.v2 = v2;
-
         this.iBeforeMoney = Long.valueOf(iBeforeMoney);
         this.iAfterMoney = Long.valueOf(iAfterMoney);
         this.iMoneyType = Integer.valueOf(iMoneyType);

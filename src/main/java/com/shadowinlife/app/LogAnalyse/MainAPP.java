@@ -29,10 +29,13 @@ public class MainAPP {
 
     public static void main(String[] args) {
         if (args.length < 5) {
-            System.out.println("args[0]---FileTarget \n " + "args[1]----Mode \n "
-                    + "args[2]---vFlagName \n  " + "args[3]----Date\n "
-                    + "args[4]---SPLIT for split file, OSSTABLE--create oss table directly\n" 
-                    + "args[5]---iworldid");
+            System.out
+                    .println("args[0]---FileTarget \n "
+                            + "args[1]----Mode \n "
+                            + "args[2]---vFlagName \n  "
+                            + "args[3]----Date\n "
+                            + "args[4]---SPLIT for split file, OSSTABLE--create oss table directly ALL--create all mode\n"
+                            + "args[5]---iworldid");
         }
 
         // Assemble path of the origin log files
@@ -45,66 +48,62 @@ public class MainAPP {
         Path path;
         String targetFile;
         date = "20" + date;
-        if(iworldid.equalsIgnoreCase("2")){
+        if (iworldid.equalsIgnoreCase("2")) {
             path = new Path(nameNode + "/logsplit37/");
             targetFile = nameNode + "/logsplit37/*/" + tableName + date + "/*";
-        }
-        else {
+        } else {
             path = new Path(nameNode + "/logsplit/");
             targetFile = nameNode + "/logsplit/*/" + tableName + date + "/*";
         }
-        
+
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
 
         if (TAG != null && TAG.equalsIgnoreCase("SPLIT")) {
-            SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata37/" + date + "/*/*", "/logsplit37");
+            SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata37/" + date + "/*/*",
+                    "/logsplit37");
         }
-        
+
         try {
-            if(TAG.equalsIgnoreCase("OSSTABLE")){
-                Exception e = new Exception();
-                throw e;
-            }
-            //Regist Memory UDF for spark sql. Convert null to -1
-            sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {     
-                private static final long serialVersionUID = 1L;
-                @Override
-                public Integer call(Integer value) throws Exception {
-                    if (value == null)
-                        return -1;
-                    return value;
+            if (TAG.equalsIgnoreCase("OSSTABLE")) {
+                if (TAG.equalsIgnoreCase("ALL")) {
+                    UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
+                    UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit", date);
+                    UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", date);
                 }
-            }, DataTypes.IntegerType);
-            
-            RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
-                    + "(.*)");
-            
-            if (!regexPathFilter.accept(path)) {
-                CreateProcessTable.FatTableWithoutFile(sqlContext, tableName, date, iworldid);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
             } else {
-                // Read origin log file
-                
-                JavaRDD<String> logLines = sc.textFile(targetFile);
 
-                // Split origin file into key-value model
-                JavaPairRDD<String, String[]> hadoopFile = logLines
-                        .mapToPair(new PairFunction<String, String, String[]>() {
-                            private static final long serialVersionUID = 1L;
+                RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
+                        + "(.*)");
 
-                            @Override
-                            public Tuple2<String, String[]> call(String line) throws Exception {
-                                LogLineSplit temp = LogLineSplit.parseFromLogFile(line);
-                                return new Tuple2<String, String[]>(temp.getKeyName(), temp
-                                        .getLineValues());
-                            }
-                        });
-                
-                // Create Fat Process Table
-                CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date, iworldid);
+                if (!regexPathFilter.accept(path)) {
+                    CreateProcessTable.FatTableWithoutFile(sqlContext, tableName, date, iworldid);
+                } else {
+                    // Read origin log file
+
+                    JavaRDD<String> logLines = sc.textFile(targetFile);
+
+                    // Split origin file into key-value model
+                    JavaPairRDD<String, String[]> hadoopFile = logLines
+                            .mapToPair(new PairFunction<String, String, String[]>() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public Tuple2<String, String[]> call(String line) throws Exception {
+                                    LogLineSplit temp = LogLineSplit.parseFromLogFile(line);
+                                    return new Tuple2<String, String[]>(temp.getKeyName(), temp
+                                            .getLineValues());
+                                }
+                            });
+
+                    // Create Fat Process Table
+                    CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date,
+                            iworldid);
+                }
             }
-            if(!mode.equalsIgnoreCase("NULL"))
+            if (!mode.equalsIgnoreCase("NULL"))
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
         } catch (NullPointerException e) {
             e.printStackTrace();

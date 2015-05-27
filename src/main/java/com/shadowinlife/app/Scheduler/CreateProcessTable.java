@@ -3,7 +3,9 @@ package com.shadowinlife.app.Scheduler;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
+import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.types.DataTypes;
 
 import scala.Tuple2;
 
@@ -15,6 +17,17 @@ import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.TaskProcessTable;
 public class CreateProcessTable {
     public static void FatTableConstruct(HiveContext sqlContext, String tableName,
             JavaPairRDD<String, String[]> hadoopFile, String date, String iworldid) {
+        
+        sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {     
+            private static final long serialVersionUID = 1L;
+            @Override
+            public Integer call(Integer value) throws Exception {
+                if (value == null)
+                    return -1;
+                return value;
+            }
+        }, DataTypes.IntegerType);
+        
         switch (tableName) {
         case "RoleLogin":
             // Filter origin file into different RDD
