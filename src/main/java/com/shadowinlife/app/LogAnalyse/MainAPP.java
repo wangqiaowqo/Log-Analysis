@@ -31,7 +31,8 @@ public class MainAPP {
         if (args.length < 5) {
             System.out.println("args[0]---FileTarget \n " + "args[1]----Mode \n "
                     + "args[2]---vFlagName \n  " + "args[3]----Date\n "
-                    + "args[4]---1 for split file" + "args[5]---iworldid");
+                    + "args[4]---SPLIT for split file, OSSTABLE--create oss table directly\n" 
+                    + "args[5]---iworldid");
         }
 
         // Assemble path of the origin log files
@@ -39,7 +40,7 @@ public class MainAPP {
         String mode = args[1];
         String tableName = args[2];
         String date = args[3];
-        String oozie = args[4];
+        String TAG = args[4];
         String iworldid = args[5];
         Path path;
         String targetFile;
@@ -57,11 +58,15 @@ public class MainAPP {
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
 
-        if (oozie != null && oozie.equalsIgnoreCase("1")) {
+        if (TAG != null && TAG.equalsIgnoreCase("SPLIT")) {
             SplitAction.split(sc, "hdfs://10-4-28-24:8020/logdata37/" + date + "/*/*", "/logsplit37");
         }
         
         try {
+            if(TAG.equalsIgnoreCase("OSSTABLE")){
+                Exception e = new Exception();
+                throw e;
+            }
             //Regist Memory UDF for spark sql. Convert null to -1
             sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {     
                 private static final long serialVersionUID = 1L;
