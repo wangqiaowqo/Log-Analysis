@@ -66,13 +66,15 @@ public class MainAPP {
         }
 
         try {
+
+            if (TAG.equalsIgnoreCase("ALL")) {
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit", date);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", date);
+            }
             if (TAG.equalsIgnoreCase("OSSTABLE")) {
-                if (TAG.equalsIgnoreCase("ALL")) {
-                    UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
-                    UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit", date);
-                    UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", date);
-                }
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
+
             } else {
 
                 RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
