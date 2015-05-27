@@ -240,7 +240,7 @@ public class UserAccountAnalysis {
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "IF(itimes is null,-1,CASE WHEN itimes < 100 THEN itimes ELSE round(itimes/100,0)*100 END) itimes," //sTypeValue : ActivityTimesDis value
+            + "IF(itimesdis is null,-1,itimesdis)," //sTypeValue : ActivityTimesDis value
             + "count(*) " 
             //+ "DATE2LONG('%s') "
             + "from "
@@ -250,13 +250,13 @@ public class UserAccountAnalysis {
             + "index_igameid,"
             + "index_iworldid,"
             + "suin,"
-            + "sum(itimes) itimes "
+            + "(case when sum(itimes) < 100 then sum(itimes) else round(sum(itimes)/100,0)*100 END) itimesdis "
             + "from fat_%s_user "
             + "WHERE "
             + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
-            + "group by index_igameid,index_iaccounttype,index_iworldid,itimes with cube";
+            + "group by index_igameid,index_iaccounttype,index_iworldid,itimesdis with cube";
     
     private static String tbDayUserActivityTypeDis_ActivityTimeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s,index_sType='ActivityTimeDis') "
             + "SELECT '%s'," //date
@@ -264,7 +264,7 @@ public class UserAccountAnalysis {
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
-            + "%s,"//"IF(ionlinetime is null,-1,round(ionlinetime/300,0)*5) ionlinetimedis," //sTypeValue : ActivityTimeDis value
+            + "IF(ionlinetimedis is null,-1,ionlinetimedis),"//"IF(ionlinetime is null,-1,round(ionlinetime/300,0)*5) ionlinetimedis," //sTypeValue : ActivityTimeDis value
             + "count(*) " 
             //+ "DATE2LONG('%s') "
             + "from "
@@ -274,13 +274,13 @@ public class UserAccountAnalysis {
             + "index_igameid,"
             + "index_iworldid,"
             + "suin,"
-            + "sum(ionlinetime) ionlinetime "
+            + "%s "
             + "from fat_%s_user "
             + "WHERE "
             + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
-            + "group by index_igameid,index_iaccounttype,index_iworldid,ionlinetime with cube";
+            + "group by index_igameid,index_iaccounttype,index_iworldid,ionlinetimedis with cube";
     /*
      * tbActivityScaleDis
      +---------------+------------+----------+--+
@@ -514,13 +514,13 @@ public class UserAccountAnalysis {
             
             String strRange = new String();
             if(strMode.equalsIgnoreCase("login")){
-            	strRange = "IF(ionlinetime is null,-1,round(ionlinetime/300,0)*5) ionlinetime";
+            	strRange = "round(sum(ionlinetime)/300,0)*5 ionlinetimedis";
             }
             else if(strMode.equalsIgnoreCase("deposit")){
-            	strRange = "IF(ionlinetime is null,-1,round(ionlinetime/500,0)*5) ionlinetime";
+            	strRange = "round(sum(ionlinetime)/500,0)*5 ionlinetimedis";
             }
             else if(strMode.equalsIgnoreCase("pay")){
-            	strRange = "IF(ionlinetime is null,-1,round(ionlinetime/100,0)*1) ionlinetime";
+            	strRange = "round(sum(ionlinetime)/100,0)*1 ionlinetimedis";
             }
             else{
             	
