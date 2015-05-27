@@ -10,6 +10,7 @@ import scala.Tuple2;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.TaskProcessTable;
 
 public class CreateProcessTable {
     public static void FatTableConstruct(HiveContext sqlContext, String tableName,
@@ -58,7 +59,41 @@ public class CreateProcessTable {
             JavaRDD<String[]> moneyFlowRDD = hadoopFile.values();
             MoneyFlowProcessTable.process(sqlContext, moneyFlowRDD, date, iworldid);
             break;
+        case "Task":
+            // Filter origin file into different RDD
+            JavaRDD<String[]> rddTaskStart = hadoopFile.filter(
+                    new Function<Tuple2<String, String[]>, Boolean>() {
 
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public Boolean call(Tuple2<String, String[]> f) throws Exception {
+                            if (f._1.contains("TaskStart")) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }).values();
+
+            JavaRDD<String[]> rddTaskFinished = hadoopFile.filter(
+                    new Function<Tuple2<String, String[]>, Boolean>() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public Boolean call(Tuple2<String, String[]> f) throws Exception {
+                            if (f._1.contains("TaskFinished")) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    }).values();
+
+            TaskProcessTable.process(sqlContext, rddTaskStart, rddTaskFinished, date, iworldid,
+                    "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",
+                    "oss_dm_dajian_tbTask");
+            break;
         }
     }
 

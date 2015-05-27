@@ -91,7 +91,7 @@ public class RoleLogout implements Serializable{
         this.iReputation=Long.valueOf(iReputation);
         this.iEnergy = Long.valueOf(iEnergy);
         this.iMoney = iMoney;
-        this.iOnlineTime=Long.valueOf(iOnlineTime);
+        this.iOnlineTime=this.dtEventTime.getTime() - this.dtLoginTime.getTime();
         this.iLoginWay=iLoginWay;             
     }
 

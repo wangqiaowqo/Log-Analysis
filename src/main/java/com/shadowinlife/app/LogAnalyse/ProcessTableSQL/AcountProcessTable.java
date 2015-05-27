@@ -58,8 +58,8 @@ public class AcountProcessTable {
             + "WHEN login_dtEventTime IS NULL THEN logout_dtEventTime "
             + "WHEN logout_dtEventTime>login_dtEventTime THEN logout_dtEventTime "
             + "ELSE login_dtEventTime END) AS acttime "
-            
             + "FROM tbLogin FULL JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
+    
     // USER NOT ACTIVITY
     private static String tbUser_unact_account_table = "INSERT OVERWRITE TABLE fat_login_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
@@ -107,7 +107,7 @@ public class AcountProcessTable {
             + "0," //group
             + "T2.iRoleLevel, "
             + "1," //iviplevel
-            + "IF(T2.outtime is null, T2.intime, T2.outtime),"
+            + "IF(T2.outtime < T2.intime, T2.intime, T2.outtime),"
             + "T2.iOnlinetime,"
             + "1 AS index_iaccounttype,"
             + "DATE2LONG('%s') AS index_dtstatdate,"

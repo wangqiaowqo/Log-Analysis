@@ -32,15 +32,17 @@ public class DeliveryDataToMysql {
             
             sql = "DELETE FROM " + mTable + mySQLWhere;
             System.out.println(sql);
-            stmt.executeUpdate(sql);
+            int RowDelCount = stmt.executeUpdate(sql);
+            System.out.println("DELETE " + RowDelCount);
             stmt.close();
             conn.close();
-            sql = "SELECT ";
+            String hivesql = "SELECT ";
             for (int i = 0; i < columnNames.size() - 1; i++) {
-                sql = sql + columnNames.get(i) + ",";
+                hivesql = hivesql + columnNames.get(i) + ",";
             }
-            sql = sql + columnNames.get(columnNames.size()-1) + " FROM "+strTable+strWhere;
-            DataFrame oss_dm_mode_tbRegisterUser = sqlContext.sql(sql);
+            hivesql = hivesql + columnNames.get(columnNames.size()-1) + " FROM "+strTable+strWhere;
+            System.out.println("gongmeng:" + hivesql);
+            DataFrame oss_dm_mode_tbRegisterUser = sqlContext.sql(hivesql);
 
             oss_dm_mode_tbRegisterUser.insertIntoJDBC(mySqlURL, mTable, false);
             
