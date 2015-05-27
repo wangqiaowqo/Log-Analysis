@@ -3,11 +3,9 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import jodd.util.StringUtil;
-
-import com.shadowinlife.app.Tools.CONSTANT;
-
 public class TaskStart implements Serializable {
+ 
+    private static final long serialVersionUID = 1L;
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;

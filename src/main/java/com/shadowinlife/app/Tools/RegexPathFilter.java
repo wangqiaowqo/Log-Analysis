@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -17,11 +15,8 @@ import org.apache.hadoop.fs.RemoteIterator;
 public class RegexPathFilter implements PathFilter, Configurable {
 
     public static final String CONF_REGEX_PROPERTY = "regexPathFilter.regex";
-    private static final Log LOG = LogFactory.getLog(RegexPathFilter.class);
     private String _regex;
     private Configuration _conf;
-    private Path path;
-
     public RegexPathFilter(String _regex) {
         this._regex = _regex;
     }
@@ -40,7 +35,6 @@ public class RegexPathFilter implements PathFilter, Configurable {
 
     public boolean accept(Path path) {
         try {
-            this.path = path;
             _conf = new Configuration(true);
             FileSystem fs = FileSystem.get(_conf);
             RemoteIterator<LocatedFileStatus> filePaths = fs.listFiles(path, true);

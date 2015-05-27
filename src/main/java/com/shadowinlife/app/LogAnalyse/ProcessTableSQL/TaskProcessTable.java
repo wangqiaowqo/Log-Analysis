@@ -7,10 +7,7 @@ import java.sql.DriverManager;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.hive.HiveContext;
-import org.apache.spark.sql.types.DataTypes;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskFinished;
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskStart;
