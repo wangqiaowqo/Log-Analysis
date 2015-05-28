@@ -49,8 +49,8 @@ public class MainAPP {
                         + "--GAMEID Index Filed Gameid\n"
                         + "--WORLDID Index Filed WORLDID\n"
                         + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n" 
-                        + "--FLAG  FLAG=ALL Will Create All Oss Table Directly\n"
-                        + " FLAG=OSSTABLE will Create Oss Table Based on the MODE_VALUE\n"
+                        + "--TAG   ALL Will Create All Oss Table Directly\n"
+                        + "        OSSTABLE will Create Oss Table Based on the MODE_VALUE\n"
                         + "--TABLE Consist the table name");
                 return;
             }
@@ -83,12 +83,12 @@ public class MainAPP {
             }
         }
 
-        if (iWorldId.equalsIgnoreCase("2")) {
+        if (iWorldId!=null&&iWorldId.equalsIgnoreCase("2")) {
             path = new Path(HDFSNameNode + "/logsplit37/");
-            targetFile = HDFSNameNode + "/logsplit37/*/" + tableName + date + "/*";
+            targetFile = HDFSNameNode + "/logsplit37/*/" + tableName + date.substring(2) + "/*";
         } else {
             path = new Path(HDFSNameNode + "/logsplit/");
-            targetFile = HDFSNameNode + "/logsplit/*/" + tableName + date + "/*";
+            targetFile = HDFSNameNode + "/logsplit/*/" + tableName + date.substring(2) + "/*";
         }
 
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
