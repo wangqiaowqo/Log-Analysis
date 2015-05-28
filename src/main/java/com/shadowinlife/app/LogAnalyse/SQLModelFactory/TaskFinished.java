@@ -72,7 +72,7 @@ public class TaskFinished {
         this.iItemNum = Integer.valueOf(iItemNum);
         this.iItemRemain = Integer.valueOf(iItemRemain);
         this.iItemGuide = Integer.valueOf(iItemGuide);
-        this.iTaskTime = this.dtEventTime.getTime() - this.dtTaskStartTime.getTime();
+        this.iTaskTime = (this.dtEventTime.getTime() - this.dtTaskStartTime.getTime())/1000;
     }
 
     public static TaskFinished parseFromLogFile(String[] array) {
