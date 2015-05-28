@@ -1,8 +1,11 @@
 package com.shadowinlife.app.Scheduler;
 
+import org.apache.hadoop.fs.Path;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.types.DataTypes;
@@ -13,13 +16,16 @@ import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.TaskProcessTable;
+import com.shadowinlife.app.Tools.LogLineSplit;
+import com.shadowinlife.app.Tools.RegexPathFilter;
 
 public class CreateProcessTable {
-    public static void FatTableConstruct(HiveContext sqlContext, String tableName,
-            JavaPairRDD<String, String[]> hadoopFile, String date, String iworldid) {
-        
-        sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {     
+    public static void FatTableConstruct(JavaSparkContext sc, HiveContext sqlContext, String HDFSNameNode,
+            String tableName, String date, String iworldid) {
+
+        sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {
             private static final long serialVersionUID = 1L;
+
             @Override
             public Integer call(Integer value) throws Exception {
                 if (value == null)
@@ -27,6 +33,44 @@ public class CreateProcessTable {
                 return value;
             }
         }, DataTypes.IntegerType);
+
+        Path path = null;
+        String targetFile = null;
+        JavaPairRDD<String, String[]> hadoopFile = null;
+        RegexPathFilter filter = new RegexPathFilter("(.*)" + tableName + date
+                + "(.*)");
+        
+        
+        if (iworldid != null && iworldid.equalsIgnoreCase("2")) {
+            path = new Path(HDFSNameNode + "/logsplit37/");
+            targetFile = HDFSNameNode + "/logsplit37/*/" + tableName + date.substring(2) + "/*";
+        } else {
+            path = new Path(HDFSNameNode + "/logsplit/");
+            targetFile = HDFSNameNode + "/logsplit/*/" + tableName + date.substring(2) + "/*";
+        }
+        
+       
+        if (!filter.accept(path)) {
+            FatTableWithoutFile(sqlContext, tableName, date, iworldid);
+            return;
+        } else {
+            // Read origin log file
+
+            JavaRDD<String> logLines = sc.textFile(targetFile);
+
+            // Split origin file into key-value model
+            hadoopFile = logLines
+                    .mapToPair(new PairFunction<String, String, String[]>() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public Tuple2<String, String[]> call(String line) throws Exception {
+                            LogLineSplit temp = LogLineSplit.parseFromLogFile(line);
+                            return new Tuple2<String, String[]>(temp.getKeyName(), temp
+                                    .getLineValues());
+                        }
+                    });
+        }
         
         switch (tableName) {
         case "RoleLogin":

@@ -1,20 +1,13 @@
 package com.shadowinlife.app.LogAnalyse;
 
 import org.apache.hadoop.fs.Path;
-import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaPairRDD;
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.sql.hive.HiveContext;
 
-import scala.Tuple2;
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
 import com.shadowinlife.app.Scheduler.CreateProcessTable;
-import com.shadowinlife.app.Tools.LogLineSplit;
-import com.shadowinlife.app.Tools.RegexPathFilter;
-import com.shadowinlife.app.Tools.SplitAction;
 
 /**
  * @author shadowinlife
@@ -26,41 +19,55 @@ import com.shadowinlife.app.Tools.SplitAction;
 public class MainAPP {
 
     public static void main(String[] args) {
-        
+
         String HDFSNameNode = null; /* hdfs://namenode:8020/ */
         String mode = null;
         String date = null;
         String Flag = null;
         String iWorldId = null, iGameId = null, iAccountType = null;
-        Path path = null;
-        String targetFile = null;
         String tableName = null;
-        
+
         for (int i = 0; i < args.length; i = i + 2) {
+           
+            //入参格式监测
             if (!args[i].contains("--")) {
                 System.out.println("Wrong Parameter\n --help for all parameters");
                 return;
             }
+            
+            //帮助文件
             if (args[i].contains("help")) {
                 System.out.println("--HDFS  url for hdfs\n"
-                        + "--MODE  MODE_NAME  IF MODE=NULL Dont't Create Oss Table\n" 
-                        + "--MYSQLURL for MySql\n"
-                        + "--DATE Index Field Date\n"   
-                        + "--GAMEID Index Filed Gameid\n"
-                        + "--WORLDID Index Filed WORLDID\n"
-                        + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n" 
-                        + "--TAG   ALL Will Create All Oss Table Directly\n"
-                        + "        OSSTABLE will Create Oss Table Based on the MODE_VALUE\n"
-                        + "--TABLE Consist the table name");
+                        + "--MODE  MODE_NAME  IF MODE=NULL Dont't Create Oss Table\n"
+                        + "--MYSQLURL for MySql\n" + "--DATE Index Field Date\n"
+                        + "--GAMEID Index Filed Gameid\n" + "--WORLDID Index Filed WORLDID\n"
+                        + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n"
+                        + "--TAG   ALL 即计算fat表，也计算结果表， mode为空则所有模式都计算\n"
+                        + "        OSS  只计算结果表，mode为空计算所有种类的结果表\n"
+                        + "        FAT 只计算Fat表，Mode为空则计算所有种类的中间表\n");
                 return;
             }
             
+            //获取入参
             switch (args[i]) {
             case "--HDFS":
-                HDFSNameNode = args[i+1];
+                HDFSNameNode = args[i + 1];
                 break;
             case "--MODE":
                 mode = args[i + 1];
+                switch (mode) {
+                case "pay":
+                    tableName = "MoneyFlow";
+                    break;
+                case "deposit":
+                    tableName = "ChongZhi";
+                    break;
+                case "login":
+                    tableName = "RoleLogin";
+                    break;
+                default:
+                    tableName = mode;
+                }
                 break;
             case "--TAG":
                 Flag = args[i + 1];
@@ -77,66 +84,52 @@ public class MainAPP {
             case "--ACCOUNTTYPE":
                 iAccountType = args[i + 1];
                 break;
-            case "--TABLE":
-                tableName = args[i + 1];
-                break;
+
             }
         }
-
-        if (iWorldId!=null&&iWorldId.equalsIgnoreCase("2")) {
-            path = new Path(HDFSNameNode + "/logsplit37/");
-            targetFile = HDFSNameNode + "/logsplit37/*/" + tableName + date.substring(2) + "/*";
-        } else {
-            path = new Path(HDFSNameNode + "/logsplit/");
-            targetFile = HDFSNameNode + "/logsplit/*/" + tableName + date.substring(2) + "/*";
+       
+        //入参合法性监测
+        if (date == null
+                || Flag == null
+                || (Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")
+                        && HDFSNameNode == null && iWorldId == null)) {
+            System.out.println("Parameter is illegal, see --help");
         }
-
+       
+        //初始化基本环境
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
-
+        
+        //根据入参调度程序
         try {
+            if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) && mode != null) {
 
-            if (Flag.equalsIgnoreCase("ALL")) {
+                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, tableName, date,
+                        iWorldId);
+
+            } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT"))
+                    && mode == null) { 
+                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "RoleLogin", date,
+                            iWorldId);
+                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "Task", date,
+                            iWorldId);
+                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "MoneyFlow", date,
+                            iWorldId);
+                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "ChongZhi", date,
+                            iWorldId);
+
+            } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))
+                    && mode == null) {
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit", date);
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", date);
-            }
-            if (Flag.equalsIgnoreCase("OSSTABLE")) {
+            } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))
+                    && mode != null) {
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
 
-            } else {
-
-                RegexPathFilter regexPathFilter = new RegexPathFilter("(.*)" + tableName + date
-                        + "(.*)");
-
-                if (!regexPathFilter.accept(path)) {
-                    CreateProcessTable.FatTableWithoutFile(sqlContext, tableName, date, iWorldId);
-                } else {
-                    // Read origin log file
-
-                    JavaRDD<String> logLines = sc.textFile(targetFile);
-
-                    // Split origin file into key-value model
-                    JavaPairRDD<String, String[]> hadoopFile = logLines
-                            .mapToPair(new PairFunction<String, String, String[]>() {
-                                private static final long serialVersionUID = 1L;
-
-                                @Override
-                                public Tuple2<String, String[]> call(String line) throws Exception {
-                                    LogLineSplit temp = LogLineSplit.parseFromLogFile(line);
-                                    return new Tuple2<String, String[]>(temp.getKeyName(), temp
-                                            .getLineValues());
-                                }
-                            });
-
-                    // Create Fat Process Table
-                    CreateProcessTable.FatTableConstruct(sqlContext, tableName, hadoopFile, date,
-                            iWorldId);
-                }
             }
-            if (!mode.equalsIgnoreCase("NULL"))
-                UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
+
         } catch (NullPointerException e) {
             e.printStackTrace();
         } catch (Exception e) {
