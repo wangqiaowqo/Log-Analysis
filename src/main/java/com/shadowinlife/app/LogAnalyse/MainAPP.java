@@ -28,14 +28,14 @@ public class MainAPP {
         String tableName = null;
 
         for (int i = 0; i < args.length; i = i + 2) {
-           
-            //入参格式监测
+
+            // 入参格式监测
             if (!args[i].contains("--")) {
                 System.out.println("Wrong Parameter\n --help for all parameters");
                 return;
             }
-            
-            //帮助文件
+
+            // 帮助文件
             if (args[i].contains("help")) {
                 System.out.println("--HDFS  url for hdfs\n"
                         + "--MODE  MODE_NAME  IF MODE=NULL Dont't Create Oss Table\n"
@@ -47,8 +47,8 @@ public class MainAPP {
                         + "        FAT 只计算Fat表，Mode为空则计算所有种类的中间表\n");
                 return;
             }
-            
-            //获取入参
+
+            // 获取入参
             switch (args[i]) {
             case "--HDFS":
                 HDFSNameNode = args[i + 1];
@@ -87,21 +87,24 @@ public class MainAPP {
 
             }
         }
-       
-        //入参合法性监测
-        if (date == null
-                || Flag == null
-                || (Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")
-                        && HDFSNameNode == null && iWorldId == null)) {
+
+        // 入参合法性监测
+        if (date == null || Flag == null) {
             System.out.println("Parameter is illegal, see --help");
+            return;
         }
-       
-        //初始化基本环境
+        if (Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) {
+            if (HDFSNameNode == null || iWorldId == null) {
+                System.out.println("HDFSNameNode can't be null, iworldid can not be null");
+                return;
+            }
+        }
+        // 初始化基本环境
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
         HiveContext sqlContext = new HiveContext(sc.sc());
-        
-        //根据入参调度程序
+
+        // 根据入参调度程序
         try {
             if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) && mode != null) {
 
@@ -109,15 +112,15 @@ public class MainAPP {
                         iWorldId);
 
             } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT"))
-                    && mode == null) { 
-                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "RoleLogin", date,
-                            iWorldId);
-                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "Task", date,
-                            iWorldId);
-                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "MoneyFlow", date,
-                            iWorldId);
-                    CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "ChongZhi", date,
-                            iWorldId);
+                    && mode == null) {
+                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "RoleLogin",
+                        date, iWorldId);
+                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "Task", date,
+                        iWorldId);
+                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "MoneyFlow",
+                        date, iWorldId);
+                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "ChongZhi",
+                        date, iWorldId);
 
             } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))
                     && mode == null) {
