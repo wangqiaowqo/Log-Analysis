@@ -93,7 +93,7 @@ public class TaskProcessTable {
             DataFrame dfTaskFinished = sqlContext.createDataFrame(tbTaskFinished,
                     TaskFinished.class);
             sqlContext.registerDataFrameAsTable(dfTaskFinished, "TaskFinished");
-           
+
             // run SQL analysis SQL
             sqlContext.sql(SQL_AcceptTask).registerTempTable("T1");
             sqlContext.sql(SQL_FinishedTask).registerTempTable("T2");
@@ -102,7 +102,8 @@ public class TaskProcessTable {
             Statement stmt = conn.createStatement();
             String delMysql = "DELETE FROM " + table + " Where dtStatDate='" + date
                     + "' AND iWorldId=" + iworldid;
-            stmt.executeUpdate(delMysql);
+            int rows = stmt.executeUpdate(delMysql);
+            System.out.println(rows + " " + delMysql);
             conn.close();
             sqlContext.sql(String.format(SQL_UNION, date, iworldid)).insertIntoJDBC(url, table,
                     false);

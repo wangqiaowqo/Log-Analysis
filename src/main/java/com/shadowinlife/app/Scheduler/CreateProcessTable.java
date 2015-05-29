@@ -43,10 +43,10 @@ public class CreateProcessTable {
         
         if (iworldid != null && iworldid.equalsIgnoreCase("2")) {
             path = new Path(HDFSNameNode + "/logsplit37/");
-            targetFile = HDFSNameNode + "/logsplit37/*/" + tableName + date.substring(2) + "/*";
+            targetFile = HDFSNameNode + "/logsplit37/*/" + tableName + date + "/*";
         } else {
             path = new Path(HDFSNameNode + "/logsplit/");
-            targetFile = HDFSNameNode + "/logsplit/*/" + tableName + date.substring(2) + "/*";
+            targetFile = HDFSNameNode + "/logsplit/*/" + tableName + date + "/*";
         }
         
        
