@@ -149,7 +149,7 @@ public class CreateProcessTable {
 
             TaskProcessTable.process(sqlContext, rddTaskStart, rddTaskFinished, date, iworldid,
                     "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",
-                    "oss_dm_dajian_tbTask");
+                    "oss_dm_tbTask");
             break;
         }
     }
