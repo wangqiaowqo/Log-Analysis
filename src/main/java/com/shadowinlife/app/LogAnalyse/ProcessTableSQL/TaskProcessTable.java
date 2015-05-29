@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskFinished;
@@ -38,18 +39,18 @@ public class TaskProcessTable {
     private static String SQL_UNION = "SELECT '%s',"
             + "1," // iAccountType
             + "%s," // iWorldId
-            + "T1.iTaskType,"
-            + "T1.iTaskId,"
-            + "T1.iTaskLevel,"
-            + "T1.iAcceptRoleNum,"
-            + "T1.iAcceptUinNum,"
-            + "T2.iCompleteRoleNum,"
-            + "T2.iCompleteTimes,"
+            + "IF(T1.iTaskType IS NULL, T2.iTaskType, T1.iTaskType),"
+            + "IF(T1.iTaskId IS NULL, T2.iTaskId, T1.iTaskId),"
+            + "IF(T1.iTaskLevel IS NULL, T2.iTaskLevel, T1.iTaskLevel),"
+            + "IF(T1.iAcceptRoleNum IS NULL, '0' ,T1.iAcceptRoleNum),"
+            + "IF(T1.iAcceptTimes IS NULL, '0', T1.iAcceptTimes),"
+            + "IF(T2.iCompleteRoleNum IS NULL, '0', T2.iCompleteRoleNum),"
+            + "IF(T2.iCompleteTimes IS NULL, '0', T2.iCompleteTimes),"
             + "0," // iCancelRoleNum
             + "0," // iCancelTimes
-            + "T1.iAcceptUinNum,"
-            + "T2.iCompleteUinNum,"
-            + "T2.iTotalTime FROM T1 JOIN T2 "
+            + "IF(T1.iAcceptUinNum IS NULL, '0', T1.iAcceptUinNum),"
+            + "IF(T2.iCompleteUinNum IS NULL, '0', T2.iCompleteUinNum),"
+            + "IF(T2.iTotalTime IS NULL, '0', T2.iTotalTime) FROM T1 FULL JOIN T2 "
             + "ON (T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND T1.iTaskLevel=T2.iTaskLevel)";
 
     public static boolean process(HiveContext sqlContext, JavaRDD<String[]> rddTaskStart,
@@ -89,15 +90,30 @@ public class TaskProcessTable {
 
             // Convert all the values into the spark table
             DataFrame dfTaskStart = sqlContext.createDataFrame(tbTaskStart, TaskStart.class);
+            for(Row r: dfTaskStart.collect()) {
+                System.out.println("A " + r.mkString(" "));
+            }
             sqlContext.registerDataFrameAsTable(dfTaskStart, "TaskStart");
             DataFrame dfTaskFinished = sqlContext.createDataFrame(tbTaskFinished,
                     TaskFinished.class);
+            for(Row r: dfTaskFinished.collect()) {
+                System.out.println("B " + r.mkString(" "));
+            }
             sqlContext.registerDataFrameAsTable(dfTaskFinished, "TaskFinished");
 
             // run SQL analysis SQL
             sqlContext.sql(SQL_AcceptTask).registerTempTable("T1");
+            
+            for(Row r: sqlContext.sql("select * from T1").collect()) {
+                System.out.println("C " + r.get(0)  +" " + r.get(1) + " " + r.get(2) + " " + r.get(3) + " " + r.get(4) +" " + r.get(5));
+            }
+            
             sqlContext.sql(SQL_FinishedTask).registerTempTable("T2");
-
+            
+            for(Row r: sqlContext.sql("select * from T2").collect()) {
+                System.out.println("D " + r.mkString(" "));
+            }
+            
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             String delMysql = "DELETE FROM " + table + " Where dtStatDate='" + date
@@ -105,7 +121,12 @@ public class TaskProcessTable {
             int rows = stmt.executeUpdate(delMysql);
             System.out.println(rows + " " + delMysql);
             conn.close();
-            sqlContext.sql(String.format(SQL_UNION, date, iworldid)).insertIntoJDBC(url, table,
+            DataFrame OssData = sqlContext.sql(String.format(SQL_UNION, date, iworldid));
+            for(Row r: OssData.collect()) {
+                System.out.println("OSS " + r.mkString(" "));
+            }
+            
+            OssData.insertIntoJDBC(url, table,
                     false);
 
             // Free Mem
