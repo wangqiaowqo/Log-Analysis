@@ -3,7 +3,7 @@ package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class TaskStart implements Serializable {
+public class TaskStart extends BaseBean implements Serializable {
  
     private static final long serialVersionUID = 1L;
     private Timestamp dtEventTime;
@@ -76,7 +76,7 @@ public class TaskStart implements Serializable {
         this.iItemGuide = Integer.valueOf(iItemGuide);
     }
 
-    public static TaskStart parseFromLogFile(String[] array) {
+    public TaskStart parseFromLogFile(String[] array) {
         String[] columnList = array;
         for (int i = 0; i < columnList.length; i++){
             if (columnList[i].equalsIgnoreCase(" ")){

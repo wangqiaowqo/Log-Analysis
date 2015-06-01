@@ -153,8 +153,8 @@ public class AcountProcessTable {
 
                 @Override
                 public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin call(String[] line) {
-                    
-                    return RoleLogin.parseFromLogFile(line);
+                    RoleLogin r = new RoleLogin();
+                    return r.parseFromLogFile(line);
 
                 }
 

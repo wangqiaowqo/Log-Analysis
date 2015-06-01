@@ -1,8 +1,9 @@
 package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class TaskFinished {
+public class TaskFinished extends BaseBean implements Serializable {
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;
@@ -75,7 +76,7 @@ public class TaskFinished {
         this.iTaskTime = (this.dtEventTime.getTime() - this.dtTaskStartTime.getTime())/1000;
     }
 
-    public static TaskFinished parseFromLogFile(String[] array) {
+    public TaskFinished parseFromLogFile(String[] array) {
         String[] columnList = array;
         for (int i = 0; i < columnList.length; i++){
             if (columnList[i].equalsIgnoreCase(" ")){

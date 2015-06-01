@@ -1,5 +1,6 @@
 package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import jodd.util.StringUtil;
@@ -29,7 +30,7 @@ import jodd.util.StringUtil;
 | iAction      | int              | NO   |     | 0       |       |
 +--------------+------------------+------+-----+---------+-------+
 */
-public class MoneyFlow {
+public class MoneyFlow extends BaseBean implements Serializable {
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;
@@ -77,7 +78,7 @@ public class MoneyFlow {
         this.iAction = Integer.valueOf(iAction);
     }
 
-    public static MoneyFlow parseFromLogFile(String[] array) {
+    public MoneyFlow parseFromLogFile(String[] array) {
         String[] columnList = array;
 
         if (columnList.length == 20) {

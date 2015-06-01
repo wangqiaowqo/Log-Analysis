@@ -38,7 +38,7 @@ import com.shadowinlife.app.Tools.CONSTANT;
 | iLoginWay    | String           | NO   |     | 0       |       |
 +--------------+------------------+------+-----+---------+-------+
  */
-public class RoleLogout implements Serializable{
+public class RoleLogout extends BaseBean implements Serializable {
   
     private static final long serialVersionUID = -8150457539320394072L;
     
@@ -95,7 +95,7 @@ public class RoleLogout implements Serializable{
         this.iLoginWay=iLoginWay;             
     }
 
-    public static RoleLogout parseFromLogFile(String[] array) {
+    public RoleLogout parseFromLogFile(String[] array) {
         String[] columnList = array;
         try { // TODO Some column may be null,should handle it
             if (columnList.length == 23) {

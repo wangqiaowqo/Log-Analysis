@@ -39,8 +39,10 @@ public class MainAPP {
             if (args[i].contains("help")) {
                 System.out.println("--HDFS  url for hdfs\n"
                         + "--MODE  MODE_NAME  IF MODE=NULL Dont't Create Oss Table\n"
-                        + "--MYSQLURL for MySql\n" + "--DATE Index Field Date\n"
-                        + "--GAMEID Index Filed Gameid\n" + "--WORLDID Index Filed WORLDID\n"
+                        + "--MYSQLURL for MySql\n" 
+                        + "--DATE Index Field Date\n"
+                        + "--GAMEID Index Filed Gameid\n" 
+                        + "--WORLDID Index Filed WORLDID\n"
                         + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n"
                         + "--TAG   ALL 即计算fat表，也计算结果表， mode为空则所有模式都计算\n"
                         + "        OSS  只计算结果表，mode为空计算所有种类的结果表\n"

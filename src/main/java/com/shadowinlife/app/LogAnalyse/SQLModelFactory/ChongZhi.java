@@ -37,7 +37,7 @@ import com.shadowinlife.app.Tools.CONSTANT;
 
 import jodd.util.StringUtil;
 
-public class ChongZhi implements Serializable {
+public class ChongZhi extends BaseBean implements Serializable {
 
    
     private static final long serialVersionUID = 1L;
@@ -99,7 +99,7 @@ public class ChongZhi implements Serializable {
         this.iLoginWay = iLoginWay;
     }
 
-    public static ChongZhi parseFromLogFile(String[] array) {
+    public ChongZhi parseFromLogFile(String[] array) {
         String[] columnList = array;
 
         if (columnList.length == 24) {

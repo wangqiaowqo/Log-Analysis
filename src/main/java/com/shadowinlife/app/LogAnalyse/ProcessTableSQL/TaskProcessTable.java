@@ -90,30 +90,19 @@ public class TaskProcessTable {
 
             // Convert all the values into the spark table
             DataFrame dfTaskStart = sqlContext.createDataFrame(tbTaskStart, TaskStart.class);
-            for(Row r: dfTaskStart.collect()) {
-                System.out.println("A " + r.mkString(" "));
-            }
+            
             sqlContext.registerDataFrameAsTable(dfTaskStart, "TaskStart");
             DataFrame dfTaskFinished = sqlContext.createDataFrame(tbTaskFinished,
                     TaskFinished.class);
-            for(Row r: dfTaskFinished.collect()) {
-                System.out.println("B " + r.mkString(" "));
-            }
+            
             sqlContext.registerDataFrameAsTable(dfTaskFinished, "TaskFinished");
 
             // run SQL analysis SQL
             sqlContext.sql(SQL_AcceptTask).registerTempTable("T1");
-            
-            for(Row r: sqlContext.sql("select * from T1").collect()) {
-                System.out.println("C " + r.get(0)  +" " + r.get(1) + " " + r.get(2) + " " + r.get(3) + " " + r.get(4) +" " + r.get(5));
-            }
-            
+           
             sqlContext.sql(SQL_FinishedTask).registerTempTable("T2");
             
-            for(Row r: sqlContext.sql("select * from T2").collect()) {
-                System.out.println("D " + r.mkString(" "));
-            }
-            
+           
             Connection conn = DriverManager.getConnection(url);
             Statement stmt = conn.createStatement();
             String delMysql = "DELETE FROM " + table + " Where dtStatDate='" + date
@@ -122,9 +111,6 @@ public class TaskProcessTable {
             System.out.println(rows + " " + delMysql);
             conn.close();
             DataFrame OssData = sqlContext.sql(String.format(SQL_UNION, date, iworldid));
-            for(Row r: OssData.collect()) {
-                System.out.println("OSS " + r.mkString(" "));
-            }
             
             OssData.insertIntoJDBC(url, table,
                     false);
