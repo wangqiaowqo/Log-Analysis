@@ -16,7 +16,7 @@ import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.TaskProcessTable;
-import com.shadowinlife.app.Tools.LogLineSplit;
+import com.shadowinlife.app.Split.LogLineSplit;
 import com.shadowinlife.app.Tools.RegexPathFilter;
 
 public class CreateProcessTable {

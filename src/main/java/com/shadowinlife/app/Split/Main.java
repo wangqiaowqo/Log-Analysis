@@ -1,5 +1,7 @@
 package com.shadowinlife.app.Split;
 
+import java.util.List;
+
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -10,20 +12,21 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 
 import com.shadowinlife.app.LogAnalyse.SQLModelFactory.*;
-import com.shadowinlife.app.Tools.LogLineSplit;
+import com.shadowinlife.app.Tools.ReadConfigurationFile;
 
 import scala.Tuple2;
 
 public class Main {
 
     public static void main(String[] args) {
+        String path = null;
         String date = null;
-        String iGameId = "*";
-        String iWorldId = "*";
-        String iAccountType = "*";
+        String iGameId = null;
+        String iWorldId = null;
+        String iAccountType = null;
         String NameNode = null;
         String time = null;
-        String tablename = null;
+        
         for (int i = 0; i < args.length; i = i + 2) {
             if (!args[i].contains("--")) {
                 System.out.println("Wrong Parameter\n --help for all parameters");
@@ -34,8 +37,8 @@ public class Main {
                         + "--DATE Index Field Date  NOT NULL\n" + "--GAMEID Index Filed Gameid\n"
                         + "--WORLDID Index Filed WORLDID\n"
                         + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n"
-                        + "--TABLE split actualy Table\n"
-                        + "--TIME Hours of the Field\n");
+                        + "--TABLE split actualy Table\n" + "--TIME Hours of the Field\n"
+                        + "--CONF configuration files for javabean class");
                 return;
             }
             switch (args[i]) {
@@ -53,21 +56,20 @@ public class Main {
             case "--ACCOUNTTYPE":
                 iAccountType = args[i + 1];
                 break;
-            case "--Table":
-                tablename = args[i + 1];
-                break;
             case "--TIME":
-                time = args[i+1];
+                time = args[i + 1];
+                break;
+            case "--CONF":
+                path = args[i + 1];
                 break;
             }
         }
 
         String targetFile = NameNode + "/LOG/" + iGameId + "/" + iAccountType + "/" + iWorldId
                 + "/" + date + "/" + time + "/*";
-        String dstPath = "/LOG/" + iGameId + "/" + iAccountType + "/" + iWorldId
-                + "/" + date + "/" + time + "/";
+        String dstPath = "/LOG/" + iGameId + "/" + iAccountType + "/" + iWorldId + "/" + date + "/"
+                + time + "/";
 
-        
         SparkConf conf = new SparkConf().setAppName("Log Filter");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
@@ -89,13 +91,15 @@ public class Main {
                     });
 
             SQLContext sqlContext = new SQLContext(sc);
-            
-            
-            Class c = Class.forName("com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin");
-            SaveParquet<BaseBean> sq = new SaveParquet<BaseBean>();
-            sq.set((BaseBean)c.newInstance());
-            sq.LogToParquet(sqlContext, hadoopFile, "RoleLogin", dstPath);
-            
+
+            List<String[]> list = ReadConfigurationFile.ReadFile(path);
+            for (String[] l : list) {
+                Class c = Class
+                        .forName(l[0]);
+                SaveParquet<BaseBean> sq = new SaveParquet<BaseBean>();
+                sq.set((BaseBean) c.newInstance());
+                sq.LogToParquet(sqlContext, hadoopFile, l[1], dstPath);
+            }
             sc.stop();
             sc.close();
 

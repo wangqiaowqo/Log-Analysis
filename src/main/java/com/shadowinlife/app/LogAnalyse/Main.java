@@ -16,7 +16,7 @@ import com.shadowinlife.app.Scheduler.CreateProcessTable;
  *        Main class of the analyse app
  */
 
-public class MainAPP {
+public class Main {
 
     public static void main(String[] args) {
 
