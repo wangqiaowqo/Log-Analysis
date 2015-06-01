@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SPLIT>
+	<struct JavaBean="com.shadowinlife.app.LogAnalyse.SQLModelFactory.ChongZhi"
+		TableName="ChongZhi" />
+	<struct JavaBean="com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin"
+		TableName="RoleLogin" />
+	<struct JavaBean="com.shadowinlife.app.LogAnalyse.SQLModelFactory.MoneyFlow"
+		TableName="MoneyFlow" />
+	<struct JavaBean="com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout"
+		TableName="RoleLogout" />
+	<struct JavaBean="com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskStart"
+		TableName="TastStart" />
+	<struct JavaBean="com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskFinished"
+		TableName="TaskFinished" />
+</SPLIT>
