@@ -26,13 +26,14 @@ public class ReadConfigurationFile {
 
             System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-            NodeList nList = doc.getElementsByTagName("keyvalue");
+            NodeList nList = doc.getElementsByTagName("struct");
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
                 Element eElement = (Element) nNode;
                 String[] t = {eElement.getAttribute("JavaBean"),eElement.getAttribute("TableName")};
+                System.out.println("Node element :" + t[0] + " " + t[1]);
                 l.add(t);
             }
         } catch (Exception e) {

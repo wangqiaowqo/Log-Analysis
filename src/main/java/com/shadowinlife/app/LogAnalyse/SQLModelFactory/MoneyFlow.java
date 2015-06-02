@@ -78,6 +78,9 @@ public class MoneyFlow extends BaseBean implements Serializable {
         this.iAction = Integer.valueOf(iAction);
     }
 
+    public MoneyFlow(){
+        super();
+    }
     public MoneyFlow parseFromLogFile(String[] array) {
         String[] columnList = array;
 

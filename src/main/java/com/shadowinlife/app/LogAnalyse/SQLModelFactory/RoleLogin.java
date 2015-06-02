@@ -34,7 +34,7 @@ import com.shadowinlife.app.Tools.CONSTANT;
 | iReputation  | int(11) unsigned | NO   |     | 0       |       |
 | iEnergy      | int(11) unsigned | NO   |     | 0       |       |
 | iMoney       | "json"           | NO   |     | 0       |       |
-| dtCreateTime | datetime         | YES  |     | NULL    |       |
+| dtCreateTime | datetime         | YES  |     | N  ULL    |       |
 | iOnlineTime  | int(11) unsigned | NO   |     | 0       |       |
 | iLoginWay    | String           | NO   |     | 0       |       |
 +--------------+------------------+------+-----+---------+-------+

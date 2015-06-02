@@ -35,7 +35,7 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
 
                         @Override
                         public Boolean call(Tuple2<String, String[]> f) throws Exception {
-                            if (f._1().equalsIgnoreCase("RoleLogin")) {
+                            if (f._1().equalsIgnoreCase(name)) {
                                 return true;
                             } else {
                                 return false;

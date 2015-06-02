@@ -25,7 +25,7 @@ public class Main {
         String iWorldId = null;
         String iAccountType = null;
         String NameNode = null;
-        String time = null;
+        String time = "";
         
         for (int i = 0; i < args.length; i = i + 2) {
             if (!args[i].contains("--")) {
@@ -37,7 +37,7 @@ public class Main {
                         + "--DATE Index Field Date  NOT NULL\n" + "--GAMEID Index Filed Gameid\n"
                         + "--WORLDID Index Filed WORLDID\n"
                         + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n"
-                        + "--TABLE split actualy Table\n" + "--TIME Hours of the Field\n"
+                        + "--TIME Hours of the Field\n"
                         + "--CONF configuration files for javabean class");
                 return;
             }
@@ -72,7 +72,8 @@ public class Main {
 
         SparkConf conf = new SparkConf().setAppName("Log Filter");
         JavaSparkContext sc = new JavaSparkContext(conf);
-
+        SQLContext sqlContext = new SQLContext(sc);
+        
         try {
             // Read origin log file
             JavaRDD<String> logLines = sc.textFile(targetFile);
@@ -90,10 +91,9 @@ public class Main {
                         }
                     });
 
-            SQLContext sqlContext = new SQLContext(sc);
-
             List<String[]> list = ReadConfigurationFile.ReadFile(path);
             for (String[] l : list) {
+                System.out.println("gongmeng: " + l[0] + " " + l[1]);
                 Class c = Class
                         .forName(l[0]);
                 SaveParquet<BaseBean> sq = new SaveParquet<BaseBean>();

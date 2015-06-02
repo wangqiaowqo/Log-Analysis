@@ -76,6 +76,10 @@ public class TaskStart extends BaseBean implements Serializable {
         this.iItemGuide = Integer.valueOf(iItemGuide);
     }
 
+    public TaskStart() {
+        super();
+    }
+    
     public TaskStart parseFromLogFile(String[] array) {
         String[] columnList = array;
         for (int i = 0; i < columnList.length; i++){

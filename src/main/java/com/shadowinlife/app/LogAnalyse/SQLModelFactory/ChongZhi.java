@@ -99,6 +99,9 @@ public class ChongZhi extends BaseBean implements Serializable {
         this.iLoginWay = iLoginWay;
     }
 
+    public ChongZhi(){
+       super();
+    }
     public ChongZhi parseFromLogFile(String[] array) {
         String[] columnList = array;
 

@@ -76,6 +76,10 @@ public class TaskFinished extends BaseBean implements Serializable {
         this.iTaskTime = (this.dtEventTime.getTime() - this.dtTaskStartTime.getTime())/1000;
     }
 
+    public TaskFinished() {
+        super();
+    }
+    
     public TaskFinished parseFromLogFile(String[] array) {
         String[] columnList = array;
         for (int i = 0; i < columnList.length; i++){

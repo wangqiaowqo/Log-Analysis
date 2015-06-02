@@ -94,7 +94,11 @@ public class RoleLogout extends BaseBean implements Serializable {
         this.iOnlineTime = (this.dtEventTime.getTime() - this.dtLoginTime.getTime())/1000l;
         this.iLoginWay=iLoginWay;             
     }
-
+    
+    public RoleLogout() {
+        super();
+    }
+    
     public RoleLogout parseFromLogFile(String[] array) {
         String[] columnList = array;
         try { // TODO Some column may be null,should handle it
