@@ -139,28 +139,11 @@ public class MoneyFlowProcessTable {
             + "T1.index_igameid,"
             + "T1.index_iworldid FROM fat_pay_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
-    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> PayFile,
+    public static boolean process(HiveContext sqlContext, DataFrame schemaMoneyFlow,
             String date, String iworldid) {
         
         try {
-            
-            // Create RDD from login FILES
-            JavaRDD<MoneyFlow> PayLogs = PayFile.map(new Function<String[], MoneyFlow>() {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public MoneyFlow call(String[] line) {
-                    
-                    return MoneyFlow.parseFromLogFile(line);
-
-                }
-
-            });
-            
-            // Convert all the values into the spark table
-            DataFrame schemaPayRDD = sqlContext.createDataFrame(PayLogs, MoneyFlow.class);
-            sqlContext.registerDataFrameAsTable(schemaPayRDD, "PayLog");
+            sqlContext.registerDataFrameAsTable(schemaMoneyFlow, "PayLog");
            
 
             // Execute the daily analysis SQL

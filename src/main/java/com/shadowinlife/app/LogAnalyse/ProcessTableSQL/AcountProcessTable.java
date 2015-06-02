@@ -141,43 +141,12 @@ public class AcountProcessTable {
             + "T1.index_igameid,"
             + "T1.index_iworldid FROM fat_login_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
-    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> loginFile,
-            JavaRDD<String[]> logoutFile, String date, String iworldid) {
+    public static boolean process(HiveContext sqlContext, DataFrame schemaLoginRDD,
+            DataFrame schemaLogoutRDD, String date, String iworldid) {
         
         try {
             
-            // Create RDD from login FILES
-            JavaRDD<RoleLogin> loginLogs = loginFile.map(new Function<String[], RoleLogin>() {
-
-                private static final long serialVersionUID = -8639862064479870422L;
-
-                @Override
-                public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogin call(String[] line) {
-                    RoleLogin r = new RoleLogin();
-                    return r.parseFromLogFile(line);
-
-                }
-
-            });
-
-            // Create RDD from logout FILES
-            JavaRDD<RoleLogout> logoutLogs = logoutFile.map(new Function<String[], RoleLogout>() {
-
-                private static final long serialVersionUID = 9145640452810492525L;
-
-                @Override
-                public com.shadowinlife.app.LogAnalyse.SQLModelFactory.RoleLogout call(String[] line) {
-
-                    return RoleLogout.parseFromLogFile(line);
-
-                }
-
-            });
-            
-            // Convert all the values into the spark table
-            DataFrame schemaLoginRDD = sqlContext.createDataFrame(loginLogs, RoleLogin.class);
-            DataFrame schemaLogoutRDD = sqlContext.createDataFrame(logoutLogs, RoleLogout.class);
-            
+         
             schemaLoginRDD.registerTempTable("loginLog");
             schemaLoginRDD.registerTempTable("logoutLog");
             

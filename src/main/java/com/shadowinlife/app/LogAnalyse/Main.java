@@ -26,7 +26,7 @@ public class Main {
         String Flag = null;
         String iWorldId = null, iGameId = null, iAccountType = null;
         String tableName = null;
-
+        String FilePath = null;
         for (int i = 0; i < args.length; i = i + 2) {
 
             // 入参格式监测
@@ -110,18 +110,18 @@ public class Main {
         try {
             if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) && mode != null) {
 
-                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, tableName, date,
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, tableName, date,
                         iWorldId);
 
             } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT"))
                     && mode == null) {
-                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "RoleLogin",
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "RoleLogin",
                         date, iWorldId);
-                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "Task", date,
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "Task", date,
                         iWorldId);
-                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "MoneyFlow",
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "MoneyFlow",
                         date, iWorldId);
-                CreateProcessTable.FatTableConstruct(sc, sqlContext, HDFSNameNode, "ChongZhi",
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "ChongZhi",
                         date, iWorldId);
 
             } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))

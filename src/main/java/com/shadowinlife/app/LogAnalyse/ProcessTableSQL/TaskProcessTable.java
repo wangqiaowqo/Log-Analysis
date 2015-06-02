@@ -53,48 +53,11 @@ public class TaskProcessTable {
             + "IF(T2.iTotalTime IS NULL, '0', T2.iTotalTime) FROM T1 FULL JOIN T2 "
             + "ON (T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND T1.iTaskLevel=T2.iTaskLevel)";
 
-    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> rddTaskStart,
-            JavaRDD<String[]> rddTaskFinished, String date, String iworldid, String url,
+    public static boolean process(HiveContext sqlContext, DataFrame dfTaskStart,
+            DataFrame dfTaskFinished, String date, String iworldid, String url,
             String table) {
 
         try {
-
-            // Create RDD from login FILES
-            JavaRDD<TaskStart> tbTaskStart = rddTaskStart.map(new Function<String[], TaskStart>() {
-
-                private static final long serialVersionUID = -8639862064479870422L;
-
-                @Override
-                public TaskStart call(String[] line) {
-
-                    return TaskStart.parseFromLogFile(line);
-
-                }
-
-            });
-
-            // Create RDD from logout FILES
-            JavaRDD<TaskFinished> tbTaskFinished = rddTaskFinished
-                    .map(new Function<String[], TaskFinished>() {
-
-                        private static final long serialVersionUID = 9145640452810492525L;
-
-                        @Override
-                        public TaskFinished call(String[] line) {
-
-                            return TaskFinished.parseFromLogFile(line);
-
-                        }
-
-                    });
-
-            // Convert all the values into the spark table
-            DataFrame dfTaskStart = sqlContext.createDataFrame(tbTaskStart, TaskStart.class);
-            
-            sqlContext.registerDataFrameAsTable(dfTaskStart, "TaskStart");
-            DataFrame dfTaskFinished = sqlContext.createDataFrame(tbTaskFinished,
-                    TaskFinished.class);
-            
             sqlContext.registerDataFrameAsTable(dfTaskFinished, "TaskFinished");
 
             // run SQL analysis SQL

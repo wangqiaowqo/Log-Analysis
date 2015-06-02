@@ -140,27 +140,11 @@ public class ChongzhiProcessTable {
             + "T1.index_igameid,"
             + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s') AND index_iworldid=%s";
 
-    public static boolean process(HiveContext sqlContext, JavaRDD<String[]> chongZhiFile,
+    public static boolean process(HiveContext sqlContext, DataFrame schemaChongZhiRDD,
             String date, String iworldid) {
         
-        try {
-            
-            // Create RDD from login FILES
-            JavaRDD<ChongZhi> chongZhiLogs = chongZhiFile.map(new Function<String[], ChongZhi>() {
-
-				private static final long serialVersionUID = 1L;
-
-				@Override
-                public ChongZhi call(String[] line) {
-                    
-                    return ChongZhi.parseFromLogFile(line);
-
-                }
-
-            });
-            
+        try {          
             // Convert all the values into the spark table
-            DataFrame schemaChongZhiRDD = sqlContext.createDataFrame(chongZhiLogs, ChongZhi.class);
             sqlContext.registerDataFrameAsTable(schemaChongZhiRDD, "ChongZhiLog");
            
 
