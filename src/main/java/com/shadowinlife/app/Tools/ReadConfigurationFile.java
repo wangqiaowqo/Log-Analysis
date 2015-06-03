@@ -46,11 +46,8 @@ public class ReadConfigurationFile {
     }
 
     /**
-     * &lt;    <   less than
-       &gt;    >   greater than
-       &amp;   &   ampersand 
-       &apos;  '   apostrophe
-       &quot;  "   quotation mark
+     * &lt; < less than &gt; > greater than &amp; & ampersand &apos; '
+     * apostrophe &quot; " quotation mark
      */
     public static List<Map<String, List<String[]>>> ReadLogAnalyseConfiguration(String Path) {
         List<Map<String, List<String[]>>> l = new ArrayList<Map<String, List<String[]>>>();
@@ -68,55 +65,69 @@ public class ReadConfigurationFile {
 
             for (int i = 0; i < nList.getLength(); i++) {
                 Map<String, List<String[]>> m = new HashMap<String, List<String[]>>();
+                
                 List<String[]> tmp = new ArrayList<String[]>();
                 Node nNode = nList.item(i);
                 Element eElement = (Element) nNode;
-                //Date Time [begin, end)
+                // Date Time [begin, end)
                 String[] date = { eElement.getAttribute("Begin"), eElement.getAttribute("End") };
                 tmp.add(date);
-                m.put("map", tmp);
+                m.put("Date", tmp);
                 
-                //GameId comma separate
+                System.out.println(date[0] + date[1]);
+
+                // GameId comma separate
                 String[] GameId = eElement.getElementsByTagName("GameId").item(0).getTextContent()
                         .split(",");
-                tmp.clear();
-                tmp.add(GameId);
-                m.put("GameId", tmp);
+                List<String[]> tmp_GameId = new ArrayList<String[]>();
+                tmp_GameId.add(GameId);
+                m.put("GameId", tmp_GameId);
                 
-                //WorldId comma separate
+                // WorldId comma separate
                 String[] WorldId = eElement.getElementsByTagName("WorldId").item(0)
                         .getTextContent().split(",");
-                tmp.clear();
-                tmp.add(WorldId);
-                m.put("WorldId", tmp);
-                
-               //AccountType comma separate
+                List<String[]> tmp_WorldId = new ArrayList<String[]>();
+                tmp_WorldId.add(WorldId);
+                m.put("WorldId", tmp_WorldId);
+
+                // AccountType comma separate
                 String[] AccountType = eElement.getElementsByTagName("AccountType").item(0)
                         .getTextContent().split(",");
-                tmp.clear();
-                tmp.add(AccountType);
-                m.put("AccountType", tmp);
-
+                List<String[]> tmp_AccountType = new ArrayList<String[]>();
+                tmp_AccountType.add(AccountType);
+                m.put("AccountType", tmp_AccountType);
+                
+                
                 String[] FinalSQL = eElement.getElementsByTagName("Final").item(0).getTextContent()
                         .split(",");
-                tmp.clear();
-                tmp.add(FinalSQL);
-                m.put("Final", tmp);
-
+                List<String[]> tmp_Final = new ArrayList<String[]>();
+                tmp_Final.add(FinalSQL);
+                m.put("Final", tmp_Final);
+                
                 String[] Table = eElement.getElementsByTagName("Table").item(0).getTextContent()
                         .split(",");
-                tmp.clear();
-                tmp.add(Table);
-                m.put("Table", tmp);
+                List<String[]> tmp_Table = new ArrayList<String[]>();
+                tmp_Table.add(Table);
+                m.put("Table", tmp_Table);
                 
-                tmp.clear();
+                List<String[]> tmp_SQL = new ArrayList<String[]>();
                 NodeList SqlList = eElement.getElementsByTagName("Sql");
-                for(int j = 0; j <  SqlList.getLength(); j++) {
-                    Element e = (Element)SqlList.item(j);
-                    String[] SQL = {e.getAttribute("TempTable"), e.getTextContent()};
-                    tmp.add(SQL);
+                for (int j = 0; j < SqlList.getLength(); j++) {
+                    Element e = (Element) SqlList.item(j);
+                    String[] SQL = { e.getAttribute("TempTable"), e.getTextContent() };
+                    tmp_SQL.add(SQL);
                 }
-                m.put("Sql", tmp);
+                m.put("Sql", tmp_SQL);
+                
+                List<String[]> tmp_Hive = new ArrayList<String[]>();
+                NodeList HiveList = eElement.getElementsByTagName("Hive");
+                for (int z = 0; z < SqlList.getLength(); z++) {
+                    Element e = (Element) SqlList.item(z);
+                    String[] SQL = { e.getAttribute("HiveTalbe"), e.getTextContent() };
+                    tmp_Hive.add(SQL);
+                }
+                m.put("Hive", tmp_Hive);
+                
                 l.add(m);
             }
         } catch (Exception e) {

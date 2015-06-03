@@ -11,7 +11,7 @@
 		<GameId>1</GameId>
 		<AccountType>1</AccountType>
 		<WorldId>1,2</WorldId>
-		<Table>RoleLogin,RoleLogout</Table>
+		<Table>RoleLogin,RoleLogout,MoneyFlow</Table>
 		<Sql TempTable="T1"> select a/6 from boss where a &lt; 6 </Sql>
 		<Sql TempTalbe="T2"></Sql>
 		<Final MySqlTable=""></Final>
