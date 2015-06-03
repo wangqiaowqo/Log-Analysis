@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 public class TaskFinished extends BaseBean implements Serializable {
+    private int iAccountType;
+    private int iGameId;
+    private int iWorldId;
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;
@@ -37,12 +40,15 @@ public class TaskFinished extends BaseBean implements Serializable {
     private int iFinshType;
     private long iTaskTime;
     
-    private TaskFinished(String dtEventTime, String iEventId, String version, String iUin,
+    private TaskFinished(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
             String iRoleVipLevel, String iRepuLevel, String v1, String v2, String iRoleExperience,
             String iRoleSword, String dtTaskStartTime, String iTaskType,  String iTaskCircle, String iTaskId,
             String vTaskName, String iTaskStar, String iNpcId, String vNpcName, String iFlag, String iItemType,
             String iItemId, String iItemNum, String iItemRemain, String iItemGuide, String iFinishType) {
+        this.iGameId = Integer.valueOf(GameId);
+        this.iAccountType = Integer.valueOf(AccountType);
+        this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
         this.version = version;
@@ -80,14 +86,14 @@ public class TaskFinished extends BaseBean implements Serializable {
         super();
     }
     
-    public TaskFinished parseFromLogFile(String[] array) {
+    public TaskFinished parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
         String[] columnList = array;
         for (int i = 0; i < columnList.length; i++){
             if (columnList[i].equalsIgnoreCase(" ")){
                 columnList[i] = "0";}
         }
             // TODO Some column may be null,should handle it      
-                return new TaskFinished(columnList[1], columnList[2], columnList[3], columnList[4],
+                return new TaskFinished(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
                         columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
                         columnList[10], columnList[11], columnList[12], columnList[13],
                         columnList[14], columnList[15], columnList[16], columnList[17],
@@ -285,5 +291,29 @@ public class TaskFinished extends BaseBean implements Serializable {
 
     public void setiTaskTime(long iTaskTime) {
         this.iTaskTime = iTaskTime;
+    }
+
+    public int getiAccountType() {
+        return iAccountType;
+    }
+
+    public void setiAccountType(int iAccountType) {
+        this.iAccountType = iAccountType;
+    }
+
+    public int getiGameId() {
+        return iGameId;
+    }
+
+    public void setiGameId(int iGameId) {
+        this.iGameId = iGameId;
+    }
+
+    public int getiWorldId() {
+        return iWorldId;
+    }
+
+    public void setiWorldId(int iWorldId) {
+        this.iWorldId = iWorldId;
     }
 }

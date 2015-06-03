@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scheduler>
+	<action begin="2015-06-02" end="2015-07-07">
+		<table>login</table>
+		<table>logout</table>
+		<sql temptable="T1"> select a/6 from boss where a<6 </sql>
+		<sql temptalbe="T2"></sql>
+		<final mysqltable=""></final>
+	</action>
+	<action date="everyday">
+		<table>login</table>
+		<table>logout</table>
+		<sql temptable="T1"></sql>
+		<sql temptalbe="T2"></sql>
+		<final mysqltable=""></final>
+	</action>
+</scheduler>    

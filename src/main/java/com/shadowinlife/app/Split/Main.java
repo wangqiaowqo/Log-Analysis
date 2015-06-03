@@ -98,7 +98,7 @@ public class Main {
                         .forName(l[0]);
                 SaveParquet<BaseBean> sq = new SaveParquet<BaseBean>();
                 sq.set((BaseBean) c.newInstance());
-                sq.LogToParquet(sqlContext, hadoopFile, l[1], dstPath);
+                sq.LogToParquet(sqlContext, hadoopFile, l[1], dstPath, iGameId, iAccountType, iWorldId);
             }
             sc.stop();
             sc.close();

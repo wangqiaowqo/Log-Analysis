@@ -41,7 +41,9 @@ public class ChongZhi extends BaseBean implements Serializable {
 
    
     private static final long serialVersionUID = 1L;
-   
+    private int iAccountType;
+    private int iGameId;
+    private int iWorldId;
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;
@@ -67,12 +69,14 @@ public class ChongZhi extends BaseBean implements Serializable {
     private String vDesc;
     private String iLoginWay;
 
-    public ChongZhi(String dtEventTime, String iEventId, String version, String iUin,
+    public ChongZhi(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
             String iRoleVipLevel, String iRepuLevel, String v1, String v2, String iArea,
             String DstUin, String iSourceWay, String vClientIp, String vRemark, String iPayBefore,
             String iPayDelta, String iPayAfter, String vDesc, String iLoginWay) {
-
+        this.iGameId = Integer.valueOf(GameId);
+        this.iAccountType = Integer.valueOf(AccountType);
+        this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
         this.version = version;
@@ -102,7 +106,7 @@ public class ChongZhi extends BaseBean implements Serializable {
     public ChongZhi(){
        super();
     }
-    public ChongZhi parseFromLogFile(String[] array) {
+    public ChongZhi parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
         String[] columnList = array;
 
         if (columnList.length == 24) {
@@ -111,7 +115,7 @@ public class ChongZhi extends BaseBean implements Serializable {
                     columnList[i] = "0";
                 }
             }
-            return new ChongZhi(columnList[1], columnList[2], columnList[3], columnList[4],
+            return new ChongZhi(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
                     columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
                     columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
                     columnList[15], columnList[16], columnList[17], columnList[18], columnList[19],
@@ -303,5 +307,29 @@ public class ChongZhi extends BaseBean implements Serializable {
 
     public void setiLoginWay(String iLoginWay) {
         this.iLoginWay = iLoginWay;
+    }
+
+    public int getiAccountType() {
+        return iAccountType;
+    }
+
+    public void setiAccountType(int iAccountType) {
+        this.iAccountType = iAccountType;
+    }
+
+    public int getiGameId() {
+        return iGameId;
+    }
+
+    public void setiGameId(int iGameId) {
+        this.iGameId = iGameId;
+    }
+
+    public int getiWorldId() {
+        return iWorldId;
+    }
+
+    public void setiWorldId(int iWorldId) {
+        this.iWorldId = iWorldId;
     }
 }

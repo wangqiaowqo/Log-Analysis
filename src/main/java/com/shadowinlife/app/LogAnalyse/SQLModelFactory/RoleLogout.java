@@ -41,7 +41,9 @@ import com.shadowinlife.app.Tools.CONSTANT;
 public class RoleLogout extends BaseBean implements Serializable {
   
     private static final long serialVersionUID = -8150457539320394072L;
-    
+    private int iAccountType;
+    private int iGameId;
+    private int iWorldId;
     private Timestamp dtEventTime;
     private String iEventId;
     private String version;
@@ -66,11 +68,14 @@ public class RoleLogout extends BaseBean implements Serializable {
     private Long iOnlineTime;
     private String iLoginWay;
 
-    private RoleLogout(String dtEventTime, String iEventId, String version, String iUin,
+    private RoleLogout(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
             String iRoleVipLevel, String iRepuLevel, String v1, String v2, String dtLoginTime, String vClientIp,
             String vZoneId, String iRoleExp, String iReputation, String iEnergy, String iMoney,
             String iOnlineTime, String iLoginWay) {
+        this.iGameId = Integer.valueOf(GameId);
+        this.iAccountType = Integer.valueOf(AccountType);
+        this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
         this.version = version;
@@ -99,7 +104,7 @@ public class RoleLogout extends BaseBean implements Serializable {
         super();
     }
     
-    public RoleLogout parseFromLogFile(String[] array) {
+    public RoleLogout parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
         String[] columnList = array;
         try { // TODO Some column may be null,should handle it
             if (columnList.length == 23) {
@@ -108,20 +113,20 @@ public class RoleLogout extends BaseBean implements Serializable {
                         columnList[i] = "0";
                     }
                 }
-                return new RoleLogout(columnList[1], columnList[2], columnList[3], columnList[4],
+                return new RoleLogout(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
                         columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
                         columnList[10], columnList[11], columnList[12], columnList[13],
                         columnList[14], columnList[15], columnList[16], columnList[17],
                         columnList[18], columnList[19], columnList[20], columnList[21],
                         columnList[22]);
             } else {
-                return new RoleLogout("1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
+                return new RoleLogout("0","0","0","1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
                         "0", "0", "0", "0", "0", " ", " ", "1970-01-01 00:00:00", "0.0.0.0", " ", "0", "0", "0", " ",
                          "1", " ");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new RoleLogout("1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
+            return new RoleLogout("0","0","0","1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
                     "0", "0", "0", "0", "0", " ", " ", "1970-01-01 00:00:00","0.0.0.0", " ", "0", "0", "0", " ",
                      "1", " ");
         }
@@ -310,5 +315,29 @@ public class RoleLogout extends BaseBean implements Serializable {
 
     public void setDtLoginTime(Timestamp dtLoginTime) {
         this.dtLoginTime = dtLoginTime;
+    }
+
+    public int getiAccountType() {
+        return iAccountType;
+    }
+
+    public void setiAccountType(int iAccountType) {
+        this.iAccountType = iAccountType;
+    }
+
+    public int getiGameId() {
+        return iGameId;
+    }
+
+    public void setiGameId(int iGameId) {
+        this.iGameId = iGameId;
+    }
+
+    public int getiWorldId() {
+        return iWorldId;
+    }
+
+    public void setiWorldId(int iWorldId) {
+        this.iWorldId = iWorldId;
     }
 }

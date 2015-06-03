@@ -26,7 +26,7 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
     }
 
     public void LogToParquet(SQLContext sqlContext, JavaPairRDD<String, String[]> hadoopFile,
-            String tableName, String dst) {
+            String tableName, String dst, final String GameId, final String AccountType, final String WorldId) {
         try {
             final String name = tableName;
             JavaRDD<String[]> tempRDD = hadoopFile.filter(
@@ -51,7 +51,7 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
                 @Override
                 public T call(String[] line) {
                    
-                    return (T) t.parseFromLogFile(line);
+                    return (T) t.parseFromLogFile(line, GameId, AccountType, WorldId);
 
                 }
 
