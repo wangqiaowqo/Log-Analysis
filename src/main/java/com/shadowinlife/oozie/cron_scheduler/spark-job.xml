@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scheduler>
 	<action begin="2015-06-02" end="2015-07-07">
+		<GameId>1</GameId>
+		<AccountType>1</AccountType>
+		<WorldId>1,2</WorldId>
 		<table>login</table>
 		<table>logout</table>
 		<sql temptable="T1"> select a/6 from boss where a<6 </sql>

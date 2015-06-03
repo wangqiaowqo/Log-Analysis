@@ -10,8 +10,8 @@ import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
-import com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskFinished;
-import com.shadowinlife.app.LogAnalyse.SQLModelFactory.TaskStart;
+import com.shadowinlife.app.SQLModelFactory.TaskFinished;
+import com.shadowinlife.app.SQLModelFactory.TaskStart;
 
 public class TaskProcessTable {
 

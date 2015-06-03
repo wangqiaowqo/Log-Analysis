@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -14,7 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ReadConfigurationFile {
-    public static List<String[]> ReadFile(String Path) {
+    public static List<String[]> ReadSplitConfiguration(String Path) {
         List<String[]> l = new ArrayList<String[]>();
         try {
             File fXmlFile = new File(Path);
@@ -32,7 +31,8 @@ public class ReadConfigurationFile {
 
                 Node nNode = nList.item(temp);
                 Element eElement = (Element) nNode;
-                String[] t = {eElement.getAttribute("JavaBean"),eElement.getAttribute("TableName")};
+                String[] t = { eElement.getAttribute("JavaBean"),
+                        eElement.getAttribute("TableName") };
                 System.out.println("Node element :" + t[0] + " " + t[1]);
                 l.add(t);
             }
@@ -41,5 +41,9 @@ public class ReadConfigurationFile {
         }
 
         return l;
+    }
+
+    public static Map<String, String[]> ReadLogAnalyseConfiguration(String Path) {
+        
     }
 }

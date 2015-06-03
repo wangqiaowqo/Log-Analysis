@@ -11,7 +11,7 @@ import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 
-import com.shadowinlife.app.LogAnalyse.SQLModelFactory.*;
+import com.shadowinlife.app.SQLModelFactory.*;
 import com.shadowinlife.app.Tools.ReadConfigurationFile;
 
 import scala.Tuple2;
@@ -91,7 +91,7 @@ public class Main {
                         }
                     });
 
-            List<String[]> list = ReadConfigurationFile.ReadFile(path);
+            List<String[]> list = ReadConfigurationFile.ReadSplitConfiguration(path);
             for (String[] l : list) {
                 System.out.println("gongmeng: " + l[0] + " " + l[1]);
                 Class c = Class

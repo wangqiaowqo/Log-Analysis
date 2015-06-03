@@ -1,4 +1,4 @@
-package com.shadowinlife.app.LogAnalyse.SQLModelFactory;
+package com.shadowinlife.app.SQLModelFactory;
 
 /**
  +--------------+------------------+------+-----+---------+-------+
