@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scheduler>
-	<action begin="2015-06-02" end="2015-07-07">
+<!--
+&lt;	<	less than
+&gt;	>	greater than
+&amp;	&	ampersand 
+&apos;	'	apostrophe
+&quot;	"	quotation mark
+-->
+<Scheduler>
+	<Action Name="" Begin="2015-06-02" End="2015-06-03">
 		<GameId>1</GameId>
 		<AccountType>1</AccountType>
 		<WorldId>1,2</WorldId>
-		<table>login</table>
-		<table>logout</table>
-		<sql temptable="T1"> select a/6 from boss where a<6 </sql>
-		<sql temptalbe="T2"></sql>
-		<final mysqltable=""></final>
-	</action>
-	<action date="everyday">
-		<table>login</table>
-		<table>logout</table>
-		<sql temptable="T1"></sql>
-		<sql temptalbe="T2"></sql>
-		<final mysqltable=""></final>
-	</action>
-</scheduler>    
+		<Table>RoleLogin,RoleLogout</Table>
+		<Sql TempTable="T1"> select a/6 from boss where a &lt; 6 </Sql>
+		<Sql TempTalbe="T2"></Sql>
+		<Final MySqlTable=""></Final>
+	</Action>
+</Scheduler>    

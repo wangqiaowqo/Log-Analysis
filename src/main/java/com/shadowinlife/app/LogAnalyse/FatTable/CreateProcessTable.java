@@ -6,6 +6,7 @@ import org.apache.spark.sql.hive.HiveContext;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ProceeMoneyStorage;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.TaskProcessTable;
 
 
@@ -37,6 +38,10 @@ public class CreateProcessTable {
                     "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",
                     "oss_dm_tbTask");
             break;
+        case "MoneyStorage":
+            DataFrame dfRoleStatus = sqlContext.parquetFile(FilePath+"RoleStatus.parquet");
+            ProceeMoneyStorage.process(sqlContext, dfRoleStatus, date, iworldid, 
+                    "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss", "oss_dm_tbMoneyStorage");
         }
     }
 
