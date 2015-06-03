@@ -1,4 +1,4 @@
-package com.shadowinlife.app.LogAnalyse.Scheduler;
+package com.shadowinlife.app.LogAnalyse.FatTable;
 
 import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.hive.HiveContext;

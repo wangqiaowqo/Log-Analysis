@@ -1,4 +1,4 @@
-package com.shadowinlife.app.OssTableSQL;
+package com.shadowinlife.app.LogAnalyse.OssTableSQL;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

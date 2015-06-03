@@ -5,8 +5,8 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.hive.HiveContext;
 
-import com.shadowinlife.app.LogAnalyse.Scheduler.CreateProcessTable;
-import com.shadowinlife.app.OssTableSQL.UserAccountAnalysis;
+import com.shadowinlife.app.LogAnalyse.FatTable.CreateProcessTable;
+import com.shadowinlife.app.LogAnalyse.OssTableSQL.UserAccountAnalysis;
 
 /**
  * @author shadowinlife
