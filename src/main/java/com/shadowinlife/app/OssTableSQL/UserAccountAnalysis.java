@@ -389,6 +389,130 @@ public class UserAccountAnalysis {
             + "group by index_iaccounttype,index_igameid,index_iworldid,maxLevel,iPeriodNum "
             + "grouping sets((index_iaccounttype,index_igameid,index_iworldid,maxLevel,iPeriodNum),"
             + "(index_iaccounttype,index_igameid,index_iworldid,iPeriodNum))";
+    
+    private static String tbStayScaleDis_DayActi = "INSERT OVERWRITE TABLE oss_dm_%s_tbStayScaleDis "
+            + "PARTITION(index_dtstatdate, index_iperiod, index_ssourceuser, index_ilookperiod) "
+            + "SELECT '%s'," //date
+            + "'%s'," //ssourceuser : DAYACTI  DAYREGISTER
+            + "'%s'," //iPeroid
+            + "t1.igameid,"
+            + "t1.iaccounttype,"
+            + "t1.iworldid,"
+            + "t2.ilevel," 
+            + "datediff(t2.dtstatdate,t1.dtstatdate)," //TODO  Look period
+            + "count(*),"
+            
+            + "DATE2LONG('%s'),'%s','%s',datediff(t2.dtstatdate,t1.dtstatdate) "
+            + "from "
+            
+            + "(select dtstatdate,"
+            + "if(iaccounttype is null,-1,iaccounttype) AS iaccounttype,"
+            + "if(igameid is null,-1,igameid) AS igameid,"
+            + "if(iworldid is null,-1,iworldid) AS iworldid,"
+            + "suin "
+            + "from fat_%s_user "
+            + "where index_dtstatdate <= date2long('%s') and index_dtstatdate >= (date2long('%s') - 90) and useractivity(idayacti,1) = 1 "
+            + "group by dtstatdate,iaccounttype,igameid,iworldid,suin "
+            + "grouping sets((dtstatdate,iaccounttype,igameid,iworldid,suin),"
+            + "(dtstatdate,iaccounttype,igameid,suin),"
+            + "(dtstatdate,iaccounttype,iworldid,suin),"
+            + "(dtstatdate,igameid,iworldid,suin),"
+            + "(dtstatdate,igameid,suin),"
+            + "(dtstatdate,iaccounttype,suin),"
+            + "(dtstatdate,iworldid,suin),"
+            + "(dtstatdate,suin))) t1  "
+            + "left join "
+            + "(select dtstatdate,"
+            + "if(iaccounttype is null,-1,iaccounttype) AS iaccounttype,"
+            + "if(igameid is null,-1,igameid) AS igameid,"
+            + "if(iworldid is null,-1,iworldid) AS iworldid,"
+            + "if(ilevel is null,-1,ilevel) AS ilevel,"
+            + "suin "
+            + "from fat_%s_user "
+            + "where index_dtstatdate = date2long('%s') and useractivity(idayacti,1) = 1 "
+            + "group by dtstatdate,iaccounttype,igameid,iworldid,ilevel,suin "
+            + "grouping sets((dtstatdate,iaccounttype,igameid,iworldid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,igameid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,iworldid,ilevel,suin),"
+            + "(dtstatdate,igameid,iworldid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,igameid,iworldid,suin),"
+            + "(dtstatdate,igameid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,ilevel,suin),"
+            + "(dtstatdate,iworldid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,igameid,suin),"
+            + "(dtstatdate,iaccounttype,iworldid,suin),"
+            + "(dtstatdate,igameid,iworldid,suin),"
+            + "(dtstatdate,iaccounttype,suin),"
+            + "(dtstatdate,igameid,suin),"
+            + "(dtstatdate,iworldid,suin),"
+            + "(dtstatdate,ilevel,suin),"
+            + "(dtstatdate,suin)))  t2 "
+            + " on t1.iaccounttype=t2.iaccounttype and t1.suin=t2.suin and t1.igameid=t2.igameid and t1.iworldid=t2.iworldid "
+            + " where t2.suin is not null "
+            
+            + "group by t1.igameid,t1.iaccounttype,t1.iworldid,t2.ilevel,datediff(t2.dtstatdate,t1.dtstatdate)";  
+    
+    private static String tbStayScaleDis_WeekOrMonthActi = "INSERT OVERWRITE TABLE oss_dm_%s_tbStayScaleDis "
+            + "PARTITION(index_dtstatdate, index_iperiod, index_ssourceuser, index_ilookperiod) "
+            + "SELECT '%s'," //date
+            + "'%s'," //ssourceuser : DAYACTI  DAYREGISTER
+            + "'%s'," //iPeroid
+            + "t1.igameid,"
+            + "t1.iaccounttype,"
+            + "t1.iworldid,"
+            + "t2.ilevel," 
+            + "%s," //TODO  Look period
+            + "count(*),"
+            
+            + "DATE2LONG('%s'),'%s','%s',%s "
+            + "from "
+            
+            + "(select dtstatdate,"
+            + "if(iaccounttype is null,-1,iaccounttype) AS iaccounttype,"
+            + "if(igameid is null,-1,igameid) AS igameid,"
+            + "if(iworldid is null,-1,iworldid) AS iworldid,"
+            + "suin "
+            + "from fat_%s_user "
+            + "where index_dtstatdate = date2long('%s') and useractivity(%s,1) = 1 "
+            + "group by dtstatdate,iaccounttype,igameid,iworldid,suin "
+            + "grouping sets((dtstatdate,iaccounttype,igameid,iworldid,suin),"
+            + "(dtstatdate,iaccounttype,igameid,suin),"
+            + "(dtstatdate,iaccounttype,iworldid,suin),"
+            + "(dtstatdate,igameid,iworldid,suin),"
+            + "(dtstatdate,igameid,suin),"
+            + "(dtstatdate,iaccounttype,suin),"
+            + "(dtstatdate,iworldid,suin),"
+            + "(dtstatdate,suin))) t1  "
+            + "left join "
+            + "(select dtstatdate,"
+            + "if(iaccounttype is null,-1,iaccounttype) AS iaccounttype,"
+            + "if(igameid is null,-1,igameid) AS igameid,"
+            + "if(iworldid is null,-1,iworldid) AS iworldid,"
+            + "if(ilevel is null,-1,ilevel) AS ilevel,"
+            + "suin "
+            + "from fat_%s_user "
+            + "where index_dtstatdate = date2long('%s') and useractivity(%s,1) = 1 "
+            + "group by dtstatdate,iaccounttype,igameid,iworldid,ilevel,suin "
+            + "grouping sets((dtstatdate,iaccounttype,igameid,iworldid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,igameid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,iworldid,ilevel,suin),"
+            + "(dtstatdate,igameid,iworldid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,igameid,iworldid,suin),"
+            + "(dtstatdate,igameid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,ilevel,suin),"
+            + "(dtstatdate,iworldid,ilevel,suin),"
+            + "(dtstatdate,iaccounttype,igameid,suin),"
+            + "(dtstatdate,iaccounttype,iworldid,suin),"
+            + "(dtstatdate,igameid,iworldid,suin),"
+            + "(dtstatdate,iaccounttype,suin),"
+            + "(dtstatdate,igameid,suin),"
+            + "(dtstatdate,iworldid,suin),"
+            + "(dtstatdate,ilevel,suin),"
+            + "(dtstatdate,suin)))  t2 "
+            + " on t1.iaccounttype=t2.iaccounttype and t1.suin=t2.suin and t1.igameid=t2.igameid and t1.iworldid=t2.iworldid "
+            + " where t2.suin is not null "
+            
+            + "group by t1.igameid,t1.iaccounttype,t1.iworldid,t2.ilevel";    
 
     public static void create_tbRegisterUser(HiveContext sqlContext, String strMode, String strDate) {
 
@@ -452,12 +576,25 @@ public class UserAccountAnalysis {
             sqlContext.sql(strSql);
             
             // stat tbStayScaleDis
+            // 1.week reg user active tracking
             str = "floor(datediff('" + strDate + "',to_date(iregtime))/7) iPeriodNum";
             String strWhere = "and useractivity(iweekacti,1) = 1 and iregtime >= date_add('" + strDate + "',-251)";
             strSql = String.format(tbStayScaleDis, strMode, strDate, "WeekReg", 36, 
             		strDate, 36, "WeekReg", 
             		str, strMode, strDate, strWhere);
             sqlContext.sql(strSql);
+            
+            // 2.week active user active tracking
+            for (int i = 0; i <= 36; ++i) {
+            	time.setTime(date);
+            	time.add(Calendar.DATE, -(7*i));
+            	strBeforeWeekDate = sdf.format(time.getTime());
+            	strSql = String.format(tbStayScaleDis_WeekOrMonthActi, strMode, strDate, "WeekActi", 36, i,
+                		strDate, 36, "WeekActi", i, 
+                		strMode, strBeforeWeekDate, "iWeekActi", strMode, strDate, "iWeekActi");
+                sqlContext.sql(strSql);
+            }
+            
         }
 
         time.setTime(date);//renew date
@@ -506,6 +643,7 @@ public class UserAccountAnalysis {
             sqlContext.sql(strSql);
             
             // stat tbStayScaleDis
+            // 1.month reg user active tracking
             str = "year('" + strDate + "')*12 + month('" + strDate + "') - year(to_date(iregtime))*12 - month(to_date(iregtime)) iPeriodNum";
             time.add(Calendar.DATE, 1);//first day of the month
             time.set(Calendar.MONTH, time.get(Calendar.MONTH) - 24);
@@ -515,6 +653,18 @@ public class UserAccountAnalysis {
             		strDate, 24, "MonthReg", 
             		str, strMode, strDate, strWhere);
             sqlContext.sql(strSql);
+            
+            // 2.month active user active tracking
+			for (int i = 0; i <= 24; ++i) {
+				time.setTime(date);
+				time.add(Calendar.MONTH, -i);
+				strBeforeMonthDate = sdf.format(time.getTime());
+				strSql = String.format(tbStayScaleDis_WeekOrMonthActi, strMode,
+						strDate, "MonthActi", 24, i, strDate, 24, "MonthActi",
+						i, strMode, strBeforeMonthDate, "iMonthActi", strMode,
+						strDate, "iMonthActi");
+				sqlContext.sql(strSql);
+			}
         }
 
         // day stat,every day execute
@@ -526,9 +676,8 @@ public class UserAccountAnalysis {
                     iPeriod, strTableField, 1, strTableField, 1, strTableField, 1, strMode,
                     strDate, strMode, strDate, iPeriod);
             sqlContext.sql(strSql);
-            String str;
             // stat tbRegisterUserTypeDis
-            str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
+            String str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
             strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
@@ -569,11 +718,18 @@ public class UserAccountAnalysis {
             sqlContext.sql(strSql);
 
             // stat tbStayScaleDis
+            // 1.day reg user active tracking
             str = "datediff('" + strDate + "',to_date(iregtime)) iPeriodNum";
             String strWhere = "and useractivity(idayacti,1) = 1 and iregtime >= date_add('" + strDate + "',-90)";
             strSql = String.format(tbStayScaleDis, strMode, strDate, "DayReg", 90, 
             		strDate, 90, "DayReg", 
             		str, strMode, strDate, strWhere);
+            sqlContext.sql(strSql);
+            
+            // 2.day active user active tracking
+            strSql = String.format(tbStayScaleDis_DayActi, strMode, strDate, "DayActi", 90, 
+            		strDate, 90, "DayActi", 
+            		strMode, strDate, strDate, strMode, strDate);
             sqlContext.sql(strSql);
         }
 
