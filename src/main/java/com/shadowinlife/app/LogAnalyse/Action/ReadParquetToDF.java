@@ -38,7 +38,7 @@ public class ReadParquetToDF {
                 }
             }
         }
-
+        
         sc.registerDataFrameAsTable(df, Table.trim());
     }
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+# Flume agent2 config
+a2.sources = r1
+a2.sinks = k1
+a2.channels = c1
+a2.sources.r1.type = avro
+a2.sources.r1.bind = 10-4-32-53
+a2.sources.r1.port = 51510
+a2.sinks.k1.type = hdfs
+a2.sinks.k1.hdfs.path = hdfs://10-4-28-24:8020/LOG/%{Game}/%{AccountType}/%{WorldId}/%Y-%m-%d/%H
+a2.sinks.k1.hdfs.rollInterval = 3600
+a2.sinks.k1.hdfs.rollSize = 0
+a2.sinks.k1.hdfs.rollCount = 0
+a2.sinks.k1.hdfs.fileType = DataStream
+a2.sinks.k1.hdfs.writeFormat = Text
+a2.sinks.k1.hdfs.useLocalTimeStamp=true
+a2.channels.c1.type = memory
+a2.channels.c1.capacity = 100
+a2.sources.r1.channels = c1
+a2.sinks.k1.channel = c1
+
+
+agent1.channels.ch1.type = memory
+
+agent1.sources.avro-source1.channels = ch1
+agent1.sources.avro-source1.type     = avro
+agent1.sources.avro-source1.bind     = 10-4-32-53
+agent1.sources.avro-source1.port     = 41414
+
+agent1.sinks.mysqlSink.type     = com.shadowinlife.Flume.MySQL.MysqlConfigSink
+agent1.sinks.mysqlSink.channel  = ch1
+agent1.sinks.mysqlSink.host     = 10-4-28-24
+agent1.sinks.mysqlSink.port     = 3306
+agent1.sinks.mysqlSink.user     = oss
+agent1.sinks.mysqlSink.password = oss
+agent1.sinks.mysqlSink.database = dbLog
+agent1.sinks.mysqlSink.table    = tbRealOnline
+agent1.sinks.mysqlSink.columnName = dtStatTime, iChannelId, iUserNum
+agent1.sinks.mysqlSink.sql = REPLACE INTO %s (%s) VALUES
+agent1.sinks.mysqlSink.separator= \\\|
+
+
+agent1.channels = ch1
+agent1.sources  = avro-source1
+agent1.sinks    = mysqlSink
