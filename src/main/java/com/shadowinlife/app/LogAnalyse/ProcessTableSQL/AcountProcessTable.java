@@ -141,30 +141,20 @@ public class AcountProcessTable {
             + "T1.index_igameid,"
             + "T1.index_iworldid FROM fat_login_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
-    public static boolean process(HiveContext sqlContext, DataFrame schemaLoginRDD,
-            DataFrame schemaLogoutRDD, String date, String iworldid) {
+    public static boolean process(HiveContext sqlContext, String date, String iworldid) {
         
         try {
+            String RoleLoginSQL = "SELECT `iUin` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
+                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(iUin) AS in_times, MAX(`dtEventTime`) AS login_dtEventTime,"
+                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY iUin";
             
-         
-            schemaLoginRDD.registerTempTable("loginLog");
-            schemaLoginRDD.registerTempTable("logoutLog");
+            String RoleLogoutSQL = "SELECT `iUin` AS logout_id,SUM(`iOnlineTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
+                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(iUin) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
+                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY iUin";
             
             // Dump out the group data of user login and logout
-            DataFrame userLogin = schemaLoginRDD.groupBy("iUin").agg(col("iUin").as("login_id"),
-                    max(col("iRoleLevel")).as("tbLogin_iRoleLevel"),
-                    max(col("vClientIp")).as("tbLogin_vClientIp"),
-                    count(col("iUin")).as("in_times"),
-                    max(col("dtEventTime")).as("login_dtEventTime"),
-                    min(col("dtEventTime")).as("login_regTime"));
-
-            DataFrame userLogout = schemaLogoutRDD.groupBy("iUin").agg(col("iUin").as("logout_id"),
-                    sum(col("iOnlineTime")).as("tbLogout_iOnlineTime"),
-                    max(col("iRoleLevel")).as("tbLogout_iRoleLevel"),
-                    max(col("vClientIp")).as("tbLogout_vClientIp"),
-                    count(col("iUin")).as("out_times"),
-                    max(col("dtEventTime")).as("logout_dtEventTime"),
-                    min(col("dtLoginTime")).as("logout_regtime"));
+            DataFrame userLogin = sqlContext.sql(RoleLoginSQL);
+            DataFrame userLogout = sqlContext.sql(RoleLogoutSQL);
             
             
             // Register temple tables to execute analysis SQL

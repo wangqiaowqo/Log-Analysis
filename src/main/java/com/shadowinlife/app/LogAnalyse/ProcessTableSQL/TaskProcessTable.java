@@ -53,13 +53,10 @@ public class TaskProcessTable {
             + "IF(T2.iTotalTime IS NULL, '0', T2.iTotalTime) FROM T1 FULL JOIN T2 "
             + "ON (T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND T1.iTaskLevel=T2.iTaskLevel)";
 
-    public static boolean process(HiveContext sqlContext, DataFrame dfTaskStart,
-            DataFrame dfTaskFinished, String date, String iworldid, String url,
+    public static boolean process(HiveContext sqlContext, String date, String iworldid, String url,
             String table) {
 
         try {
-            sqlContext.registerDataFrameAsTable(dfTaskFinished, "TaskFinished");
-
             // run SQL analysis SQL
             sqlContext.sql(SQL_AcceptTask).registerTempTable("T1");
            

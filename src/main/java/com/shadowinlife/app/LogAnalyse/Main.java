@@ -90,10 +90,15 @@ public class Main {
 
             }
         }
-
+        // 初始化基本环境
+        SparkConf conf = new SparkConf().setAppName("Log Analyzer");
+        JavaSparkContext sc = new JavaSparkContext(conf);
+        HiveContext sqlContext = new HiveContext(sc.sc());
         // 读取配置文件
         if (ConfiguationFile != null) {
             l = ReadConfigurationFile.ReadLogAnalyseConfiguration(ConfiguationFile);
+            ActionDriver.Scheduler(sqlContext, l, date);
+            return;
         }
 
         // 入参合法性监测
@@ -110,43 +115,43 @@ public class Main {
             }
         }
 
-        // 初始化基本环境
-        SparkConf conf = new SparkConf().setAppName("Log Analyzer");
-        JavaSparkContext sc = new JavaSparkContext(conf);
-        HiveContext sqlContext = new HiveContext(sc.sc());
-        ActionDriver.Scheduler(sqlContext, l);
+    
+       
 
-        /*
-         * // 根据入参调度程序 try { if ((Flag.equalsIgnoreCase("ALL") ||
-         * Flag.equalsIgnoreCase("FAT")) && mode != null) {
-         * 
-         * CreateProcessTable.FatTableConstruct(sqlContext, FilePath, tableName,
-         * date, iWorldId);
-         * 
-         * } else if ((Flag.equalsIgnoreCase("ALL") ||
-         * Flag.equalsIgnoreCase("FAT")) && mode == null) {
-         * CreateProcessTable.FatTableConstruct(sqlContext, FilePath,
-         * "RoleLogin", date, iWorldId);
-         * CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "Task",
-         * date, iWorldId); CreateProcessTable.FatTableConstruct(sqlContext,
-         * FilePath, "MoneyFlow", date, iWorldId);
-         * CreateProcessTable.FatTableConstruct(sqlContext, FilePath,
-         * "ChongZhi", date, iWorldId);
-         * 
-         * } else if ((Flag.equalsIgnoreCase("ALL") ||
-         * Flag.equalsIgnoreCase("OSS")) && mode == null) {
-         * UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
-         * UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit",
-         * date); UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login",
-         * date); } else if ((Flag.equalsIgnoreCase("ALL") ||
-         * Flag.equalsIgnoreCase("OSS")) && mode != null) {
-         * UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-         * 
-         * }
-         * 
-         * } catch (NullPointerException e) { e.printStackTrace(); } catch
-         * (Exception e) { e.printStackTrace(); }
-         */
+        // 根据入参调度程序
+        try {
+            if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) && mode != null) {
+
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, tableName, date,
+                        iWorldId);
+
+            } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT"))
+                    && mode == null) {
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "RoleLogin", date,
+                        iWorldId);
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "Task", date, iWorldId);
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "MoneyFlow", date,
+                        iWorldId);
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "ChongZhi", date,
+                        iWorldId);
+
+            } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))
+                    && mode == null) {
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit", date);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", date);
+            } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))
+                    && mode != null) {
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
+
+            }
+
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         sc.stop();
         sc.close();
     }

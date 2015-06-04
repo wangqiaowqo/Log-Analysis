@@ -61,7 +61,7 @@ public class MoneyFlowProcessTable {
             + "SUM(`iMoney`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
-            + "FROM PayLog WHERE `iFlowType`=2 GROUP BY `iUin`";
+            + "FROM MoneyFlow WHERE `iFlowType`=2 GROUP BY `iUin`";
     // USER NOT ACTIVITY 
     private static String tbPay_unact_account_table = "INSERT OVERWRITE TABLE fat_pay_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
@@ -139,13 +139,10 @@ public class MoneyFlowProcessTable {
             + "T1.index_igameid,"
             + "T1.index_iworldid FROM fat_pay_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
-    public static boolean process(HiveContext sqlContext, DataFrame schemaMoneyFlow,
+    public static boolean process(HiveContext sqlContext,
             String date, String iworldid) {
         
         try {
-            sqlContext.registerDataFrameAsTable(schemaMoneyFlow, "PayLog");
-           
-
             // Execute the daily analysis SQL
             DataFrame temp_RDD = sqlContext.sql(tbPay_process_table_sql);
 
@@ -183,7 +180,7 @@ public class MoneyFlowProcessTable {
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("PayProcessTable");
-            sqlContext.dropTempTable("PayLog");
+            sqlContext.dropTempTable("MoneyFlow");
             
             return true;
         } catch (Exception e) {

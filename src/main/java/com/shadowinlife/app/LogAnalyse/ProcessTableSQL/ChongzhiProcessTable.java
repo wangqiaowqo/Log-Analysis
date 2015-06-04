@@ -61,7 +61,7 @@ public class ChongzhiProcessTable {
             + "SUM(`iPayDelta`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
-            + "FROM ChongZhiLog GROUP BY `iUin`";
+            + "FROM ChongZhi GROUP BY `iUin`";
     // USER NOT ACTIVITY 
     private static String tbChongZhi_unact_account_table = "INSERT OVERWRITE TABLE fat_deposit_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
@@ -140,14 +140,10 @@ public class ChongzhiProcessTable {
             + "T1.index_igameid,"
             + "T1.index_iworldid FROM fat_deposit_user T1 WHERE index_dtstatdate=date2long('%s') AND index_iworldid=%s";
 
-    public static boolean process(HiveContext sqlContext, DataFrame schemaChongZhiRDD,
+    public static boolean process(HiveContext sqlContext,
             String date, String iworldid) {
         
         try {          
-            // Convert all the values into the spark table
-            sqlContext.registerDataFrameAsTable(schemaChongZhiRDD, "ChongZhiLog");
-           
-
             // Execute the daily analysis SQL
             DataFrame temp_RDD = sqlContext.sql(tbChongZhi_process_table_sql);
             
@@ -190,7 +186,7 @@ public class ChongzhiProcessTable {
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("ChongZhiProcessTable");
-            sqlContext.dropTempTable("ChongZhiLog");
+            sqlContext.dropTempTable("ChongZhi");
             
             return true;
         } catch (Exception e) {

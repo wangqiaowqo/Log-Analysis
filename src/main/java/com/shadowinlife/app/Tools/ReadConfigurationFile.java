@@ -133,8 +133,6 @@ public class ReadConfigurationFile {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return l;
-
     }
 }

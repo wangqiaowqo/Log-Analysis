@@ -47,7 +47,7 @@ public class ProceeMoneyStorage {
             + "ConvertNull(`iRoleLevel`) AS `iRoleLevel`,"
             + "-1 AS `iVipLevel`," // iVipLevel
             + "COUNT(DISTINCT `iRoleId`) AS `iRoleNum`," + "SUM(`iMoney`) AS `iMoney` "
-            + "FROM `MoneyStorage` " + "WHERE `iMoney` > 0 "
+            + "FROM `RoleStatus` " + "WHERE `iMoney` > 0 "
             + "GROUP BY `iJobId`,`iGender`,`iRoleLevel` WITH CUBE";
 
     private static String SQL_UNION = "SELECT '%s'," + "1," // iAccountType
@@ -57,13 +57,10 @@ public class ProceeMoneyStorage {
             + "`iJobId`," + "`iGender`," + "`iRoleLevel`," + "`iVipLevel`," // iVipLevel
             + "`iRoleNum`," + "`iMoney` " + "FROM `T1`";
 
-    public static boolean process(HiveContext sqlContext, DataFrame dfRoleStatus, String date,
+    public static boolean process(HiveContext sqlContext, String date,
             String iworldid, String url, String table) {
         
         try {
-            // Convert all the values into the spark table
-            sqlContext.registerDataFrameAsTable(dfRoleStatus, "MoneyStorage");
-
             // run SQL analysis SQL
             sqlContext.sql(SQL_AcceptTask).registerTempTable("T1");
 
@@ -78,7 +75,7 @@ public class ProceeMoneyStorage {
 
             // Free Mem
             sqlContext.dropTempTable("T1");
-            sqlContext.dropTempTable("MoneyStorage");
+            sqlContext.dropTempTable("RoleStatus");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
