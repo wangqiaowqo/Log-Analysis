@@ -69,8 +69,9 @@ public class ReadConfigurationFile {
                 List<String[]> tmp = new ArrayList<String[]>();
                 Node nNode = nList.item(i);
                 Element eElement = (Element) nNode;
+                
                 // Date Time [begin, end)
-                String[] date = { eElement.getAttribute("Begin"), eElement.getAttribute("End") };
+                String[] date = { eElement.getAttribute("Begin").trim(), eElement.getAttribute("End").trim() };
                 tmp.add(date);
                 m.put("Date", tmp);
                 
@@ -102,7 +103,7 @@ public class ReadConfigurationFile {
                 List<String[]> tmp_Final = new ArrayList<String[]>();
                 for (int j = 0; j < finalList.getLength(); j++) {
                     Element e = (Element) finalList.item(j);
-                    String[] s = {e.getAttribute("url"), e.getAttribute("Table"), e.getTextContent()};
+                    String[] s = {e.getAttribute("url").trim(), e.getAttribute("Table").trim(), e.getTextContent()};
                     tmp_Final.add(s);
                 }
                 m.put("Final", tmp_Final);
@@ -117,7 +118,7 @@ public class ReadConfigurationFile {
                 NodeList SqlList = eElement.getElementsByTagName("Sql");
                 for (int j = 0; j < SqlList.getLength(); j++) {
                     Element e = (Element) SqlList.item(j);
-                    String[] SQL = { e.getAttribute("TempTable"), e.getTextContent() };
+                    String[] SQL = { e.getAttribute("TempTable").trim(), e.getTextContent() };
                     tmp_SQL.add(SQL);
                 }
                 m.put("Sql", tmp_SQL);
@@ -126,7 +127,7 @@ public class ReadConfigurationFile {
                 NodeList HiveList = eElement.getElementsByTagName("Hive");
                 for (int z = 0; z < SqlList.getLength(); z++) {
                     Element e = (Element) SqlList.item(z);
-                    String[] SQL = { e.getAttribute("HiveTalbe"), e.getTextContent() };
+                    String[] SQL = { e.getAttribute("HiveTalbe").trim(), e.getTextContent() };
                     tmp_Hive.add(SQL);
                 }
                 m.put("Hive", tmp_Hive);

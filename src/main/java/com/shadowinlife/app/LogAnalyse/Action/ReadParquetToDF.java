@@ -11,19 +11,19 @@ public class ReadParquetToDF {
     public static void ReadParquet(HiveContext sc, String BeginTime, String EndTime,
             String[] GameId, String[] AccountType, String[] WorldId, String Table) {
 
-        DataFrame df = sc.parquetFile("/LOG/BASE/" + Table + ".parquet");
+        DataFrame df = sc.parquetFile("/LOG/BASE/" + Table.trim() + ".parquet");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd/HH");
         Timestamp bTime = Timestamp.valueOf(BeginTime);
         Timestamp eTime = Timestamp.valueOf(EndTime);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(bTime.getTime());
 
-        while (calendar.getTimeInMillis() <= eTime.getTime()) {
+        while (calendar.getTimeInMillis() < eTime.getTime()) {
             for (String iGameId : GameId) {
                 for (String iAccountType : AccountType) {
                     for (String iWorldId : WorldId) {
-                        String ParquetFilePath = "/LOG/" + iGameId + "/" + iAccountType + "/"
-                                + iWorldId + "/" + format.format(calendar.getTime()) + "/" + Table
+                        String ParquetFilePath = "/LOG/" + iGameId.trim() + "/" + iAccountType.trim() + "/"
+                                + iWorldId.trim() + "/" + format.format(calendar.getTime()) + "/" + Table.trim()
                                 + ".parquet";
                         try {
                             DataFrame tmp = sc.parquetFile(ParquetFilePath);
@@ -39,6 +39,6 @@ public class ReadParquetToDF {
             }
         }
 
-        sc.registerDataFrameAsTable(df, Table);
+        sc.registerDataFrameAsTable(df, Table.trim());
     }
 }

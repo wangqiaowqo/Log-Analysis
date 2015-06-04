@@ -9,7 +9,7 @@
 	<struct JavaBean="com.shadowinlife.app.SQLModelFactory.RoleLogout"
 		TableName="RoleLogout" />
 	<struct JavaBean="com.shadowinlife.app.SQLModelFactory.TaskStart"
-		TableName="TastStart" />
+		TableName="TaskStart" />
 	<struct JavaBean="com.shadowinlife.app.SQLModelFactory.TaskFinished"
 		TableName="TaskFinished" />
 		<struct JavaBean="com.shadowinlife.app.SQLModelFactory.RoleStatus"

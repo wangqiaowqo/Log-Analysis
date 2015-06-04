@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.types.DataTypes;
 
 import com.shadowinlife.app.LogAnalyse.FatTable.CreateProcessTable;
 import com.shadowinlife.app.LogAnalyse.OssTableSQL.UserAccountAnalysis;
@@ -93,7 +95,18 @@ public class Main {
         // 初始化基本环境
         SparkConf conf = new SparkConf().setAppName("Log Analyzer");
         JavaSparkContext sc = new JavaSparkContext(conf);
+        
         HiveContext sqlContext = new HiveContext(sc.sc());
+        sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {
+            @Override
+            public Integer call(Integer value) throws Exception {
+                if (value == null)
+                    return -1;
+                return value;
+            }
+
+        }, DataTypes.IntegerType);
+        
         // 读取配置文件
         if (ConfiguationFile != null) {
             l = ReadConfigurationFile.ReadLogAnalyseConfiguration(ConfiguationFile);

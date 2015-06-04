@@ -1,19 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-&lt;	<	less than
-&gt;	>	greater than
-&amp;	&	ampersand 
-&apos;	'	apostrophe
-&quot;	"	quotation mark
--->
+<!-- &lt; < less than &gt; > greater than &amp; & ampersand &apos; ' apostrophe 
+	&quot; " quotation mark -->
 <Scheduler>
-	<Action Name="" Begin="2015-06-02" End="2015-06-03">
+	<Action Begin="2015-06-03" End="2015-06-04">
 		<GameId>1</GameId>
 		<AccountType>1</AccountType>
-		<WorldId>1,2</WorldId>
-		<Table>RoleLogin,RoleLogout,MoneyFlow</Table>
-		<Sql TempTable="T1"> select a/6 from boss where a &lt; 6 </Sql>
-		<Sql TempTalbe="T2"></Sql>
-		<Final URL="" Table=""></Final>
+		<WorldId>2</WorldId>
+		<Table>TaskStart, TaskFinished</Table>
+		<Sql TempTable="T1">select `iAccountType`, `iWorldId`,
+			ConvertNull(`iTaskType`) AS `iTaskType`, ConvertNull(`iTaskId`) AS
+			`iTaskId`, ConvertNull(`iTaskStar`) AS `iTaskLevel`,COUNT(DISTINCT
+			`iRoleId`) AS `iAcceptRoleNum`, COUNT(*) AS `iAcceptTimes`,
+			COUNT(DISTINCT `iUin`) AS `iAcceptUinNum` FROM `TaskStart` GROUP BY
+			`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar` GROUPING
+			SETS ((`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar`),
+			(`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`),(`iAccountType`,`iWorldId`,`iTaskType`),(`iAccountType`,`iWorldId`)) </Sql>
+		<Sql TempTable="T2">select `iAccountType`,`iWorldId`,ConvertNull(`iTaskType`) AS `iTaskType`,
+			ConvertNull(`iTaskId`) AS `iTaskId`, ConvertNull(`iTaskStar`) AS
+			`iTaskLevel`, COUNT(DISTINCT `iRoleId`) AS `iCompleteRoleNum`,
+			COUNT(*) AS `iCompleteTimes`, COUNT(DISTINCT `iUin`) AS
+			`iCompleteUinNum`, SUM(`iTaskTime`) AS `iTotalTime` FROM TaskFinished
+			GROUP BY `iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar` GROUPING SETS
+			((`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar`),
+			(`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`),(`iAccountType`,`iWorldId`,`iTaskType`),(`iAccountType`,`iWorldId`))</Sql>
+		<Final
+			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
+			Table="oss_dm_tbTask">SELECT '1111-11-11', T1.iAccountType, T1.iWorldId, IF(T1.iTaskType IS
+			NULL, T2.iTaskType, T1.iTaskType), IF(T1.iTaskId IS NULL, T2.iTaskId,
+			T1.iTaskId), IF(T1.iTaskLevel IS NULL, T2.iTaskLevel, T1.iTaskLevel),
+			IF(T1.iAcceptRoleNum IS NULL, '0' ,T1.iAcceptRoleNum),
+			IF(T1.iAcceptTimes IS NULL, '0', T1.iAcceptTimes),
+			IF(T2.iCompleteRoleNum IS NULL, '0', T2.iCompleteRoleNum),
+			IF(T2.iCompleteTimes IS NULL, '0', T2.iCompleteTimes), 0, 0,
+			IF(T1.iAcceptUinNum IS NULL, '0', T1.iAcceptUinNum),
+			IF(T2.iCompleteUinNum IS NULL, '0', T2.iCompleteUinNum),
+			IF(T2.iTotalTime IS NULL, '0', T2.iTotalTime) FROM T1 FULL JOIN T2 ON
+			(T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND
+			T1.iTaskLevel=T2.iTaskLevel)</Final>
 	</Action>
 </Scheduler>    
