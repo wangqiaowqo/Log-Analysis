@@ -70,7 +70,7 @@ public class RoleLogin extends BaseBean implements Serializable {
     private Long iOnlineTime;
     private String iLoginWay;
 
-    private void getBean(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
+    public RoleLogin(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
             String iRoleVipLevel, String iRepuLevel, String v1, String v2, String vClientIp,
             String vZoneId, String iRoleExp, String iReputation, String iEnergy, String iMoney,
@@ -106,7 +106,8 @@ public class RoleLogin extends BaseBean implements Serializable {
         super();
     }
 
-    public  RoleLogin parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
+    public RoleLogin parseFromLogFile(String[] array, String GameId, String AccountType,
+            String WorldId) {
         String[] columnList = array;
         try {
             // TODO Some column may be null,should handle it
@@ -116,24 +117,25 @@ public class RoleLogin extends BaseBean implements Serializable {
                         columnList[i] = "0";
                     }
                 }
-                 getBean(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
-                        columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
-                        columnList[10], columnList[11], columnList[12], columnList[13],
-                        columnList[14], columnList[15], columnList[16], columnList[17],
-                        columnList[18], columnList[19], columnList[20], columnList[21],
-                        columnList[22]);
+                return new RoleLogin(GameId, AccountType, WorldId, columnList[1], columnList[2],
+                        columnList[3], columnList[4], columnList[5], columnList[6], columnList[7],
+                        columnList[8], columnList[9], columnList[10], columnList[11],
+                        columnList[12], columnList[13], columnList[14], columnList[15],
+                        columnList[16], columnList[17], columnList[18], columnList[19],
+                        columnList[20], columnList[21], columnList[22]);
             } else {
-                 getBean("0","0","0","1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
-                        "0", "0", "0", "0", "0", " ", " ", "0.0.0.0", " ", "0", "0", "0", " ",
-                        "1970-01-01 00:00:00", "0", " ");
+                new RoleLogin("0", "0", "0", "1970-01-01 00:00:00", "id", "version", "error_uin",
+                        "0", " ", "0", "0", "0", "0", "0", " ", " ", "0.0.0.0", " ", "0", "0", "0",
+                        " ", "1970-01-01 00:00:00", "0", " ");
             }
         } catch (Exception e) {
             e.printStackTrace();
-             getBean("0","0","0","1970-01-01 00:00:00", "id", "version", "error_uin", "0", " ",
-                    "0", "0", "0", "0", "0", " ", " ", "0.0.0.0", " ", "0", "0", "0", " ",
+            new RoleLogin("0", "0", "0", "1970-01-01 00:00:00", "id", "version", "error_uin", "0",
+                    " ", "0", "0", "0", "0", "0", " ", " ", "0.0.0.0", " ", "0", "0", "0", " ",
                     "1970-01-01 00:00:00", "0", " ");
         }
-        return this;
+        return null;
+
     }
 
     @Override

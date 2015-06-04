@@ -57,6 +57,7 @@ public class CreateProcessTable {
             ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType, WorldId, "RoleStatus");
             ProceeMoneyStorage.process(sqlContext, date, iworldid, 
                     "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss", "oss_dm_tbMoneyStorage");
+            break;
         }
     }
 

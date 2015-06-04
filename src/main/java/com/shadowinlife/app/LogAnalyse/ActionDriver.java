@@ -10,6 +10,8 @@ import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
+import com.shadowinlife.app.LogAnalyse.Action.TempTableToMysql;
+import com.shadowinlife.app.LogAnalyse.Action.DFTableToTempTable;
 import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
 
 public class ActionDriver {
@@ -20,6 +22,7 @@ public class ActionDriver {
             String[] WorldId = m.get("WorldId").get(0);
             String BeginTime = m.get("Date").get(0)[0] + " 00:00:00";
             String EndTime = m.get("Date").get(0)[1] + " 02:00:00";
+
             if (date != null) {
                 BeginTime = date + " 00:00:00";
                 Timestamp bTime = Timestamp.valueOf(BeginTime);
@@ -32,24 +35,22 @@ public class ActionDriver {
             String[] Tables = m.get("Table").get(0);
 
             for (String Table : Tables) {
-                System.out.println(Table);
+                System.out.println("Tring to load:" + Table);
                 ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId,
                         Table);
             }
+            
+            List<String[]> SQLlist = m.get("Sql");
+            for(String[] sql:SQLlist) {
+                DFTableToTempTable.ExcuteSQL(sc, sql[0], sql[1]);
+            }
+            
+            List<String[]> Finallist = m.get("Final");
+            for(String[] sql:Finallist) {
+                TempTableToMysql.ExcuteFinalSQL(sc, sql[0], sql[1], sql[2]);
+            }
+            
         }
-        DataFrame test1 = sc.sql("select * from RoleLogin");
-        for (Row r : test1.collect()) {
-            System.out.println("RoleLogin: " + r.mkString(" "));
-        }
-
-        DataFrame test2 = sc.sql("select * from RoleLogout");
-        for (Row r : test2.collect()) {
-            System.out.println("RoleLogout: " + r.mkString(" "));
-        }
-
-        DataFrame test3 = sc.sql("select * from MoneyFlow");
-        for (Row r : test3.collect()) {
-            System.out.println("MoneyFlow: " + r.mkString(" "));
-        }
+        
     }
 }

@@ -14,6 +14,6 @@
 		<Table>RoleLogin,RoleLogout,MoneyFlow</Table>
 		<Sql TempTable="T1"> select a/6 from boss where a &lt; 6 </Sql>
 		<Sql TempTalbe="T2"></Sql>
-		<Final MySqlTable=""></Final>
+		<Final URL="" Table=""></Final>
 	</Action>
 </Scheduler>    

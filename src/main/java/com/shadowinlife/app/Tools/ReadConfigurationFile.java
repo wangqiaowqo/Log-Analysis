@@ -98,10 +98,13 @@ public class ReadConfigurationFile {
                 m.put("AccountType", tmp_AccountType);
                 
                 
-                String[] FinalSQL = eElement.getElementsByTagName("Final").item(0).getTextContent()
-                        .split(",");
+                NodeList finalList = eElement.getElementsByTagName("Final");
                 List<String[]> tmp_Final = new ArrayList<String[]>();
-                tmp_Final.add(FinalSQL);
+                for (int j = 0; j < finalList.getLength(); j++) {
+                    Element e = (Element) finalList.item(j);
+                    String[] s = {e.getAttribute("url"), e.getAttribute("Table"), e.getTextContent()};
+                    tmp_Final.add(s);
+                }
                 m.put("Final", tmp_Final);
                 
                 String[] Table = eElement.getElementsByTagName("Table").item(0).getTextContent()

@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 public class ReadParquetToDF {
@@ -26,8 +25,13 @@ public class ReadParquetToDF {
                         String ParquetFilePath = "/LOG/" + iGameId + "/" + iAccountType + "/"
                                 + iWorldId + "/" + format.format(calendar.getTime()) + "/" + Table
                                 + ".parquet";
-                        DataFrame tmp = sc.parquetFile(ParquetFilePath);
-                        df = df.unionAll(tmp);
+                        try {
+                            DataFrame tmp = sc.parquetFile(ParquetFilePath);
+                            df = df.unionAll(tmp);
+                            tmp.unpersist();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         calendar.add(Calendar.HOUR_OF_DAY, 1);
                     }
@@ -35,9 +39,6 @@ public class ReadParquetToDF {
             }
         }
 
-        for (Row r : df.collect()) {
-            System.out.println(Table + ": " + r.mkString(" "));
-        }
         sc.registerDataFrameAsTable(df, Table);
     }
 }
