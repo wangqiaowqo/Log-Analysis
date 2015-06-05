@@ -41,7 +41,7 @@ public class ActionDriver {
             for (String Table : Tables) {
                 System.out.println("Tring to load:" + Table);
                 String curTime = m.get("Date").get(0)[1] + " 00:00:00";
-                String strWhere = "SELECT * FROM " + Table + " WHERE `dtEventTime`>='" + BeginTime
+                String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                         + "' AND `dtEventTime`<'"+curTime+"'";
                 talbename.add(Table);
                 ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId,

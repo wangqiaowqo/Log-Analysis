@@ -71,10 +71,8 @@ public class TaskProcessTable {
             System.out.println(rows + " " + delMysql);
             conn.close();
             DataFrame OssData = sqlContext.sql(String.format(SQL_UNION, date, iworldid));
-            
-            for(Row r:OssData.collect())
-                System.out.println(r.mkString(" | "));
-            //OssData.insertIntoJDBC(url, table, false);
+
+            OssData.insertIntoJDBC(url, table, false);
                    
 
             // Free Mem

@@ -7,6 +7,7 @@ import java.util.Calendar;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 import static org.apache.spark.sql.functions.*;
@@ -149,7 +150,7 @@ public class AcountProcessTable {
                     + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY iUin";
             
             String RoleLogoutSQL = "SELECT `iUin` AS logout_id,SUM(`iOnlineTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
-                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(iUin) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
+                    + "MAX(`vClientIp`) AS tbLogout_vClientIp, COUNT(iUin) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
                     + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY iUin";
             
             // Dump out the group data of user login and logout
@@ -189,6 +190,8 @@ public class AcountProcessTable {
             sqlContext.sql(String.format(tbUser_unact_account_table, date, date, date, iworldid));
             sqlContext.sql(String.format(tbUser_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
+            System.out.println(String.format(tbUser_act_account_table, date, iworldid, date, iworldid, date, iworldid));
+           
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
             }

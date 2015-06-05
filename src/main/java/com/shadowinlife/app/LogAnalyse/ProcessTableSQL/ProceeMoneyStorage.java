@@ -73,9 +73,7 @@ public class ProceeMoneyStorage {
             conn.close();
             DataFrame dfMoneyStorage = sqlContext.sql(String.format(SQL_UNION, date, iworldid));
             
-            for(Row r:dfMoneyStorage.collect())
-                System.out.println(r.mkString(" | "));
-            //dfMoneyStorage.insertIntoJDBC(url, table,false);
+            dfMoneyStorage.insertIntoJDBC(url, table,false);
 
             // Free Mem
             sqlContext.dropTempTable("T1");

@@ -24,7 +24,7 @@ public class CreateProcessTable {
         calendar.setTimeInMillis(bTime.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         String EndTime = format.format(calendar.getTime()) + " 02:00:00";
-        String strWhere = "SELECT * FROM " + tableName + " WHERE `dtEventTime`>='" + BeginTime
+        String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                 + "' AND `dtEventTime`<'" + format.format(calendar.getTime()) + "'";
         String[] AccountType = { "1" };
         String[] GameId = { "1" };

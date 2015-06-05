@@ -3,13 +3,9 @@ package com.shadowinlife.app.LogAnalyse.ProcessTableSQL;
 import java.sql.Date;
 import java.util.Calendar;
 
-import org.apache.spark.api.java.JavaRDD;
-import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
-
-import com.shadowinlife.app.SQLModelFactory.ChongZhi;
 
 /**
 +--------------------------+-----------------------------------+-----------------------+--+
