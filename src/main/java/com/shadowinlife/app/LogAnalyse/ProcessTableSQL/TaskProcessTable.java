@@ -72,8 +72,10 @@ public class TaskProcessTable {
             conn.close();
             DataFrame OssData = sqlContext.sql(String.format(SQL_UNION, date, iworldid));
             
-            OssData.insertIntoJDBC(url, table,
-                    false);
+            for(Row r:OssData.collect())
+                System.out.println(r.mkString(" | "));
+            //OssData.insertIntoJDBC(url, table, false);
+                   
 
             // Free Mem
             sqlContext.dropTempTable("T1");

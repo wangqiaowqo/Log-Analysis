@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.SQLModelFactory.RoleStatus;
@@ -70,8 +71,11 @@ public class ProceeMoneyStorage {
                     + date + "' AND iWorldId=" + iworldid;
             stmt.executeUpdate(delMysql);
             conn.close();
-            sqlContext.sql(String.format(SQL_UNION, date, iworldid)).insertIntoJDBC(url, table,
-                    false);
+            DataFrame dfMoneyStorage = sqlContext.sql(String.format(SQL_UNION, date, iworldid));
+            
+            for(Row r:dfMoneyStorage.collect())
+                System.out.println(r.mkString(" | "));
+            //dfMoneyStorage.insertIntoJDBC(url, table,false);
 
             // Free Mem
             sqlContext.dropTempTable("T1");

@@ -24,8 +24,9 @@ public class ActionDriver {
             String[] WorldId = m.get("WorldId").get(0);
             String BeginTime = m.get("Date").get(0)[0] + " 00:00:00";
             String EndTime = m.get("Date").get(0)[1] + " 02:00:00";
-            List<String> talbename = new ArrayList<String>();
             
+            List<String> talbename = new ArrayList<String>();
+
             if (date != null) {
                 BeginTime = date + " 00:00:00";
                 Timestamp bTime = Timestamp.valueOf(BeginTime);
@@ -39,26 +40,29 @@ public class ActionDriver {
 
             for (String Table : Tables) {
                 System.out.println("Tring to load:" + Table);
+                String curTime = m.get("Date").get(0)[1] + " 00:00:00";
+                String strWhere = "SELECT * FROM " + Table + " WHERE `dtEventTime`>='" + BeginTime
+                        + "' AND `dtEventTime`<'"+curTime+"'";
                 talbename.add(Table);
                 ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId,
-                        Table);
+                        Table,strWhere);
             }
-            
+
             List<String[]> SQLlist = m.get("Sql");
-            for(String[] sql:SQLlist) {
+            for (String[] sql : SQLlist) {
                 talbename.add(sql[0]);
                 DFTableToTempTable.ExcuteSQL(sc, sql[0], sql[1]);
             }
-            
+
             List<String[]> Finallist = m.get("Final");
-            for(String[] sql:Finallist) {
+            for (String[] sql : Finallist) {
                 TempTableToMysql.ExcuteFinalSQL(sc, sql[0], sql[1], sql[2]);
             }
-            for(String t : talbename) {
+            for (String t : talbename) {
                 sc.dropTempTable(t);
             }
-            
+
         }
-        
+
     }
 }
