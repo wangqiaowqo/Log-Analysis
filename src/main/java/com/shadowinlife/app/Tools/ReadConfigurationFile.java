@@ -103,7 +103,7 @@ public class ReadConfigurationFile {
                 List<String[]> tmp_Final = new ArrayList<String[]>();
                 for (int j = 0; j < finalList.getLength(); j++) {
                     Element e = (Element) finalList.item(j);
-                    String[] s = {e.getAttribute("url").trim(), e.getAttribute("Table").trim(), e.getTextContent()};
+                    String[] s = {e.getAttribute("URL").trim(), e.getAttribute("Table").trim(), e.getTextContent()};
                     tmp_Final.add(s);
                 }
                 m.put("Final", tmp_Final);
