@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<MySql name="Dajian" >
+    <struct name="RoleLogin"	   id=""	 desc="角色登入日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="登陆时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iJobId"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iGender"	            type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="vClientIp"	            type="varchar"	size="48"  key="0"	desc="角色登录时客户端所在ip"/>
+		<entry name="vZoneId"	            type="varchar"	size="48"  key="0"	desc="登录的zone（频道）编号"/>  	  		
+		<entry name="iExp"	                type="int"	    size=""    key="0"	desc="经验"/> 
+		<entry name="iReputation"           type="int"	    size=""    key="0"	desc="声望值"/> 
+		<entry name="iEnergy"	            type="int"	    size=""    key="0"	desc="角色活力"/> 	
+		<entry name="jMoney"	            type="text"	    size=""    key="0"	desc="角色背包中的金钱数（钻石、金币、绑钻）"/> 
+		<entry name="dtCreateTime"          type="datetime" size=""    key="0"	desc="角色创建的时间"/> 
+		<entry name="lOnlineTotalTime"      type="int"	    size=""    key="0"	desc="从创建角色到本次登录总在线时长（秒）"/> 				
+	</struct>	
+	<struct name="RoleStatus"	   id=""	 desc="帐号登陆日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="登陆时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iJobId"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iGender"	            type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleExp"	            type="int"	    size=""    key="0"	desc="角色经验值"/> 
+		<entry name="dtCreateTime"	        type="datetime"	size=""    key="0"	desc="账号创建时间"/>
+		<entry name="dtRoleLastSaveTime"	type="datetime"	size=""    key="0"	desc="角色状态最后更新时间"/>
+		<entry name="iPoints"	            type="int"	    size=""    key="0"	desc="角色总代币存量，如钻石"/> 
+		<entry name="iDepositPoints"        type="int"	    size=""    key="0"	desc="角色充值代币存量"/> 
+		<entry name="iMoney"	            type="int"	    size=""    key="0"	desc="角色金钱存量，如金币"/> 		
+	</struct>
+	<struct name="MoneyFlow"	   id=""	 desc="货币变化日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="登陆时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iJobId"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iGender"	            type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iBeforeMoney"	        type="int"	    size=""    key="0"	desc="动作前的金钱数"/> 
+		<entry name="iAfterMoney"           type="int"	    size=""    key="0"	desc="动作后的金钱数"/> 
+		<entry name="iMoneyType"	        type="int"	    size=""    key="0"	desc="货币类型，例如：1金币；2 钻石"/> 	
+		<entry name="iMoney"	            type="int"	    size=""    key="0"	desc="动作涉及的金钱数"/> 
+		<entry name="iFlowType"             type="int"	    size=""    key="0"	desc="途径，1、产出途径 2、消耗途径 3、存取途径 4、转移途径"/> 
+		<entry name="iAction"	            type="int"	    size=""    key="0"	desc="动作,发生原因"/> 				
+	</struct>	
+</MySql>
+

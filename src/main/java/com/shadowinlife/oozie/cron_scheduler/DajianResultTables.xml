@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<MySql name="Dajian" >
+	<struct name="MoneyStorage"	   id=""	 desc="系统金钱存量统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
+		<entry name="iStore"	            type="int"	    size=""    key="1"	desc="存储方式ID。背包、仓库等。"/> 
+		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="拥有金钱角色数量"/> 
+		<entry name="iMoney"	            type="bigint"	size=""    key="0"	desc="角色金钱存量，如金币"/> 		
+	</struct>
+	<struct name="MoneyProduce"	   id=""	 desc="金钱产出统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
+		<entry name="iProduce"	            type="int"	    size=""    key="1"	desc="产出途径ID。任务奖励产出、玩家NPC售卖道具产出等"/> 
+		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="拥有金钱角色数量"/> 
+		<entry name="iMoney"	            type="bigint"	size=""    key="0"	desc="角色金钱数量，如金币"/>
+		<entry name="iTimes"	            type="int"	    size=""    key="0"	desc="次数"/> 		
+	</struct>	
+	<struct name="MoneyConsume"	   id=""	 desc="金钱消耗统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
+		<entry name="iConsume"	            type="int"	    size=""    key="1"	desc="消耗途径ID。任务消耗、从NPC购买消耗、技能学习消耗、生活系统消耗等。"/> 
+		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="拥有金钱角色数量"/> 
+		<entry name="iMoney"	            type="bigint"	size=""    key="0"	desc="角色金钱数量，如金币"/> 		
+		<entry name="iTimes"	            type="int"	    size=""    key="0"	desc="次数"/>
+	</struct>		
+	<struct name="Task"	   id=""	 desc="任务统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iTaskTypeId"	        type="int"	    size=""    key="1"	desc="任务类型"/> 
+		<entry name="iTaskId"	            type="int"	    size=""    key="1"	desc="任务ID"/> 
+		<entry name="iTaskLevel"	        type="int"	    size=""    key="1"	desc="任务难度或者星级"/>
+		<entry name="iAcceptRoleNum"	    type="int"	    size=""    key="0"	desc="接受任务角色数"/>
+		<entry name="iAcceptTimes"	        type="int"	    size=""    key="0"	desc="接受任务次数"/> 
+		<entry name="iCompleteRoleNum"	    type="int"	    size=""    key="0"	desc="完成任务角色数"/> 
+		<entry name="iCompleteTimes"	    type="int"	    size=""    key="0"	desc="完成任务次数"/> 
+		<entry name="iCancelRoleNum"	    type="int"	    size=""    key="0"	desc="取消任务角色数"/> 	
+		<entry name="iCancelTimes"	        type="int"	    size=""    key="0"	desc="取消任务次数"/> 
+		<entry name="iAcceptUinNum"	        type="int"	    size=""    key="0"	desc="接受任务uin数"/> 
+		<entry name="iCompleteUinNum"	    type="int"	    size=""    key="0"	desc="完成任务uin数"/> 
+		<entry name="iTotalTime"	        type="bigint"	size=""    key="0"	desc="完成任务时长(秒)"/>	
+	</struct>
+	<struct name="RoleJobLvDis"	   id=""	 desc="所有角色性别职业级别统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iRoleNum"	            type="bigint"	size=""    key="0"	desc="角色数"/>	
+	</struct>	
+	<struct name="DayActiRoleJobLvDis"	   id=""	 desc="日活跃角色性别职业级别统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="角色数"/>	
+	</struct>	
+	<struct name="Copy"	   id=""	 desc="副本统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iCopyTypeId"	        type="int"	    size=""    key="1"	desc="副本类型"/> 
+		<entry name="iCopyId"	            type="int"	    size=""    key="1"	desc="副本ID"/> 
+		<entry name="iCopyLevel"	        type="int"	    size=""    key="1"	desc="副本难度或者星级"/>
+		<entry name="iAchievementId"        type="int"	    size=""    key="1"	desc="完成成就，如星级"/>
+		<entry name="iStartRoleNum"	        type="int"	    size=""    key="0"	desc="开始副本角色数"/>
+		<entry name="iStartTimes"	        type="int"	    size=""    key="0"	desc="开始副本次数"/> 
+		<entry name="iCompleteRoleNum"	    type="int"	    size=""    key="0"	desc="完成副本角色数"/> 
+		<entry name="iCompleteTimes"	    type="int"	    size=""    key="0"	desc="完成副本次数"/> 
+		<entry name="iCancelRoleNum"	    type="int"	    size=""    key="0"	desc="取消副本角色数"/> 	
+		<entry name="iCancelTimes"	        type="int"	    size=""    key="0"	desc="取消副本次数"/> 
+		<entry name="iStartUinNum"	        type="int"	    size=""    key="0"	desc="开始副本uin数"/> 
+		<entry name="iCompleteUinNum"	    type="int"	    size=""    key="0"	desc="完成副本uin数"/> 
+		<entry name="iTotalTime"	        type="bigint"	size=""    key="0"	desc="完成副本时长(秒)"/>	
+	</struct>	
+</MySql>
+

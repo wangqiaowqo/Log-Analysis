@@ -3,30 +3,52 @@
 	&quot; " quotation mark -->
 <Scheduler>
 	<Action Begin="2015-06-03" End="2015-06-04">
+	    <Period>1</Period>
+	    <Step>1</Step>
 		<GameId>1</GameId>
 		<AccountType>1</AccountType>
 		<WorldId>2</WorldId>
-		<Table>TaskStart, TaskFinished</Table>
-		<Sql TempTable="T1">select `iAccountType`, `iWorldId`,
-			ConvertNull(`iTaskType`) AS `iTaskType`, ConvertNull(`iTaskId`) AS
-			`iTaskId`, ConvertNull(`iTaskStar`) AS `iTaskLevel`,COUNT(DISTINCT
-			`iRoleId`) AS `iAcceptRoleNum`, COUNT(*) AS `iAcceptTimes`,
-			COUNT(DISTINCT `iUin`) AS `iAcceptUinNum` FROM `TaskStart` GROUP BY
-			`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar` GROUPING
-			SETS ((`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar`),
-			(`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`),(`iAccountType`,`iWorldId`,`iTaskType`),(`iAccountType`,`iWorldId`)) </Sql>
-		<Sql TempTable="T2">select `iAccountType`,`iWorldId`,ConvertNull(`iTaskType`) AS `iTaskType`,
+		<Table>TaskStart,TaskFinished</Table>
+		<Sql TempTable="T1">select ConvertNull(`iAccountType`) AS `iAccountType`, 
+			ConvertNull(`iWorldId`) AS `iWorldId`,
+			ConvertNull(`iRoleJob`) AS `iRoleJob`,
+			ConvertNull(`iRoleSex`) AS `iRoleSex`,
+			ConvertNull(`iRoleLevel`) AS `iRoleLevel`,
+			ConvertNull(`iRoleVipLevel`) AS `iRoleVipLevel`,
+			ConvertNull(`iTaskType`) AS `iTaskType`, 
+			ConvertNull(`iTaskId`) AS `iTaskId`, 
+			ConvertNull(`iTaskStar`) AS `iTaskLevel`,
+			COUNT(DISTINCT `iRoleId`) AS `iAcceptRoleNum`, 
+			COUNT(*) AS `iAcceptTimes`,
+			COUNT(DISTINCT `iUin`) AS `iAcceptUinNum` 
+			FROM `TaskStart` 
+			GROUP BY
+			`iAccountType`,`iWorldId`,`iRoleJob`,`iRoleSex`,`iRoleLevel`,`iRoleVipLevel`,`iTaskType`,`iTaskId`,`iTaskStar` 
+			GROUPING SETS((`iAccountType`,`iTaskType`,`iTaskId`,`iTaskStar`))</Sql>
+		<Sql TempTable="T2">select ConvertNull(`iAccountType`) AS `iAccountType`, 
+			ConvertNull(`iWorldId`) AS `iWorldId`,
+			ConvertNull(`iRoleJob`) AS `iRoleJob`,
+			ConvertNull(`iRoleSex`) AS `iRoleSex`,
+			ConvertNull(`iRoleLevel`) AS `iRoleLevel`,
+			ConvertNull(`iRoleVipLevel`) AS `iRoleVipLevel`,
+		    ConvertNull(`iTaskType`) AS `iTaskType`,
 			ConvertNull(`iTaskId`) AS `iTaskId`, ConvertNull(`iTaskStar`) AS
 			`iTaskLevel`, COUNT(DISTINCT `iRoleId`) AS `iCompleteRoleNum`,
 			COUNT(*) AS `iCompleteTimes`, COUNT(DISTINCT `iUin`) AS
 			`iCompleteUinNum`, SUM(`iTaskTime`) AS `iTotalTime` FROM TaskFinished
-			GROUP BY `iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar` GROUPING SETS
-			((`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar`),
-			(`iAccountType`,`iWorldId`,`iTaskType`,`iTaskId`),(`iAccountType`,`iWorldId`,`iTaskType`),(`iAccountType`,`iWorldId`))</Sql>
+			GROUP BY
+			`iAccountType`,`iWorldId`,`iRoleJob`,`iRoleSex`,`iRoleLevel`,`iRoleVipLevel`,`iTaskType`,`iTaskId`,`iTaskStar` 
+			GROUPING SETS((`iAccountType`,`iTaskType`,`iTaskId`,`iTaskStar`))</Sql>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbTask">SELECT '1111-11-11', T1.iAccountType, T1.iWorldId, IF(T1.iTaskType IS
-			NULL, T2.iTaskType, T1.iTaskType), IF(T1.iTaskId IS NULL, T2.iTaskId,
+			Table="oss_dm_tbTask">SELECT '1111-11-11', 
+			IF(T1.iAccountType IS NULL,T2.iAccountType,T1.iAccountType), 
+			IF(T1.iWorldId IS NULL,T2.iWorldId,T1.iWorldId),
+            IF(T1.iRoleJob IS NULL,T2.iRoleJob,T1.iRoleJob),
+            IF(T1.iRoleSex IS NULL,T2.iRoleSex,T1.iRoleSex),
+            IF(T1.iRoleLevel IS NULL,T2.iRoleLevel,T1.iRoleLevel),
+            IF(T1.iRoleVipLevel IS NULL,T2.iRoleVipLevel,T1.iRoleVipLevel), 			
+			IF(T1.iTaskType IS NULL, T2.iTaskType, T1.iTaskType), IF(T1.iTaskId IS NULL, T2.iTaskId,
 			T1.iTaskId), IF(T1.iTaskLevel IS NULL, T2.iTaskLevel, T1.iTaskLevel),
 			IF(T1.iAcceptRoleNum IS NULL, '0' ,T1.iAcceptRoleNum),
 			IF(T1.iAcceptTimes IS NULL, '0', T1.iAcceptTimes),
@@ -35,7 +57,7 @@
 			IF(T1.iAcceptUinNum IS NULL, '0', T1.iAcceptUinNum),
 			IF(T2.iCompleteUinNum IS NULL, '0', T2.iCompleteUinNum),
 			IF(T2.iTotalTime IS NULL, '0', T2.iTotalTime) FROM T1 FULL JOIN T2 ON
-			(T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND
+			(T1.iAccountType=T2.iAccountType AND T1.iWorldId=T2.iWorldId AND T1.iRoleJob=T2.iRoleJob AND T1.iRoleSex=T2.iRoleSex AND T1.iRoleLevel=T2.iRoleLevel AND T1.iRoleVipLevel=T2.iRoleVipLevel AND T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND
 			T1.iTaskLevel=T2.iTaskLevel)</Final>
 	</Action>
 </Scheduler>    
