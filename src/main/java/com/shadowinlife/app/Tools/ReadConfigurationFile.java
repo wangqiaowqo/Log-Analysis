@@ -66,16 +66,20 @@ public class ReadConfigurationFile {
             for (int i = 0; i < nList.getLength(); i++) {
                 Map<String, List<String[]>> m = new HashMap<String, List<String[]>>();
                 
-                List<String[]> tmp = new ArrayList<String[]>();
+                
                 Node nNode = nList.item(i);
                 Element eElement = (Element) nNode;
                 
+                String[] name = {eElement.getAttribute("name").trim()};
+                List<String[]> tmp_name = new ArrayList<String[]>();
+                tmp_name.add(name);
+                m.put("Name", tmp_name);
+                
                 // Date Time [begin, end)
+                List<String[]> tmp = new ArrayList<String[]>();
                 String[] date = { eElement.getAttribute("Begin").trim(), eElement.getAttribute("End").trim() };
                 tmp.add(date);
                 m.put("Date", tmp);
-                
-                System.out.println(date[0] + date[1]);
 
                 // GameId comma separate
                 String[] GameId = eElement.getElementsByTagName("GameId").item(0).getTextContent()
@@ -103,7 +107,7 @@ public class ReadConfigurationFile {
                 List<String[]> tmp_Final = new ArrayList<String[]>();
                 for (int j = 0; j < finalList.getLength(); j++) {
                     Element e = (Element) finalList.item(j);
-                    String[] s = {e.getAttribute("url").trim(), e.getAttribute("Table").trim(), e.getTextContent()};
+                    String[] s = {e.getAttribute("URL").trim(), e.getAttribute("Table").trim(), e.getTextContent()};
                     tmp_Final.add(s);
                 }
                 m.put("Final", tmp_Final);

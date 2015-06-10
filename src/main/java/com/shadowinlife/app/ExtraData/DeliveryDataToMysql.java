@@ -41,7 +41,7 @@ public class DeliveryDataToMysql {
                 hivesql = hivesql + columnNames.get(i) + ",";
             }
             hivesql = hivesql + columnNames.get(columnNames.size()-1) + " FROM "+strTable+strWhere;
-            System.out.println("gongmeng:" + hivesql);
+           
             DataFrame oss_dm_mode_tbRegisterUser = sqlContext.sql(hivesql);
 
             oss_dm_mode_tbRegisterUser.insertIntoJDBC(mySqlURL, mTable, false);

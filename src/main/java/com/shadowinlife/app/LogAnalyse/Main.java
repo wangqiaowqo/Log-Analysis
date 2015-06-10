@@ -32,6 +32,7 @@ public class Main {
         String FilePath = null;
         String ConfiguationFile = null;
         List<Map<String, List<String[]>>> l = null;
+        String Action = null;
         for (int i = 0; i < args.length; i = i + 2) {
 
             // 入参格式监测
@@ -49,7 +50,8 @@ public class Main {
                         + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n"
                         + "--TAG   ALL 即计算fat表，也计算结果表， mode为空则所有模式都计算\n"
                         + "        OSS  只计算结果表，mode为空计算所有种类的结果表\n"
-                        + "        FAT 只计算Fat表，Mode为空则计算所有种类的中间表\n");
+                        + "        FAT 只计算Fat表，Mode为空则计算所有种类的中间表\n"
+                        + "--ACTION 所希望运行的Action的名字，使用逗号隔开");
                 return;
             }
 
@@ -89,7 +91,9 @@ public class Main {
             case "--ACCOUNTTYPE":
                 iAccountType = args[i + 1];
                 break;
-
+            case "--ACTION":
+                Action = args[i+1];
+                break;
             }
         }
         // 初始化基本环境
@@ -110,7 +114,7 @@ public class Main {
         // 读取配置文件
         if (ConfiguationFile != null) {
             l = ReadConfigurationFile.ReadLogAnalyseConfiguration(ConfiguationFile);
-            ActionDriver.Scheduler(sqlContext, l, date);
+            ActionDriver.Scheduler(sqlContext, l, date, Action);
             return;
         }
 
