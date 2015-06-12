@@ -5,7 +5,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
@@ -18,7 +18,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
@@ -32,7 +32,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
@@ -46,7 +46,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iTaskTypeId"	        type="int"	    size=""    key="1"	desc="任务类型"/> 
@@ -67,7 +67,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iRoleNum"	            type="bigint"	size=""    key="0"	desc="角色数"/>	
@@ -77,7 +77,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="角色数"/>	
@@ -87,7 +87,7 @@
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
 		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
 		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iGender"	            type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iCopyTypeId"	        type="int"	    size=""    key="1"	desc="副本类型"/> 
@@ -103,6 +103,35 @@
 		<entry name="iStartUinNum"	        type="int"	    size=""    key="0"	desc="开始副本uin数"/> 
 		<entry name="iCompleteUinNum"	    type="int"	    size=""    key="0"	desc="完成副本uin数"/> 
 		<entry name="iTotalTime"	        type="bigint"	size=""    key="0"	desc="完成副本时长(秒)"/>	
+	</struct>
+	<struct name="GoodsVendition"	   id=""	 desc="道具销售统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iGoodsId"	            type="int"	    size=""    key="1"	desc="商品ID（道具ID 或 装备ID 或avatar Id 或 宠物ID等）"/> 
+		<entry name="iGoodsType"	        type="int"	    size=""    key="1"	desc="商品类型（普通道具、装备、avatar、宠物等）"/> 
+		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型（部分游戏存在多种游戏货币，需要金钱类型加以区分，关联tbMoneyTypeConf获取金钱名称）"/>
+		<entry name="iGoodsNum"	            type="int"	    size=""    key="0"	desc="销售道具数量"/>
+		<entry name="iPayment"	            type="int"	    size=""    key="0"	desc="购买商品支付的游戏币数量"/> 
+		<entry name="iPayUinNum"	        type="int"	    size=""    key="0"	desc="购买商品的用户数"/> 
+		<entry name="iPayRoleNum"	        type="int"	    size=""    key="0"	desc="购买商品的角色数"/> 	
 	</struct>	
+	<struct name="CombatSkillsDis"	   id=""	 desc="战斗技能携带统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iSkillCarryType"	    type="int"	    size=""    key="1"	desc="技能携带方式：1 退出登陆携带；2 进入副本携带"/> 
+		<entry name="iSkillId"	            type="int"	    size=""    key="1"	desc="技能ID"/> 
+		<entry name="iSkillLevel"	        type="int"	    size=""    key="1"	desc="技能等级"/>
+		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="角色数"/> 	
+	</struct>
 </MySql>
 

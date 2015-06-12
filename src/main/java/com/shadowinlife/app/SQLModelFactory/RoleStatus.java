@@ -4,9 +4,30 @@ import java.io.*;
 import java.sql.*;
 
 public class RoleStatus extends BaseBean implements Serializable {
+    public RoleStatus() {
+        super();
+    }
     private int iAccountType;
     private int iGameId;
     private int iWorldId;
+    public int getiAccountType() {
+        return iAccountType;
+    }
+    public int getiGameId() {
+        return iGameId;
+    }
+    public int getiWorldId() {
+        return iWorldId;
+    }
+    public void setiAccountType(int iAccountType) {
+        this.iAccountType = iAccountType;
+    }
+    public void setiGameId(int iGameId) {
+        this.iGameId = iGameId;
+    }
+    public void setiWorldId(int iWorldId) {
+        this.iWorldId = iWorldId;
+    }
     private Timestamp dtEventTime;
     public void setdtEventTime(Timestamp dtEventTime){
         this.dtEventTime=dtEventTime;
@@ -55,20 +76,20 @@ public class RoleStatus extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iJobId;
-    public void setiJobId(Integer iJobId){
-        this.iJobId=iJobId;
+    private Integer iRoleJob;
+    public void setiRoleJob(Integer iRoleJob){
+        this.iRoleJob=iRoleJob;
     }
-   public Integer getiJobId() {
-        return iJobId;
+   public Integer getiRoleJob() {
+        return iRoleJob;
     }
 
-    private Integer iGender;
-    public void setiGender(Integer iGender){
-        this.iGender=iGender;
+    private Integer iRoleGender;
+    public void setiRoleGender(Integer iRoleGender){
+        this.iRoleGender=iRoleGender;
     }
-   public Integer getiGender() {
-        return iGender;
+   public Integer getiRoleGender() {
+        return iRoleGender;
     }
 
     private Integer iRoleLevel;
@@ -79,20 +100,44 @@ public class RoleStatus extends BaseBean implements Serializable {
         return iRoleLevel;
     }
 
-    private Integer iRoleExp;
-    public void setiRoleExp(Integer iRoleExp){
-        this.iRoleExp=iRoleExp;
+    private Integer iRoleVipLevel;
+    public void setiRoleVipLevel(Integer iRoleVipLevel){
+        this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleExp() {
-        return iRoleExp;
+   public Integer getiRoleVipLevel() {
+        return iRoleVipLevel;
     }
 
-    private Timestamp dtCreateTime;
-    public void setdtCreateTime(Timestamp dtCreateTime){
-        this.dtCreateTime=dtCreateTime;
+    private Integer iRoleReputationLevel;
+    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+        this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Timestamp getdtCreateTime() {
-        return dtCreateTime;
+   public Integer getiRoleReputationLevel() {
+        return iRoleReputationLevel;
+    }
+
+    private String vRoleElse1;
+    public void setvRoleElse1(String vRoleElse1){
+        this.vRoleElse1=vRoleElse1;
+    }
+   public String getvRoleElse1() {
+        return vRoleElse1;
+    }
+
+    private String vRoleElse2;
+    public void setvRoleElse2(String vRoleElse2){
+        this.vRoleElse2=vRoleElse2;
+    }
+   public String getvRoleElse2() {
+        return vRoleElse2;
+    }
+
+    private Timestamp dtRoleCreateTime;
+    public void setdtRoleCreateTime(Timestamp dtRoleCreateTime){
+        this.dtRoleCreateTime=dtRoleCreateTime;
+    }
+   public Timestamp getdtRoleCreateTime() {
+        return dtRoleCreateTime;
     }
 
     private Timestamp dtRoleLastSaveTime;
@@ -128,50 +173,30 @@ public class RoleStatus extends BaseBean implements Serializable {
     }
 
     public RoleStatus parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new RoleStatus(GameId, AccountType,WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15]);
+        return new RoleStatus(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18]);
     }
 
-    public RoleStatus(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iJobId,String iGender,String iRoleLevel,String iRoleExp,String dtCreateTime,String dtRoleLastSaveTime,String iPoints,String iDepositPoints,String iMoney){
-        this.setiGameId(Integer.valueOf(GameId));
-        this.setiAccountType(Integer.valueOf(AccountType));
-        this.setiWorldId(Integer.valueOf(WorldId));
+    public RoleStatus(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String dtRoleCreateTime,String dtRoleLastSaveTime,String iPoints,String iDepositPoints,String iMoney){
+        this.iGameId = Integer.valueOf(GameId);
+        this.iAccountType = Integer.valueOf(AccountType);
+        this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
         this.iRoleId = Integer.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iJobId = Integer.valueOf(iJobId);
-        this.iGender = Integer.valueOf(iGender);
+        this.iRoleJob = Integer.valueOf(iRoleJob);
+        this.iRoleGender = Integer.valueOf(iRoleGender);
         this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleExp = Integer.valueOf(iRoleExp);
-        this.dtCreateTime = Timestamp.valueOf(dtCreateTime);
+        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.vRoleElse1 = String.valueOf(vRoleElse1);
+        this.vRoleElse2 = String.valueOf(vRoleElse2);
+        this.dtRoleCreateTime = Timestamp.valueOf(dtRoleCreateTime);
         this.dtRoleLastSaveTime = Timestamp.valueOf(dtRoleLastSaveTime);
         this.iPoints = Integer.valueOf(iPoints);
         this.iDepositPoints = Integer.valueOf(iDepositPoints);
         this.iMoney = Integer.valueOf(iMoney);
-    }
-    
-    public RoleStatus() {
-       super();
-    }
-    
-    public int getiAccountType() {
-        return iAccountType;
-    }
-    public void setiAccountType(int iAccountType) {
-        this.iAccountType = iAccountType;
-    }
-    public int getiGameId() {
-        return iGameId;
-    }
-    public void setiGameId(int iGameId) {
-        this.iGameId = iGameId;
-    }
-    public int getiWorldId() {
-        return iWorldId;
-    }
-    public void setiWorldId(int iWorldId) {
-        this.iWorldId = iWorldId;
     }
 }
