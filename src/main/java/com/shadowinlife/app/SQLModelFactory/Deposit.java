@@ -37,7 +37,7 @@ import com.shadowinlife.app.Tools.CONSTANT;
 
 import jodd.util.StringUtil;
 
-public class ChongZhi extends BaseBean implements Serializable {
+public class Deposit extends BaseBean implements Serializable {
 
    
     private static final long serialVersionUID = 1L;
@@ -69,7 +69,7 @@ public class ChongZhi extends BaseBean implements Serializable {
     private String vDesc;
     private String iLoginWay;
 
-    public ChongZhi(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
+    public Deposit(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
             String iRoleVipLevel, String iRepuLevel, String v1, String v2, String iArea,
             String DstUin, String iSourceWay, String vClientIp, String vRemark, String iPayBefore,
@@ -103,10 +103,10 @@ public class ChongZhi extends BaseBean implements Serializable {
         this.iLoginWay = iLoginWay;
     }
 
-    public ChongZhi(){
+    public Deposit(){
        super();
     }
-    public ChongZhi parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
+    public Deposit parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
         String[] columnList = array;
 
         if (columnList.length == 24) {
@@ -115,7 +115,7 @@ public class ChongZhi extends BaseBean implements Serializable {
                     columnList[i] = "0";
                 }
             }
-            return new ChongZhi(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
+            return new Deposit(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
                     columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
                     columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
                     columnList[15], columnList[16], columnList[17], columnList[18], columnList[19],

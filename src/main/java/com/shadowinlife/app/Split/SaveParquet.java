@@ -43,7 +43,7 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
                             }
                         }
                     }).values();
-            ;
+            
             JavaRDD<T> tempLogs = tempRDD.map(new Function<String[], T>() {
 
                 private static final long serialVersionUID = -8639862064479870422L;
