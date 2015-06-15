@@ -8,7 +8,7 @@ import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.hive.HiveContext;
 
 public class ReadParquetToDF {
-    public static void ReadParquet(HiveContext sc, String BeginTime, String EndTime,
+    public void ReadParquet(HiveContext sc, String BeginTime, String EndTime,
             String[] GameId, String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
 
         DataFrame df = sc.parquetFile("/LOG/BASE/" + Table.trim() + ".parquet");

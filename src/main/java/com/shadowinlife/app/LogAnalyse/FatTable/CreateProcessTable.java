@@ -29,38 +29,39 @@ public class CreateProcessTable {
         String[] AccountType = { "1" };
         String[] GameId = { "1" };
         String[] WorldId = { iworldid };
+        ReadParquetToDF rptd = new ReadParquetToDF();
         switch (tableName) {
         case "RoleLogin":
             // Filter origin file into different RDD
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "RoleLogin", strWhere);
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "RoleLogout", strWhere);
             AcountProcessTable.process(sqlContext, date, iworldid);
             break;
 
         case "Deposit":
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "Deposit", strWhere);
             ChongzhiProcessTable.process(sqlContext, date, iworldid);
             break;
 
         case "MoneyFlow":
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "MoneyFlow", strWhere);
             MoneyFlowProcessTable.process(sqlContext, date, iworldid);
             break;
         case "Task":
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "TaskStart", strWhere);
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "TaskFinished", strWhere);
             TaskProcessTable.process(sqlContext, date, iworldid,
                     "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",
                     "oss_dm_tbTask");
             break;
         case "MoneyStorage":
-            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "RoleStatus", strWhere);
             ProceeMoneyStorage.process(sqlContext, date, iworldid,
                     "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",

@@ -47,7 +47,8 @@ public class ActionDriver {
                 String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                         + "' AND `dtEventTime`<'"+curTime+"'";
                 talbename.add(Table);
-                ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId,
+                ReadParquetToDF rptd = new ReadParquetToDF();
+                rptd.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId,
                         Table,strWhere);
             }
 
