@@ -67,7 +67,7 @@ public class Main {
                     tableName = "MoneyFlow";
                     break;
                 case "deposit":
-                    tableName = "ChongZhi";
+                    tableName = "Deposit";
                     break;
                 case "login":
                     tableName = "RoleLogin";
@@ -149,7 +149,7 @@ public class Main {
                 CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "Task", date, iWorldId);
                 CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "MoneyFlow", date,
                         iWorldId);
-                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "ChongZhi", date,
+                CreateProcessTable.FatTableConstruct(sqlContext, FilePath, "Deposit", date,
                         iWorldId);
 
             } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))

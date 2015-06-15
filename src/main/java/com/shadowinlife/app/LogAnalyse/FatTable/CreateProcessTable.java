@@ -39,9 +39,9 @@ public class CreateProcessTable {
             AcountProcessTable.process(sqlContext, date, iworldid);
             break;
 
-        case "ChongZhi":
+        case "Deposit":
             ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "ChongZhi", strWhere);
+                    WorldId, "Deposit", strWhere);
             ChongzhiProcessTable.process(sqlContext, date, iworldid);
             break;
 
@@ -76,7 +76,7 @@ public class CreateProcessTable {
             AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
             break;
 
-        case "ChongZhi":
+        case "Deposit":
             ChongzhiProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
             break;
 
