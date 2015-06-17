@@ -17,15 +17,22 @@ import com.shadowinlife.app.LogAnalyse.Action.DFTableToTempTable;
 import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
 
 public class ActionDriver {
-    public static void Scheduler(HiveContext sc, List<Map<String, List<String[]>>> l, String date, String Action) {
+    public static void Scheduler(HiveContext sc, List<Map<String, List<String[]>>> l, String date,
+            String Action, String intWorldId) {
         for (Map<String, List<String[]>> m : l) {
             String[] AccountType = m.get("AccountType").get(0);
             String[] GameId = m.get("GameId").get(0);
-            String[] WorldId = m.get("WorldId").get(0);
+            String[] WorldId;
+            if (intWorldId == null) {
+                WorldId = m.get("WorldId").get(0);
+            } else {
+                WorldId = new String[1];
+                WorldId[0] = intWorldId;
+            }
             String BeginTime = m.get("Date").get(0)[0] + " 00:00:00";
             String EndTime = m.get("Date").get(0)[1] + " 02:00:00";
             String ActionName = m.get("Name").get(0)[0];
-            if(Action!=null && !Action.contains(ActionName)) {
+            if (Action != null && !Action.contains(ActionName)) {
                 continue;
             }
             List<String> talbename = new ArrayList<String>();
@@ -45,11 +52,11 @@ public class ActionDriver {
                 System.out.println("Tring to load:" + Table);
                 String curTime = m.get("Date").get(0)[1] + " 00:00:00";
                 String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
-                        + "' AND `dtEventTime`<'"+curTime+"'";
+                        + "' AND `dtEventTime`<'" + curTime + "'";
                 talbename.add(Table);
                 ReadParquetToDF rptd = new ReadParquetToDF();
-                rptd.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId,
-                        Table,strWhere);
+                rptd.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table,
+                        strWhere);
             }
 
             List<String[]> SQLlist = m.get("Sql");
