@@ -46,6 +46,7 @@
 		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
 		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
 		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExp"	            type="int"	    size=""    key="0"	desc="角色经验值"/>
 		<entry name="dtRoleCreateTime"	    type="datetime" size=""    key="0"  desc="角色创建时间"/>
 		<entry name="dtRoleLastSaveTime"	type="datetime" size=""    key="0"  desc="角色状态最后更新时间"/>  	  		
 		<entry name="iPoints"	            type="int"	    size=""    key="0"	desc="角色总代币存量"/> 
@@ -335,6 +336,47 @@
 		<entry name="iNum"	                type="int"	    size=""    key="0"	desc="获得数量"/> 
 		<entry name="iAfterRemain"          type="int"	    size=""    key="0"	desc="存量"/> 
 		<entry name="iAfterEngergyLevel"	type="int"	    size=""    key="0"	desc="等级"/> 	
+	</struct>
+	<struct name="OpenLattice"	   id=""	 desc="玩家格子开启"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 
+		<entry name="vClientIp"	            type="varchar"	size="48"  key="0"	desc="IP地址"/>
+		<entry name="iLatticeNum"           type="int"	    size=""    key="0"	desc="开启格子数"/>		
+		<entry name="iMoneyType"	        type="int"	    size=""    key="0"	desc="金钱类型	0 金币；1 钻石"/> 
+		<entry name="iMoney"                type="int"	    size=""    key="0"	desc="消耗金钱"/> 
+		<entry name="iMoneyRemain"	        type="int"	    size=""    key="0"	desc="之后存量"/> 	
+	</struct>
+	<struct name="EnchaseEquip"	   id=""	 desc="物品（装备）（镶嵌拆除、替换等）日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 
+		<entry name="iEnchageAction"        type="int"	    size=""    key="0"	desc="玩家动作类型（区分是镶嵌、拆除或卸载等动作）	1=镶嵌；2=拆除；3=替换等"/>		
+		<entry name="iEnchageEquipIdType"	type="int"	    size=""    key="0"	desc="玩家镶嵌、替换等的对象大类	0 圣剑系统；1 装备 2人物的某个部位（手，脚等）"/> 
+		<entry name="iEnchageEquipIdID"     type="int"	    size=""    key="0"	desc="玩家镶嵌、替换等的对象ID（装备ID等物品ID）"/> 
+		<entry name="jEnchageEquipIdAtrr"	type="text"	    size=""    key="0"	desc="玩家镶嵌、替换等的对物品（物品数量、物品属性等）"/>
+		<entry name="jCostItemAtrr"	        type="text"	    size=""    key="0"	desc="玩家镶嵌、替换等消耗或替换掉的物品（金钱、装备等的物品数量、属性等）"/>
+		<entry name="bResult"	            type="bool"	    size=""    key="0"	desc="镶嵌是否成功"/> 	 	
 	</struct>	
 	<struct name="MoneyFlow"	   id=""	 desc="货币变化日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
