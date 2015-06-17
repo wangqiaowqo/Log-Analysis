@@ -132,6 +132,14 @@ public class RoleStatus extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
+    private Integer iRoleExp;
+    public void setiRoleExp(Integer iRoleExp){
+        this.iRoleExp=iRoleExp;
+    }
+   public Integer getiRoleExp() {
+        return iRoleExp;
+    }
+
     private Timestamp dtRoleCreateTime;
     public void setdtRoleCreateTime(Timestamp dtRoleCreateTime){
         this.dtRoleCreateTime=dtRoleCreateTime;
@@ -173,10 +181,10 @@ public class RoleStatus extends BaseBean implements Serializable {
     }
 
     public RoleStatus parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new RoleStatus(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18]);
+        return new RoleStatus(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19]);
     }
 
-    public RoleStatus(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String dtRoleCreateTime,String dtRoleLastSaveTime,String iPoints,String iDepositPoints,String iMoney){
+    public RoleStatus(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExp,String dtRoleCreateTime,String dtRoleLastSaveTime,String iPoints,String iDepositPoints,String iMoney){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
@@ -193,6 +201,7 @@ public class RoleStatus extends BaseBean implements Serializable {
         this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
+        this.iRoleExp = Integer.valueOf(iRoleExp);
         this.dtRoleCreateTime = Timestamp.valueOf(dtRoleCreateTime);
         this.dtRoleLastSaveTime = Timestamp.valueOf(dtRoleLastSaveTime);
         this.iPoints = Integer.valueOf(iPoints);
