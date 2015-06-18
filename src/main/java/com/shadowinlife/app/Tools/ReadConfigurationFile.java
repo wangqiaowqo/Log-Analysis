@@ -70,7 +70,7 @@ public class ReadConfigurationFile {
                 Node nNode = nList.item(i);
                 Element eElement = (Element) nNode;
                 
-                String[] name = {eElement.getAttribute("name").trim()};
+                String[] name = {eElement.getAttribute("Name").trim()};
                 List<String[]> tmp_name = new ArrayList<String[]>();
                 tmp_name.add(name);
                 m.put("Name", tmp_name);
