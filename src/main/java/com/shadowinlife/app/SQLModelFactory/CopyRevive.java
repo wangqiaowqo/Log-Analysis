@@ -3,8 +3,8 @@ package com.shadowinlife.app.SQLModelFactory;
 import java.io.*;
 import java.sql.*;
 
-public class TaskStart extends BaseBean implements Serializable {
-    public TaskStart() {
+public class CopyRevive extends BaseBean implements Serializable {
+    public CopyRevive() {
         super();
     }
     private int iAccountType;
@@ -148,123 +148,115 @@ public class TaskStart extends BaseBean implements Serializable {
         return iRoleSword;
     }
 
-    private Integer iTaskType;
-    public void setiTaskType(Integer iTaskType){
-        this.iTaskType=iTaskType;
+    private Integer iLogType;
+    public void setiLogType(Integer iLogType){
+        this.iLogType=iLogType;
     }
-   public Integer getiTaskType() {
-        return iTaskType;
-    }
-
-    private Integer iTaskWay;
-    public void setiTaskWay(Integer iTaskWay){
-        this.iTaskWay=iTaskWay;
-    }
-   public Integer getiTaskWay() {
-        return iTaskWay;
+   public Integer getiLogType() {
+        return iLogType;
     }
 
-    private Integer iTaskCircle;
-    public void setiTaskCircle(Integer iTaskCircle){
-        this.iTaskCircle=iTaskCircle;
+    private Integer iCopyType;
+    public void setiCopyType(Integer iCopyType){
+        this.iCopyType=iCopyType;
     }
-   public Integer getiTaskCircle() {
-        return iTaskCircle;
-    }
-
-    private Integer iTaskId;
-    public void setiTaskId(Integer iTaskId){
-        this.iTaskId=iTaskId;
-    }
-   public Integer getiTaskId() {
-        return iTaskId;
+   public Integer getiCopyType() {
+        return iCopyType;
     }
 
-    private String vTaskName;
-    public void setvTaskName(String vTaskName){
-        this.vTaskName=vTaskName;
+    private Integer iCopyId;
+    public void setiCopyId(Integer iCopyId){
+        this.iCopyId=iCopyId;
     }
-   public String getvTaskName() {
-        return vTaskName;
-    }
-
-    private Integer iTaskStar;
-    public void setiTaskStar(Integer iTaskStar){
-        this.iTaskStar=iTaskStar;
-    }
-   public Integer getiTaskStar() {
-        return iTaskStar;
+   public Integer getiCopyId() {
+        return iCopyId;
     }
 
-    private Integer iNpcId;
-    public void setiNpcId(Integer iNpcId){
-        this.iNpcId=iNpcId;
+    private String vCopyName;
+    public void setvCopyName(String vCopyName){
+        this.vCopyName=vCopyName;
     }
-   public Integer getiNpcId() {
-        return iNpcId;
-    }
-
-    private String vNpcName;
-    public void setvNpcName(String vNpcName){
-        this.vNpcName=vNpcName;
-    }
-   public String getvNpcName() {
-        return vNpcName;
+   public String getvCopyName() {
+        return vCopyName;
     }
 
-    private Integer iFlag;
-    public void setiFlag(Integer iFlag){
-        this.iFlag=iFlag;
+    private Integer iTeamId;
+    public void setiTeamId(Integer iTeamId){
+        this.iTeamId=iTeamId;
     }
-   public Integer getiFlag() {
-        return iFlag;
-    }
-
-    private Integer iItemType;
-    public void setiItemType(Integer iItemType){
-        this.iItemType=iItemType;
-    }
-   public Integer getiItemType() {
-        return iItemType;
+   public Integer getiTeamId() {
+        return iTeamId;
     }
 
-    private Integer iItemId;
-    public void setiItemId(Integer iItemId){
-        this.iItemId=iItemId;
+    private Integer iCopyLevel;
+    public void setiCopyLevel(Integer iCopyLevel){
+        this.iCopyLevel=iCopyLevel;
     }
-   public Integer getiItemId() {
-        return iItemId;
-    }
-
-    private Integer iItemNum;
-    public void setiItemNum(Integer iItemNum){
-        this.iItemNum=iItemNum;
-    }
-   public Integer getiItemNum() {
-        return iItemNum;
+   public Integer getiCopyLevel() {
+        return iCopyLevel;
     }
 
-    private Integer iItemRemain;
-    public void setiItemRemain(Integer iItemRemain){
-        this.iItemRemain=iItemRemain;
+    private Integer iCopystar;
+    public void setiCopystar(Integer iCopystar){
+        this.iCopystar=iCopystar;
     }
-   public Integer getiItemRemain() {
-        return iItemRemain;
-    }
-
-    private Integer iItemGuid;
-    public void setiItemGuid(Integer iItemGuid){
-        this.iItemGuid=iItemGuid;
-    }
-   public Integer getiItemGuid() {
-        return iItemGuid;
+   public Integer getiCopystar() {
+        return iCopystar;
     }
 
-    public TaskStart parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new TaskStart(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28],args[29]);
+    private Integer iCopyLevelId;
+    public void setiCopyLevelId(Integer iCopyLevelId){
+        this.iCopyLevelId=iCopyLevelId;
+    }
+   public Integer getiCopyLevelId() {
+        return iCopyLevelId;
     }
 
-    public TaskStart(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iTaskType,String iTaskWay,String iTaskCircle,String iTaskId,String vTaskName,String iTaskStar,String iNpcId,String vNpcName,String iFlag,String iItemType,String iItemId,String iItemNum,String iItemRemain,String iItemGuid){
+    private Integer iTrunkId;
+    public void setiTrunkId(Integer iTrunkId){
+        this.iTrunkId=iTrunkId;
+    }
+   public Integer getiTrunkId() {
+        return iTrunkId;
+    }
+
+    private Integer iReviveType;
+    public void setiReviveType(Integer iReviveType){
+        this.iReviveType=iReviveType;
+    }
+   public Integer getiReviveType() {
+        return iReviveType;
+    }
+
+    private Integer iObjId;
+    public void setiObjId(Integer iObjId){
+        this.iObjId=iObjId;
+    }
+   public Integer getiObjId() {
+        return iObjId;
+    }
+
+    private String jObjProperty;
+    public void setjObjProperty(String jObjProperty){
+        this.jObjProperty=jObjProperty;
+    }
+   public String getjObjProperty() {
+        return jObjProperty;
+    }
+
+    private String jMoney;
+    public void setjMoney(String jMoney){
+        this.jMoney=jMoney;
+    }
+   public String getjMoney() {
+        return jMoney;
+    }
+
+    public CopyRevive parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new CopyRevive(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28]);
+    }
+
+    public CopyRevive(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iLogType,String iCopyType,String iCopyId,String vCopyName,String iTeamId,String iCopyLevel,String iCopystar,String iCopyLevelId,String iTrunkId,String iReviveType,String iObjId,String jObjProperty,String jMoney){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
@@ -283,19 +275,18 @@ public class TaskStart extends BaseBean implements Serializable {
         this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.iRoleExperience = Integer.valueOf(iRoleExperience);
         this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iTaskType = Integer.valueOf(iTaskType);
-        this.iTaskWay = Integer.valueOf(iTaskWay);
-        this.iTaskCircle = Integer.valueOf(iTaskCircle);
-        this.iTaskId = Integer.valueOf(iTaskId);
-        this.vTaskName = String.valueOf(vTaskName);
-        this.iTaskStar = Integer.valueOf(iTaskStar);
-        this.iNpcId = Integer.valueOf(iNpcId);
-        this.vNpcName = String.valueOf(vNpcName);
-        this.iFlag = Integer.valueOf(iFlag);
-        this.iItemType = Integer.valueOf(iItemType);
-        this.iItemId = Integer.valueOf(iItemId);
-        this.iItemNum = Integer.valueOf(iItemNum);
-        this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iLogType = Integer.valueOf(iLogType);
+        this.iCopyType = Integer.valueOf(iCopyType);
+        this.iCopyId = Integer.valueOf(iCopyId);
+        this.vCopyName = String.valueOf(vCopyName);
+        this.iTeamId = Integer.valueOf(iTeamId);
+        this.iCopyLevel = Integer.valueOf(iCopyLevel);
+        this.iCopystar = Integer.valueOf(iCopystar);
+        this.iCopyLevelId = Integer.valueOf(iCopyLevelId);
+        this.iTrunkId = Integer.valueOf(iTrunkId);
+        this.iReviveType = Integer.valueOf(iReviveType);
+        this.iObjId = Integer.valueOf(iObjId);
+        this.jObjProperty = String.valueOf(jObjProperty);
+        this.jMoney = String.valueOf(jMoney);
     }
 }

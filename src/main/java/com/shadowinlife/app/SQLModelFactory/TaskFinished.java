@@ -1,319 +1,319 @@
 package com.shadowinlife.app.SQLModelFactory;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
+import java.io.*;
+import java.sql.*;
 
 public class TaskFinished extends BaseBean implements Serializable {
+    public TaskFinished() {
+        super();
+    }
     private int iAccountType;
     private int iGameId;
     private int iWorldId;
+    public int getiAccountType() {
+        return iAccountType;
+    }
+    public int getiGameId() {
+        return iGameId;
+    }
+    public int getiWorldId() {
+        return iWorldId;
+    }
+    public void setiAccountType(int iAccountType) {
+        this.iAccountType = iAccountType;
+    }
+    public void setiGameId(int iGameId) {
+        this.iGameId = iGameId;
+    }
+    public void setiWorldId(int iWorldId) {
+        this.iWorldId = iWorldId;
+    }
     private Timestamp dtEventTime;
-    private String iEventId;
-    private String version;
-    private String iUin;
-    private int iRoleId;
+    public void setdtEventTime(Timestamp dtEventTime){
+        this.dtEventTime=dtEventTime;
+    }
+   public Timestamp getdtEventTime() {
+        return dtEventTime;
+    }
+
+    private Long iEventId;
+    public void setiEventId(Long iEventId){
+        this.iEventId=iEventId;
+    }
+   public Long getiEventId() {
+        return iEventId;
+    }
+
+    private String vVersionId;
+    public void setvVersionId(String vVersionId){
+        this.vVersionId=vVersionId;
+    }
+   public String getvVersionId() {
+        return vVersionId;
+    }
+
+    private String vUin;
+    public void setvUin(String vUin){
+        this.vUin=vUin;
+    }
+   public String getvUin() {
+        return vUin;
+    }
+
+    private Integer iRoleId;
+    public void setiRoleId(Integer iRoleId){
+        this.iRoleId=iRoleId;
+    }
+   public Integer getiRoleId() {
+        return iRoleId;
+    }
+
     private String vRoleName;
-    private int iRoleJob;
-    private int iRoleSex;
-    private int iRoleLevel;
-    private int iRoleVipLevel;
-    private int iRepuLevel;
-    private String v1;
-    private String v2;
-    
-    private long iRoleExperience;
-    private int iRoleSword;
+    public void setvRoleName(String vRoleName){
+        this.vRoleName=vRoleName;
+    }
+   public String getvRoleName() {
+        return vRoleName;
+    }
+
+    private Integer iRoleJob;
+    public void setiRoleJob(Integer iRoleJob){
+        this.iRoleJob=iRoleJob;
+    }
+   public Integer getiRoleJob() {
+        return iRoleJob;
+    }
+
+    private Integer iRoleGender;
+    public void setiRoleGender(Integer iRoleGender){
+        this.iRoleGender=iRoleGender;
+    }
+   public Integer getiRoleGender() {
+        return iRoleGender;
+    }
+
+    private Integer iRoleLevel;
+    public void setiRoleLevel(Integer iRoleLevel){
+        this.iRoleLevel=iRoleLevel;
+    }
+   public Integer getiRoleLevel() {
+        return iRoleLevel;
+    }
+
+    private Integer iRoleVipLevel;
+    public void setiRoleVipLevel(Integer iRoleVipLevel){
+        this.iRoleVipLevel=iRoleVipLevel;
+    }
+   public Integer getiRoleVipLevel() {
+        return iRoleVipLevel;
+    }
+
+    private Integer iRoleReputationLevel;
+    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+        this.iRoleReputationLevel=iRoleReputationLevel;
+    }
+   public Integer getiRoleReputationLevel() {
+        return iRoleReputationLevel;
+    }
+
+    private String vRoleElse1;
+    public void setvRoleElse1(String vRoleElse1){
+        this.vRoleElse1=vRoleElse1;
+    }
+   public String getvRoleElse1() {
+        return vRoleElse1;
+    }
+
+    private String vRoleElse2;
+    public void setvRoleElse2(String vRoleElse2){
+        this.vRoleElse2=vRoleElse2;
+    }
+   public String getvRoleElse2() {
+        return vRoleElse2;
+    }
+
+    private Integer iRoleExperience;
+    public void setiRoleExperience(Integer iRoleExperience){
+        this.iRoleExperience=iRoleExperience;
+    }
+   public Integer getiRoleExperience() {
+        return iRoleExperience;
+    }
+
+    private Integer iRoleSword;
+    public void setiRoleSword(Integer iRoleSword){
+        this.iRoleSword=iRoleSword;
+    }
+   public Integer getiRoleSword() {
+        return iRoleSword;
+    }
+
     private Timestamp dtTaskStartTime;
-    private int iTaskType;
-    private int iTaskCircle;
-    private int iTaskId;
-    private String  vTaskName;
-    private int iTaskStar;
-    private int iNpcId;
+    public void setdtTaskStartTime(Timestamp dtTaskStartTime){
+        this.dtTaskStartTime=dtTaskStartTime;
+    }
+   public Timestamp getdtTaskStartTime() {
+        return dtTaskStartTime;
+    }
+
+    private Integer iTaskType;
+    public void setiTaskType(Integer iTaskType){
+        this.iTaskType=iTaskType;
+    }
+   public Integer getiTaskType() {
+        return iTaskType;
+    }
+
+    private Integer iTaskWay;
+    public void setiTaskWay(Integer iTaskWay){
+        this.iTaskWay=iTaskWay;
+    }
+   public Integer getiTaskWay() {
+        return iTaskWay;
+    }
+
+    private Integer iTaskCircle;
+    public void setiTaskCircle(Integer iTaskCircle){
+        this.iTaskCircle=iTaskCircle;
+    }
+   public Integer getiTaskCircle() {
+        return iTaskCircle;
+    }
+
+    private Integer iTaskId;
+    public void setiTaskId(Integer iTaskId){
+        this.iTaskId=iTaskId;
+    }
+   public Integer getiTaskId() {
+        return iTaskId;
+    }
+
+    private String vTaskName;
+    public void setvTaskName(String vTaskName){
+        this.vTaskName=vTaskName;
+    }
+   public String getvTaskName() {
+        return vTaskName;
+    }
+
+    private Integer iTaskStar;
+    public void setiTaskStar(Integer iTaskStar){
+        this.iTaskStar=iTaskStar;
+    }
+   public Integer getiTaskStar() {
+        return iTaskStar;
+    }
+
+    private Integer iNpcId;
+    public void setiNpcId(Integer iNpcId){
+        this.iNpcId=iNpcId;
+    }
+   public Integer getiNpcId() {
+        return iNpcId;
+    }
+
     private String vNpcName;
-    private int iFlag;
-    private int iItemType;
-    private int iItemId;
-    private int iItemNum;
-    private int iItemRemain;
-    private int iItemGuide;
-    private int iFinshType;
-    private long iTaskTime;
-    
-    private TaskFinished(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
-            String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
-            String iRoleVipLevel, String iRepuLevel, String v1, String v2, String iRoleExperience,
-            String iRoleSword, String dtTaskStartTime, String iTaskType,  String iTaskCircle, String iTaskId,
-            String vTaskName, String iTaskStar, String iNpcId, String vNpcName, String iFlag, String iItemType,
-            String iItemId, String iItemNum, String iItemRemain, String iItemGuide, String iFinishType) {
+    public void setvNpcName(String vNpcName){
+        this.vNpcName=vNpcName;
+    }
+   public String getvNpcName() {
+        return vNpcName;
+    }
+
+    private Integer iFlag;
+    public void setiFlag(Integer iFlag){
+        this.iFlag=iFlag;
+    }
+   public Integer getiFlag() {
+        return iFlag;
+    }
+
+    private Integer iItemType;
+    public void setiItemType(Integer iItemType){
+        this.iItemType=iItemType;
+    }
+   public Integer getiItemType() {
+        return iItemType;
+    }
+
+    private Integer iItemId;
+    public void setiItemId(Integer iItemId){
+        this.iItemId=iItemId;
+    }
+   public Integer getiItemId() {
+        return iItemId;
+    }
+
+    private Integer iItemNum;
+    public void setiItemNum(Integer iItemNum){
+        this.iItemNum=iItemNum;
+    }
+   public Integer getiItemNum() {
+        return iItemNum;
+    }
+
+    private Integer iItemRemain;
+    public void setiItemRemain(Integer iItemRemain){
+        this.iItemRemain=iItemRemain;
+    }
+   public Integer getiItemRemain() {
+        return iItemRemain;
+    }
+
+    private Integer iItemGuid;
+    public void setiItemGuid(Integer iItemGuid){
+        this.iItemGuid=iItemGuid;
+    }
+   public Integer getiItemGuid() {
+        return iItemGuid;
+    }
+
+    private Integer iFinshType;
+    public void setiFinshType(Integer iFinshType){
+        this.iFinshType=iFinshType;
+    }
+   public Integer getiFinshType() {
+        return iFinshType;
+    }
+
+    public TaskFinished parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new TaskFinished(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28],args[29],args[30],args[31]);
+    }
+
+    public TaskFinished(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String dtTaskStartTime,String iTaskType,String iTaskWay,String iTaskCircle,String iTaskId,String vTaskName,String iTaskStar,String iNpcId,String vNpcName,String iFlag,String iItemType,String iItemId,String iItemNum,String iItemRemain,String iItemGuid,String iFinshType){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
-        this.iEventId = iEventId;
-        this.version = version;
-        this.iUin = iUin;
+        this.iEventId = Long.valueOf(iEventId);
+        this.vVersionId = String.valueOf(vVersionId);
+        this.vUin = String.valueOf(vUin);
         this.iRoleId = Integer.valueOf(iRoleId);
-        this.vRoleName = vRoleName;
+        this.vRoleName = String.valueOf(vRoleName);
         this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleSex = Integer.valueOf(iRoleSex);
-        this.iRoleLevel=Integer.valueOf(iRoleLevel);
+        this.iRoleGender = Integer.valueOf(iRoleGender);
+        this.iRoleLevel = Integer.valueOf(iRoleLevel);
         this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRepuLevel = Integer.valueOf(iRepuLevel);
-        this.v1 = v1;
-        this.v2 = v2;
-        
+        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.vRoleElse1 = String.valueOf(vRoleElse1);
+        this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.iRoleExperience = Integer.valueOf(iRoleExperience);
         this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iTaskType = Integer.valueOf(iTaskType);
         this.dtTaskStartTime = Timestamp.valueOf(dtTaskStartTime);
+        this.iTaskType = Integer.valueOf(iTaskType);
+        this.iTaskWay = Integer.valueOf(iTaskWay);
         this.iTaskCircle = Integer.valueOf(iTaskCircle);
         this.iTaskId = Integer.valueOf(iTaskId);
-        this.vTaskName = vTaskName;
+        this.vTaskName = String.valueOf(vTaskName);
         this.iTaskStar = Integer.valueOf(iTaskStar);
         this.iNpcId = Integer.valueOf(iNpcId);
-        this.vNpcName = vNpcName;
+        this.vNpcName = String.valueOf(vNpcName);
         this.iFlag = Integer.valueOf(iFlag);
         this.iItemType = Integer.valueOf(iItemType);
         this.iItemId = Integer.valueOf(iItemId);
         this.iItemNum = Integer.valueOf(iItemNum);
         this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemGuide = Integer.valueOf(iItemGuide);
-        this.iTaskTime = (this.dtEventTime.getTime() - this.dtTaskStartTime.getTime())/1000;
-    }
-
-    public TaskFinished() {
-        super();
-    }
-    
-    public TaskFinished parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
-        String[] columnList = array;
-        for (int i = 0; i < columnList.length; i++){
-            if (columnList[i].equalsIgnoreCase(" ")){
-                columnList[i] = "0";}
-        }
-            // TODO Some column may be null,should handle it      
-                return new TaskFinished(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
-                        columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
-                        columnList[10], columnList[11], columnList[12], columnList[13],
-                        columnList[14], columnList[15], columnList[16], columnList[17],
-                        columnList[18], columnList[19], columnList[20], columnList[21],
-                        columnList[22],columnList[23],columnList[24],columnList[25],columnList[26],columnList[27],
-                        columnList[28], columnList[29], columnList[30]);
-            
-      
-    }
-    
-    public Timestamp getDtEventTime() {
-        return dtEventTime;
-    }
-    public void setDtEventTime(Timestamp dtEventTime) {
-        this.dtEventTime = dtEventTime;
-    }
-    public String getiEventId() {
-        return iEventId;
-    }
-    public void setiEventId(String iEventId) {
-        this.iEventId = iEventId;
-    }
-    public String getVersion() {
-        return version;
-    }
-    public void setVersion(String version) {
-        this.version = version;
-    }
-    public String getiUin() {
-        return iUin;
-    }
-    public void setiUin(String iUin) {
-        this.iUin = iUin;
-    }
-    public int getiRoleId() {
-        return iRoleId;
-    }
-    public void setiRoleId(int iRoleId) {
-        this.iRoleId = iRoleId;
-    }
-    public String getvRoleName() {
-        return vRoleName;
-    }
-    public void setvRoleName(String vRoleName) {
-        this.vRoleName = vRoleName;
-    }
-    public int getiRoleJob() {
-        return iRoleJob;
-    }
-    public void setiRoleJob(int iRoleJob) {
-        this.iRoleJob = iRoleJob;
-    }
-    public int getiRoleSex() {
-        return iRoleSex;
-    }
-    public void setiRoleSex(int iRoleSex) {
-        this.iRoleSex = iRoleSex;
-    }
-    public int getiRoleLevel() {
-        return iRoleLevel;
-    }
-    public void setiRoleLevel(int iRoleLevel) {
-        this.iRoleLevel = iRoleLevel;
-    }
-    public int getiRoleVipLevel() {
-        return iRoleVipLevel;
-    }
-    public void setiRoleVipLevel(int iRoleVipLevel) {
-        this.iRoleVipLevel = iRoleVipLevel;
-    }
-    public int getiRepuLevel() {
-        return iRepuLevel;
-    }
-    public void setiRepuLevel(int iRepuLevel) {
-        this.iRepuLevel = iRepuLevel;
-    }
-    public String getV1() {
-        return v1;
-    }
-    public void setV1(String v1) {
-        this.v1 = v1;
-    }
-    public String getV2() {
-        return v2;
-    }
-    public void setV2(String v2) {
-        this.v2 = v2;
-    }
-    public long getiRoleExperience() {
-        return iRoleExperience;
-    }
-    public void setiRoleExperience(long iRoleExperience) {
-        this.iRoleExperience = iRoleExperience;
-    }
-    public int getiRoleSword() {
-        return iRoleSword;
-    }
-    public void setiRoleSword(int iRoleSword) {
-        this.iRoleSword = iRoleSword;
-    }
-    public Timestamp getDtTaskFinishedTime() {
-        return dtTaskStartTime;
-    }
-    public void setDtTaskFinishedTime(Timestamp dtTaskFinishedTime) {
-        this.dtTaskStartTime = dtTaskFinishedTime;
-    }
-    public int getiTaskType() {
-        return iTaskType;
-    }
-    public void setiTaskType(int iTaskType) {
-        this.iTaskType = iTaskType;
-    }
-    public int getiTaskCircle() {
-        return iTaskCircle;
-    }
-    public void setiTaskCircle(int iTaskCircle) {
-        this.iTaskCircle = iTaskCircle;
-    }
-    public int getiTaskId() {
-        return iTaskId;
-    }
-    public void setiTaskId(int iTaskId) {
-        this.iTaskId = iTaskId;
-    }
-    public String getvTaskName() {
-        return vTaskName;
-    }
-    public void setvTaskName(String vTaskName) {
-        this.vTaskName = vTaskName;
-    }
-    public int getiTaskStar() {
-        return iTaskStar;
-    }
-    public void setiTaskStar(int iTaskStar) {
-        this.iTaskStar = iTaskStar;
-    }
-    public int getiNpcId() {
-        return iNpcId;
-    }
-    public void setiNpcId(int iNpcId) {
-        this.iNpcId = iNpcId;
-    }
-    public String getvNpcName() {
-        return vNpcName;
-    }
-    public void setvNpcName(String vNpcName) {
-        this.vNpcName = vNpcName;
-    }
-    public int getiFlag() {
-        return iFlag;
-    }
-    public void setiFlag(int iFlag) {
-        this.iFlag = iFlag;
-    }
-    public int getiItemType() {
-        return iItemType;
-    }
-    public void setiItemType(int iItemType) {
-        this.iItemType = iItemType;
-    }
-    public int getiItemId() {
-        return iItemId;
-    }
-    public void setiItemId(int iItemId) {
-        this.iItemId = iItemId;
-    }
-    public int getiItemNum() {
-        return iItemNum;
-    }
-    public void setiItemNum(int iItemNum) {
-        this.iItemNum = iItemNum;
-    }
-    public int getiItemRemain() {
-        return iItemRemain;
-    }
-    public void setiItemRemain(int iItemRemain) {
-        this.iItemRemain = iItemRemain;
-    }
-    public int getiItemGuide() {
-        return iItemGuide;
-    }
-    public void setiItemGuide(int iItemGuide) {
-        this.iItemGuide = iItemGuide;
-    }
-    public int getiFinshType() {
-        return iFinshType;
-    }
-    public void setiFinshType(int iFinshType) {
-        this.iFinshType = iFinshType;
-    }
-
-    public long getiTaskTime() {
-        return iTaskTime;
-    }
-
-    public void setiTaskTime(long iTaskTime) {
-        this.iTaskTime = iTaskTime;
-    }
-
-    public int getiAccountType() {
-        return iAccountType;
-    }
-
-    public void setiAccountType(int iAccountType) {
-        this.iAccountType = iAccountType;
-    }
-
-    public int getiGameId() {
-        return iGameId;
-    }
-
-    public void setiGameId(int iGameId) {
-        this.iGameId = iGameId;
-    }
-
-    public int getiWorldId() {
-        return iWorldId;
-    }
-
-    public void setiWorldId(int iWorldId) {
-        this.iWorldId = iWorldId;
+        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iFinshType = Integer.valueOf(iFinshType);
     }
 }

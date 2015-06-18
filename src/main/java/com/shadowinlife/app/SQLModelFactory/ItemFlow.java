@@ -3,8 +3,8 @@ package com.shadowinlife.app.SQLModelFactory;
 import java.io.*;
 import java.sql.*;
 
-public class TaskStart extends BaseBean implements Serializable {
-    public TaskStart() {
+public class ItemFlow extends BaseBean implements Serializable {
+    public ItemFlow() {
         super();
     }
     private int iAccountType;
@@ -132,100 +132,12 @@ public class TaskStart extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
-        this.iRoleExperience=iRoleExperience;
+    private String vClientIP;
+    public void setvClientIP(String vClientIP){
+        this.vClientIP=vClientIP;
     }
-   public Integer getiRoleExperience() {
-        return iRoleExperience;
-    }
-
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
-        this.iRoleSword=iRoleSword;
-    }
-   public Integer getiRoleSword() {
-        return iRoleSword;
-    }
-
-    private Integer iTaskType;
-    public void setiTaskType(Integer iTaskType){
-        this.iTaskType=iTaskType;
-    }
-   public Integer getiTaskType() {
-        return iTaskType;
-    }
-
-    private Integer iTaskWay;
-    public void setiTaskWay(Integer iTaskWay){
-        this.iTaskWay=iTaskWay;
-    }
-   public Integer getiTaskWay() {
-        return iTaskWay;
-    }
-
-    private Integer iTaskCircle;
-    public void setiTaskCircle(Integer iTaskCircle){
-        this.iTaskCircle=iTaskCircle;
-    }
-   public Integer getiTaskCircle() {
-        return iTaskCircle;
-    }
-
-    private Integer iTaskId;
-    public void setiTaskId(Integer iTaskId){
-        this.iTaskId=iTaskId;
-    }
-   public Integer getiTaskId() {
-        return iTaskId;
-    }
-
-    private String vTaskName;
-    public void setvTaskName(String vTaskName){
-        this.vTaskName=vTaskName;
-    }
-   public String getvTaskName() {
-        return vTaskName;
-    }
-
-    private Integer iTaskStar;
-    public void setiTaskStar(Integer iTaskStar){
-        this.iTaskStar=iTaskStar;
-    }
-   public Integer getiTaskStar() {
-        return iTaskStar;
-    }
-
-    private Integer iNpcId;
-    public void setiNpcId(Integer iNpcId){
-        this.iNpcId=iNpcId;
-    }
-   public Integer getiNpcId() {
-        return iNpcId;
-    }
-
-    private String vNpcName;
-    public void setvNpcName(String vNpcName){
-        this.vNpcName=vNpcName;
-    }
-   public String getvNpcName() {
-        return vNpcName;
-    }
-
-    private Integer iFlag;
-    public void setiFlag(Integer iFlag){
-        this.iFlag=iFlag;
-    }
-   public Integer getiFlag() {
-        return iFlag;
-    }
-
-    private Integer iItemType;
-    public void setiItemType(Integer iItemType){
-        this.iItemType=iItemType;
-    }
-   public Integer getiItemType() {
-        return iItemType;
+   public String getvClientIP() {
+        return vClientIP;
     }
 
     private Integer iItemId;
@@ -236,6 +148,14 @@ public class TaskStart extends BaseBean implements Serializable {
         return iItemId;
     }
 
+    private Integer iItemType;
+    public void setiItemType(Integer iItemType){
+        this.iItemType=iItemType;
+    }
+   public Integer getiItemType() {
+        return iItemType;
+    }
+
     private Integer iItemNum;
     public void setiItemNum(Integer iItemNum){
         this.iItemNum=iItemNum;
@@ -244,27 +164,51 @@ public class TaskStart extends BaseBean implements Serializable {
         return iItemNum;
     }
 
-    private Integer iItemRemain;
-    public void setiItemRemain(Integer iItemRemain){
-        this.iItemRemain=iItemRemain;
+    private Integer iEquipGuid;
+    public void setiEquipGuid(Integer iEquipGuid){
+        this.iEquipGuid=iEquipGuid;
     }
-   public Integer getiItemRemain() {
-        return iItemRemain;
-    }
-
-    private Integer iItemGuid;
-    public void setiItemGuid(Integer iItemGuid){
-        this.iItemGuid=iItemGuid;
-    }
-   public Integer getiItemGuid() {
-        return iItemGuid;
+   public Integer getiEquipGuid() {
+        return iEquipGuid;
     }
 
-    public TaskStart parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new TaskStart(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28],args[29]);
+    private Integer iFlowDirection;
+    public void setiFlowDirection(Integer iFlowDirection){
+        this.iFlowDirection=iFlowDirection;
+    }
+   public Integer getiFlowDirection() {
+        return iFlowDirection;
     }
 
-    public TaskStart(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iTaskType,String iTaskWay,String iTaskCircle,String iTaskId,String vTaskName,String iTaskStar,String iNpcId,String vNpcName,String iFlag,String iItemType,String iItemId,String iItemNum,String iItemRemain,String iItemGuid){
+    private Integer iAction;
+    public void setiAction(Integer iAction){
+        this.iAction=iAction;
+    }
+   public Integer getiAction() {
+        return iAction;
+    }
+
+    private Integer iBeforeItemNum;
+    public void setiBeforeItemNum(Integer iBeforeItemNum){
+        this.iBeforeItemNum=iBeforeItemNum;
+    }
+   public Integer getiBeforeItemNum() {
+        return iBeforeItemNum;
+    }
+
+    private Integer iAfterItemNum;
+    public void setiAfterItemNum(Integer iAfterItemNum){
+        this.iAfterItemNum=iAfterItemNum;
+    }
+   public Integer getiAfterItemNum() {
+        return iAfterItemNum;
+    }
+
+    public ItemFlow parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new ItemFlow(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22]);
+    }
+
+    public ItemFlow(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String vClientIP,String iItemId,String iItemType,String iItemNum,String iEquipGuid,String iFlowDirection,String iAction,String iBeforeItemNum,String iAfterItemNum){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
@@ -281,21 +225,14 @@ public class TaskStart extends BaseBean implements Serializable {
         this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iTaskType = Integer.valueOf(iTaskType);
-        this.iTaskWay = Integer.valueOf(iTaskWay);
-        this.iTaskCircle = Integer.valueOf(iTaskCircle);
-        this.iTaskId = Integer.valueOf(iTaskId);
-        this.vTaskName = String.valueOf(vTaskName);
-        this.iTaskStar = Integer.valueOf(iTaskStar);
-        this.iNpcId = Integer.valueOf(iNpcId);
-        this.vNpcName = String.valueOf(vNpcName);
-        this.iFlag = Integer.valueOf(iFlag);
-        this.iItemType = Integer.valueOf(iItemType);
+        this.vClientIP = String.valueOf(vClientIP);
         this.iItemId = Integer.valueOf(iItemId);
+        this.iItemType = Integer.valueOf(iItemType);
         this.iItemNum = Integer.valueOf(iItemNum);
-        this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iEquipGuid = Integer.valueOf(iEquipGuid);
+        this.iFlowDirection = Integer.valueOf(iFlowDirection);
+        this.iAction = Integer.valueOf(iAction);
+        this.iBeforeItemNum = Integer.valueOf(iBeforeItemNum);
+        this.iAfterItemNum = Integer.valueOf(iAfterItemNum);
     }
 }

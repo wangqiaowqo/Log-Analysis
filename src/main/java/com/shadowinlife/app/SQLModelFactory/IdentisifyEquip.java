@@ -3,8 +3,8 @@ package com.shadowinlife.app.SQLModelFactory;
 import java.io.*;
 import java.sql.*;
 
-public class TaskStart extends BaseBean implements Serializable {
-    public TaskStart() {
+public class IdentisifyEquip extends BaseBean implements Serializable {
+    public IdentisifyEquip() {
         super();
     }
     private int iAccountType;
@@ -132,100 +132,36 @@ public class TaskStart extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
-        this.iRoleExperience=iRoleExperience;
+    private Integer iEquipIdTpye;
+    public void setiEquipIdTpye(Integer iEquipIdTpye){
+        this.iEquipIdTpye=iEquipIdTpye;
     }
-   public Integer getiRoleExperience() {
-        return iRoleExperience;
-    }
-
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
-        this.iRoleSword=iRoleSword;
-    }
-   public Integer getiRoleSword() {
-        return iRoleSword;
+   public Integer getiEquipIdTpye() {
+        return iEquipIdTpye;
     }
 
-    private Integer iTaskType;
-    public void setiTaskType(Integer iTaskType){
-        this.iTaskType=iTaskType;
+    private Integer iEquipId;
+    public void setiEquipId(Integer iEquipId){
+        this.iEquipId=iEquipId;
     }
-   public Integer getiTaskType() {
-        return iTaskType;
-    }
-
-    private Integer iTaskWay;
-    public void setiTaskWay(Integer iTaskWay){
-        this.iTaskWay=iTaskWay;
-    }
-   public Integer getiTaskWay() {
-        return iTaskWay;
+   public Integer getiEquipId() {
+        return iEquipId;
     }
 
-    private Integer iTaskCircle;
-    public void setiTaskCircle(Integer iTaskCircle){
-        this.iTaskCircle=iTaskCircle;
+    private Integer iEquipGuid;
+    public void setiEquipGuid(Integer iEquipGuid){
+        this.iEquipGuid=iEquipGuid;
     }
-   public Integer getiTaskCircle() {
-        return iTaskCircle;
-    }
-
-    private Integer iTaskId;
-    public void setiTaskId(Integer iTaskId){
-        this.iTaskId=iTaskId;
-    }
-   public Integer getiTaskId() {
-        return iTaskId;
+   public Integer getiEquipGuid() {
+        return iEquipGuid;
     }
 
-    private String vTaskName;
-    public void setvTaskName(String vTaskName){
-        this.vTaskName=vTaskName;
+    private Integer iItemTpye;
+    public void setiItemTpye(Integer iItemTpye){
+        this.iItemTpye=iItemTpye;
     }
-   public String getvTaskName() {
-        return vTaskName;
-    }
-
-    private Integer iTaskStar;
-    public void setiTaskStar(Integer iTaskStar){
-        this.iTaskStar=iTaskStar;
-    }
-   public Integer getiTaskStar() {
-        return iTaskStar;
-    }
-
-    private Integer iNpcId;
-    public void setiNpcId(Integer iNpcId){
-        this.iNpcId=iNpcId;
-    }
-   public Integer getiNpcId() {
-        return iNpcId;
-    }
-
-    private String vNpcName;
-    public void setvNpcName(String vNpcName){
-        this.vNpcName=vNpcName;
-    }
-   public String getvNpcName() {
-        return vNpcName;
-    }
-
-    private Integer iFlag;
-    public void setiFlag(Integer iFlag){
-        this.iFlag=iFlag;
-    }
-   public Integer getiFlag() {
-        return iFlag;
-    }
-
-    private Integer iItemType;
-    public void setiItemType(Integer iItemType){
-        this.iItemType=iItemType;
-    }
-   public Integer getiItemType() {
-        return iItemType;
+   public Integer getiItemTpye() {
+        return iItemTpye;
     }
 
     private Integer iItemId;
@@ -252,19 +188,51 @@ public class TaskStart extends BaseBean implements Serializable {
         return iItemRemain;
     }
 
-    private Integer iItemGuid;
-    public void setiItemGuid(Integer iItemGuid){
-        this.iItemGuid=iItemGuid;
+    private Integer iItemLevel;
+    public void setiItemLevel(Integer iItemLevel){
+        this.iItemLevel=iItemLevel;
     }
-   public Integer getiItemGuid() {
-        return iItemGuid;
-    }
-
-    public TaskStart parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new TaskStart(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28],args[29]);
+   public Integer getiItemLevel() {
+        return iItemLevel;
     }
 
-    public TaskStart(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iTaskType,String iTaskWay,String iTaskCircle,String iTaskId,String vTaskName,String iTaskStar,String iNpcId,String vNpcName,String iFlag,String iItemType,String iItemId,String iItemNum,String iItemRemain,String iItemGuid){
+    private Integer iItemExp;
+    public void setiItemExp(Integer iItemExp){
+        this.iItemExp=iItemExp;
+    }
+   public Integer getiItemExp() {
+        return iItemExp;
+    }
+
+    private Integer iItemStar;
+    public void setiItemStar(Integer iItemStar){
+        this.iItemStar=iItemStar;
+    }
+   public Integer getiItemStar() {
+        return iItemStar;
+    }
+
+    private Boolean bResult;
+    public void setbResult(Boolean bResult){
+        this.bResult=bResult;
+    }
+   public Boolean getbResult() {
+        return bResult;
+    }
+
+    private String jItemAtrrbute;
+    public void setjItemAtrrbute(String jItemAtrrbute){
+        this.jItemAtrrbute=jItemAtrrbute;
+    }
+   public String getjItemAtrrbute() {
+        return jItemAtrrbute;
+    }
+
+    public IdentisifyEquip parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new IdentisifyEquip(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25]);
+    }
+
+    public IdentisifyEquip(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iEquipIdTpye,String iEquipId,String iEquipGuid,String iItemTpye,String iItemId,String iItemNum,String iItemRemain,String iItemLevel,String iItemExp,String iItemStar,String bResult,String jItemAtrrbute){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
@@ -281,21 +249,17 @@ public class TaskStart extends BaseBean implements Serializable {
         this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iTaskType = Integer.valueOf(iTaskType);
-        this.iTaskWay = Integer.valueOf(iTaskWay);
-        this.iTaskCircle = Integer.valueOf(iTaskCircle);
-        this.iTaskId = Integer.valueOf(iTaskId);
-        this.vTaskName = String.valueOf(vTaskName);
-        this.iTaskStar = Integer.valueOf(iTaskStar);
-        this.iNpcId = Integer.valueOf(iNpcId);
-        this.vNpcName = String.valueOf(vNpcName);
-        this.iFlag = Integer.valueOf(iFlag);
-        this.iItemType = Integer.valueOf(iItemType);
+        this.iEquipIdTpye = Integer.valueOf(iEquipIdTpye);
+        this.iEquipId = Integer.valueOf(iEquipId);
+        this.iEquipGuid = Integer.valueOf(iEquipGuid);
+        this.iItemTpye = Integer.valueOf(iItemTpye);
         this.iItemId = Integer.valueOf(iItemId);
         this.iItemNum = Integer.valueOf(iItemNum);
         this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iItemLevel = Integer.valueOf(iItemLevel);
+        this.iItemExp = Integer.valueOf(iItemExp);
+        this.iItemStar = Integer.valueOf(iItemStar);
+        this.bResult = Boolean.valueOf(bResult);
+        this.jItemAtrrbute = String.valueOf(jItemAtrrbute);
     }
 }

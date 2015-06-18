@@ -3,8 +3,8 @@ package com.shadowinlife.app.SQLModelFactory;
 import java.io.*;
 import java.sql.*;
 
-public class TaskStart extends BaseBean implements Serializable {
-    public TaskStart() {
+public class CopyMonsterKill extends BaseBean implements Serializable {
+    public CopyMonsterKill() {
         super();
     }
     private int iAccountType;
@@ -148,123 +148,59 @@ public class TaskStart extends BaseBean implements Serializable {
         return iRoleSword;
     }
 
-    private Integer iTaskType;
-    public void setiTaskType(Integer iTaskType){
-        this.iTaskType=iTaskType;
+    private Integer iCopyType;
+    public void setiCopyType(Integer iCopyType){
+        this.iCopyType=iCopyType;
     }
-   public Integer getiTaskType() {
-        return iTaskType;
-    }
-
-    private Integer iTaskWay;
-    public void setiTaskWay(Integer iTaskWay){
-        this.iTaskWay=iTaskWay;
-    }
-   public Integer getiTaskWay() {
-        return iTaskWay;
+   public Integer getiCopyType() {
+        return iCopyType;
     }
 
-    private Integer iTaskCircle;
-    public void setiTaskCircle(Integer iTaskCircle){
-        this.iTaskCircle=iTaskCircle;
+    private Integer iCopyId;
+    public void setiCopyId(Integer iCopyId){
+        this.iCopyId=iCopyId;
     }
-   public Integer getiTaskCircle() {
-        return iTaskCircle;
-    }
-
-    private Integer iTaskId;
-    public void setiTaskId(Integer iTaskId){
-        this.iTaskId=iTaskId;
-    }
-   public Integer getiTaskId() {
-        return iTaskId;
+   public Integer getiCopyId() {
+        return iCopyId;
     }
 
-    private String vTaskName;
-    public void setvTaskName(String vTaskName){
-        this.vTaskName=vTaskName;
+    private Integer iCopyLevelId;
+    public void setiCopyLevelId(Integer iCopyLevelId){
+        this.iCopyLevelId=iCopyLevelId;
     }
-   public String getvTaskName() {
-        return vTaskName;
-    }
-
-    private Integer iTaskStar;
-    public void setiTaskStar(Integer iTaskStar){
-        this.iTaskStar=iTaskStar;
-    }
-   public Integer getiTaskStar() {
-        return iTaskStar;
+   public Integer getiCopyLevelId() {
+        return iCopyLevelId;
     }
 
-    private Integer iNpcId;
-    public void setiNpcId(Integer iNpcId){
-        this.iNpcId=iNpcId;
+    private Integer iCopyTrunkId;
+    public void setiCopyTrunkId(Integer iCopyTrunkId){
+        this.iCopyTrunkId=iCopyTrunkId;
     }
-   public Integer getiNpcId() {
-        return iNpcId;
-    }
-
-    private String vNpcName;
-    public void setvNpcName(String vNpcName){
-        this.vNpcName=vNpcName;
-    }
-   public String getvNpcName() {
-        return vNpcName;
+   public Integer getiCopyTrunkId() {
+        return iCopyTrunkId;
     }
 
-    private Integer iFlag;
-    public void setiFlag(Integer iFlag){
-        this.iFlag=iFlag;
+    private Integer iMonsterId;
+    public void setiMonsterId(Integer iMonsterId){
+        this.iMonsterId=iMonsterId;
     }
-   public Integer getiFlag() {
-        return iFlag;
-    }
-
-    private Integer iItemType;
-    public void setiItemType(Integer iItemType){
-        this.iItemType=iItemType;
-    }
-   public Integer getiItemType() {
-        return iItemType;
+   public Integer getiMonsterId() {
+        return iMonsterId;
     }
 
-    private Integer iItemId;
-    public void setiItemId(Integer iItemId){
-        this.iItemId=iItemId;
+    private Timestamp dtEnterTime;
+    public void setdtEnterTime(Timestamp dtEnterTime){
+        this.dtEnterTime=dtEnterTime;
     }
-   public Integer getiItemId() {
-        return iItemId;
-    }
-
-    private Integer iItemNum;
-    public void setiItemNum(Integer iItemNum){
-        this.iItemNum=iItemNum;
-    }
-   public Integer getiItemNum() {
-        return iItemNum;
+   public Timestamp getdtEnterTime() {
+        return dtEnterTime;
     }
 
-    private Integer iItemRemain;
-    public void setiItemRemain(Integer iItemRemain){
-        this.iItemRemain=iItemRemain;
-    }
-   public Integer getiItemRemain() {
-        return iItemRemain;
+    public CopyMonsterKill parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new CopyMonsterKill(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21]);
     }
 
-    private Integer iItemGuid;
-    public void setiItemGuid(Integer iItemGuid){
-        this.iItemGuid=iItemGuid;
-    }
-   public Integer getiItemGuid() {
-        return iItemGuid;
-    }
-
-    public TaskStart parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new TaskStart(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28],args[29]);
-    }
-
-    public TaskStart(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iTaskType,String iTaskWay,String iTaskCircle,String iTaskId,String vTaskName,String iTaskStar,String iNpcId,String vNpcName,String iFlag,String iItemType,String iItemId,String iItemNum,String iItemRemain,String iItemGuid){
+    public CopyMonsterKill(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iCopyType,String iCopyId,String iCopyLevelId,String iCopyTrunkId,String iMonsterId,String dtEnterTime){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
@@ -283,19 +219,11 @@ public class TaskStart extends BaseBean implements Serializable {
         this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.iRoleExperience = Integer.valueOf(iRoleExperience);
         this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iTaskType = Integer.valueOf(iTaskType);
-        this.iTaskWay = Integer.valueOf(iTaskWay);
-        this.iTaskCircle = Integer.valueOf(iTaskCircle);
-        this.iTaskId = Integer.valueOf(iTaskId);
-        this.vTaskName = String.valueOf(vTaskName);
-        this.iTaskStar = Integer.valueOf(iTaskStar);
-        this.iNpcId = Integer.valueOf(iNpcId);
-        this.vNpcName = String.valueOf(vNpcName);
-        this.iFlag = Integer.valueOf(iFlag);
-        this.iItemType = Integer.valueOf(iItemType);
-        this.iItemId = Integer.valueOf(iItemId);
-        this.iItemNum = Integer.valueOf(iItemNum);
-        this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iCopyType = Integer.valueOf(iCopyType);
+        this.iCopyId = Integer.valueOf(iCopyId);
+        this.iCopyLevelId = Integer.valueOf(iCopyLevelId);
+        this.iCopyTrunkId = Integer.valueOf(iCopyTrunkId);
+        this.iMonsterId = Integer.valueOf(iMonsterId);
+        this.dtEnterTime = Timestamp.valueOf(dtEnterTime);
     }
 }
