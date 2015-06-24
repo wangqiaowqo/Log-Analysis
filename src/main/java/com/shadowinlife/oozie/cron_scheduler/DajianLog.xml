@@ -70,7 +70,7 @@
 		<entry name="iRoleExp"	            type="int"	    size=""    key="0"	desc="角色经验值"/> 
 		<entry name="vClientIp"	            type="varchar"	size="48"  key="0"	desc="角色登录时客户端所在ip"/>				
 	</struct>			
-    <struct name="RoleLogin"	   id=""	 desc="角色登入日志"> 
+    <!--struct name="RoleLogin"	   id=""	 desc="角色登入日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
 		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
@@ -116,7 +116,7 @@
 		<entry name="jMoney"	            type="text"	    size=""    key="0"	desc="角色背包中的金钱数（钻石、金币、绑钻）"/> 
 		<entry name="lOnlineTotalTime"      type="int"	    size=""    key="0"	desc="从创建角色到本次登录总在线时长（秒）"/>
 		<entry name="vLoginWay"	            type="varchar"	size="48"  key="0"	desc="登陆渠道"/>		
-	</struct>
+	</struct-->
     <struct name="AccountLogin"	   id=""	 desc="帐号登入日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
@@ -128,7 +128,7 @@
 		<entry name="iFeeFlag"	            type="int"      size=""    key="0"	desc="付费标识"/> 
 		<entry name="vLoginWay"	            type="varchar"	size="48"  key="0"	desc="登陆渠道"/>		
 	</struct>	
-    <struct name="Deposit"	   id=""	 desc="充值接口日志"> 
+    <!--struct name="Deposit"	   id=""	 desc="充值接口日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
 		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
@@ -152,7 +152,7 @@
 		<entry name="iPayAfter"             type="int"	    size=""    key="0"	desc="充值后代币（点券）金额"/>
 		<entry name="vDesc"	                type="varchar"	size="48"  key="0"	desc="备注"/>
 		<entry name="vLoginWay"	            type="varchar"	size="48"  key="0"	desc="登陆渠道"/>		
-	</struct>		
+	</struct-->		
     <struct name="Shop"	   id=""	 desc="购买日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
@@ -208,8 +208,29 @@
 		<entry name="iItemId"	            type="int"	    size=""    key="0"	desc="使用的物品ID"/> 	
 		<entry name="iItemType"	            type="int"	    size=""    key="0"	desc="使用的物品类型（普通道具中的消耗品）"/> 
 		<entry name="iItemNum"              type="int"	    size=""    key="0"	desc="使用的物品数量"/> 
-		<entry name="iItemGuid"	            type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 				
-	</struct>			
+		<entry name="iItemGuid"	            type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/>
+	</struct>	
+	<struct name="RepairEquip"	   id=""	 desc="装备修理日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/> 
+		<entry name="iEquipId"	            type="int"	    size=""    key="0"	desc="装备ID"/> 	
+		<entry name="iCostMoney"	        type="int"	    size=""    key="0"	desc="消耗金钱"/> 
+		<entry name="bResult"               type="bool"	    size=""    key="0"	desc="修理是否成功"/> 
+		<entry name="iEquipGuid"	        type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/>
+	</struct>	
 	<struct name="TaskStart"	   id=""	 desc="任务开始日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
@@ -273,6 +294,162 @@
 		<entry name="iItemRemain"           type="int"	    size=""    key="0"	desc="变化后存量"/> 
 		<entry name="iItemGuid"	            type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/>
 		<entry name="iFinshType"	        type="int"	    size=""    key="0"	desc="任务完成方式	1 一键满星；2 立即完成；3 任务失败；0 普通完成"/> 	 				
+	</struct>
+	<struct name="PartyBuild"	   id=""	 desc="创建、成立团体日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/>  		
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID"/> 
+		<entry name="vPartyName"            type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"	        type="int"	    size=""    key="0"	desc="团体等级"/> 	
+		<entry name="iPartyMoney"	        type="int"	    size=""    key="0"	desc="团体资财"/> 
+		<entry name="iPartyPolity"          type="int"	    size=""    key="0"	desc="团体发展度"/> 
+		<entry name="iPartyCapacity"	    type="int"	    size=""    key="0"	desc="团体容量"/>	
+	</struct>
+	<struct name="GuildDismiss"	   id=""	 desc="解散团体日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/>  		
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID"/> 
+		<entry name="vPartyName"            type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"	        type="int"	    size=""    key="0"	desc="团体等级"/> 	
+		<entry name="iPartyMoney"	        type="int"	    size=""    key="0"	desc="团体资财"/> 
+		<entry name="iPartyPolity"          type="int"	    size=""    key="0"	desc="团体发展度"/> 
+	</struct>
+	<struct name="PartyAddMember"	   id=""	 desc="团体成员变动日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/>
+        <entry name="iFlag"	                type="int"	    size=""    key="0"	desc="变动标签	0 加入；1 退出；2 任命"/> 
+		<entry name="iFlagType"             type="int"	    size=""    key="0"	desc="类型	0 申请自动通过；1 申请审批通过；2 退会；3 被踢；"/> 
+		<entry name="vOtherUin"	            type="varchar"	size="48"  key="0"	desc="被操做用户账号"/>   
+		<entry name="iOtherRoleId"	        type="int"      size=""    key="0"	desc="被操做角色ID"/> 
+		<entry name="vOtherRoleName"	    type="varchar"	size="48"  key="0"	desc="被操做角色名称"/>
+		<entry name="iOtherRoleJob"	        type="int"	    size=""    key="0"	desc="被操做角色职业"/> 
+		<entry name="iOtherRoleGender"	    type="int"	    size=""    key="0"	desc="被操做角色性别"/> 
+		<entry name="iOtherRoleLevel"	    type="int"	    size=""    key="0"	desc="被操做角色等级"/> 
+		<entry name="iOtherRoleVipLevel"	type="int"	    size=""    key="0"	desc="被操做角色VIP等级"/>
+		<entry name="iOtherRoleReputationLevel"	type="int"	    size=""    key="0"	desc="被操做角色声望等级"/> 
+		<entry name="vOtherRoleElse1"	    type="varchar"	size="48"  key="0"	desc="被操做角色其他属性1"/>  
+		<entry name="vOtherRoleElse2"	    type="varchar"	size="48"  key="0"	desc="被操做角色其他属性2"/>
+		<entry name="iOtherRoleExperience"	type="int"	    size=""    key="0"	desc="被操做当前等级角色经验值"/> 
+		<entry name="iOtherRoleSword"       type="int"	    size=""    key="0"	desc="被操做角色战斗力"/> 		
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID"/> 
+		<entry name="vPartyName"            type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"	        type="int"	    size=""    key="0"	desc="团体等级"/> 	
+		<entry name="iPartyMoney"	        type="int"	    size=""    key="0"	desc="团体资财"/> 
+		<entry name="iPartyPolity"          type="int"	    size=""    key="0"	desc="团体发展度"/> 
+		<entry name="iMemeberNum"           type="int"	    size=""    key="0"	desc="成员数"/> 
+	</struct>
+	<struct name="BuildingUpgrade"	   id=""	 desc="团体（个人）建筑升级日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/>  		
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID"/> 
+		<entry name="vPartyName"            type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"	        type="int"	    size=""    key="0"	desc="团体等级"/> 	
+		<entry name="iBuildingParty"	    type="int"	    size=""    key="0"	desc="升级对象	0=个人 1=工会"/> 
+		<entry name="iUpgrateBulidingId"    type="int"	    size=""    key="0"	desc="升级建筑ID"/> 
+		<entry name="vUpgrateBulidingName"  type="varchar"	size="48"  key="0"	desc="升级建筑名"/>
+		<entry name="iBulidingLevel"        type="int"	    size=""    key="0"	desc="升级后建筑等级"/> 
+		<entry name="iUpgrateCostParty"     type="int"	    size=""    key="0"	desc="升级消耗资源所属方	0=个人 1=工会"/> 
+		<entry name="jUpgrateCostMoney"     type="text"	    size=""    key="0"	desc="升级消耗团队或个人资产（资金、贡献等）"/> 
+		<entry name="jPartyLeftMoney"       type="text"	    size=""    key="0"	desc="升级后团体或个人剩余资财（资金等）"/> 
+		<entry name="iPartyLeftPolity"      type="int"	    size=""    key="0"	desc="团体发展度（贡献、经验等等）"/> 
+		<entry name="iCostTime"             type="int"	    size=""    key="0"	desc="升级消耗时间（秒）"/> 
+		<entry name="dtEventEndTime"	    type="datetime" size=""    key="0"  desc="升级结束时间	格式 “YYYY-MM-DD HH:MM:SS”"/> 	
+	</struct>	
+	<struct name="Donation"	   id=""	 desc="团体（个人）捐献或者贡献"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/>  		
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID"/> 
+		<entry name="vPartyName"            type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"	        type="int"	    size=""    key="0"	desc="团体等级"/> 	
+		<entry name="iDonationType"	        type="int"	    size=""    key="0"	desc="捐献类型	1晶石 2金币 3豪掷千金等"/> 
+		<entry name="jDonationCostItems"    type="text"	    size=""    key="0"	desc="捐献消耗道具"/> 
+		<entry name="jDonationGetItems"     type="text"	    size=""    key="0"	desc="捐献获得道具"/> 	
+	</struct>
+	<struct name="MonsterAttackCity"	   id=""	 desc="怪物攻城（泰坦攻城）"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/>  		
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID"/> 
+		<entry name="vPartyName"            type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"	        type="int"	    size=""    key="0"	desc="团体等级"/> 	
+		<entry name="jProfit"               type="text"	    size=""    key="0"	desc="领取收益物品以及数量"/> 	
 	</struct>	
 	<struct name="CopyMonsterKill"	   id=""	 desc="玩家副本杀怪死亡日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
@@ -296,6 +473,63 @@
 		<entry name="iCopyTrunkId"	        type="int"	    size=""    key="0"	desc="副本TrunkID"/> 
 		<entry name="iMonsterId"            type="int"	    size=""    key="0"	desc="怪物ID"/> 
 		<entry name="dtEnterTime"	        type="datetime" size=""    key="0"  desc="进入Trunk时间"/>	
+	</struct>
+	<struct name="MarketTakeOn"	   id=""	 desc="交易市场商品上架日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iMoneyBeforeStall"	    type="int"	    size=""    key="0"	desc="摆摊前玩家身上金钱数"/> 
+		<entry name="iMoneyAfterStall"      type="int"	    size=""    key="0"	desc="摆摊后玩家身上金钱数"/>  		
+		<entry name="iItemId"	            type="int"	    size=""    key="0"	desc="物品ID"/> 
+		<entry name="iItemType"             type="int"	    size=""    key="0"	desc="物品类型（普通道具、装备、avatar等）"/> 
+		<entry name="iItemNum"	            type="int"	    size=""    key="0"	desc="物品数量"/> 	
+		<entry name="iItemGuid"	            type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 
+		<entry name="iPrice"                type="int"	    size=""    key="0"	desc="价格"/> 
+		<entry name="iTransactionCosts"	    type="int"	    size=""    key="0"	desc="手续费"/> 
+	</struct>
+	<struct name="MarketTrade"	   id=""	 desc="交易市场交易日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vBuyerUin"	            type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iBuyerRoleId"	        type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vBuyerName"	        type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iBuyerJobId"	        type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iBuyerGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iBuyerLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iBuyerVipLevel"	    type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iBuyerReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vBuyerRoleElse1"	    type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vBuyerRoleElse2"	    type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="iMoneyBeforeTrade"	    type="int"	    size=""    key="0"	desc="交易前购买者身上金钱数"/> 
+		<entry name="iMoneyAfterTrade"      type="int"	    size=""    key="0"	desc="交易后购买者身上金钱数"/>  		
+		<entry name="iSellerType"	        type="int"	    size=""    key="0"	desc="卖主类型	0 系统；1 玩家"/> 
+		<entry name="vSellerUin"	        type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iSellerRoleId"	        type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vSellerName"	        type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iSellerJobId"	        type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iSellerGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iSellerLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iSellerVipLevel"	    type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iSellerReputationLevel"type="int"	    size=""    key="0"	desc="角色声望等级"/>
+		<entry name="vBuyerClientIp"	    type="varchar"	size="48"  key="0"	desc="购买者客户端IP"/>
+		<entry name="vSellerClientIp"	    type="varchar"	size="48"  key="0"	desc="卖主客户端IP"/>
+		<entry name="iPayment"              type="int"	    size=""    key="0"	desc="本次交易购买者向卖主支付的金钱数"/> 
+		<entry name="iGoodsCount"	        type="int"	    size=""    key="0"	desc="单次交易的物品种类数量"/> 	
+		<entry name="iItemId"	            type="int"	    size=""    key="0"	desc="从摊位中购买的物品ID"/> 
+		<entry name="iItemType"             type="int"	    size=""    key="0"	desc="从摊位中购买的某物品类型（普通道具、装备、avatar等"/> 
+		<entry name="iItemNum"	            type="int"	    size=""    key="0"	desc="从摊位中购买的某物品数量"/> 
+		<entry name="iItemGuid"	            type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 
 	</struct>	
 	<struct name="CopyKillMon"	   id=""	 desc="玩家副本杀怪日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
@@ -317,6 +551,31 @@
 		<entry name="iCopyLevelId"	        type="int"	    size=""    key="0"	desc="副本关卡ID"/> 	
 		<entry name="iCopyTrunkId"	        type="int"	    size=""    key="0"	desc="副本TrunkID"/>  
 		<entry name="dtEnterTime"	        type="datetime" size=""    key="0"  desc="进入Trunk时间"/>	
+	</struct>
+	<struct name="LearnSkill"	   id=""	 desc="玩家学习技能日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 
+		<entry name="iMapId"                type="int"	    size=""    key="0"	desc="角色所在地图"/>		
+		<entry name="iPosX"	                type="int"	    size=""    key="0"	desc="角色所在坐标X"/> 
+		<entry name="iPosY"                 type="int"	    size=""    key="0"	desc="角色所在坐标Y"/> 
+		<entry name="iSkillTpye"	        type="int"	    size=""    key="0"	desc="技能类型	技能类型（普攻序列、主技能、追击、强化、被动、光环）"/> 	
+		<entry name="iSkillId"	            type="int"	    size=""    key="0"	desc="技能ID"/>  
+		<entry name="iCurrSkillLv"          type="int"	    size=""    key="0"	desc="当前技能等级"/>		
+		<entry name="iSkillLvAfterLearn"	type="int"	    size=""    key="0"	desc="学习技能后的技能等级"/> 
+		<entry name="iNpcId"                type="int"	    size=""    key="0"	desc="NPC ID"/> 
+		<entry name="iNpcPosX"	            type="int"	    size=""    key="0"	desc="NPC所在坐标X"/> 	
+		<entry name="iNpcPosY"	            type="int"	    size=""    key="0"	desc="NCP所在坐标Y"/> 	
 	</struct>	
 	<struct name="GetEnergy"	   id=""	 desc="能量点获得日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
@@ -337,6 +596,36 @@
 		<entry name="iAfterRemain"          type="int"	    size=""    key="0"	desc="存量"/> 
 		<entry name="iAfterEngergyLevel"	type="int"	    size=""    key="0"	desc="等级"/> 	
 	</struct>
+	<struct name="ReceiveGift"	   id=""	 desc="玩家领取赠送"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 
+		<entry name="vClientIp"	            type="varchar"	size="48"  key="0"	desc="领取赠送IP地址"/> 
+		<entry name="iItemType"             type="int"	    size=""    key="0"	desc="道领取赠的送具类型	0 道具；1 钻石；2 爱心；3 体力；"/>		
+		<entry name="iItemId"	            type="int"	    size=""    key="0"	desc="领取赠送的道具ID"/> 
+		<entry name="iItemNum"              type="int"	    size=""    key="0"	desc="领取赠送的数量"/> 
+		<entry name="iCanReceiveTimes"	    type="int"	    size=""    key="0"	desc="剩余领取次数（宝箱）"/> 	
+		<entry name="iItemRemain"	        type="int"	    size=""    key="0"	desc="之后存量(宝箱)"/> 	
+		<entry name="iItemStor"	            type="int"	    size=""    key="0"	desc="领后存量"/> 
+        <entry name="vOtherUin"	            type="varchar"	size="48"  key="0"	desc="赠送用户账号"/>   
+		<entry name="iOtherRoleId"	        type="int"      size=""    key="0"	desc="赠送角色ID"/> 
+		<entry name="vOtherRoleName"	    type="varchar"	size="48"  key="0"	desc="赠送角色名称"/>
+		<entry name="iOtherRoleJob"	        type="int"	    size=""    key="0"	desc="赠送角色职业"/> 
+		<entry name="iOtherRoleGender"	    type="int"	    size=""    key="0"	desc="赠送角色性别"/> 
+		<entry name="iOtherRoleLevel"	    type="int"	    size=""    key="0"	desc="赠送角色等级"/> 
+		<entry name="iOtherRoleVipLevel"	type="int"	    size=""    key="0"	desc="赠送角色VIP等级"/>
+		<entry name="iOtherRoleReputationLevel"	type="int"	    size=""    key="0"	desc="赠送角色声望等级"/> 		
+	</struct>	
 	<struct name="OpenLattice"	   id=""	 desc="玩家格子开启"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
@@ -378,7 +667,107 @@
 		<entry name="jCostItemAtrr"	        type="text"	    size=""    key="0"	desc="玩家镶嵌、替换等消耗或替换掉的物品（金钱、装备等的物品数量、属性等）"/>
 		<entry name="bResult"	            type="bool"	    size=""    key="0"	desc="镶嵌是否成功"/> 	 	
 	</struct>	
-	<struct name="MoneyFlow"	   id=""	 desc="货币变化日志"> 
+	<struct name="IdentisifyEquip"	   id=""	 desc="物品（装备）强化日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+        <entry name="iEquipIdTpye"	        type="int"	    size=""    key="0"	desc="强化类型（装备、宝石、圣剑等）"/> 		
+		<entry name="iEquipId"              type="int"	    size=""    key="0"	desc="强化装备ID（或道具ID）"/>		
+		<entry name="iEquipGuid"	        type="int"	    size=""    key="0"	desc="强化装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 
+		<entry name="iItemTpye"             type="int"	    size=""    key="0"	desc="消耗道具类型（装备、金币、钻石、声望、贡献等）"/> 
+		<entry name="iItemId"	            type="int"	    size=""    key="0"	desc="消耗道具ID"/> 		
+		<entry name="iItemNum"              type="int"	    size=""    key="0"	desc="消耗道具数量"/>		
+		<entry name="iItemRemain"	        type="int"	    size=""    key="0"	desc="道具存量"/> 
+		<entry name="iItemLevel"            type="int"	    size=""    key="0"	desc="道具强化后等级"/> 
+        <entry name="iItemExp"	            type="int"	    size=""    key="0"	desc="道具强化后经验"/> 
+		<entry name="iItemStar"             type="int"	    size=""    key="0"	desc="道具强化后星级"/> 
+		<entry name="bResult"	            type="bool"	    size=""    key="0"	desc="强化是否成功	1 成功；0 失败"/>	 	
+		<entry name="jItemAtrrbute"	        type="text"	    size=""    key="0"	desc="装备或道具强化后的属性"/>
+	</struct>	
+	<struct name="DecompoundEquip"	   id=""	 desc="物品（装备）分解日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+        <entry name="iEquipType"	        type="int"	    size=""    key="0"	desc="分解的物品类型（装备、符文等）"/> 		
+		<entry name="iEquipId"              type="int"	    size=""    key="0"	desc="强化装备ID（或道具ID）"/>		
+		<entry name="iEquipGuid"	        type="int"	    size=""    key="0"	desc="强化装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 
+		<entry name="iCostMoney"            type="int"	    size=""    key="0"	desc="消耗金钱"/> 
+		<entry name="bResult"	            type="bool"	    size=""    key="0"	desc="分解是否成功"/> 		
+		<entry name="iGetItemId"            type="int"	    size=""    key="0"	desc="分解得到的物品ID"/>		
+		<entry name="iGetItemType"	        type="int"	    size=""    key="0"	desc="分解得到的物品类型（普通道具、装备、avatar等）"/> 
+		<entry name="iGetItemNum"           type="int"	    size=""    key="0"	desc="分解得到的物品数量"/> 
+        <entry name="iGetItemGuid"	        type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 
+	</struct>	
+	<struct name="ItemFlow"	   id=""	 desc="普通道具流向日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="vClientIP"	            type="varchar"	size="48"  key="0"	desc="客户端IP"/>
+        <entry name="iItemId"	            type="int"	    size=""    key="0"	desc="道具ID"/> 		
+		<entry name="iItemType"             type="int"	    size=""    key="0"	desc="道具类型"/>		
+		<entry name="iItemNum"	            type="int"	    size=""    key="0"	desc="道具数量"/> 
+		<entry name="iEquipGuid"            type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/> 
+		<entry name="iFlowDirection"	    type="int"	    size=""    key="0"	desc="流向	0 流入；1 流出"/> 		
+		<entry name="iAction"               type="int"	    size=""    key="0"	desc="动作	例如： 1 拾取， 2 存入仓库， 3 从仓库取出， 4 丢弃， 5 P2P交易……"/>		
+		<entry name="iBeforeItemNum"	    type="int"	    size=""    key="0"	desc="动作前的道具数量"/> 
+		<entry name="iAfterItemNum"         type="int"	    size=""    key="0"	desc="动作后的道具数量"/> 
+	</struct>
+	<struct name="ArmFlow"	   id=""	 desc="装备流向日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/>
+		<entry name="vClientIP"	            type="varchar"	size="48"  key="0"	desc="客户端IP"/>
+        <entry name="iArmId"	            type="int"	    size=""    key="0"	desc="装备ID"/> 		
+		<entry name="iStar"                 type="int"	    size=""    key="0"	desc="装备星级"/>		
+		<entry name="iLevel"	            type="int"	    size=""    key="0"	desc="装备等级"/> 
+		<entry name="iArmType"              type="int"	    size=""    key="0"	desc="装备类型"/> 
+		<entry name="iArmNum"	            type="int"	    size=""    key="0"	desc="装备数量"/> 		
+		<entry name="iArmGuid"              type="int"	    size=""    key="0"	desc="装备、宠物、avatar等全局唯一标识（若为消耗品则不作要求）"/>		
+		<entry name="jEquipProperty"	    type="text"	    size=""    key="0"	desc="装备属性"/>
+		<entry name="iFlowDirection"	    type="int"	    size=""    key="0"	desc="流向	0 流入；1 流出"/> 
+		<entry name="iAction"               type="int"	    size=""    key="0"	desc="动作	例如： 1 拾取， 2 存入仓库， 3 从仓库取出， 4 丢弃， 5 P2P交易……"/> 
+	</struct>
+	<!--struct name="MoneyFlow"	   id=""	 desc="货币变化日志"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
 		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
@@ -398,6 +787,331 @@
 		<entry name="iMoney"	            type="int"	    size=""    key="0"	desc="动作涉及的金钱数"/> 
 		<entry name="iFlowType"             type="int"	    size=""    key="0"	desc="途径，1、产出途径 2、消耗途径 3、存取途径 4、转移途径"/> 
 		<entry name="iAction"	            type="int"	    size=""    key="0"	desc="动作,发生原因"/> 				
+	</struct-->	
+	<struct name="LearnLiftSkills"	   id=""	 desc="学习生产技能日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iSkillId"	            type="int"	    size=""    key="0"	desc="技能ID"/> 
+		<entry name="iAfterSkillLevel"      type="int"	    size=""    key="0"	desc="技能等级"/> 
+		<entry name="iConsumeId"	        type="int"	    size=""    key="0"	desc="消耗类型ID	0 工会贡献；如果消耗道具，则为道具ID"/> 	
+		<entry name="iConsume"	            type="int"	    size=""    key="0"	desc="消耗量"/> 
+		<entry name="iAfterRemain"          type="int"	    size=""    key="0"	desc="剩余量"/> 			
+	</struct>
+    <struct name="UseLiftSkills"	   id=""	 desc="使用生产技能日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iSkillId"	            type="int"	    size=""    key="0"	desc="技能ID"/> 
+		<entry name="iSkillLevel"           type="int"	    size=""    key="0"	desc="技能等级"/> 
+		<entry name="iConsumeId"	        type="int"	    size=""    key="0"	desc="消耗类型ID	0 工会贡献；如果消耗道具，则为道具ID"/> 	
+		<entry name="iConsume"	            type="int"	    size=""    key="0"	desc="消耗量"/> 
+		<entry name="iAfterRemain"          type="int"	    size=""    key="0"	desc="剩余量"/>
+        <entry name="iItemId"	            type="int"	    size=""    key="0"	desc="产出道具ID或者物品ID"/> 
+		<entry name="iItemNum"              type="int"	    size=""    key="0"	desc="产出道具数量或者物品数量"/>		
 	</struct>	
+	<struct name="GetVigour"	   id=""	 desc="活力获得日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iGetWay"	            type="int"	    size=""    key="0"	desc="获得途径"/> 
+		<entry name="iNum"                  type="int"	    size=""    key="0"	desc="获得数量"/> 
+		<entry name="iAfterRemain"	        type="int"	    size=""    key="0"	desc="存量"/> 				
+	</struct>
+	<struct name="EquipChange"	   id=""	 desc="装备更换日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 	
+        <entry name="vClientIP"	            type="varchar"	size="48"  key="0"	desc="客户端IP"/>		
+		<entry name="iEquipWareID"	        type="int"	    size=""    key="0"	desc="换上的装备ID"/> 
+		<entry name="iEquipWareGuid"        type="int"	    size=""    key="0"	desc="换上装备的唯一ID"/> 
+		<entry name="iEquipWareGrade"	    type="int"	    size=""    key="0"	desc="换上装备强化等级"/> 	
+        <entry name="jEquipWareProperty"	type="text"	    size=""    key="0"	desc="换上装备属性"/>
+        <entry name="iEquipTakeOffID"	    type="int"	    size=""    key="0"	desc="换下的装备ID"/> 
+		<entry name="iEquipTakeOffGuid"     type="int"	    size=""    key="0"	desc="换下装备的唯一ID"/> 
+		<entry name="iEquipTakeOffGrade"	type="int"	    size=""    key="0"	desc="换下装备强化等级"/> 	
+        <entry name="jEquipTakeOffProperty"	type="text"	    size=""    key="0"	desc="换下装备属性"/>		
+	</struct>
+	<struct name="CopyEnter"	   id=""	 desc="进入副本日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/> 
+		<entry name="iLogType"	            type="int"	    size=""    key="0"	desc="日志分类	0 副本；1 关卡；2 Trunk；4 其它"/>
+		<entry name="iCopyType"	            type="int"	    size=""    key="0"	desc="副本类型	0 挂机、1 精英、2 悬赏等"/> 
+		<entry name="iCopyId"               type="int"	    size=""    key="0"	desc="副本id"/> 
+		<entry name="vCopyName"	            type="varchar"	size="48"  key="0"	desc="副本名称"/>
+		<entry name="iTeamId"	            type="int"	    size=""    key="0"	desc="组队ID	0 非组队"/> 
+		<entry name="iCopyLevel"            type="int"	    size=""    key="0"	desc="副本难度	简单、普通、困难、英雄、噩梦等"/> 
+		<entry name="iCopystar"	            type="int"	    size=""    key="0"	desc="副本星级"/>		
+        <entry name="iCopyLevelId"	        type="int"	    size=""    key="0"	desc="关卡ID"/> 
+		<entry name="iTrunkId"              type="int"	    size=""    key="0"	desc="TrunkID"/> 	
+        <entry name="jPetProperty"	        type="text"	    size=""    key="0"	desc="宠物和属性"/>		
+		<entry name="jRoleSkills"	        type="text"	    size=""    key="0"	desc="角色携带技能"/>	
+		<entry name="jRoleRunes"	        type="text"	    size=""    key="0"	desc="角色携带符文"/>	
+		<entry name="jMoney"	            type="text"	    size=""    key="0"	desc="代币携带情况"/>	
+		<entry name="jItem"	                type="text"	    size=""    key="0"	desc="携带物品"/>	
+	</struct>
+	<struct name="CopyExit"	   id=""	 desc="退出副本日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/> 
+		<entry name="iLogType"	            type="int"	    size=""    key="0"	desc="日志分类	0 副本；1 关卡；2 Trunk；4 其它"/>
+		<entry name="iExitType"	            type="int"	    size=""    key="0"	desc="退出类型	0 正常退出；1 死亡退出；2 超时退出"/>
+		<entry name="iCopyType"	            type="int"	    size=""    key="0"	desc="副本类型	0 挂机、1 精英、2 悬赏等"/> 
+		<entry name="iCopyId"               type="int"	    size=""    key="0"	desc="副本id"/> 
+		<entry name="vCopyName"	            type="varchar"	size="48"  key="0"	desc="副本名称"/>
+		<entry name="iTeamId"	            type="int"	    size=""    key="0"	desc="组队ID	0 非组队"/> 
+		<entry name="iCopyLevel"            type="int"	    size=""    key="0"	desc="副本难度	简单、普通、困难、英雄、噩梦等"/> 
+		<entry name="iCopystar"	            type="int"	    size=""    key="0"	desc="副本星级"/>		
+        <entry name="iCopyLevelId"	        type="int"	    size=""    key="0"	desc="关卡ID"/> 
+		<entry name="iTrunkId"              type="int"	    size=""    key="0"	desc="TrunkID"/> 	
+		<entry name="iTotalDamage"          type="int"	    size=""    key="0"	desc="角色输出总伤害"/> 
+        <entry name="jPetHurt"	            type="text"	    size=""    key="0"	desc="宠物输出伤害"/>			
+		<entry name="jMoney"	            type="text"	    size=""    key="0"	desc="代币获得情况"/>	
+		<entry name="jItem"	                type="text"	    size=""    key="0"	desc="获得物品"/>	
+	</struct>	
+	<struct name="CopyRevive"	   id=""	 desc="副本复活日志"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/> 
+		<entry name="iLogType"	            type="int"	    size=""    key="0"	desc="日志分类	0 副本；1 关卡；2 Trunk；4 其它"/>
+		<entry name="iCopyType"	            type="int"	    size=""    key="0"	desc="副本类型	0 挂机、1 精英、2 悬赏等"/> 
+		<entry name="iCopyId"               type="int"	    size=""    key="0"	desc="副本id"/> 
+		<entry name="vCopyName"	            type="varchar"	size="48"  key="0"	desc="副本名称"/>
+		<entry name="iTeamId"	            type="int"	    size=""    key="0"	desc="组队ID	0 非组队"/> 
+		<entry name="iCopyLevel"            type="int"	    size=""    key="0"	desc="副本难度	简单、普通、困难、英雄、噩梦等"/> 
+		<entry name="iCopystar"	            type="int"	    size=""    key="0"	desc="副本星级"/>		
+        <entry name="iCopyLevelId"	        type="int"	    size=""    key="0"	desc="关卡ID"/> 
+		<entry name="iTrunkId"              type="int"	    size=""    key="0"	desc="TrunkID"/> 	
+		<entry name="iReviveType"           type="int"	    size=""    key="0"	desc="复活类型	0 角色自己；1 宠物"/> 
+        <entry name="iObjId"	            type="int"	    size=""    key="0"	desc="复活对象ID"/> 			
+		<entry name="jObjProperty"	        type="text"	    size=""    key="0"	desc="复活对象属性	角色自己，可以不填"/>	
+		<entry name="jMoney"	            type="text"	    size=""    key="0"	desc="代币消耗情况"/>	
+	</struct>
+	<struct name="CopyRoleReplace"	   id=""	 desc="副本作战单位替换（宠物）"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/> 
+		<entry name="iLogType"	            type="int"	    size=""    key="0"	desc="日志分类	0 副本；1 关卡；2 Trunk；4 其它"/>
+		<entry name="iCopyType"	            type="int"	    size=""    key="0"	desc="副本类型	0 挂机、1 精英、2 悬赏等"/> 
+		<entry name="iCopyId"               type="int"	    size=""    key="0"	desc="副本id"/> 
+		<entry name="vCopyName"	            type="varchar"	size="48"  key="0"	desc="副本名称"/>
+		<entry name="iTeamId"	            type="int"	    size=""    key="0"	desc="组队ID	0 非组队"/> 
+		<entry name="iCopyLevel"            type="int"	    size=""    key="0"	desc="副本难度	简单、普通、困难、英雄、噩梦等"/> 
+		<entry name="iCopystar"	            type="int"	    size=""    key="0"	desc="副本星级"/>		
+        <entry name="iCopyLevelId"	        type="int"	    size=""    key="0"	desc="关卡ID"/> 
+		<entry name="iTrunkId"              type="int"	    size=""    key="0"	desc="TrunkID"/> 	
+		<entry name="iReplacedId"           type="int"	    size=""    key="0"	desc="被替换者ID"/> 
+        <entry name="iPetId"	            type="int"	    size=""    key="0"	desc="上阵宠物ID"/> 			
+		<entry name="iReason"	            type="int"	    size=""    key="0"	desc="退出原因"/>
+	</struct>
+	<struct name="RefreshTimes"	   id=""	 desc="秒CD刷新（挑战机会、市场、建筑升级等）"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"            type="int"	    size=""    key="0"	desc="角色战斗力"/> 
+		<entry name="iPartyId"	            type="int"	    size=""    key="0"	desc="团体ID	有团队填写团队，没有为0"/>
+		<entry name="vPartyName"	        type="varchar"	size="48"  key="0"	desc="团体名"/> 
+		<entry name="iPartyLevel"           type="int"	    size=""    key="0"	desc="团体等级"/> 
+		<entry name="iRefreshParty"	        type="int"	    size=""    key="0"	desc="秒刷新对象	0个人 1工会"/> 
+		<entry name="iRefreshType"	        type="int"	    size=""    key="0"	desc="秒刷新对象类型	0 建筑升级CD ； 1 市场刷新CD ；2副本CD ；3竞技场挑战CD"/> 
+		<entry name="iRefreshState"         type="int"	    size=""    key="0"	desc="刷新场景	0=竞技场；1=交易系统；2=个人建筑；2工会建筑"/> 
+		<entry name="iRefreshStateId"	    type="int"	    size=""    key="0"	desc="刷新具体对象ID（建筑1,2,3等，副本ID、商人ID、竞技场ID等）"/>		
+        <entry name="jCostMoney"	        type="text"	    size=""    key="0"	desc="刷新消耗物品金钱量（宝石、金币分类型以及数量）"/> 
+		<entry name="jCostItems"            type="text"	    size=""    key="0"	desc="刷新消耗物品道具（非金钱类物品和数量）"/> 	
+	</struct>	
+	<struct name="Welfare"	   id=""	 desc="福利领取"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iWelfareWay"	        type="int"	    size=""    key="0"	desc="福利领取途径	0月卡 1 次登 2三日登录 微信登录 ； "/> 
+		<entry name="jWelfareItems"	        type="text"	    size=""    key="0"	desc="领取福利内容（福利类型、福利数量等）"/>
+		<entry name="vClientIP"	            type="varchar"	size="48"  key="0"	desc="客户端IP"/>
+	</struct>
+	<struct name="MadeFood"	   id=""	 desc="制作美食"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iFoodId"	            type="int"	    size=""    key="0"	desc="食物ID"/> 
+		<entry name="iFoodNum"	            type="text"	    size=""    key="0"	desc="食物数量"/>
+	</struct>
+	<struct name="PetGain"	   id=""	 desc="宠物获得"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"	        type="int"	    size=""    key="0"	desc="角色战斗力"/>
+		<entry name="iPetType"	            type="int"	    size=""    key="0"	desc="宠物类型	0 英灵；1 守护神；2 else"/> 
+		<entry name="iPetID"	            type="int"	    size=""    key="0"	desc="宠物ID"/>
+		<entry name="vPetName"	            type="varchar"	size="48"  key="0"	desc="宠物名称"/> 		
+		<entry name="iPetStar"	            type="int"	    size=""    key="0"	desc="宠物星级	1,2,3,4,5星等或者紫、金、蓝、绿、白等"/>
+		<entry name="iPetlevel"	            type="int"	    size=""    key="0"	desc="宠物等级"/> 
+		<entry name="jPetAttribute"	        type="text"	    size=""    key="0"	desc="宠物属性（各种属性）"/>
+		<entry name="iPetWay"	            type="int"	    size=""    key="0"	desc="获得途径"/> 
+		<entry name="jItemCost"	            type="text"	    size=""    key="0"	desc="消耗或获得道具以及数量"/>
+		<entry name="iMoneyType"	        type="int"	    size=""    key="0"	desc="获得或消耗货币类型	例如：1 钻石；2 金币；3绑钻"/> 
+		<entry name="iPayBefore"	        type="int"	    size=""    key="0"	desc="前代币（点券）存量"/>
+		<entry name="iPayDelta"	            type="int"	    size=""    key="0"	desc="获得或消耗代币（点券）数量"/> 
+		<entry name="iPayAfter"	            type="int"	    size=""    key="0"	desc="获得后代币（点券）存量"/>
+	</struct>
+	<!--struct name="PetUP"	   id=""	 desc="宠物升级"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"	        type="int"	    size=""    key="0"	desc="角色战斗力"/>
+		<entry name="iPetType"	            type="int"	    size=""    key="0"	desc="宠物类型	0 英灵；1 守护神；2 else"/> 
+		<entry name="iPetID"	            type="int"	    size=""    key="0"	desc="宠物ID"/>
+		<entry name="vPetName"	            type="varchar"	size="48"  key="0"	desc="宠物名称"/> 		
+		<entry name="iPetUpTpye"	            type="int"	    size=""    key="0"	desc="升级内容	0 等级，1 星级，2 XXX"/>
+		<entry name="iPetStar"	            type="int"	    size=""    key="0"	desc="宠物星级	1,2,3,4,5星等或者紫、金、蓝、绿、白等"/>
+		<entry name="iPetlevel"	            type="int"	    size=""    key="0"	desc="宠物等级"/> 
+		<entry name="jPetAttribute"	        type="text"	    size=""    key="0"	desc="宠物属性（各种属性）"/>
+		<entry name="iPetWay"	            type="int"	    size=""    key="0"	desc="获得途径"/> 
+		<entry name="jItemCost"	            type="text"	    size=""    key="0"	desc="消耗或获得道具以及数量"/>
+		<entry name="iMoneyType"	        type="int"	    size=""    key="0"	desc="获得或消耗货币类型	例如：1 钻石；2 金币；3绑钻"/> 
+		<entry name="iPayBefore"	        type="int"	    size=""    key="0"	desc="前代币（点券）存量"/>
+		<entry name="iPayDelta"	            type="int"	    size=""    key="0"	desc="获得或消耗代币（点券）数量"/> 
+		<entry name="iPayAfter"	            type="int"	    size=""    key="0"	desc="获得后代币（点券）存量"/>
+	</struct-->
 </MySql>
 

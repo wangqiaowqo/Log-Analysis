@@ -2,7 +2,7 @@
 <!-- &lt; < less than &gt; > greater than &amp; & ampersand &apos; ' apostrophe 
 	&quot; " quotation mark -->
 <Scheduler>
-	<Action Name="Task" Begin="2015-06-11" End="2015-06-12">
+	<Action Name="Task" Begin="2015-06-18" End="2015-06-19">
 	    <Period>1</Period>
 	    <Step>1</Step>
 		<GameId>1</GameId>
@@ -20,7 +20,7 @@
 			ConvertNull(`iTaskStar`) AS `iTaskLevel`,
 			COUNT(DISTINCT `iRoleId`) AS `iAcceptRoleNum`, 
 			COUNT(*) AS `iAcceptTimes`,
-			COUNT(DISTINCT `iUin`) AS `iAcceptUinNum` 
+			COUNT(DISTINCT `vUin`) AS `iAcceptUinNum` 
 			FROM `TaskStart` 
 			GROUP BY
 			`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar` 
@@ -34,14 +34,15 @@
 		    ConvertNull(`iTaskType`) AS `iTaskType`,
 			ConvertNull(`iTaskId`) AS `iTaskId`, ConvertNull(`iTaskStar`) AS
 			`iTaskLevel`, COUNT(DISTINCT `iRoleId`) AS `iCompleteRoleNum`,
-			COUNT(*) AS `iCompleteTimes`, COUNT(DISTINCT `iUin`) AS
-			`iCompleteUinNum`, SUM(`iTaskTime`) AS `iTotalTime` FROM TaskFinished
+			COUNT(*) AS `iCompleteTimes`, COUNT(DISTINCT `vUin`) AS `iCompleteUinNum`, 
+			SUM(UNIX_TIMESTAMP(`dtEventTime`) - UNIX_TIMESTAMP(`dtTaskStartTime`)) AS `iTotalTime` 
+			FROM `TaskFinished`
 			GROUP BY
 			`iWorldId`,`iTaskType`,`iTaskId`,`iTaskStar` 
 			WITH CUBE</Sql>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbTask">SELECT '2015-06-11', 
+			Table="oss_dm_tbTask">SELECT '2015-06-18', 
 			IF(T1.iAccountType IS NULL,T2.iAccountType,T1.iAccountType), 
 			IF(T1.iWorldId IS NULL,T2.iWorldId,T1.iWorldId),
             IF(T1.iRoleJob IS NULL,T2.iRoleJob,T1.iRoleJob),
@@ -60,7 +61,122 @@
 			(T1.iAccountType=T2.iAccountType AND T1.iWorldId=T2.iWorldId AND T1.iRoleJob=T2.iRoleJob AND T1.iRoleGender=T2.iRoleGender AND T1.iRoleLevel=T2.iRoleLevel AND T1.iRoleVipLevel=T2.iRoleVipLevel AND T1.iTaskType=T2.iTaskType AND T1.iTaskId=T2.iTaskId AND
 			T1.iTaskLevel=T2.iTaskLevel)</Final>
 	</Action>
-	<Action Name="Money" Begin="2015-06-11" End="2015-06-12">
+	<Action Name="Copy" Begin="2015-06-18" End="2015-06-19">
+	    <Period>1</Period>
+	    <Step>1</Step>
+		<GameId>1</GameId>
+		<AccountType>1</AccountType>
+		<WorldId>1,2,3</WorldId>
+		<Table>CopyEnter,CopyExit</Table>
+		<Sql TempTable="T1">select -1 AS `iAccountType`, 
+			ConvertNull(`iWorldId`) AS `iWorldId`,
+			-1 AS `iRoleJob`,
+			-1 AS `iRoleGender`,
+			-1 AS `iRoleLevel`,
+			-1 AS `iRoleVipLevel`,
+			ConvertNull(`iCopyType`) AS `iCopyTypeId`, 
+			ConvertNull(`iCopyId`) AS `iCopyId`, 
+			ConvertNull(`iCopyLevel`) AS `iCopyLevel`,
+			-1 AS `iAchievementId`,
+			COUNT(DISTINCT `iRoleId`) AS `iStartRoleNum`, 
+			COUNT(*) AS `iStartTimes`,
+			COUNT(DISTINCT `vUin`) AS `iStartUinNum` 
+			FROM `CopyEnter` 
+			GROUP BY
+			`iWorldId`,`iCopyType`,`iCopyId`,`iCopyLevel` 
+			WITH CUBE</Sql>
+		<Sql TempTable="T2">select -1 AS `iAccountType`, 
+			ConvertNull(`iWorldId`) AS `iWorldId`,
+			-1 AS `iRoleJob`,
+			-1 AS `iRoleGender`,
+			-1 AS `iRoleLevel`,
+			-1 AS `iRoleVipLevel`,
+		    ConvertNull(`iCopyType`) AS `iCopyTypeId`, 
+			ConvertNull(`iCopyId`) AS `iCopyId`, 
+			ConvertNull(`iCopyLevel`) AS `iCopyLevel`,
+			ConvertNull(`iCopystar`) AS `iAchievementId`,
+			COUNT(DISTINCT `iRoleId`) AS `iCompleteRoleNum`, 
+			COUNT(*) AS `iCompleteTimes`,
+			COUNT(DISTINCT `vUin`) AS `iCompleteUinNum`, 
+			SUM(UNIX_TIMESTAMP(`dtEventTime`) - UNIX_TIMESTAMP(`dtEventTime`)) AS `iTotalTime` 
+			FROM `CopyExit` 
+			WHERE `iExitType` = 0 
+			GROUP BY
+			`iWorldId`,`iCopyType`,`iCopyId`,`iCopyLevel`,`iCopystar` 
+			WITH CUBE</Sql>
+		<Sql TempTable="T3">select -1 AS `iAccountType`, 
+			ConvertNull(`iWorldId`) AS `iWorldId`,
+			-1 AS `iRoleJob`,
+			-1 AS `iRoleGender`,
+			-1 AS `iRoleLevel`,
+			-1 AS `iRoleVipLevel`,
+		    ConvertNull(`iCopyType`) AS `iCopyTypeId`, 
+			ConvertNull(`iCopyId`) AS `iCopyId`, 
+			ConvertNull(`iCopyLevel`) AS `iCopyLevel`,
+			-1 AS `iAchievementId`,
+			COUNT(DISTINCT `iRoleId`) AS `iCancelRoleNum`, 
+			COUNT(*) AS `iCancelTimes`,
+			COUNT(DISTINCT `vUin`) AS `iCancelUinNum`, 
+			SUM(UNIX_TIMESTAMP(`dtEventTime`) - UNIX_TIMESTAMP(`dtEventTime`)) AS `iCancelTotalTime` 
+			FROM `CopyExit` 
+			WHERE `iExitType` != 0 
+			GROUP BY
+			`iWorldId`,`iCopyType`,`iCopyId`,`iCopyLevel` 
+			WITH CUBE</Sql>
+		<Sql TempTable="T4">SELECT 
+			IF(T1.`iAccountType` IS NULL,T2.`iAccountType`,T1.`iAccountType`) AS `iAccountType`, 
+			IF(T1.`iWorldId` IS NULL,T2.`iWorldId`,T1.`iWorldId`) `iWorldId`,
+            IF(T1.`iRoleJob` IS NULL,T2.`iRoleJob`,T1.`iRoleJob`) `iRoleJob`,
+            IF(T1.`iRoleGender` IS NULL,T2.`iRoleGender`,T1.`iRoleGender`) `iRoleGender`,
+            IF(T1.`iRoleLevel` IS NULL,T2.`iRoleLevel`,T1.`iRoleLevel`) `iRoleLevel`,
+            IF(T1.`iRoleVipLevel` IS NULL,T2.`iRoleVipLevel`,T1.`iRoleVipLevel`) `iRoleVipLevel`, 			
+			IF(T1.`iCopyTypeId` IS NULL, T2.`iCopyTypeId`, T1.`iCopyTypeId`) `iCopyTypeId`, 
+			IF(T1.`iCopyId` IS NULL, T2.`iCopyId`,T1.`iCopyId`) `iCopyId`, 
+			IF(T1.`iCopyLevel` IS NULL, T2.`iCopyLevel`, T1.`iCopyLevel`) `iCopyLevel`,
+			IF(T1.`iAchievementId` IS NULL, T2.`iAchievementId`, T1.`iAchievementId`) `iAchievementId`,
+			IF(T1.`iStartRoleNum` IS NULL, '0' ,T1.`iStartRoleNum`) `iStartRoleNum`,
+			IF(T1.`iStartTimes` IS NULL, '0', T1.`iStartTimes`) `iStartTimes`,
+			IF(T2.`iCompleteRoleNum` IS NULL, '0', T2.`iCompleteRoleNum`) `iCompleteRoleNum`,
+			IF(T2.`iCompleteTimes` IS NULL, '0', T2.`iCompleteTimes`) `iCompleteTimes`, 
+			IF(T1.`iStartUinNum` IS NULL, '0', T1.`iStartUinNum`) `iStartUinNum`,
+			IF(T2.`iCompleteUinNum` IS NULL, '0', T2.`iCompleteUinNum`) `iCompleteUinNum`,
+			IF(T2.`iTotalTime` IS NULL, '0', T2.`iTotalTime`) `iTotalTime` 
+			FROM T1 FULL JOIN T2 
+			ON
+			(T1.`iAccountType`=T2.`iAccountType` AND T1.`iWorldId`=T2.`iWorldId` AND T1.`iRoleJob`=T2.`iRoleJob` AND T1.`iRoleGender`=T2.`iRoleGender` AND T1.`iRoleLevel`=T2.`iRoleLevel` AND T1.`iRoleVipLevel`=T2.`iRoleVipLevel` AND T1.`iCopyTypeId`=T2.`iCopyTypeId` AND T1.`iCopyId`=T2.`iCopyId` AND
+			T1.`iCopyLevel`=T2.`iCopyLevel` AND T1.`iAchievementId`=T2.`iAchievementId`)</Sql>			
+		<Final
+			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
+			Table="oss_dm_tbCopy">SELECT '2015-06-18', 
+			IF(T4.`iAccountType` IS NULL,T3.`iAccountType`,T4.`iAccountType`) `iAccountType`, 
+			IF(T4.iWorldId IS NULL,T3.iWorldId,T4.iWorldId) iWorldId,
+            IF(T4.iRoleJob IS NULL,T3.iRoleJob,T4.iRoleJob) iRoleJob,
+            IF(T4.iRoleGender IS NULL,T3.iRoleGender,T4.iRoleGender) iRoleGender,
+            IF(T4.iRoleLevel IS NULL,T3.iRoleLevel,T4.iRoleLevel) iRoleLevel,
+            IF(T4.iRoleVipLevel IS NULL,T3.iRoleVipLevel,T4.iRoleVipLevel) iRoleVipLevel, 			
+			IF(T4.iCopyTypeId IS NULL, T3.iCopyTypeId, T4.iCopyTypeId) iCopyTypeId, 
+			IF(T4.iCopyId IS NULL, T3.iCopyId,T4.iCopyId) iCopyId, 
+			IF(T4.iCopyLevel IS NULL, T3.iCopyLevel, T4.iCopyLevel) iCopyLevel,
+			IF(T4.iAchievementId IS NULL, T3.iAchievementId, T4.iAchievementId) iAchievementId,
+			IF(T4.iStartRoleNum IS NULL, '0' ,T4.iStartRoleNum) iStartRoleNum,
+			IF(T4.iStartTimes IS NULL, '0', T4.iStartTimes) iStartTimes,
+			IF(T4.iCompleteRoleNum IS NULL, '0', T4.iCompleteRoleNum) iCompleteRoleNum,
+			IF(T4.iCompleteTimes IS NULL, '0', T4.iCompleteTimes) iCompleteTimes, 
+			IF(T3.iCancelRoleNum IS NULL, '0', T3.iCancelRoleNum) iCancelRoleNum,
+			IF(T3.iCancelTimes IS NULL, '0', T3.iCancelTimes) iCancelTimes,
+			IF(T4.iStartUinNum IS NULL, '0', T4.iStartUinNum),
+			IF(T4.iCompleteUinNum IS NULL, '0', T4.iCompleteUinNum),
+			IF(T3.iCancelUinNum IS NULL, '0', T3.iCancelUinNum),
+			IF(T4.iTotalTime IS NULL, '0', T4.iTotalTime) iTotalTime,
+			IF(T3.iCancelTotalTime IS NULL, '0', T3.iCancelTotalTime) iCancelTotalTime 
+			FROM 
+			T4 FULL JOIN T3 
+			ON
+			(T4.`iAccountType`=T3.`iAccountType` AND T4.iWorldId=T3.iWorldId AND T4.iRoleJob=T3.iRoleJob AND T4.iRoleGender=T3.iRoleGender AND T4.iRoleLevel=T3.iRoleLevel AND T4.iRoleVipLevel=T3.iRoleVipLevel AND T4.iCopyTypeId=T3.iCopyTypeId AND T4.iCopyId=T3.iCopyId AND
+			T4.iCopyLevel=T3.iCopyLevel AND T4.iAchievementId=T3.iAchievementId)
+			</Final>
+	</Action>	
+	<Action Name="Money" Begin="2015-06-18" End="2015-06-19">
 	    <Period>1</Period>
 	    <Step>1</Step>
 		<GameId>1</GameId>
@@ -133,7 +249,7 @@
 			WITH CUBE</Sql>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbMoneyProduce">SELECT '2015-06-11', 
+			Table="oss_dm_tbMoneyProduce">SELECT '2015-06-18', 
 			iAccountType, 
 			iWorldId,
             iRoleJob,
@@ -148,7 +264,7 @@
 			FROM T1 </Final>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbMoneyConsume">SELECT '2015-06-11', 
+			Table="oss_dm_tbMoneyConsume">SELECT '2015-06-18', 
 			iAccountType, 
 			iWorldId,
             iRoleJob,
@@ -163,7 +279,7 @@
 			FROM T2 </Final>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbMoneyStorage">SELECT '2015-06-11', 
+			Table="oss_dm_tbMoneyStorage">SELECT '2015-06-18', 
 			iAccountType, 
 			iWorldId,
             iRoleJob,
@@ -177,7 +293,7 @@
 			FROM T3 </Final>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbMoneyStorage">SELECT '2015-06-11', 
+			Table="oss_dm_tbMoneyStorage">SELECT '2015-06-18', 
 			iAccountType, 
 			iWorldId,
             iRoleJob,
@@ -190,7 +306,7 @@
 			iMoney 
 			FROM T4 </Final>
 	</Action>	
-		<Action Name="RoleJobLvDis" Begin="2015-06-11" End="2015-06-12">
+	<Action Name="RoleJobLvDis" Begin="2015-06-18" End="2015-06-19">
 	    <Period>1</Period>
 	    <Step>1</Step>
 		<GameId>1</GameId>
@@ -216,13 +332,13 @@
 			ConvertNull(`iRoleVipLevel`) AS `iRoleVipLevel`,
 			COUNT(DISTINCT `iRoleId`) AS `iRoleNum` 
 			FROM `RoleStatus` 
-			WHERE `dtRoleLastSaveTime` &gt;= '2015-06-11' AND `dtRoleLastSaveTime` &lt; '2015-06-12' 
+			WHERE `dtRoleLastSaveTime` &gt;= '2015-06-18' AND `dtRoleLastSaveTime` &lt; '2015-06-19' 
 			GROUP BY
 			`iWorldId`,`iRoleJob`,`iRoleGender`, `iRoleLevel`,`iRoleVipLevel` 
 			WITH CUBE</Sql>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbRoleJobLvDis">SELECT '2015-06-11', 
+			Table="oss_dm_tbRoleJobLvDis">SELECT '2015-06-18', 
 			iAccountType, 
 			iWorldId,
             iRoleJob,
@@ -233,7 +349,7 @@
 			FROM T1 </Final>
 		<Final
 			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
-			Table="oss_dm_tbDayActiRoleJobLvDis">SELECT '2015-06-11', 
+			Table="oss_dm_tbDayActiRoleJobLvDis">SELECT '2015-06-18', 
 			iAccountType, 
 			iWorldId,
             iRoleJob,
@@ -242,5 +358,50 @@
             iRoleVipLevel, 			
 			iRoleNum 
 			FROM T2 </Final>
+	</Action>	
+	<Action Name="GoodsVendition" Begin="2015-06-18" End="2015-06-19">
+	    <Period>1</Period>
+	    <Step>1</Step>
+		<GameId>1</GameId>
+		<AccountType>1</AccountType>
+		<WorldId>1,2,3</WorldId>
+		<Table>Shop</Table>
+		<Sql TempTable="T1">select -1 AS `iAccountType`, 
+			ConvertNull(`iWorldId`) AS `iWorldId`,
+			-1 AS `iRoleJob`,
+			-1 AS `iRoleGender`,
+			-1 AS `iRoleLevel`,
+			-1 AS `iRoleVipLevel`,
+			ConvertNull(`iGoodsId`) AS `iGoodsId`,
+			ConvertNull(`iGoodsType`) AS `iGoodsType`,  
+			ConvertNull(`iCostWay`) AS `iMoneyType`,
+			SUM(`iGoodsNum`) AS `iGoodsNum`,
+			SUM(`iCost`) AS `iPayment`,
+			COUNT(DISTINCT `vUin`) AS `iPayUinNum`,
+			COUNT(DISTINCT `iRoleId`) AS `iPayRoleNum` 
+			FROM `Shop` 
+			GROUP BY
+			`iWorldId`,`iGoodsId`,`iGoodsType`,`iCostWay` 
+			GROUPING SETS((`iWorldId`,`iGoodsId`,`iGoodsType`,`iCostWay`),
+			(`iGoodsId`,`iGoodsType`,`iCostWay`),(`iWorldId`,`iGoodsType`,`iCostWay`),(`iWorldId`,`iGoodsId`,`iCostWay`),
+			(`iWorldId`,`iCostWay`),(`iGoodsId`,`iCostWay`),(`iGoodsType`,`iCostWay`),
+			(`iCostWay`))</Sql>
+		<Final
+			URL="jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&amp;password=oss"
+			Table="oss_dm_tbGoodsVendition">SELECT '2015-06-18', 
+			iAccountType, 
+			iWorldId,
+            iRoleJob,
+            iRoleGender,
+            iRoleLevel,
+            iRoleVipLevel, 			 
+			iGoodsId,
+			iGoodsType,
+			iMoneyType, 
+			iGoodsNum,
+			iPayment,
+			iPayUinNum,
+			iPayRoleNum 
+			FROM T1 </Final>
 	</Action>	
 </Scheduler>    

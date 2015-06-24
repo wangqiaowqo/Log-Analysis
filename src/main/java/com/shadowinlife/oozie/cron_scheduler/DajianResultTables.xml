@@ -1,18 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <MySql name="Dajian" >
-	<struct name="MoneyStorage"	   id=""	 desc="系统金钱存量统计表"> 
-		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
-		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
-		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
-		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
-		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
-		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
-		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
-		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
-		<entry name="iStore"	            type="int"	    size=""    key="1"	desc="存储方式ID。背包、仓库等。"/> 
-		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="拥有金钱角色数量"/> 
-		<entry name="iMoney"	            type="bigint"	size=""    key="0"	desc="角色金钱存量，如金币"/> 		
-	</struct>
 	<struct name="MoneyProduce"	   id=""	 desc="金钱产出统计表"> 
 		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
@@ -40,7 +27,20 @@
 		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="拥有金钱角色数量"/> 
 		<entry name="iMoney"	            type="bigint"	size=""    key="0"	desc="角色金钱数量，如金币"/> 		
 		<entry name="iTimes"	            type="int"	    size=""    key="0"	desc="次数"/>
-	</struct>		
+	</struct>	
+	<struct name="MoneyStorage"	   id=""	 desc="系统金钱存量统计表"> 
+		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
+		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
+		<entry name="iWorldId"	            type="int"      size=""    key="1"	desc="World编号"/> 
+		<entry name="iRoleJob"	            type="int"	    size=""    key="1"	desc="角色职业"/>
+		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
+		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型"/> 
+		<entry name="iStore"	            type="int"	    size=""    key="1"	desc="存储方式ID。背包、仓库等。"/> 
+		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="拥有金钱角色数量"/> 
+		<entry name="iMoney"	            type="bigint"	size=""    key="0"	desc="角色金钱存量，如金币"/> 		
+	</struct>	
 	<struct name="Task"	   id=""	 desc="任务统计表"> 
 		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
 		<entry name="iAccountType"	        type="int"      size=""    key="1"	desc="帐号类型 （QQ号，微信等等）"/>   
@@ -101,8 +101,10 @@
 		<entry name="iCancelRoleNum"	    type="int"	    size=""    key="0"	desc="取消副本角色数"/> 	
 		<entry name="iCancelTimes"	        type="int"	    size=""    key="0"	desc="取消副本次数"/> 
 		<entry name="iStartUinNum"	        type="int"	    size=""    key="0"	desc="开始副本uin数"/> 
-		<entry name="iCompleteUinNum"	    type="int"	    size=""    key="0"	desc="完成副本uin数"/> 
-		<entry name="iTotalTime"	        type="bigint"	size=""    key="0"	desc="完成副本时长(秒)"/>	
+		<entry name="iCompleteUinNum"	    type="int"	    size=""    key="0"	desc="完成副本uin数"/>
+		<entry name="iCancelUinNum" 	    type="int"	    size=""    key="0"	desc="取消副本uin数"/>  
+		<entry name="iTotalTime"	        type="bigint"	size=""    key="0"	desc="完成副本时长(秒)"/>
+		<entry name="iCancelTotalTime"	    type="bigint"	size=""    key="0"	desc="取消副本耗时(秒)"/>		
 	</struct>
 	<struct name="GoodsVendition"	   id=""	 desc="道具销售统计表"> 
 		<entry name="dtStatDate"	        type="date"     size=""    key="1"  desc="统计日期"/> 	
