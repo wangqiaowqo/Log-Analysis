@@ -46,27 +46,26 @@ public class RoleLogout extends BaseBean implements Serializable {
     private int iWorldId;
     private Timestamp dtEventTime;
     private String iEventId;
-    private String version;
-    private String iUin;
+    private String vVersionId;
+    private String vUin;
     private int iRoleId;
     private String vRoleName;
     private int iRoleJob;
-    private int iRoleSex;
+    private int iRoleGender;
     private int iRoleLevel;
     private int iRoleVipLevel;
-    private int iRepuLevel;
-    private String v1;
-    private String v2;
-
+    private int iRoleReputationLevel;
+    private String vRoleElse1;
+    private String vRoleElse2;
+    private Timestamp dtLoginTime;
     private long vClientIp;
     private String vZoneId;
-    private long iRoleExp;
+    private long iExp;
     private long iReputation;
     private long iEnergy;
-    private String iMoney;
-    private Timestamp dtLoginTime;
-    private Long iOnlineTime;
-    private String iLoginWay;
+    private String jMoney;
+    private Long lOnlineTotalTime;
+    private String vLoginWay;
 
     private RoleLogout(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
@@ -78,26 +77,26 @@ public class RoleLogout extends BaseBean implements Serializable {
         this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
-        this.version = version;
-        this.iUin = iUin;
+        this.vVersionId = version;
+        this.vUin = iUin;
         this.iRoleId = Integer.valueOf(iRoleId);
         this.vRoleName = vRoleName;
         this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleSex = Integer.valueOf(iRoleSex);
+        this.iRoleGender = Integer.valueOf(iRoleSex);
         this.iRoleLevel=Integer.valueOf(iRoleLevel);
         this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRepuLevel = Integer.valueOf(iRepuLevel);
-        this.v1 = v1;
-        this.v2 = v2;
+        this.iRoleReputationLevel = Integer.valueOf(iRepuLevel);
+        this.vRoleElse1 = v1;
+        this.vRoleElse2 = v2;
         this.setDtLoginTime(Timestamp.valueOf(dtLoginTime));
         this.vClientIp = CONSTANT.ipToLong(vClientIp);
         this.vZoneId=vZoneId;
-        this.iRoleExp=Long.valueOf(iRoleExp);
+        this.iExp=Long.valueOf(iRoleExp);
         this.iReputation=Long.valueOf(iReputation);
         this.iEnergy = Long.valueOf(iEnergy);
-        this.iMoney = iMoney;
-        this.iOnlineTime = (this.dtEventTime.getTime() - this.dtLoginTime.getTime())/1000l;
-        this.iLoginWay=iLoginWay;             
+        this.jMoney = iMoney;
+        this.lOnlineTotalTime = (this.dtEventTime.getTime() - this.dtLoginTime.getTime())/1000l;
+        this.vLoginWay=iLoginWay;             
     }
     
     public RoleLogout() {
@@ -157,19 +156,19 @@ public class RoleLogout extends BaseBean implements Serializable {
     }
 
     public String getVersion() {
-        return version;
+        return vVersionId;
     }
 
     public void setVersion(String version) {
-        this.version = version;
+        this.vVersionId = version;
     }
 
     public String getiUin() {
-        return iUin;
+        return vUin;
     }
 
     public void setiUin(String iUin) {
-        this.iUin = iUin;
+        this.vUin = iUin;
     }
 
     public int getiRoleId() {
@@ -197,11 +196,11 @@ public class RoleLogout extends BaseBean implements Serializable {
     }
 
     public int getiRoleSex() {
-        return iRoleSex;
+        return iRoleGender;
     }
 
     public void setiRoleSex(int iRoleSex) {
-        this.iRoleSex = iRoleSex;
+        this.iRoleGender = iRoleSex;
     }
 
     public int getiRoleLevel() {
@@ -221,27 +220,27 @@ public class RoleLogout extends BaseBean implements Serializable {
     }
 
     public int getiRepuLevel() {
-        return iRepuLevel;
+        return iRoleReputationLevel;
     }
 
     public void setiRepuLevel(int iRepuLevel) {
-        this.iRepuLevel = iRepuLevel;
+        this.iRoleReputationLevel = iRepuLevel;
     }
 
     public String getV1() {
-        return v1;
+        return vRoleElse1;
     }
 
     public void setV1(String v1) {
-        this.v1 = v1;
+        this.vRoleElse1 = v1;
     }
 
     public String getV2() {
-        return v2;
+        return vRoleElse2;
     }
 
     public void setV2(String v2) {
-        this.v2 = v2;
+        this.vRoleElse2 = v2;
     }
 
     public long getvClientIp() {
@@ -261,11 +260,11 @@ public class RoleLogout extends BaseBean implements Serializable {
     }
 
     public long getiRoleExp() {
-        return iRoleExp;
+        return iExp;
     }
 
     public void setiRoleExp(long iRoleExp) {
-        this.iRoleExp = iRoleExp;
+        this.iExp = iRoleExp;
     }
 
     public long getiReputation() {
@@ -285,28 +284,28 @@ public class RoleLogout extends BaseBean implements Serializable {
     }
 
     public String getiMoney() {
-        return iMoney;
+        return jMoney;
     }
 
     public void setiMoney(String iMoney) {
-        this.iMoney = iMoney;
+        this.jMoney = iMoney;
     }
 
 
     public long getiOnlineTime() {
-        return iOnlineTime;
+        return lOnlineTotalTime;
     }
 
     public void setiOnlineTime(long iOnlineTime) {
-        this.iOnlineTime = iOnlineTime;
+        this.lOnlineTotalTime = iOnlineTime;
     }
 
     public String getiLoginWay() {
-        return iLoginWay;
+        return vLoginWay;
     }
 
     public void setiLoginWay(String iLoginWay) {
-        this.iLoginWay = iLoginWay;
+        this.vLoginWay = iLoginWay;
     }
 
     public Timestamp getDtLoginTime() {

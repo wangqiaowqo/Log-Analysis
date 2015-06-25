@@ -51,15 +51,15 @@ public class MoneyFlowProcessTable {
     
  // create daily user Pay table
     private static String tbPay_process_table_sql = 
-            "SELECT `iUin` AS id,"
+            "SELECT `vUin` AS id,"
             + "MAX(`iRoleId`) AS iRoleId,"
             + "MIN(`dtEventTime`) AS FirstTime,"
             + "MAX(`dtEventTime`) AS ActTime,"
-            + "COUNT(`iUin`) AS iTimes,"
+            + "COUNT(`vUin`) AS iTimes,"
             + "SUM(`iMoney`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
-            + "FROM MoneyFlow WHERE `iFlowType`=2 GROUP BY `iUin`";
+            + "FROM MoneyFlow WHERE `iFlowType`=2 GROUP BY `vUin`";
     // USER NOT ACTIVITY 
     private static String tbPay_unact_account_table = "INSERT OVERWRITE TABLE fat_pay_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "

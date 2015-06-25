@@ -46,28 +46,28 @@ public class Deposit extends BaseBean implements Serializable {
     private int iWorldId;
     private Timestamp dtEventTime;
     private String iEventId;
-    private String version;
-    private String iUin;
+    private String vVersionId;
+    private String vUin;
     private int iRoleId;
     private String vRoleName;
     private int iRoleJob;
-    private int iRoleSex;
+    private int iRoleGender;
     private int iRoleLevel;
     private int iRoleVipLevel;
-    private int iRepuLevel;
-    private String v1;
-    private String v2;
+    private int iRoleReputationLevel;
+    private String vRoleElse1;
+    private String vRoleElse2;
 
     private long iArea;
-    private String DstUin;
+    private String vDstUin;
     private String iSourceWay;
     private Long vClientIp;
-    private String vRemark;
+    private String vRemarks;
     private int iPayBefore;
     private int iPayDelta;
     private int iPayAfter;
     private String vDesc;
-    private String iLoginWay;
+    private String vLoginWay;
 
     public Deposit(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
             String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
@@ -79,28 +79,28 @@ public class Deposit extends BaseBean implements Serializable {
         this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = iEventId;
-        this.version = version;
-        this.iUin = iUin;
+        this.vVersionId = version;
+        this.vUin = iUin;
         this.iRoleId = Integer.valueOf(iRoleId);
         this.vRoleName = vRoleName;
         this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleSex = Integer.valueOf(iRoleSex);
+        this.iRoleGender = Integer.valueOf(iRoleSex);
         this.iRoleLevel = Integer.valueOf(iRoleLevel);
         this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRepuLevel = Integer.valueOf(iRepuLevel);
-        this.v1 = v1;
-        this.v2 = v2;
+        this.iRoleReputationLevel = Integer.valueOf(iRepuLevel);
+        this.vRoleElse1 = v1;
+        this.vRoleElse2 = v2;
 
         this.iArea = Long.valueOf(iArea);
-        this.DstUin = DstUin;
+        this.vDstUin = DstUin;
         this.iSourceWay = iSourceWay;
         this.vClientIp = CONSTANT.ipToLong(vClientIp);
-        this.vRemark = vRemark;
+        this.vRemarks = vRemark;
         this.iPayBefore = Integer.valueOf(iPayBefore);
         this.iPayDelta = Integer.valueOf(iPayDelta);
         this.iPayAfter = Integer.valueOf(iPayAfter);
         this.vDesc = vDesc;
-        this.iLoginWay = iLoginWay;
+        this.vLoginWay = iLoginWay;
     }
 
     public Deposit(){
@@ -142,19 +142,19 @@ public class Deposit extends BaseBean implements Serializable {
     }
 
     public String getVersion() {
-        return version;
+        return vVersionId;
     }
 
     public void setVersion(String version) {
-        this.version = version;
+        this.vVersionId = version;
     }
 
     public String getiUin() {
-        return iUin;
+        return vUin;
     }
 
     public void setiUin(String iUin) {
-        this.iUin = iUin;
+        this.vUin = iUin;
     }
 
     public int getiRoleId() {
@@ -182,11 +182,11 @@ public class Deposit extends BaseBean implements Serializable {
     }
 
     public int getiRoleSex() {
-        return iRoleSex;
+        return iRoleGender;
     }
 
     public void setiRoleSex(int iRoleSex) {
-        this.iRoleSex = iRoleSex;
+        this.iRoleGender = iRoleSex;
     }
 
     public int getiRoleLevel() {
@@ -206,27 +206,27 @@ public class Deposit extends BaseBean implements Serializable {
     }
 
     public int getiRepuLevel() {
-        return iRepuLevel;
+        return iRoleReputationLevel;
     }
 
     public void setiRepuLevel(int iRepuLevel) {
-        this.iRepuLevel = iRepuLevel;
+        this.iRoleReputationLevel = iRepuLevel;
     }
 
     public String getV1() {
-        return v1;
+        return vRoleElse1;
     }
 
     public void setV1(String v1) {
-        this.v1 = v1;
+        this.vRoleElse1 = v1;
     }
 
     public String getV2() {
-        return v2;
+        return vRoleElse2;
     }
 
     public void setV2(String v2) {
-        this.v2 = v2;
+        this.vRoleElse2 = v2;
     }
 
     public long getiArea() {
@@ -238,11 +238,11 @@ public class Deposit extends BaseBean implements Serializable {
     }
 
     public String getDstUin() {
-        return DstUin;
+        return vDstUin;
     }
 
     public void setDstUin(String dstUin) {
-        DstUin = dstUin;
+        vDstUin = dstUin;
     }
 
     public String getiSourceWay() {
@@ -262,11 +262,11 @@ public class Deposit extends BaseBean implements Serializable {
     }
 
     public String getvRemark() {
-        return vRemark;
+        return vRemarks;
     }
 
     public void setvRemark(String vRemark) {
-        this.vRemark = vRemark;
+        this.vRemarks = vRemark;
     }
 
     public int getiPayBefore() {
@@ -302,11 +302,11 @@ public class Deposit extends BaseBean implements Serializable {
     }
 
     public String getiLoginWay() {
-        return iLoginWay;
+        return vLoginWay;
     }
 
     public void setiLoginWay(String iLoginWay) {
-        this.iLoginWay = iLoginWay;
+        this.vLoginWay = iLoginWay;
     }
 
     public int getiAccountType() {

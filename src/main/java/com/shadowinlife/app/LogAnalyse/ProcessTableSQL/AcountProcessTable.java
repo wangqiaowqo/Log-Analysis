@@ -145,13 +145,13 @@ public class AcountProcessTable {
     public static boolean process(HiveContext sqlContext, String date, String iworldid) {
         
         try {
-            String RoleLoginSQL = "SELECT `iUin` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
-                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(iUin) AS in_times, MAX(`dtEventTime`) AS login_dtEventTime,"
-                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY iUin";
+            String RoleLoginSQL = "SELECT `vUin` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
+                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(vUin) AS in_times, MAX(`dtEventTime`) AS login_dtEventTime,"
+                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY vUin";
             
-            String RoleLogoutSQL = "SELECT `iUin` AS logout_id,SUM(`iOnlineTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
-                    + "MAX(`vClientIp`) AS tbLogout_vClientIp, COUNT(iUin) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
-                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY iUin";
+            String RoleLogoutSQL = "SELECT `vUin` AS logout_id,SUM(`lOnlineTotalTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
+                    + "MAX(`vClientIp`) AS tbLogout_vClientIp, COUNT(vUin) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
+                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY vUin";
             
             // Dump out the group data of user login and logout
             DataFrame userLogin = sqlContext.sql(RoleLoginSQL);
