@@ -57,7 +57,7 @@ public class ChongzhiProcessTable {
             + "SUM(`iPayDelta`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
-            + "FROM ChongZhi GROUP BY `vUin`";
+            + "FROM Deposit GROUP BY `vUin`";
     // USER NOT ACTIVITY 
     private static String tbChongZhi_unact_account_table = "INSERT OVERWRITE TABLE fat_deposit_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "

@@ -10,8 +10,7 @@ import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ProceeMoneyStorage;
-import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.TaskProcessTable;
+
 
 public class CreateProcessTable {
     public static void FatTableConstruct(HiveContext sqlContext, String FilePath, String tableName,
@@ -51,22 +50,7 @@ public class CreateProcessTable {
                     WorldId, "MoneyFlow", strWhere);
             MoneyFlowProcessTable.process(sqlContext, date, iworldid);
             break;
-        case "Task":
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "TaskStart", strWhere);
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "TaskFinished", strWhere);
-            TaskProcessTable.process(sqlContext, date, iworldid,
-                    "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",
-                    "oss_dm_tbTask");
-            break;
-        case "MoneyStorage":
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "RoleStatus", strWhere);
-            ProceeMoneyStorage.process(sqlContext, date, iworldid,
-                    "jdbc:mysql://10-4-28-24:3306/dbDJOssResult?user=oss&password=oss",
-                    "oss_dm_tbMoneyStorage");
-            break;
+        
         }
     }
 
