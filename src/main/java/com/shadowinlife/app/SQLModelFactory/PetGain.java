@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class PetGain extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class PetGain extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,35 +131,35 @@ public class PetGain extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
+    private Long iRoleExperience;
+    public void setiRoleExperience(Long iRoleExperience){
         this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiRoleExperience() {
+   public Long getiRoleExperience() {
         return iRoleExperience;
     }
 
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
+    private Long iRoleSword;
+    public void setiRoleSword(Long iRoleSword){
         this.iRoleSword=iRoleSword;
     }
-   public Integer getiRoleSword() {
+   public Long getiRoleSword() {
         return iRoleSword;
     }
 
-    private Integer iPetType;
-    public void setiPetType(Integer iPetType){
+    private Long iPetType;
+    public void setiPetType(Long iPetType){
         this.iPetType=iPetType;
     }
-   public Integer getiPetType() {
+   public Long getiPetType() {
         return iPetType;
     }
 
-    private Integer iPetID;
-    public void setiPetID(Integer iPetID){
+    private Long iPetID;
+    public void setiPetID(Long iPetID){
         this.iPetID=iPetID;
     }
-   public Integer getiPetID() {
+   public Long getiPetID() {
         return iPetID;
     }
 
@@ -172,19 +171,19 @@ public class PetGain extends BaseBean implements Serializable {
         return vPetName;
     }
 
-    private Integer iPetStar;
-    public void setiPetStar(Integer iPetStar){
+    private Long iPetStar;
+    public void setiPetStar(Long iPetStar){
         this.iPetStar=iPetStar;
     }
-   public Integer getiPetStar() {
+   public Long getiPetStar() {
         return iPetStar;
     }
 
-    private Integer iPetlevel;
-    public void setiPetlevel(Integer iPetlevel){
+    private Long iPetlevel;
+    public void setiPetlevel(Long iPetlevel){
         this.iPetlevel=iPetlevel;
     }
-   public Integer getiPetlevel() {
+   public Long getiPetlevel() {
         return iPetlevel;
     }
 
@@ -196,11 +195,11 @@ public class PetGain extends BaseBean implements Serializable {
         return jPetAttribute;
     }
 
-    private Integer iPetWay;
-    public void setiPetWay(Integer iPetWay){
+    private Long iPetWay;
+    public void setiPetWay(Long iPetWay){
         this.iPetWay=iPetWay;
     }
-   public Integer getiPetWay() {
+   public Long getiPetWay() {
         return iPetWay;
     }
 
@@ -212,35 +211,35 @@ public class PetGain extends BaseBean implements Serializable {
         return jItemCost;
     }
 
-    private Integer iMoneyType;
-    public void setiMoneyType(Integer iMoneyType){
+    private Long iMoneyType;
+    public void setiMoneyType(Long iMoneyType){
         this.iMoneyType=iMoneyType;
     }
-   public Integer getiMoneyType() {
+   public Long getiMoneyType() {
         return iMoneyType;
     }
 
-    private Integer iPayBefore;
-    public void setiPayBefore(Integer iPayBefore){
+    private Long iPayBefore;
+    public void setiPayBefore(Long iPayBefore){
         this.iPayBefore=iPayBefore;
     }
-   public Integer getiPayBefore() {
+   public Long getiPayBefore() {
         return iPayBefore;
     }
 
-    private Integer iPayDelta;
-    public void setiPayDelta(Integer iPayDelta){
+    private Long iPayDelta;
+    public void setiPayDelta(Long iPayDelta){
         this.iPayDelta=iPayDelta;
     }
-   public Integer getiPayDelta() {
+   public Long getiPayDelta() {
         return iPayDelta;
     }
 
-    private Integer iPayAfter;
-    public void setiPayAfter(Integer iPayAfter){
+    private Long iPayAfter;
+    public void setiPayAfter(Long iPayAfter){
         this.iPayAfter=iPayAfter;
     }
-   public Integer getiPayAfter() {
+   public Long getiPayAfter() {
         return iPayAfter;
     }
 
@@ -256,28 +255,28 @@ public class PetGain extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iPetType = Integer.valueOf(iPetType);
-        this.iPetID = Integer.valueOf(iPetID);
+        this.iRoleExperience = Long.valueOf(iRoleExperience);
+        this.iRoleSword = Long.valueOf(iRoleSword);
+        this.iPetType = Long.valueOf(iPetType);
+        this.iPetID = Long.valueOf(iPetID);
         this.vPetName = String.valueOf(vPetName);
-        this.iPetStar = Integer.valueOf(iPetStar);
-        this.iPetlevel = Integer.valueOf(iPetlevel);
+        this.iPetStar = Long.valueOf(iPetStar);
+        this.iPetlevel = Long.valueOf(iPetlevel);
         this.jPetAttribute = String.valueOf(jPetAttribute);
-        this.iPetWay = Integer.valueOf(iPetWay);
+        this.iPetWay = Long.valueOf(iPetWay);
         this.jItemCost = String.valueOf(jItemCost);
-        this.iMoneyType = Integer.valueOf(iMoneyType);
-        this.iPayBefore = Integer.valueOf(iPayBefore);
-        this.iPayDelta = Integer.valueOf(iPayDelta);
-        this.iPayAfter = Integer.valueOf(iPayAfter);
+        this.iMoneyType = Long.valueOf(iMoneyType);
+        this.iPayBefore = Long.valueOf(iPayBefore);
+        this.iPayDelta = Long.valueOf(iPayDelta);
+        this.iPayAfter = Long.valueOf(iPayAfter);
     }
 }

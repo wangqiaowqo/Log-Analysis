@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class IdentisifyEquip extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class IdentisifyEquip extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,83 +131,83 @@ public class IdentisifyEquip extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iEquipIdTpye;
-    public void setiEquipIdTpye(Integer iEquipIdTpye){
+    private Long iEquipIdTpye;
+    public void setiEquipIdTpye(Long iEquipIdTpye){
         this.iEquipIdTpye=iEquipIdTpye;
     }
-   public Integer getiEquipIdTpye() {
+   public Long getiEquipIdTpye() {
         return iEquipIdTpye;
     }
 
-    private Integer iEquipId;
-    public void setiEquipId(Integer iEquipId){
+    private Long iEquipId;
+    public void setiEquipId(Long iEquipId){
         this.iEquipId=iEquipId;
     }
-   public Integer getiEquipId() {
+   public Long getiEquipId() {
         return iEquipId;
     }
 
-    private Integer iEquipGuid;
-    public void setiEquipGuid(Integer iEquipGuid){
+    private Long iEquipGuid;
+    public void setiEquipGuid(Long iEquipGuid){
         this.iEquipGuid=iEquipGuid;
     }
-   public Integer getiEquipGuid() {
+   public Long getiEquipGuid() {
         return iEquipGuid;
     }
 
-    private Integer iItemTpye;
-    public void setiItemTpye(Integer iItemTpye){
+    private Long iItemTpye;
+    public void setiItemTpye(Long iItemTpye){
         this.iItemTpye=iItemTpye;
     }
-   public Integer getiItemTpye() {
+   public Long getiItemTpye() {
         return iItemTpye;
     }
 
-    private Integer iItemId;
-    public void setiItemId(Integer iItemId){
+    private Long iItemId;
+    public void setiItemId(Long iItemId){
         this.iItemId=iItemId;
     }
-   public Integer getiItemId() {
+   public Long getiItemId() {
         return iItemId;
     }
 
-    private Integer iItemNum;
-    public void setiItemNum(Integer iItemNum){
+    private Long iItemNum;
+    public void setiItemNum(Long iItemNum){
         this.iItemNum=iItemNum;
     }
-   public Integer getiItemNum() {
+   public Long getiItemNum() {
         return iItemNum;
     }
 
-    private Integer iItemRemain;
-    public void setiItemRemain(Integer iItemRemain){
+    private Long iItemRemain;
+    public void setiItemRemain(Long iItemRemain){
         this.iItemRemain=iItemRemain;
     }
-   public Integer getiItemRemain() {
+   public Long getiItemRemain() {
         return iItemRemain;
     }
 
-    private Integer iItemLevel;
-    public void setiItemLevel(Integer iItemLevel){
+    private Long iItemLevel;
+    public void setiItemLevel(Long iItemLevel){
         this.iItemLevel=iItemLevel;
     }
-   public Integer getiItemLevel() {
+   public Long getiItemLevel() {
         return iItemLevel;
     }
 
-    private Integer iItemExp;
-    public void setiItemExp(Integer iItemExp){
+    private Long iItemExp;
+    public void setiItemExp(Long iItemExp){
         this.iItemExp=iItemExp;
     }
-   public Integer getiItemExp() {
+   public Long getiItemExp() {
         return iItemExp;
     }
 
-    private Integer iItemStar;
-    public void setiItemStar(Integer iItemStar){
+    private Long iItemStar;
+    public void setiItemStar(Long iItemStar){
         this.iItemStar=iItemStar;
     }
-   public Integer getiItemStar() {
+   public Long getiItemStar() {
         return iItemStar;
     }
 
@@ -240,25 +239,25 @@ public class IdentisifyEquip extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iEquipIdTpye = Integer.valueOf(iEquipIdTpye);
-        this.iEquipId = Integer.valueOf(iEquipId);
-        this.iEquipGuid = Integer.valueOf(iEquipGuid);
-        this.iItemTpye = Integer.valueOf(iItemTpye);
-        this.iItemId = Integer.valueOf(iItemId);
-        this.iItemNum = Integer.valueOf(iItemNum);
-        this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemLevel = Integer.valueOf(iItemLevel);
-        this.iItemExp = Integer.valueOf(iItemExp);
-        this.iItemStar = Integer.valueOf(iItemStar);
+        this.iEquipIdTpye = Long.valueOf(iEquipIdTpye);
+        this.iEquipId = Long.valueOf(iEquipId);
+        this.iEquipGuid = Long.valueOf(iEquipGuid);
+        this.iItemTpye = Long.valueOf(iItemTpye);
+        this.iItemId = Long.valueOf(iItemId);
+        this.iItemNum = Long.valueOf(iItemNum);
+        this.iItemRemain = Long.valueOf(iItemRemain);
+        this.iItemLevel = Long.valueOf(iItemLevel);
+        this.iItemExp = Long.valueOf(iItemExp);
+        this.iItemStar = Long.valueOf(iItemStar);
         this.bResult = Boolean.valueOf(bResult);
         this.jItemAtrrbute = String.valueOf(jItemAtrrbute);
     }

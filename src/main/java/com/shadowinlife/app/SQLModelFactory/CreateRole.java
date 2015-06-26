@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -68,11 +67,11 @@ public class CreateRole extends BaseBean implements Serializable {
         return vClientIp;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -84,19 +83,19 @@ public class CreateRole extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
@@ -121,10 +120,10 @@ public class CreateRole extends BaseBean implements Serializable {
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
         this.vClientIp = String.valueOf(vClientIp);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
         this.vLoginWay = String.valueOf(vLoginWay);
     }
 }

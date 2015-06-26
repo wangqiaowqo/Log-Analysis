@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class ReceiveGift extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class ReceiveGift extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -140,51 +139,51 @@ public class ReceiveGift extends BaseBean implements Serializable {
         return vClientIp;
     }
 
-    private Integer iItemType;
-    public void setiItemType(Integer iItemType){
+    private Long iItemType;
+    public void setiItemType(Long iItemType){
         this.iItemType=iItemType;
     }
-   public Integer getiItemType() {
+   public Long getiItemType() {
         return iItemType;
     }
 
-    private Integer iItemId;
-    public void setiItemId(Integer iItemId){
+    private Long iItemId;
+    public void setiItemId(Long iItemId){
         this.iItemId=iItemId;
     }
-   public Integer getiItemId() {
+   public Long getiItemId() {
         return iItemId;
     }
 
-    private Integer iItemNum;
-    public void setiItemNum(Integer iItemNum){
+    private Long iItemNum;
+    public void setiItemNum(Long iItemNum){
         this.iItemNum=iItemNum;
     }
-   public Integer getiItemNum() {
+   public Long getiItemNum() {
         return iItemNum;
     }
 
-    private Integer iCanReceiveTimes;
-    public void setiCanReceiveTimes(Integer iCanReceiveTimes){
+    private Long iCanReceiveTimes;
+    public void setiCanReceiveTimes(Long iCanReceiveTimes){
         this.iCanReceiveTimes=iCanReceiveTimes;
     }
-   public Integer getiCanReceiveTimes() {
+   public Long getiCanReceiveTimes() {
         return iCanReceiveTimes;
     }
 
-    private Integer iItemRemain;
-    public void setiItemRemain(Integer iItemRemain){
+    private Long iItemRemain;
+    public void setiItemRemain(Long iItemRemain){
         this.iItemRemain=iItemRemain;
     }
-   public Integer getiItemRemain() {
+   public Long getiItemRemain() {
         return iItemRemain;
     }
 
-    private Integer iItemStor;
-    public void setiItemStor(Integer iItemStor){
+    private Long iItemStor;
+    public void setiItemStor(Long iItemStor){
         this.iItemStor=iItemStor;
     }
-   public Integer getiItemStor() {
+   public Long getiItemStor() {
         return iItemStor;
     }
 
@@ -196,11 +195,11 @@ public class ReceiveGift extends BaseBean implements Serializable {
         return vOtherUin;
     }
 
-    private Integer iOtherRoleId;
-    public void setiOtherRoleId(Integer iOtherRoleId){
+    private Long iOtherRoleId;
+    public void setiOtherRoleId(Long iOtherRoleId){
         this.iOtherRoleId=iOtherRoleId;
     }
-   public Integer getiOtherRoleId() {
+   public Long getiOtherRoleId() {
         return iOtherRoleId;
     }
 
@@ -212,43 +211,43 @@ public class ReceiveGift extends BaseBean implements Serializable {
         return vOtherRoleName;
     }
 
-    private Integer iOtherRoleJob;
-    public void setiOtherRoleJob(Integer iOtherRoleJob){
+    private Long iOtherRoleJob;
+    public void setiOtherRoleJob(Long iOtherRoleJob){
         this.iOtherRoleJob=iOtherRoleJob;
     }
-   public Integer getiOtherRoleJob() {
+   public Long getiOtherRoleJob() {
         return iOtherRoleJob;
     }
 
-    private Integer iOtherRoleGender;
-    public void setiOtherRoleGender(Integer iOtherRoleGender){
+    private Long iOtherRoleGender;
+    public void setiOtherRoleGender(Long iOtherRoleGender){
         this.iOtherRoleGender=iOtherRoleGender;
     }
-   public Integer getiOtherRoleGender() {
+   public Long getiOtherRoleGender() {
         return iOtherRoleGender;
     }
 
-    private Integer iOtherRoleLevel;
-    public void setiOtherRoleLevel(Integer iOtherRoleLevel){
+    private Long iOtherRoleLevel;
+    public void setiOtherRoleLevel(Long iOtherRoleLevel){
         this.iOtherRoleLevel=iOtherRoleLevel;
     }
-   public Integer getiOtherRoleLevel() {
+   public Long getiOtherRoleLevel() {
         return iOtherRoleLevel;
     }
 
-    private Integer iOtherRoleVipLevel;
-    public void setiOtherRoleVipLevel(Integer iOtherRoleVipLevel){
+    private Long iOtherRoleVipLevel;
+    public void setiOtherRoleVipLevel(Long iOtherRoleVipLevel){
         this.iOtherRoleVipLevel=iOtherRoleVipLevel;
     }
-   public Integer getiOtherRoleVipLevel() {
+   public Long getiOtherRoleVipLevel() {
         return iOtherRoleVipLevel;
     }
 
-    private Integer iOtherRoleReputationLevel;
-    public void setiOtherRoleReputationLevel(Integer iOtherRoleReputationLevel){
+    private Long iOtherRoleReputationLevel;
+    public void setiOtherRoleReputationLevel(Long iOtherRoleReputationLevel){
         this.iOtherRoleReputationLevel=iOtherRoleReputationLevel;
     }
-   public Integer getiOtherRoleReputationLevel() {
+   public Long getiOtherRoleReputationLevel() {
         return iOtherRoleReputationLevel;
     }
 
@@ -264,29 +263,29 @@ public class ReceiveGift extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.vClientIp = String.valueOf(vClientIp);
-        this.iItemType = Integer.valueOf(iItemType);
-        this.iItemId = Integer.valueOf(iItemId);
-        this.iItemNum = Integer.valueOf(iItemNum);
-        this.iCanReceiveTimes = Integer.valueOf(iCanReceiveTimes);
-        this.iItemRemain = Integer.valueOf(iItemRemain);
-        this.iItemStor = Integer.valueOf(iItemStor);
+        this.iItemType = Long.valueOf(iItemType);
+        this.iItemId = Long.valueOf(iItemId);
+        this.iItemNum = Long.valueOf(iItemNum);
+        this.iCanReceiveTimes = Long.valueOf(iCanReceiveTimes);
+        this.iItemRemain = Long.valueOf(iItemRemain);
+        this.iItemStor = Long.valueOf(iItemStor);
         this.vOtherUin = String.valueOf(vOtherUin);
-        this.iOtherRoleId = Integer.valueOf(iOtherRoleId);
+        this.iOtherRoleId = Long.valueOf(iOtherRoleId);
         this.vOtherRoleName = String.valueOf(vOtherRoleName);
-        this.iOtherRoleJob = Integer.valueOf(iOtherRoleJob);
-        this.iOtherRoleGender = Integer.valueOf(iOtherRoleGender);
-        this.iOtherRoleLevel = Integer.valueOf(iOtherRoleLevel);
-        this.iOtherRoleVipLevel = Integer.valueOf(iOtherRoleVipLevel);
-        this.iOtherRoleReputationLevel = Integer.valueOf(iOtherRoleReputationLevel);
+        this.iOtherRoleJob = Long.valueOf(iOtherRoleJob);
+        this.iOtherRoleGender = Long.valueOf(iOtherRoleGender);
+        this.iOtherRoleLevel = Long.valueOf(iOtherRoleLevel);
+        this.iOtherRoleVipLevel = Long.valueOf(iOtherRoleVipLevel);
+        this.iOtherRoleReputationLevel = Long.valueOf(iOtherRoleReputationLevel);
     }
 }

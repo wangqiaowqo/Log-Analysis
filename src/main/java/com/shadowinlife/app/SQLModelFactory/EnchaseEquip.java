@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class EnchaseEquip extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class EnchaseEquip extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,27 +131,27 @@ public class EnchaseEquip extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iEnchageAction;
-    public void setiEnchageAction(Integer iEnchageAction){
+    private Long iEnchageAction;
+    public void setiEnchageAction(Long iEnchageAction){
         this.iEnchageAction=iEnchageAction;
     }
-   public Integer getiEnchageAction() {
+   public Long getiEnchageAction() {
         return iEnchageAction;
     }
 
-    private Integer iEnchageEquipIdType;
-    public void setiEnchageEquipIdType(Integer iEnchageEquipIdType){
+    private Long iEnchageEquipIdType;
+    public void setiEnchageEquipIdType(Long iEnchageEquipIdType){
         this.iEnchageEquipIdType=iEnchageEquipIdType;
     }
-   public Integer getiEnchageEquipIdType() {
+   public Long getiEnchageEquipIdType() {
         return iEnchageEquipIdType;
     }
 
-    private Integer iEnchageEquipIdID;
-    public void setiEnchageEquipIdID(Integer iEnchageEquipIdID){
+    private Long iEnchageEquipIdID;
+    public void setiEnchageEquipIdID(Long iEnchageEquipIdID){
         this.iEnchageEquipIdID=iEnchageEquipIdID;
     }
-   public Integer getiEnchageEquipIdID() {
+   public Long getiEnchageEquipIdID() {
         return iEnchageEquipIdID;
     }
 
@@ -192,18 +191,18 @@ public class EnchaseEquip extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iEnchageAction = Integer.valueOf(iEnchageAction);
-        this.iEnchageEquipIdType = Integer.valueOf(iEnchageEquipIdType);
-        this.iEnchageEquipIdID = Integer.valueOf(iEnchageEquipIdID);
+        this.iEnchageAction = Long.valueOf(iEnchageAction);
+        this.iEnchageEquipIdType = Long.valueOf(iEnchageEquipIdType);
+        this.iEnchageEquipIdID = Long.valueOf(iEnchageEquipIdID);
         this.jEnchageEquipIdAtrr = String.valueOf(jEnchageEquipIdAtrr);
         this.jCostItemAtrr = String.valueOf(jCostItemAtrr);
         this.bResult = Boolean.valueOf(bResult);

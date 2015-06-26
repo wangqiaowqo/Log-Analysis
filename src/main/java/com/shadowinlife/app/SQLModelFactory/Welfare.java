@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class Welfare extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class Welfare extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,11 +131,11 @@ public class Welfare extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iWelfareWay;
-    public void setiWelfareWay(Integer iWelfareWay){
+    private Long iWelfareWay;
+    public void setiWelfareWay(Long iWelfareWay){
         this.iWelfareWay=iWelfareWay;
     }
-   public Integer getiWelfareWay() {
+   public Long getiWelfareWay() {
         return iWelfareWay;
     }
 
@@ -168,16 +167,16 @@ public class Welfare extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iWelfareWay = Integer.valueOf(iWelfareWay);
+        this.iWelfareWay = Long.valueOf(iWelfareWay);
         this.jWelfareItems = String.valueOf(jWelfareItems);
         this.vClientIP = String.valueOf(vClientIP);
     }

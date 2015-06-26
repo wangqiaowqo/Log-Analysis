@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -84,11 +83,11 @@ public class AccountLogin extends BaseBean implements Serializable {
         return dtCreateTime;
     }
 
-    private Integer iFeeFlag;
-    public void setiFeeFlag(Integer iFeeFlag){
+    private Long iFeeFlag;
+    public void setiFeeFlag(Long iFeeFlag){
         this.iFeeFlag=iFeeFlag;
     }
-   public Integer getiFeeFlag() {
+   public Long getiFeeFlag() {
         return iFeeFlag;
     }
 
@@ -115,7 +114,7 @@ public class AccountLogin extends BaseBean implements Serializable {
         this.vClientIp = String.valueOf(vClientIp);
         this.vZoneId = String.valueOf(vZoneId);
         this.dtCreateTime = Timestamp.valueOf(dtCreateTime);
-        this.iFeeFlag = Integer.valueOf(iFeeFlag);
+        this.iFeeFlag = Long.valueOf(iFeeFlag);
         this.vLoginWay = String.valueOf(vLoginWay);
     }
 }

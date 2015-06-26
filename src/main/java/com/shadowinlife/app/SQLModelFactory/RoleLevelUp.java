@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class RoleLevelUp extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class RoleLevelUp extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -140,19 +139,19 @@ public class RoleLevelUp extends BaseBean implements Serializable {
         return vClientIp;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
+    private Long iRoleExperience;
+    public void setiRoleExperience(Long iRoleExperience){
         this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiRoleExperience() {
+   public Long getiRoleExperience() {
         return iRoleExperience;
     }
 
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
+    private Long iRoleSword;
+    public void setiRoleSword(Long iRoleSword){
         this.iRoleSword=iRoleSword;
     }
-   public Integer getiRoleSword() {
+   public Long getiRoleSword() {
         return iRoleSword;
     }
 
@@ -164,19 +163,19 @@ public class RoleLevelUp extends BaseBean implements Serializable {
         return lTotalOnlineTime;
     }
 
-    private Integer iReason;
-    public void setiReason(Integer iReason){
-        this.iReason=iReason;
+    private String vReason;
+    public void setvReason(String vReason){
+        this.vReason=vReason;
     }
-   public Integer getiReason() {
-        return iReason;
+   public String getvReason() {
+        return vReason;
     }
 
     public RoleLevelUp parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
         return new RoleLevelUp(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18]);
     }
 
-    public RoleLevelUp(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String vClientIp,String iRoleExperience,String iRoleSword,String lTotalOnlineTime,String iReason){
+    public RoleLevelUp(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String vClientIp,String iRoleExperience,String iRoleSword,String lTotalOnlineTime,String vReason){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
@@ -184,19 +183,19 @@ public class RoleLevelUp extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.vClientIp = String.valueOf(vClientIp);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
+        this.iRoleExperience = Long.valueOf(iRoleExperience);
+        this.iRoleSword = Long.valueOf(iRoleSword);
         this.lTotalOnlineTime = Long.valueOf(lTotalOnlineTime);
-        this.iReason = Integer.valueOf(iReason);
+        this.vReason = String.valueOf(vReason);
     }
 }

@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,35 +131,35 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
+    private Long iRoleExperience;
+    public void setiRoleExperience(Long iRoleExperience){
         this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiRoleExperience() {
+   public Long getiRoleExperience() {
         return iRoleExperience;
     }
 
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
+    private Long iRoleSword;
+    public void setiRoleSword(Long iRoleSword){
         this.iRoleSword=iRoleSword;
     }
-   public Integer getiRoleSword() {
+   public Long getiRoleSword() {
         return iRoleSword;
     }
 
-    private Integer iFlag;
-    public void setiFlag(Integer iFlag){
+    private Long iFlag;
+    public void setiFlag(Long iFlag){
         this.iFlag=iFlag;
     }
-   public Integer getiFlag() {
+   public Long getiFlag() {
         return iFlag;
     }
 
-    private Integer iFlagType;
-    public void setiFlagType(Integer iFlagType){
+    private Long iFlagType;
+    public void setiFlagType(Long iFlagType){
         this.iFlagType=iFlagType;
     }
-   public Integer getiFlagType() {
+   public Long getiFlagType() {
         return iFlagType;
     }
 
@@ -172,11 +171,11 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vOtherUin;
     }
 
-    private Integer iOtherRoleId;
-    public void setiOtherRoleId(Integer iOtherRoleId){
+    private Long iOtherRoleId;
+    public void setiOtherRoleId(Long iOtherRoleId){
         this.iOtherRoleId=iOtherRoleId;
     }
-   public Integer getiOtherRoleId() {
+   public Long getiOtherRoleId() {
         return iOtherRoleId;
     }
 
@@ -188,43 +187,43 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vOtherRoleName;
     }
 
-    private Integer iOtherRoleJob;
-    public void setiOtherRoleJob(Integer iOtherRoleJob){
+    private Long iOtherRoleJob;
+    public void setiOtherRoleJob(Long iOtherRoleJob){
         this.iOtherRoleJob=iOtherRoleJob;
     }
-   public Integer getiOtherRoleJob() {
+   public Long getiOtherRoleJob() {
         return iOtherRoleJob;
     }
 
-    private Integer iOtherRoleGender;
-    public void setiOtherRoleGender(Integer iOtherRoleGender){
+    private Long iOtherRoleGender;
+    public void setiOtherRoleGender(Long iOtherRoleGender){
         this.iOtherRoleGender=iOtherRoleGender;
     }
-   public Integer getiOtherRoleGender() {
+   public Long getiOtherRoleGender() {
         return iOtherRoleGender;
     }
 
-    private Integer iOtherRoleLevel;
-    public void setiOtherRoleLevel(Integer iOtherRoleLevel){
+    private Long iOtherRoleLevel;
+    public void setiOtherRoleLevel(Long iOtherRoleLevel){
         this.iOtherRoleLevel=iOtherRoleLevel;
     }
-   public Integer getiOtherRoleLevel() {
+   public Long getiOtherRoleLevel() {
         return iOtherRoleLevel;
     }
 
-    private Integer iOtherRoleVipLevel;
-    public void setiOtherRoleVipLevel(Integer iOtherRoleVipLevel){
+    private Long iOtherRoleVipLevel;
+    public void setiOtherRoleVipLevel(Long iOtherRoleVipLevel){
         this.iOtherRoleVipLevel=iOtherRoleVipLevel;
     }
-   public Integer getiOtherRoleVipLevel() {
+   public Long getiOtherRoleVipLevel() {
         return iOtherRoleVipLevel;
     }
 
-    private Integer iOtherRoleReputationLevel;
-    public void setiOtherRoleReputationLevel(Integer iOtherRoleReputationLevel){
+    private Long iOtherRoleReputationLevel;
+    public void setiOtherRoleReputationLevel(Long iOtherRoleReputationLevel){
         this.iOtherRoleReputationLevel=iOtherRoleReputationLevel;
     }
-   public Integer getiOtherRoleReputationLevel() {
+   public Long getiOtherRoleReputationLevel() {
         return iOtherRoleReputationLevel;
     }
 
@@ -244,27 +243,27 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vOtherRoleElse2;
     }
 
-    private Integer iOtherRoleExperience;
-    public void setiOtherRoleExperience(Integer iOtherRoleExperience){
+    private Long iOtherRoleExperience;
+    public void setiOtherRoleExperience(Long iOtherRoleExperience){
         this.iOtherRoleExperience=iOtherRoleExperience;
     }
-   public Integer getiOtherRoleExperience() {
+   public Long getiOtherRoleExperience() {
         return iOtherRoleExperience;
     }
 
-    private Integer iOtherRoleSword;
-    public void setiOtherRoleSword(Integer iOtherRoleSword){
+    private Long iOtherRoleSword;
+    public void setiOtherRoleSword(Long iOtherRoleSword){
         this.iOtherRoleSword=iOtherRoleSword;
     }
-   public Integer getiOtherRoleSword() {
+   public Long getiOtherRoleSword() {
         return iOtherRoleSword;
     }
 
-    private Integer iPartyId;
-    public void setiPartyId(Integer iPartyId){
+    private Long iPartyId;
+    public void setiPartyId(Long iPartyId){
         this.iPartyId=iPartyId;
     }
-   public Integer getiPartyId() {
+   public Long getiPartyId() {
         return iPartyId;
     }
 
@@ -276,35 +275,35 @@ public class PartyAddMember extends BaseBean implements Serializable {
         return vPartyName;
     }
 
-    private Integer iPartyLevel;
-    public void setiPartyLevel(Integer iPartyLevel){
+    private Long iPartyLevel;
+    public void setiPartyLevel(Long iPartyLevel){
         this.iPartyLevel=iPartyLevel;
     }
-   public Integer getiPartyLevel() {
+   public Long getiPartyLevel() {
         return iPartyLevel;
     }
 
-    private Integer iPartyMoney;
-    public void setiPartyMoney(Integer iPartyMoney){
+    private Long iPartyMoney;
+    public void setiPartyMoney(Long iPartyMoney){
         this.iPartyMoney=iPartyMoney;
     }
-   public Integer getiPartyMoney() {
+   public Long getiPartyMoney() {
         return iPartyMoney;
     }
 
-    private Integer iPartyPolity;
-    public void setiPartyPolity(Integer iPartyPolity){
+    private Long iPartyPolity;
+    public void setiPartyPolity(Long iPartyPolity){
         this.iPartyPolity=iPartyPolity;
     }
-   public Integer getiPartyPolity() {
+   public Long getiPartyPolity() {
         return iPartyPolity;
     }
 
-    private Integer iMemeberNum;
-    public void setiMemeberNum(Integer iMemeberNum){
+    private Long iMemeberNum;
+    public void setiMemeberNum(Long iMemeberNum){
         this.iMemeberNum=iMemeberNum;
     }
-   public Integer getiMemeberNum() {
+   public Long getiMemeberNum() {
         return iMemeberNum;
     }
 
@@ -320,36 +319,36 @@ public class PartyAddMember extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iFlag = Integer.valueOf(iFlag);
-        this.iFlagType = Integer.valueOf(iFlagType);
+        this.iRoleExperience = Long.valueOf(iRoleExperience);
+        this.iRoleSword = Long.valueOf(iRoleSword);
+        this.iFlag = Long.valueOf(iFlag);
+        this.iFlagType = Long.valueOf(iFlagType);
         this.vOtherUin = String.valueOf(vOtherUin);
-        this.iOtherRoleId = Integer.valueOf(iOtherRoleId);
+        this.iOtherRoleId = Long.valueOf(iOtherRoleId);
         this.vOtherRoleName = String.valueOf(vOtherRoleName);
-        this.iOtherRoleJob = Integer.valueOf(iOtherRoleJob);
-        this.iOtherRoleGender = Integer.valueOf(iOtherRoleGender);
-        this.iOtherRoleLevel = Integer.valueOf(iOtherRoleLevel);
-        this.iOtherRoleVipLevel = Integer.valueOf(iOtherRoleVipLevel);
-        this.iOtherRoleReputationLevel = Integer.valueOf(iOtherRoleReputationLevel);
+        this.iOtherRoleJob = Long.valueOf(iOtherRoleJob);
+        this.iOtherRoleGender = Long.valueOf(iOtherRoleGender);
+        this.iOtherRoleLevel = Long.valueOf(iOtherRoleLevel);
+        this.iOtherRoleVipLevel = Long.valueOf(iOtherRoleVipLevel);
+        this.iOtherRoleReputationLevel = Long.valueOf(iOtherRoleReputationLevel);
         this.vOtherRoleElse1 = String.valueOf(vOtherRoleElse1);
         this.vOtherRoleElse2 = String.valueOf(vOtherRoleElse2);
-        this.iOtherRoleExperience = Integer.valueOf(iOtherRoleExperience);
-        this.iOtherRoleSword = Integer.valueOf(iOtherRoleSword);
-        this.iPartyId = Integer.valueOf(iPartyId);
+        this.iOtherRoleExperience = Long.valueOf(iOtherRoleExperience);
+        this.iOtherRoleSword = Long.valueOf(iOtherRoleSword);
+        this.iPartyId = Long.valueOf(iPartyId);
         this.vPartyName = String.valueOf(vPartyName);
-        this.iPartyLevel = Integer.valueOf(iPartyLevel);
-        this.iPartyMoney = Integer.valueOf(iPartyMoney);
-        this.iPartyPolity = Integer.valueOf(iPartyPolity);
-        this.iMemeberNum = Integer.valueOf(iMemeberNum);
+        this.iPartyLevel = Long.valueOf(iPartyLevel);
+        this.iPartyMoney = Long.valueOf(iPartyMoney);
+        this.iPartyPolity = Long.valueOf(iPartyPolity);
+        this.iMemeberNum = Long.valueOf(iMemeberNum);
     }
 }

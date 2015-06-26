@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class Shop extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class Shop extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,19 +131,19 @@ public class Shop extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
+    private Long iRoleExperience;
+    public void setiRoleExperience(Long iRoleExperience){
         this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiRoleExperience() {
+   public Long getiRoleExperience() {
         return iRoleExperience;
     }
 
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
+    private Long iRoleSword;
+    public void setiRoleSword(Long iRoleSword){
         this.iRoleSword=iRoleSword;
     }
-   public Integer getiRoleSword() {
+   public Long getiRoleSword() {
         return iRoleSword;
     }
 
@@ -156,11 +155,11 @@ public class Shop extends BaseBean implements Serializable {
         return vClientIp;
     }
 
-    private Integer iTradeType;
-    public void setiTradeType(Integer iTradeType){
+    private Long iTradeType;
+    public void setiTradeType(Long iTradeType){
         this.iTradeType=iTradeType;
     }
-   public Integer getiTradeType() {
+   public Long getiTradeType() {
         return iTradeType;
     }
 
@@ -172,115 +171,115 @@ public class Shop extends BaseBean implements Serializable {
         return vReceiverUin;
     }
 
-    private Integer iReceiverRoleId;
-    public void setiReceiverRoleId(Integer iReceiverRoleId){
+    private Long iReceiverRoleId;
+    public void setiReceiverRoleId(Long iReceiverRoleId){
         this.iReceiverRoleId=iReceiverRoleId;
     }
-   public Integer getiReceiverRoleId() {
+   public Long getiReceiverRoleId() {
         return iReceiverRoleId;
     }
 
-    private Integer iShopType;
-    public void setiShopType(Integer iShopType){
+    private Long iShopType;
+    public void setiShopType(Long iShopType){
         this.iShopType=iShopType;
     }
-   public Integer getiShopType() {
+   public Long getiShopType() {
         return iShopType;
     }
 
-    private Integer iShopID;
-    public void setiShopID(Integer iShopID){
+    private Long iShopID;
+    public void setiShopID(Long iShopID){
         this.iShopID=iShopID;
     }
-   public Integer getiShopID() {
+   public Long getiShopID() {
         return iShopID;
     }
 
-    private Integer iCostType;
-    public void setiCostType(Integer iCostType){
+    private Long iCostType;
+    public void setiCostType(Long iCostType){
         this.iCostType=iCostType;
     }
-   public Integer getiCostType() {
+   public Long getiCostType() {
         return iCostType;
     }
 
-    private Integer iCostWay;
-    public void setiCostWay(Integer iCostWay){
+    private Long iCostWay;
+    public void setiCostWay(Long iCostWay){
         this.iCostWay=iCostWay;
     }
-   public Integer getiCostWay() {
+   public Long getiCostWay() {
         return iCostWay;
     }
 
-    private Integer iCost;
-    public void setiCost(Integer iCost){
+    private Long iCost;
+    public void setiCost(Long iCost){
         this.iCost=iCost;
     }
-   public Integer getiCost() {
+   public Long getiCost() {
         return iCost;
     }
 
-    private Integer iRemain;
-    public void setiRemain(Integer iRemain){
+    private Long iRemain;
+    public void setiRemain(Long iRemain){
         this.iRemain=iRemain;
     }
-   public Integer getiRemain() {
+   public Long getiRemain() {
         return iRemain;
     }
 
-    private Integer iGoodsType;
-    public void setiGoodsType(Integer iGoodsType){
+    private Long iGoodsType;
+    public void setiGoodsType(Long iGoodsType){
         this.iGoodsType=iGoodsType;
     }
-   public Integer getiGoodsType() {
+   public Long getiGoodsType() {
         return iGoodsType;
     }
 
-    private Integer iGoodsPage;
-    public void setiGoodsPage(Integer iGoodsPage){
+    private Long iGoodsPage;
+    public void setiGoodsPage(Long iGoodsPage){
         this.iGoodsPage=iGoodsPage;
     }
-   public Integer getiGoodsPage() {
+   public Long getiGoodsPage() {
         return iGoodsPage;
     }
 
-    private Integer iGoodsId;
-    public void setiGoodsId(Integer iGoodsId){
+    private Long iGoodsId;
+    public void setiGoodsId(Long iGoodsId){
         this.iGoodsId=iGoodsId;
     }
-   public Integer getiGoodsId() {
+   public Long getiGoodsId() {
         return iGoodsId;
     }
 
-    private Integer iGoodsNum;
-    public void setiGoodsNum(Integer iGoodsNum){
+    private Long iGoodsNum;
+    public void setiGoodsNum(Long iGoodsNum){
         this.iGoodsNum=iGoodsNum;
     }
-   public Integer getiGoodsNum() {
+   public Long getiGoodsNum() {
         return iGoodsNum;
     }
 
-    private Integer iRebateType;
-    public void setiRebateType(Integer iRebateType){
+    private Long iRebateType;
+    public void setiRebateType(Long iRebateType){
         this.iRebateType=iRebateType;
     }
-   public Integer getiRebateType() {
+   public Long getiRebateType() {
         return iRebateType;
     }
 
-    private Integer iRebateRate;
-    public void setiRebateRate(Integer iRebateRate){
+    private Long iRebateRate;
+    public void setiRebateRate(Long iRebateRate){
         this.iRebateRate=iRebateRate;
     }
-   public Integer getiRebateRate() {
+   public Long getiRebateRate() {
         return iRebateRate;
     }
 
-    private Integer iItemGuid;
-    public void setiItemGuid(Integer iItemGuid){
+    private Long iItemGuid;
+    public void setiItemGuid(Long iItemGuid){
         this.iItemGuid=iItemGuid;
     }
-   public Integer getiItemGuid() {
+   public Long getiItemGuid() {
         return iItemGuid;
     }
 
@@ -312,34 +311,34 @@ public class Shop extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
+        this.iRoleExperience = Long.valueOf(iRoleExperience);
+        this.iRoleSword = Long.valueOf(iRoleSword);
         this.vClientIp = String.valueOf(vClientIp);
-        this.iTradeType = Integer.valueOf(iTradeType);
+        this.iTradeType = Long.valueOf(iTradeType);
         this.vReceiverUin = String.valueOf(vReceiverUin);
-        this.iReceiverRoleId = Integer.valueOf(iReceiverRoleId);
-        this.iShopType = Integer.valueOf(iShopType);
-        this.iShopID = Integer.valueOf(iShopID);
-        this.iCostType = Integer.valueOf(iCostType);
-        this.iCostWay = Integer.valueOf(iCostWay);
-        this.iCost = Integer.valueOf(iCost);
-        this.iRemain = Integer.valueOf(iRemain);
-        this.iGoodsType = Integer.valueOf(iGoodsType);
-        this.iGoodsPage = Integer.valueOf(iGoodsPage);
-        this.iGoodsId = Integer.valueOf(iGoodsId);
-        this.iGoodsNum = Integer.valueOf(iGoodsNum);
-        this.iRebateType = Integer.valueOf(iRebateType);
-        this.iRebateRate = Integer.valueOf(iRebateRate);
-        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iReceiverRoleId = Long.valueOf(iReceiverRoleId);
+        this.iShopType = Long.valueOf(iShopType);
+        this.iShopID = Long.valueOf(iShopID);
+        this.iCostType = Long.valueOf(iCostType);
+        this.iCostWay = Long.valueOf(iCostWay);
+        this.iCost = Long.valueOf(iCost);
+        this.iRemain = Long.valueOf(iRemain);
+        this.iGoodsType = Long.valueOf(iGoodsType);
+        this.iGoodsPage = Long.valueOf(iGoodsPage);
+        this.iGoodsId = Long.valueOf(iGoodsId);
+        this.iGoodsNum = Long.valueOf(iGoodsNum);
+        this.iRebateType = Long.valueOf(iRebateType);
+        this.iRebateRate = Long.valueOf(iRebateRate);
+        this.iItemGuid = Long.valueOf(iItemGuid);
         this.vReMarks = String.valueOf(vReMarks);
         this.vLoginWay = String.valueOf(vLoginWay);
     }

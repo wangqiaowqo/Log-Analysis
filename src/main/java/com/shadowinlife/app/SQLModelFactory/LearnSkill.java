@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class LearnSkill extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class LearnSkill extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,83 +131,83 @@ public class LearnSkill extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iMapId;
-    public void setiMapId(Integer iMapId){
+    private Long iMapId;
+    public void setiMapId(Long iMapId){
         this.iMapId=iMapId;
     }
-   public Integer getiMapId() {
+   public Long getiMapId() {
         return iMapId;
     }
 
-    private Integer iPosX;
-    public void setiPosX(Integer iPosX){
+    private Long iPosX;
+    public void setiPosX(Long iPosX){
         this.iPosX=iPosX;
     }
-   public Integer getiPosX() {
+   public Long getiPosX() {
         return iPosX;
     }
 
-    private Integer iPosY;
-    public void setiPosY(Integer iPosY){
+    private Long iPosY;
+    public void setiPosY(Long iPosY){
         this.iPosY=iPosY;
     }
-   public Integer getiPosY() {
+   public Long getiPosY() {
         return iPosY;
     }
 
-    private Integer iSkillTpye;
-    public void setiSkillTpye(Integer iSkillTpye){
+    private Long iSkillTpye;
+    public void setiSkillTpye(Long iSkillTpye){
         this.iSkillTpye=iSkillTpye;
     }
-   public Integer getiSkillTpye() {
+   public Long getiSkillTpye() {
         return iSkillTpye;
     }
 
-    private Integer iSkillId;
-    public void setiSkillId(Integer iSkillId){
+    private Long iSkillId;
+    public void setiSkillId(Long iSkillId){
         this.iSkillId=iSkillId;
     }
-   public Integer getiSkillId() {
+   public Long getiSkillId() {
         return iSkillId;
     }
 
-    private Integer iCurrSkillLv;
-    public void setiCurrSkillLv(Integer iCurrSkillLv){
+    private Long iCurrSkillLv;
+    public void setiCurrSkillLv(Long iCurrSkillLv){
         this.iCurrSkillLv=iCurrSkillLv;
     }
-   public Integer getiCurrSkillLv() {
+   public Long getiCurrSkillLv() {
         return iCurrSkillLv;
     }
 
-    private Integer iSkillLvAfterLearn;
-    public void setiSkillLvAfterLearn(Integer iSkillLvAfterLearn){
+    private Long iSkillLvAfterLearn;
+    public void setiSkillLvAfterLearn(Long iSkillLvAfterLearn){
         this.iSkillLvAfterLearn=iSkillLvAfterLearn;
     }
-   public Integer getiSkillLvAfterLearn() {
+   public Long getiSkillLvAfterLearn() {
         return iSkillLvAfterLearn;
     }
 
-    private Integer iNpcId;
-    public void setiNpcId(Integer iNpcId){
+    private Long iNpcId;
+    public void setiNpcId(Long iNpcId){
         this.iNpcId=iNpcId;
     }
-   public Integer getiNpcId() {
+   public Long getiNpcId() {
         return iNpcId;
     }
 
-    private Integer iNpcPosX;
-    public void setiNpcPosX(Integer iNpcPosX){
+    private Long iNpcPosX;
+    public void setiNpcPosX(Long iNpcPosX){
         this.iNpcPosX=iNpcPosX;
     }
-   public Integer getiNpcPosX() {
+   public Long getiNpcPosX() {
         return iNpcPosX;
     }
 
-    private Integer iNpcPosY;
-    public void setiNpcPosY(Integer iNpcPosY){
+    private Long iNpcPosY;
+    public void setiNpcPosY(Long iNpcPosY){
         this.iNpcPosY=iNpcPosY;
     }
-   public Integer getiNpcPosY() {
+   public Long getiNpcPosY() {
         return iNpcPosY;
     }
 
@@ -224,24 +223,24 @@ public class LearnSkill extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iMapId = Integer.valueOf(iMapId);
-        this.iPosX = Integer.valueOf(iPosX);
-        this.iPosY = Integer.valueOf(iPosY);
-        this.iSkillTpye = Integer.valueOf(iSkillTpye);
-        this.iSkillId = Integer.valueOf(iSkillId);
-        this.iCurrSkillLv = Integer.valueOf(iCurrSkillLv);
-        this.iSkillLvAfterLearn = Integer.valueOf(iSkillLvAfterLearn);
-        this.iNpcId = Integer.valueOf(iNpcId);
-        this.iNpcPosX = Integer.valueOf(iNpcPosX);
-        this.iNpcPosY = Integer.valueOf(iNpcPosY);
+        this.iMapId = Long.valueOf(iMapId);
+        this.iPosX = Long.valueOf(iPosX);
+        this.iPosY = Long.valueOf(iPosY);
+        this.iSkillTpye = Long.valueOf(iSkillTpye);
+        this.iSkillId = Long.valueOf(iSkillId);
+        this.iCurrSkillLv = Long.valueOf(iCurrSkillLv);
+        this.iSkillLvAfterLearn = Long.valueOf(iSkillLvAfterLearn);
+        this.iNpcId = Long.valueOf(iNpcId);
+        this.iNpcPosX = Long.valueOf(iNpcPosX);
+        this.iNpcPosY = Long.valueOf(iNpcPosY);
     }
 }

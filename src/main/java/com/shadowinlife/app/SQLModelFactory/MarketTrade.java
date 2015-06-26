@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class MarketTrade extends BaseBean implements Serializable {
         return vBuyerUin;
     }
 
-    private Integer iBuyerRoleId;
-    public void setiBuyerRoleId(Integer iBuyerRoleId){
+    private Long iBuyerRoleId;
+    public void setiBuyerRoleId(Long iBuyerRoleId){
         this.iBuyerRoleId=iBuyerRoleId;
     }
-   public Integer getiBuyerRoleId() {
+   public Long getiBuyerRoleId() {
         return iBuyerRoleId;
     }
 
@@ -76,43 +75,43 @@ public class MarketTrade extends BaseBean implements Serializable {
         return vBuyerName;
     }
 
-    private Integer iBuyerJobId;
-    public void setiBuyerJobId(Integer iBuyerJobId){
+    private Long iBuyerJobId;
+    public void setiBuyerJobId(Long iBuyerJobId){
         this.iBuyerJobId=iBuyerJobId;
     }
-   public Integer getiBuyerJobId() {
+   public Long getiBuyerJobId() {
         return iBuyerJobId;
     }
 
-    private Integer iBuyerGender;
-    public void setiBuyerGender(Integer iBuyerGender){
+    private Long iBuyerGender;
+    public void setiBuyerGender(Long iBuyerGender){
         this.iBuyerGender=iBuyerGender;
     }
-   public Integer getiBuyerGender() {
+   public Long getiBuyerGender() {
         return iBuyerGender;
     }
 
-    private Integer iBuyerLevel;
-    public void setiBuyerLevel(Integer iBuyerLevel){
+    private Long iBuyerLevel;
+    public void setiBuyerLevel(Long iBuyerLevel){
         this.iBuyerLevel=iBuyerLevel;
     }
-   public Integer getiBuyerLevel() {
+   public Long getiBuyerLevel() {
         return iBuyerLevel;
     }
 
-    private Integer iBuyerVipLevel;
-    public void setiBuyerVipLevel(Integer iBuyerVipLevel){
+    private Long iBuyerVipLevel;
+    public void setiBuyerVipLevel(Long iBuyerVipLevel){
         this.iBuyerVipLevel=iBuyerVipLevel;
     }
-   public Integer getiBuyerVipLevel() {
+   public Long getiBuyerVipLevel() {
         return iBuyerVipLevel;
     }
 
-    private Integer iBuyerReputationLevel;
-    public void setiBuyerReputationLevel(Integer iBuyerReputationLevel){
+    private Long iBuyerReputationLevel;
+    public void setiBuyerReputationLevel(Long iBuyerReputationLevel){
         this.iBuyerReputationLevel=iBuyerReputationLevel;
     }
-   public Integer getiBuyerReputationLevel() {
+   public Long getiBuyerReputationLevel() {
         return iBuyerReputationLevel;
     }
 
@@ -132,27 +131,27 @@ public class MarketTrade extends BaseBean implements Serializable {
         return vBuyerRoleElse2;
     }
 
-    private Integer iMoneyBeforeTrade;
-    public void setiMoneyBeforeTrade(Integer iMoneyBeforeTrade){
+    private Long iMoneyBeforeTrade;
+    public void setiMoneyBeforeTrade(Long iMoneyBeforeTrade){
         this.iMoneyBeforeTrade=iMoneyBeforeTrade;
     }
-   public Integer getiMoneyBeforeTrade() {
+   public Long getiMoneyBeforeTrade() {
         return iMoneyBeforeTrade;
     }
 
-    private Integer iMoneyAfterTrade;
-    public void setiMoneyAfterTrade(Integer iMoneyAfterTrade){
+    private Long iMoneyAfterTrade;
+    public void setiMoneyAfterTrade(Long iMoneyAfterTrade){
         this.iMoneyAfterTrade=iMoneyAfterTrade;
     }
-   public Integer getiMoneyAfterTrade() {
+   public Long getiMoneyAfterTrade() {
         return iMoneyAfterTrade;
     }
 
-    private Integer iSellerType;
-    public void setiSellerType(Integer iSellerType){
+    private Long iSellerType;
+    public void setiSellerType(Long iSellerType){
         this.iSellerType=iSellerType;
     }
-   public Integer getiSellerType() {
+   public Long getiSellerType() {
         return iSellerType;
     }
 
@@ -164,11 +163,11 @@ public class MarketTrade extends BaseBean implements Serializable {
         return vSellerUin;
     }
 
-    private Integer iSellerRoleId;
-    public void setiSellerRoleId(Integer iSellerRoleId){
+    private Long iSellerRoleId;
+    public void setiSellerRoleId(Long iSellerRoleId){
         this.iSellerRoleId=iSellerRoleId;
     }
-   public Integer getiSellerRoleId() {
+   public Long getiSellerRoleId() {
         return iSellerRoleId;
     }
 
@@ -180,43 +179,43 @@ public class MarketTrade extends BaseBean implements Serializable {
         return vSellerName;
     }
 
-    private Integer iSellerJobId;
-    public void setiSellerJobId(Integer iSellerJobId){
+    private Long iSellerJobId;
+    public void setiSellerJobId(Long iSellerJobId){
         this.iSellerJobId=iSellerJobId;
     }
-   public Integer getiSellerJobId() {
+   public Long getiSellerJobId() {
         return iSellerJobId;
     }
 
-    private Integer iSellerGender;
-    public void setiSellerGender(Integer iSellerGender){
+    private Long iSellerGender;
+    public void setiSellerGender(Long iSellerGender){
         this.iSellerGender=iSellerGender;
     }
-   public Integer getiSellerGender() {
+   public Long getiSellerGender() {
         return iSellerGender;
     }
 
-    private Integer iSellerLevel;
-    public void setiSellerLevel(Integer iSellerLevel){
+    private Long iSellerLevel;
+    public void setiSellerLevel(Long iSellerLevel){
         this.iSellerLevel=iSellerLevel;
     }
-   public Integer getiSellerLevel() {
+   public Long getiSellerLevel() {
         return iSellerLevel;
     }
 
-    private Integer iSellerVipLevel;
-    public void setiSellerVipLevel(Integer iSellerVipLevel){
+    private Long iSellerVipLevel;
+    public void setiSellerVipLevel(Long iSellerVipLevel){
         this.iSellerVipLevel=iSellerVipLevel;
     }
-   public Integer getiSellerVipLevel() {
+   public Long getiSellerVipLevel() {
         return iSellerVipLevel;
     }
 
-    private Integer iSellerReputationLevel;
-    public void setiSellerReputationLevel(Integer iSellerReputationLevel){
+    private Long iSellerReputationLevel;
+    public void setiSellerReputationLevel(Long iSellerReputationLevel){
         this.iSellerReputationLevel=iSellerReputationLevel;
     }
-   public Integer getiSellerReputationLevel() {
+   public Long getiSellerReputationLevel() {
         return iSellerReputationLevel;
     }
 
@@ -236,51 +235,51 @@ public class MarketTrade extends BaseBean implements Serializable {
         return vSellerClientIp;
     }
 
-    private Integer iPayment;
-    public void setiPayment(Integer iPayment){
+    private Long iPayment;
+    public void setiPayment(Long iPayment){
         this.iPayment=iPayment;
     }
-   public Integer getiPayment() {
+   public Long getiPayment() {
         return iPayment;
     }
 
-    private Integer iGoodsCount;
-    public void setiGoodsCount(Integer iGoodsCount){
+    private Long iGoodsCount;
+    public void setiGoodsCount(Long iGoodsCount){
         this.iGoodsCount=iGoodsCount;
     }
-   public Integer getiGoodsCount() {
+   public Long getiGoodsCount() {
         return iGoodsCount;
     }
 
-    private Integer iItemId;
-    public void setiItemId(Integer iItemId){
+    private Long iItemId;
+    public void setiItemId(Long iItemId){
         this.iItemId=iItemId;
     }
-   public Integer getiItemId() {
+   public Long getiItemId() {
         return iItemId;
     }
 
-    private Integer iItemType;
-    public void setiItemType(Integer iItemType){
+    private Long iItemType;
+    public void setiItemType(Long iItemType){
         this.iItemType=iItemType;
     }
-   public Integer getiItemType() {
+   public Long getiItemType() {
         return iItemType;
     }
 
-    private Integer iItemNum;
-    public void setiItemNum(Integer iItemNum){
+    private Long iItemNum;
+    public void setiItemNum(Long iItemNum){
         this.iItemNum=iItemNum;
     }
-   public Integer getiItemNum() {
+   public Long getiItemNum() {
         return iItemNum;
     }
 
-    private Integer iItemGuid;
-    public void setiItemGuid(Integer iItemGuid){
+    private Long iItemGuid;
+    public void setiItemGuid(Long iItemGuid){
         this.iItemGuid=iItemGuid;
     }
-   public Integer getiItemGuid() {
+   public Long getiItemGuid() {
         return iItemGuid;
     }
 
@@ -296,33 +295,33 @@ public class MarketTrade extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vBuyerUin = String.valueOf(vBuyerUin);
-        this.iBuyerRoleId = Integer.valueOf(iBuyerRoleId);
+        this.iBuyerRoleId = Long.valueOf(iBuyerRoleId);
         this.vBuyerName = String.valueOf(vBuyerName);
-        this.iBuyerJobId = Integer.valueOf(iBuyerJobId);
-        this.iBuyerGender = Integer.valueOf(iBuyerGender);
-        this.iBuyerLevel = Integer.valueOf(iBuyerLevel);
-        this.iBuyerVipLevel = Integer.valueOf(iBuyerVipLevel);
-        this.iBuyerReputationLevel = Integer.valueOf(iBuyerReputationLevel);
+        this.iBuyerJobId = Long.valueOf(iBuyerJobId);
+        this.iBuyerGender = Long.valueOf(iBuyerGender);
+        this.iBuyerLevel = Long.valueOf(iBuyerLevel);
+        this.iBuyerVipLevel = Long.valueOf(iBuyerVipLevel);
+        this.iBuyerReputationLevel = Long.valueOf(iBuyerReputationLevel);
         this.vBuyerRoleElse1 = String.valueOf(vBuyerRoleElse1);
         this.vBuyerRoleElse2 = String.valueOf(vBuyerRoleElse2);
-        this.iMoneyBeforeTrade = Integer.valueOf(iMoneyBeforeTrade);
-        this.iMoneyAfterTrade = Integer.valueOf(iMoneyAfterTrade);
-        this.iSellerType = Integer.valueOf(iSellerType);
+        this.iMoneyBeforeTrade = Long.valueOf(iMoneyBeforeTrade);
+        this.iMoneyAfterTrade = Long.valueOf(iMoneyAfterTrade);
+        this.iSellerType = Long.valueOf(iSellerType);
         this.vSellerUin = String.valueOf(vSellerUin);
-        this.iSellerRoleId = Integer.valueOf(iSellerRoleId);
+        this.iSellerRoleId = Long.valueOf(iSellerRoleId);
         this.vSellerName = String.valueOf(vSellerName);
-        this.iSellerJobId = Integer.valueOf(iSellerJobId);
-        this.iSellerGender = Integer.valueOf(iSellerGender);
-        this.iSellerLevel = Integer.valueOf(iSellerLevel);
-        this.iSellerVipLevel = Integer.valueOf(iSellerVipLevel);
-        this.iSellerReputationLevel = Integer.valueOf(iSellerReputationLevel);
+        this.iSellerJobId = Long.valueOf(iSellerJobId);
+        this.iSellerGender = Long.valueOf(iSellerGender);
+        this.iSellerLevel = Long.valueOf(iSellerLevel);
+        this.iSellerVipLevel = Long.valueOf(iSellerVipLevel);
+        this.iSellerReputationLevel = Long.valueOf(iSellerReputationLevel);
         this.vBuyerClientIp = String.valueOf(vBuyerClientIp);
         this.vSellerClientIp = String.valueOf(vSellerClientIp);
-        this.iPayment = Integer.valueOf(iPayment);
-        this.iGoodsCount = Integer.valueOf(iGoodsCount);
-        this.iItemId = Integer.valueOf(iItemId);
-        this.iItemType = Integer.valueOf(iItemType);
-        this.iItemNum = Integer.valueOf(iItemNum);
-        this.iItemGuid = Integer.valueOf(iItemGuid);
+        this.iPayment = Long.valueOf(iPayment);
+        this.iGoodsCount = Long.valueOf(iGoodsCount);
+        this.iItemId = Long.valueOf(iItemId);
+        this.iItemType = Long.valueOf(iItemType);
+        this.iItemNum = Long.valueOf(iItemNum);
+        this.iItemGuid = Long.valueOf(iItemGuid);
     }
 }

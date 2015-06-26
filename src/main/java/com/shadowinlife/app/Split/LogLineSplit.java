@@ -50,7 +50,7 @@ public class LogLineSplit {
     }
 
     public static LogLineSplit parseFromLogFile(String logline) {
-        String[] splitIndex = logline.split("\\|", 31);
+        String[] splitIndex = logline.split("\\|", 50);
         if (splitIndex.length > 2) {
 
             return new LogLineSplit(splitIndex[0], splitIndex);

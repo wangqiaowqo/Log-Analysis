@@ -1,282 +1,210 @@
 package com.shadowinlife.app.SQLModelFactory;
+import java.io.*;
+import java.sql.*;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-
-import jodd.util.StringUtil;
-/**
-+--------------+------------------+------+-----+---------+-------+
-| Field        | Type             | Null | Key | Default | Extra |
-+--------------+------------------+------+-----+---------+-------+
-| vTableFlage  | varchar(64)      | NO   |     |Chongzhi |       |
-| dtEventTime  | datetime         | YES  |     | NULL    |       |
-| iEventId     | varchar(64)      | NO   |     |         |       |
-| version      | varchar(64)      | NO   |     |         |       |
-| iUin         | varchar(64)      | NO   |     |         |       |
-| iRoleId      | int(11) unsigned | NO   |     | 0       |       |
-| vRoleName    | varchar(32)      | NO   |     |         |       |
-| iRoleJob     | int(11) unsigned | NO   |     | 0       |       |
-| iRoleSex     | int(11) unsigned | NO   |     | 0       |       |
-| iRoleLevel   | int(11) unsigned | NO   |     | 0       |       |
-| iRoleVipLevel| int(11) unsigned | NO   |     | 0       |       |
-| iRepuLevel   | int(11) unsigned | NO   |     | 0       |       |
-| v1           | varchar(32)      | NO   |     |         |       |
-| v2           | varchar(32)      | NO   |     |         |       |
-| iBeforeMoney | long             | NO   |     |         |       |
-| iAfterMoney  | long             | NO   |     |         |       |
-| iMoneyType   | int(11) unsigned | NO   |     | 0       |       |
-| iMoney       | long             | NO   |     | 0       |       |
-| iFlowType    | int              | NO   |     | 0       |       |
-| iAction      | int              | NO   |     | 0       |       |
-+--------------+------------------+------+-----+---------+-------+
-*/
 public class MoneyFlow extends BaseBean implements Serializable {
+    public MoneyFlow() {
+        super();
+    }
     private int iAccountType;
     private int iGameId;
     private int iWorldId;
+    public int getiAccountType() {
+        return iAccountType;
+    }
+    public int getiGameId() {
+        return iGameId;
+    }
+    public int getiWorldId() {
+        return iWorldId;
+    }
+    public void setiAccountType(int iAccountType) {
+        this.iAccountType = iAccountType;
+    }
+    public void setiGameId(int iGameId) {
+        this.iGameId = iGameId;
+    }
+    public void setiWorldId(int iWorldId) {
+        this.iWorldId = iWorldId;
+    }
     private Timestamp dtEventTime;
-    private String iEventId;
+    public void setdtEventTime(Timestamp dtEventTime){
+        this.dtEventTime=dtEventTime;
+    }
+   public Timestamp getdtEventTime() {
+        return dtEventTime;
+    }
+
+    private Long iEventId;
+    public void setiEventId(Long iEventId){
+        this.iEventId=iEventId;
+    }
+   public Long getiEventId() {
+        return iEventId;
+    }
+
     private String vVersionId;
+    public void setvVersionId(String vVersionId){
+        this.vVersionId=vVersionId;
+    }
+   public String getvVersionId() {
+        return vVersionId;
+    }
+
     private String vUin;
-    private int iRoleId;
+    public void setvUin(String vUin){
+        this.vUin=vUin;
+    }
+   public String getvUin() {
+        return vUin;
+    }
+
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
+        this.iRoleId=iRoleId;
+    }
+   public Long getiRoleId() {
+        return iRoleId;
+    }
+
     private String vRoleName;
-    private int iRoleJob;
-    private int iRoleGender;
-    private int iRoleLevel;
-    private int iRoleVipLevel;
-    private int iRoleReputationLevel;
+    public void setvRoleName(String vRoleName){
+        this.vRoleName=vRoleName;
+    }
+   public String getvRoleName() {
+        return vRoleName;
+    }
+
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
+        this.iRoleJob=iRoleJob;
+    }
+   public Long getiRoleJob() {
+        return iRoleJob;
+    }
+
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
+        this.iRoleGender=iRoleGender;
+    }
+   public Long getiRoleGender() {
+        return iRoleGender;
+    }
+
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
+        this.iRoleLevel=iRoleLevel;
+    }
+   public Long getiRoleLevel() {
+        return iRoleLevel;
+    }
+
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
+        this.iRoleVipLevel=iRoleVipLevel;
+    }
+   public Long getiRoleVipLevel() {
+        return iRoleVipLevel;
+    }
+
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
+        this.iRoleReputationLevel=iRoleReputationLevel;
+    }
+   public Long getiRoleReputationLevel() {
+        return iRoleReputationLevel;
+    }
+
     private String vRoleElse1;
+    public void setvRoleElse1(String vRoleElse1){
+        this.vRoleElse1=vRoleElse1;
+    }
+   public String getvRoleElse1() {
+        return vRoleElse1;
+    }
+
     private String vRoleElse2;
-    
-    private long iBeforeMoney;
-    private long iAfterMoney;
-    private int iMoneyType;
+    public void setvRoleElse2(String vRoleElse2){
+        this.vRoleElse2=vRoleElse2;
+    }
+   public String getvRoleElse2() {
+        return vRoleElse2;
+    }
+
+    private Long iBeforeMoney;
+    public void setiBeforeMoney(Long iBeforeMoney){
+        this.iBeforeMoney=iBeforeMoney;
+    }
+   public Long getiBeforeMoney() {
+        return iBeforeMoney;
+    }
+
+    private Long iAfterMoney;
+    public void setiAfterMoney(Long iAfterMoney){
+        this.iAfterMoney=iAfterMoney;
+    }
+   public Long getiAfterMoney() {
+        return iAfterMoney;
+    }
+
+    private Long iMoneyType;
+    public void setiMoneyType(Long iMoneyType){
+        this.iMoneyType=iMoneyType;
+    }
+   public Long getiMoneyType() {
+        return iMoneyType;
+    }
+
     private Long iMoney;
-    private int iFlowType;
-    private int iAction;
-    
-    public MoneyFlow(String GameId, String AccountType, String WorldId, String dtEventTime, String iEventId, String version, String iUin,
-            String iRoleId, String vRoleName, String iRoleJob, String iRoleSex, String iRoleLevel,
-            String iRoleVipLevel, String iRepuLevel, String v1, String v2, String iBeforeMoney,
-            String iAfterMoney, String iMoneyType, String iMoney, String iFlowType, String iAction) {
+    public void setiMoney(Long iMoney){
+        this.iMoney=iMoney;
+    }
+   public Long getiMoney() {
+        return iMoney;
+    }
+
+    private Long iFlowType;
+    public void setiFlowType(Long iFlowType){
+        this.iFlowType=iFlowType;
+    }
+   public Long getiFlowType() {
+        return iFlowType;
+    }
+
+    private Long iAction;
+    public void setiAction(Long iAction){
+        this.iAction=iAction;
+    }
+   public Long getiAction() {
+        return iAction;
+    }
+
+    public MoneyFlow parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new MoneyFlow(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19]);
+    }
+
+    public MoneyFlow(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iBeforeMoney,String iAfterMoney,String iMoneyType,String iMoney,String iFlowType,String iAction){
         this.iGameId = Integer.valueOf(GameId);
         this.iAccountType = Integer.valueOf(AccountType);
         this.iWorldId = Integer.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
-        this.iEventId = iEventId;
-        this.vVersionId = version;
-        this.vUin = iUin;
-        this.iRoleId = Integer.valueOf(iRoleId);
-        this.vRoleName = vRoleName;
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleSex);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRepuLevel);
-        this.vRoleElse1 = v1;
-        this.vRoleElse2 = v2;
+        this.iEventId = Long.valueOf(iEventId);
+        this.vVersionId = String.valueOf(vVersionId);
+        this.vUin = String.valueOf(vUin);
+        this.iRoleId = Long.valueOf(iRoleId);
+        this.vRoleName = String.valueOf(vRoleName);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
+        this.vRoleElse1 = String.valueOf(vRoleElse1);
+        this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.iBeforeMoney = Long.valueOf(iBeforeMoney);
         this.iAfterMoney = Long.valueOf(iAfterMoney);
-        this.iMoneyType = Integer.valueOf(iMoneyType);
-        this.iMoney = Math.abs(Long.valueOf(iMoney));
-        this.iFlowType = Integer.valueOf(iFlowType);
-        this.iAction = Integer.valueOf(iAction);
-    }
-
-    public MoneyFlow(){
-        super();
-    }
-    public MoneyFlow parseFromLogFile(String[] array, String GameId, String AccountType, String WorldId) {
-        String[] columnList = array;
-
-        if (columnList.length == 20) {
-            for (int i = 0; i < 19; i++) {
-                if (StringUtil.isEmpty(columnList[i])) {
-                    columnList[i] = "0";
-                }
-            }
-            return new MoneyFlow(GameId, AccountType, WorldId, columnList[1], columnList[2], columnList[3], columnList[4],
-                    columnList[5], columnList[6], columnList[7], columnList[8], columnList[9],
-                    columnList[10], columnList[11], columnList[12], columnList[13], columnList[14],
-                    columnList[15], columnList[16], columnList[17], columnList[18], columnList[19]);
-        } else {
-            return null;
-        }
-    }
-
-    public Timestamp getDtEventTime() {
-        return dtEventTime;
-    }
-
-    public void setDtEventTime(Timestamp dtEventTime) {
-        this.dtEventTime = dtEventTime;
-    }
-
-    public String getiEventId() {
-        return iEventId;
-    }
-
-    public void setiEventId(String iEventId) {
-        this.iEventId = iEventId;
-    }
-
-    public String getVersion() {
-        return vVersionId;
-    }
-
-    public void setVersion(String version) {
-        this.vVersionId = version;
-    }
-
-    public String getiUin() {
-        return vUin;
-    }
-
-    public void setiUin(String iUin) {
-        this.vUin = iUin;
-    }
-
-    public int getiRoleId() {
-        return iRoleId;
-    }
-
-    public void setiRoleId(int iRoleId) {
-        this.iRoleId = iRoleId;
-    }
-
-    public String getvRoleName() {
-        return vRoleName;
-    }
-
-    public void setvRoleName(String vRoleName) {
-        this.vRoleName = vRoleName;
-    }
-
-    public int getiRoleJob() {
-        return iRoleJob;
-    }
-
-    public void setiRoleJob(int iRoleJob) {
-        this.iRoleJob = iRoleJob;
-    }
-
-    public int getiRoleSex() {
-        return iRoleGender;
-    }
-
-    public void setiRoleSex(int iRoleSex) {
-        this.iRoleGender = iRoleSex;
-    }
-
-    public int getiRoleLevel() {
-        return iRoleLevel;
-    }
-
-    public void setiRoleLevel(int iRoleLevel) {
-        this.iRoleLevel = iRoleLevel;
-    }
-
-    public int getiRoleVipLevel() {
-        return iRoleVipLevel;
-    }
-
-    public void setiRoleVipLevel(int iRoleVipLevel) {
-        this.iRoleVipLevel = iRoleVipLevel;
-    }
-
-    public int getiRepuLevel() {
-        return iRoleReputationLevel;
-    }
-
-    public void setiRepuLevel(int iRepuLevel) {
-        this.iRoleReputationLevel = iRepuLevel;
-    }
-
-    public String getV1() {
-        return vRoleElse1;
-    }
-
-    public void setV1(String v1) {
-        this.vRoleElse1 = v1;
-    }
-
-    public String getV2() {
-        return vRoleElse2;
-    }
-
-    public void setV2(String v2) {
-        this.vRoleElse2 = v2;
-    }
-
-    public long getiBeforeMoney() {
-        return iBeforeMoney;
-    }
-
-    public void setiBeforeMoney(long iBeforeMoney) {
-        this.iBeforeMoney = iBeforeMoney;
-    }
-
-    public long getiAfterMoney() {
-        return iAfterMoney;
-    }
-
-    public void setiAfterMoney(long iAfterMoney) {
-        this.iAfterMoney = iAfterMoney;
-    }
-
-    public int getiMoneyType() {
-        return iMoneyType;
-    }
-
-    public void setiMoneyType(int iMoneyType) {
-        this.iMoneyType = iMoneyType;
-    }
-
-    public long getiMoney() {
-        return iMoney;
-    }
-
-    public void setiMoney(long iMoney) {
-        this.iMoney = iMoney;
-    }
-
-    public int getiFlowType() {
-        return iFlowType;
-    }
-
-    public void setiFlowType(int iFlowType) {
-        this.iFlowType = iFlowType;
-    }
-
-    public int getiAction() {
-        return iAction;
-    }
-
-    public void setiAction(int iAction) {
-        this.iAction = iAction;
-    }
-
-    public int getiAccountType() {
-        return iAccountType;
-    }
-
-    public void setiAccountType(int iAccountType) {
-        this.iAccountType = iAccountType;
-    }
-
-    public int getiGameId() {
-        return iGameId;
-    }
-
-    public void setiGameId(int iGameId) {
-        this.iGameId = iGameId;
-    }
-
-    public int getiWorldId() {
-        return iWorldId;
-    }
-
-    public void setiWorldId(int iWorldId) {
-        this.iWorldId = iWorldId;
+        this.iMoneyType = Long.valueOf(iMoneyType);
+        this.iMoney = Long.valueOf(iMoney);
+        this.iFlowType = Long.valueOf(iFlowType);
+        this.iAction = Long.valueOf(iAction);
     }
 }

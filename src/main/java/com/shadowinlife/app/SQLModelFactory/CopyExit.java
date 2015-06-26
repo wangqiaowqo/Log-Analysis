@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class CopyExit extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class CopyExit extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,51 +131,51 @@ public class CopyExit extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
+    private Long iRoleExperience;
+    public void setiRoleExperience(Long iRoleExperience){
         this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiRoleExperience() {
+   public Long getiRoleExperience() {
         return iRoleExperience;
     }
 
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
+    private Long iRoleSword;
+    public void setiRoleSword(Long iRoleSword){
         this.iRoleSword=iRoleSword;
     }
-   public Integer getiRoleSword() {
+   public Long getiRoleSword() {
         return iRoleSword;
     }
 
-    private Integer iLogType;
-    public void setiLogType(Integer iLogType){
+    private Long iLogType;
+    public void setiLogType(Long iLogType){
         this.iLogType=iLogType;
     }
-   public Integer getiLogType() {
+   public Long getiLogType() {
         return iLogType;
     }
 
-    private Integer iExitType;
-    public void setiExitType(Integer iExitType){
+    private Long iExitType;
+    public void setiExitType(Long iExitType){
         this.iExitType=iExitType;
     }
-   public Integer getiExitType() {
+   public Long getiExitType() {
         return iExitType;
     }
 
-    private Integer iCopyType;
-    public void setiCopyType(Integer iCopyType){
+    private Long iCopyType;
+    public void setiCopyType(Long iCopyType){
         this.iCopyType=iCopyType;
     }
-   public Integer getiCopyType() {
+   public Long getiCopyType() {
         return iCopyType;
     }
 
-    private Integer iCopyId;
-    public void setiCopyId(Integer iCopyId){
+    private Long iCopyId;
+    public void setiCopyId(Long iCopyId){
         this.iCopyId=iCopyId;
     }
-   public Integer getiCopyId() {
+   public Long getiCopyId() {
         return iCopyId;
     }
 
@@ -188,51 +187,51 @@ public class CopyExit extends BaseBean implements Serializable {
         return vCopyName;
     }
 
-    private Integer iTeamId;
-    public void setiTeamId(Integer iTeamId){
+    private Long iTeamId;
+    public void setiTeamId(Long iTeamId){
         this.iTeamId=iTeamId;
     }
-   public Integer getiTeamId() {
+   public Long getiTeamId() {
         return iTeamId;
     }
 
-    private Integer iCopyLevel;
-    public void setiCopyLevel(Integer iCopyLevel){
+    private Long iCopyLevel;
+    public void setiCopyLevel(Long iCopyLevel){
         this.iCopyLevel=iCopyLevel;
     }
-   public Integer getiCopyLevel() {
+   public Long getiCopyLevel() {
         return iCopyLevel;
     }
 
-    private Integer iCopystar;
-    public void setiCopystar(Integer iCopystar){
+    private Long iCopystar;
+    public void setiCopystar(Long iCopystar){
         this.iCopystar=iCopystar;
     }
-   public Integer getiCopystar() {
+   public Long getiCopystar() {
         return iCopystar;
     }
 
-    private Integer iCopyLevelId;
-    public void setiCopyLevelId(Integer iCopyLevelId){
+    private Long iCopyLevelId;
+    public void setiCopyLevelId(Long iCopyLevelId){
         this.iCopyLevelId=iCopyLevelId;
     }
-   public Integer getiCopyLevelId() {
+   public Long getiCopyLevelId() {
         return iCopyLevelId;
     }
 
-    private Integer iTrunkId;
-    public void setiTrunkId(Integer iTrunkId){
+    private Long iTrunkId;
+    public void setiTrunkId(Long iTrunkId){
         this.iTrunkId=iTrunkId;
     }
-   public Integer getiTrunkId() {
+   public Long getiTrunkId() {
         return iTrunkId;
     }
 
-    private Integer iTotalDamage;
-    public void setiTotalDamage(Integer iTotalDamage){
+    private Long iTotalDamage;
+    public void setiTotalDamage(Long iTotalDamage){
         this.iTotalDamage=iTotalDamage;
     }
-   public Integer getiTotalDamage() {
+   public Long getiTotalDamage() {
         return iTotalDamage;
     }
 
@@ -272,28 +271,28 @@ public class CopyExit extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iLogType = Integer.valueOf(iLogType);
-        this.iExitType = Integer.valueOf(iExitType);
-        this.iCopyType = Integer.valueOf(iCopyType);
-        this.iCopyId = Integer.valueOf(iCopyId);
+        this.iRoleExperience = Long.valueOf(iRoleExperience);
+        this.iRoleSword = Long.valueOf(iRoleSword);
+        this.iLogType = Long.valueOf(iLogType);
+        this.iExitType = Long.valueOf(iExitType);
+        this.iCopyType = Long.valueOf(iCopyType);
+        this.iCopyId = Long.valueOf(iCopyId);
         this.vCopyName = String.valueOf(vCopyName);
-        this.iTeamId = Integer.valueOf(iTeamId);
-        this.iCopyLevel = Integer.valueOf(iCopyLevel);
-        this.iCopystar = Integer.valueOf(iCopystar);
-        this.iCopyLevelId = Integer.valueOf(iCopyLevelId);
-        this.iTrunkId = Integer.valueOf(iTrunkId);
-        this.iTotalDamage = Integer.valueOf(iTotalDamage);
+        this.iTeamId = Long.valueOf(iTeamId);
+        this.iCopyLevel = Long.valueOf(iCopyLevel);
+        this.iCopystar = Long.valueOf(iCopystar);
+        this.iCopyLevelId = Long.valueOf(iCopyLevelId);
+        this.iTrunkId = Long.valueOf(iTrunkId);
+        this.iTotalDamage = Long.valueOf(iTotalDamage);
         this.jPetHurt = String.valueOf(jPetHurt);
         this.jMoney = String.valueOf(jMoney);
         this.jItem = String.valueOf(jItem);

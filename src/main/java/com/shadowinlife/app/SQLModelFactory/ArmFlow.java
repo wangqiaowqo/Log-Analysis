@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class ArmFlow extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class ArmFlow extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -140,51 +139,51 @@ public class ArmFlow extends BaseBean implements Serializable {
         return vClientIP;
     }
 
-    private Integer iArmId;
-    public void setiArmId(Integer iArmId){
+    private Long iArmId;
+    public void setiArmId(Long iArmId){
         this.iArmId=iArmId;
     }
-   public Integer getiArmId() {
+   public Long getiArmId() {
         return iArmId;
     }
 
-    private Integer iStar;
-    public void setiStar(Integer iStar){
+    private Long iStar;
+    public void setiStar(Long iStar){
         this.iStar=iStar;
     }
-   public Integer getiStar() {
+   public Long getiStar() {
         return iStar;
     }
 
-    private Integer iLevel;
-    public void setiLevel(Integer iLevel){
+    private Long iLevel;
+    public void setiLevel(Long iLevel){
         this.iLevel=iLevel;
     }
-   public Integer getiLevel() {
+   public Long getiLevel() {
         return iLevel;
     }
 
-    private Integer iArmType;
-    public void setiArmType(Integer iArmType){
+    private Long iArmType;
+    public void setiArmType(Long iArmType){
         this.iArmType=iArmType;
     }
-   public Integer getiArmType() {
+   public Long getiArmType() {
         return iArmType;
     }
 
-    private Integer iArmNum;
-    public void setiArmNum(Integer iArmNum){
+    private Long iArmNum;
+    public void setiArmNum(Long iArmNum){
         this.iArmNum=iArmNum;
     }
-   public Integer getiArmNum() {
+   public Long getiArmNum() {
         return iArmNum;
     }
 
-    private Integer iArmGuid;
-    public void setiArmGuid(Integer iArmGuid){
+    private Long iArmGuid;
+    public void setiArmGuid(Long iArmGuid){
         this.iArmGuid=iArmGuid;
     }
-   public Integer getiArmGuid() {
+   public Long getiArmGuid() {
         return iArmGuid;
     }
 
@@ -196,19 +195,19 @@ public class ArmFlow extends BaseBean implements Serializable {
         return jEquipProperty;
     }
 
-    private Integer iFlowDirection;
-    public void setiFlowDirection(Integer iFlowDirection){
+    private Long iFlowDirection;
+    public void setiFlowDirection(Long iFlowDirection){
         this.iFlowDirection=iFlowDirection;
     }
-   public Integer getiFlowDirection() {
+   public Long getiFlowDirection() {
         return iFlowDirection;
     }
 
-    private Integer iAction;
-    public void setiAction(Integer iAction){
+    private Long iAction;
+    public void setiAction(Long iAction){
         this.iAction=iAction;
     }
-   public Integer getiAction() {
+   public Long getiAction() {
         return iAction;
     }
 
@@ -224,24 +223,24 @@ public class ArmFlow extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.vClientIP = String.valueOf(vClientIP);
-        this.iArmId = Integer.valueOf(iArmId);
-        this.iStar = Integer.valueOf(iStar);
-        this.iLevel = Integer.valueOf(iLevel);
-        this.iArmType = Integer.valueOf(iArmType);
-        this.iArmNum = Integer.valueOf(iArmNum);
-        this.iArmGuid = Integer.valueOf(iArmGuid);
+        this.iArmId = Long.valueOf(iArmId);
+        this.iStar = Long.valueOf(iStar);
+        this.iLevel = Long.valueOf(iLevel);
+        this.iArmType = Long.valueOf(iArmType);
+        this.iArmNum = Long.valueOf(iArmNum);
+        this.iArmGuid = Long.valueOf(iArmGuid);
         this.jEquipProperty = String.valueOf(jEquipProperty);
-        this.iFlowDirection = Integer.valueOf(iFlowDirection);
-        this.iAction = Integer.valueOf(iAction);
+        this.iFlowDirection = Long.valueOf(iFlowDirection);
+        this.iAction = Long.valueOf(iAction);
     }
 }

@@ -1,5 +1,4 @@
 package com.shadowinlife.app.SQLModelFactory;
-
 import java.io.*;
 import java.sql.*;
 
@@ -60,11 +59,11 @@ public class RefreshTimes extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Integer iRoleId;
-    public void setiRoleId(Integer iRoleId){
+    private Long iRoleId;
+    public void setiRoleId(Long iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Integer getiRoleId() {
+   public Long getiRoleId() {
         return iRoleId;
     }
 
@@ -76,43 +75,43 @@ public class RefreshTimes extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Integer iRoleJob;
-    public void setiRoleJob(Integer iRoleJob){
+    private Long iRoleJob;
+    public void setiRoleJob(Long iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Integer getiRoleJob() {
+   public Long getiRoleJob() {
         return iRoleJob;
     }
 
-    private Integer iRoleGender;
-    public void setiRoleGender(Integer iRoleGender){
+    private Long iRoleGender;
+    public void setiRoleGender(Long iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Integer getiRoleGender() {
+   public Long getiRoleGender() {
         return iRoleGender;
     }
 
-    private Integer iRoleLevel;
-    public void setiRoleLevel(Integer iRoleLevel){
+    private Long iRoleLevel;
+    public void setiRoleLevel(Long iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Integer getiRoleLevel() {
+   public Long getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Integer iRoleVipLevel;
-    public void setiRoleVipLevel(Integer iRoleVipLevel){
+    private Long iRoleVipLevel;
+    public void setiRoleVipLevel(Long iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Integer getiRoleVipLevel() {
+   public Long getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Integer iRoleReputationLevel;
-    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
+    private Long iRoleReputationLevel;
+    public void setiRoleReputationLevel(Long iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Integer getiRoleReputationLevel() {
+   public Long getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -132,27 +131,27 @@ public class RefreshTimes extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iRoleExperience;
-    public void setiRoleExperience(Integer iRoleExperience){
+    private Long iRoleExperience;
+    public void setiRoleExperience(Long iRoleExperience){
         this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiRoleExperience() {
+   public Long getiRoleExperience() {
         return iRoleExperience;
     }
 
-    private Integer iRoleSword;
-    public void setiRoleSword(Integer iRoleSword){
+    private Long iRoleSword;
+    public void setiRoleSword(Long iRoleSword){
         this.iRoleSword=iRoleSword;
     }
-   public Integer getiRoleSword() {
+   public Long getiRoleSword() {
         return iRoleSword;
     }
 
-    private Integer iPartyId;
-    public void setiPartyId(Integer iPartyId){
+    private Long iPartyId;
+    public void setiPartyId(Long iPartyId){
         this.iPartyId=iPartyId;
     }
-   public Integer getiPartyId() {
+   public Long getiPartyId() {
         return iPartyId;
     }
 
@@ -164,43 +163,43 @@ public class RefreshTimes extends BaseBean implements Serializable {
         return vPartyName;
     }
 
-    private Integer iPartyLevel;
-    public void setiPartyLevel(Integer iPartyLevel){
+    private Long iPartyLevel;
+    public void setiPartyLevel(Long iPartyLevel){
         this.iPartyLevel=iPartyLevel;
     }
-   public Integer getiPartyLevel() {
+   public Long getiPartyLevel() {
         return iPartyLevel;
     }
 
-    private Integer iRefreshParty;
-    public void setiRefreshParty(Integer iRefreshParty){
+    private Long iRefreshParty;
+    public void setiRefreshParty(Long iRefreshParty){
         this.iRefreshParty=iRefreshParty;
     }
-   public Integer getiRefreshParty() {
+   public Long getiRefreshParty() {
         return iRefreshParty;
     }
 
-    private Integer iRefreshType;
-    public void setiRefreshType(Integer iRefreshType){
+    private Long iRefreshType;
+    public void setiRefreshType(Long iRefreshType){
         this.iRefreshType=iRefreshType;
     }
-   public Integer getiRefreshType() {
+   public Long getiRefreshType() {
         return iRefreshType;
     }
 
-    private Integer iRefreshState;
-    public void setiRefreshState(Integer iRefreshState){
+    private Long iRefreshState;
+    public void setiRefreshState(Long iRefreshState){
         this.iRefreshState=iRefreshState;
     }
-   public Integer getiRefreshState() {
+   public Long getiRefreshState() {
         return iRefreshState;
     }
 
-    private Integer iRefreshStateId;
-    public void setiRefreshStateId(Integer iRefreshStateId){
+    private Long iRefreshStateId;
+    public void setiRefreshStateId(Long iRefreshStateId){
         this.iRefreshStateId=iRefreshStateId;
     }
-   public Integer getiRefreshStateId() {
+   public Long getiRefreshStateId() {
         return iRefreshStateId;
     }
 
@@ -232,24 +231,24 @@ public class RefreshTimes extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Integer.valueOf(iRoleId);
+        this.iRoleId = Long.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Integer.valueOf(iRoleJob);
-        this.iRoleGender = Integer.valueOf(iRoleGender);
-        this.iRoleLevel = Integer.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Long.valueOf(iRoleJob);
+        this.iRoleGender = Long.valueOf(iRoleGender);
+        this.iRoleLevel = Long.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iRoleExperience = Integer.valueOf(iRoleExperience);
-        this.iRoleSword = Integer.valueOf(iRoleSword);
-        this.iPartyId = Integer.valueOf(iPartyId);
+        this.iRoleExperience = Long.valueOf(iRoleExperience);
+        this.iRoleSword = Long.valueOf(iRoleSword);
+        this.iPartyId = Long.valueOf(iPartyId);
         this.vPartyName = String.valueOf(vPartyName);
-        this.iPartyLevel = Integer.valueOf(iPartyLevel);
-        this.iRefreshParty = Integer.valueOf(iRefreshParty);
-        this.iRefreshType = Integer.valueOf(iRefreshType);
-        this.iRefreshState = Integer.valueOf(iRefreshState);
-        this.iRefreshStateId = Integer.valueOf(iRefreshStateId);
+        this.iPartyLevel = Long.valueOf(iPartyLevel);
+        this.iRefreshParty = Long.valueOf(iRefreshParty);
+        this.iRefreshType = Long.valueOf(iRefreshType);
+        this.iRefreshState = Long.valueOf(iRefreshState);
+        this.iRefreshStateId = Long.valueOf(iRefreshStateId);
         this.jCostMoney = String.valueOf(jCostMoney);
         this.jCostItems = String.valueOf(jCostItems);
     }
