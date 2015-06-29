@@ -50,7 +50,7 @@
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iTaskTypeId"	        type="int"	    size=""    key="1"	desc="任务类型"/> 
-		<entry name="iTaskId"	            type="int"	    size=""    key="1"	desc="任务ID"/> 
+		<entry name="iTaskId"	            type="bigint"	size=""    key="1"	desc="任务ID"/> 
 		<entry name="iTaskLevel"	        type="int"	    size=""    key="1"	desc="任务难度或者星级"/>
 		<entry name="iAcceptRoleNum"	    type="int"	    size=""    key="0"	desc="接受任务角色数"/>
 		<entry name="iAcceptTimes"	        type="int"	    size=""    key="0"	desc="接受任务次数"/> 
@@ -91,7 +91,7 @@
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iCopyTypeId"	        type="int"	    size=""    key="1"	desc="副本类型"/> 
-		<entry name="iCopyId"	            type="int"	    size=""    key="1"	desc="副本ID"/> 
+		<entry name="iCopyId"	            type="bigint"	size=""    key="1"	desc="副本ID"/> 
 		<entry name="iCopyLevel"	        type="int"	    size=""    key="1"	desc="副本难度或者星级"/>
 		<entry name="iAchievementId"        type="int"	    size=""    key="1"	desc="完成成就，如星级"/>
 		<entry name="iStartRoleNum"	        type="int"	    size=""    key="0"	desc="开始副本角色数"/>
@@ -114,7 +114,7 @@
 		<entry name="iRoleGender"	        type="int"	    size=""    key="1"	desc="角色性别 （0 无性别； 1 男； 2 女）"/>
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
-		<entry name="iGoodsId"	            type="int"	    size=""    key="1"	desc="商品ID（道具ID 或 装备ID 或avatar Id 或 宠物ID等）"/> 
+		<entry name="iGoodsId"	            type="bigint"   size=""    key="1"	desc="商品ID（道具ID 或 装备ID 或avatar Id 或 宠物ID等）"/> 
 		<entry name="iGoodsType"	        type="int"	    size=""    key="1"	desc="商品类型（普通道具、装备、avatar、宠物等）"/> 
 		<entry name="iMoneyType"	        type="int"	    size=""    key="1"	desc="金钱类型（部分游戏存在多种游戏货币，需要金钱类型加以区分，关联tbMoneyTypeConf获取金钱名称）"/>
 		<entry name="iGoodsNum"	            type="int"	    size=""    key="0"	desc="销售道具数量"/>
@@ -131,7 +131,7 @@
 		<entry name="iRoleLevel"	        type="int"	    size=""    key="1"	desc="角色等级"/> 
 		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="1"	desc="角色VIP等级"/> 
 		<entry name="iSkillCarryType"	    type="int"	    size=""    key="1"	desc="技能携带方式：1 退出登陆携带；2 进入副本携带"/> 
-		<entry name="iSkillId"	            type="int"	    size=""    key="1"	desc="技能ID"/> 
+		<entry name="iSkillId"	            type="bigint"   size=""    key="1"	desc="技能ID"/> 
 		<entry name="iSkillLevel"	        type="int"	    size=""    key="1"	desc="技能等级"/>
 		<entry name="iRoleNum"	            type="int"	    size=""    key="0"	desc="角色数"/> 	
 	</struct>
