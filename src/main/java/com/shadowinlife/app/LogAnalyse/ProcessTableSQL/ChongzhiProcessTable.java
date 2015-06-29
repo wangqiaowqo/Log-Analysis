@@ -182,7 +182,7 @@ public class ChongzhiProcessTable {
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("ChongZhiProcessTable");
-            sqlContext.dropTempTable("ChongZhi");
+            sqlContext.dropTempTable("Deposit");
             
             return true;
         } catch (Exception e) {

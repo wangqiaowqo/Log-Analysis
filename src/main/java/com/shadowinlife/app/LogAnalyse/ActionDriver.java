@@ -21,6 +21,7 @@ public class ActionDriver {
             String Action, String intWorldId) {
         System.out.println("Action:" + Action);
         for (Map<String, List<String[]>> m : l) {
+            //从XML中解析出配置的Action的执行项
             String[] AccountType = m.get("AccountType").get(0);
             String[] GameId = m.get("GameId").get(0);
             String[] WorldId;
@@ -39,7 +40,8 @@ public class ActionDriver {
                 continue;
             }
             List<String> talbename = new ArrayList<String>();
-
+            
+            //初始化执行用的日期
             if (date != null) {
                 BeginTime = date + " 00:00:00";
                 Timestamp bTime = Timestamp.valueOf(BeginTime);
@@ -50,7 +52,8 @@ public class ActionDriver {
                 EndTime = format.format(calendar.getTime()) + " 02:00:00";
             }
             String[] Tables = m.get("Table").get(0);
-
+            
+            //读取配置表中要求使用的Table到内存
             for (String Table : Tables) {
                 System.out.println("Tring to load:" + Table);
                 String curTime = m.get("Date").get(0)[1] + " 00:00:00";
@@ -61,17 +64,20 @@ public class ActionDriver {
                 rptd.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table,
                         strWhere);
             }
-
+            
+            //依次执行配置表中要求执行的SQL生成内存中中间表
             List<String[]> SQLlist = m.get("Sql");
             for (String[] sql : SQLlist) {
                 talbename.add(sql[0]);
                 DFTableToTempTable.ExcuteSQL(sc, sql[0], sql[1]);
             }
-
+            
+            //依次执行配置表中的出库的语句
             List<String[]> Finallist = m.get("Final");
             for (String[] sql : Finallist) {
                 TempTableToMysql.ExcuteFinalSQL(sc, sql[0], sql[1], sql[2]);
             }
+            //清理临时表
             for (String t : talbename) {
                 sc.dropTempTable(t);
             }
