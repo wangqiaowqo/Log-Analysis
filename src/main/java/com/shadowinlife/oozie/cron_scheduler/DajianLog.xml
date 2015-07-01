@@ -1179,6 +1179,35 @@
 		<entry name="iPayDelta"	            type="int"	    size=""    key="0"	desc="获得或消耗代币（点券）数量"/> 
 		<entry name="iPayAfter"	            type="int"	    size=""    key="0"	desc="获得后代币（点券）存量"/>
 	</struct>
+	<struct name="PetDisband"	   id=""	 desc="宠物遣散或销毁"> 
+		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
+		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
+		<entry name="vVersionId"	        type="varchar"	size="48"  key="0"	desc="游戏版本"/>  
+		<entry name="vUin"	                type="varchar"	size="48"  key="0"	desc="用户账号"/>   
+		<entry name="iRoleId"	            type="int"      size=""    key="0"	desc="角色ID"/> 
+		<entry name="vRoleName"	            type="varchar"	size="48"  key="0"	desc="角色名称"/>
+		<entry name="iRoleJob"	            type="int"	    size=""    key="0"	desc="角色职业"/> 
+		<entry name="iRoleGender"	        type="int"	    size=""    key="0"	desc="角色性别"/> 
+		<entry name="iRoleLevel"	        type="int"	    size=""    key="0"	desc="角色等级"/> 
+		<entry name="iRoleVipLevel"	        type="int"	    size=""    key="0"	desc="角色VIP等级"/>
+		<entry name="iRoleReputationLevel"	type="int"	    size=""    key="0"	desc="角色声望等级"/> 
+		<entry name="vRoleElse1"	        type="varchar"	size="48"  key="0"	desc="角色其他属性1"/>  
+		<entry name="vRoleElse2"	        type="varchar"	size="48"  key="0"	desc="角色其他属性2"/> 		
+		<entry name="iRoleExperience"	    type="int"	    size=""    key="0"	desc="当前等级角色经验值"/> 
+		<entry name="iRoleSword"	        type="int"	    size=""    key="0"	desc="角色战斗力"/>
+		<entry name="iPetType"	            type="int"	    size=""    key="0"	desc="宠物类型	0 英灵；1 守护神；2 else"/> 
+		<entry name="iPetID"	            type="int"	    size=""    key="0"	desc="宠物ID"/>
+		<entry name="vPetName"	            type="varchar"	size="48"  key="0"	desc="宠物名称"/> 		
+		<entry name="iPetStar"	            type="int"	    size=""    key="0"	desc="宠物星级	1,2,3,4,5星等或者紫、金、蓝、绿、白等"/>
+		<entry name="iPetlevel"	            type="int"	    size=""    key="0"	desc="宠物等级"/> 
+		<entry name="jPetAttribute"	        type="text"	    size=""    key="0"	desc="宠物属性（各种属性）"/>
+		<entry name="iPetWay"	            type="int"	    size=""    key="0"	desc="获得途径"/> 
+		<entry name="jItemCost"	            type="text"	    size=""    key="0"	desc="消耗或获得道具以及数量"/>
+		<entry name="iMoneyType"	        type="int"	    size=""    key="0"	desc="获得或消耗货币类型	例如：1 钻石；2 金币；3绑钻"/> 
+		<entry name="iPayBefore"	        type="int"	    size=""    key="0"	desc="解散前代币（点券）存量"/>
+		<entry name="iPayDelta"	            type="int"	    size=""    key="0"	desc="解散获得或消耗代币（点券）数量"/> 
+		<entry name="iPayAfter"	            type="int"	    size=""    key="0"	desc="获得后代币（点券）存量"/>
+	</struct>
 	<!--struct name="PetUP"	   id=""	 desc="宠物升级"> 
 		<entry name="dtEventTime"	        type="datetime" size=""    key="0"  desc="时间"/> 	
 		<entry name="iEventId"	            type="bigint"   size=""    key="0"	desc="游戏事件编号"/> 
