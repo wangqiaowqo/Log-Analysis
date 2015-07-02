@@ -6,25 +6,25 @@ public class MarketTrade extends BaseBean implements Serializable {
     public MarketTrade() {
         super();
     }
-    private int iAccountType;
-    private int iGameId;
-    private int iWorldId;
-    public int getiAccountType() {
+    private Long iAccountType;
+    private Long iGameId;
+    private Long iWorldId;
+    public Long getiAccountType() {
         return iAccountType;
     }
-    public int getiGameId() {
+    public Long getiGameId() {
         return iGameId;
     }
-    public int getiWorldId() {
+    public Long getiWorldId() {
         return iWorldId;
     }
-    public void setiAccountType(int iAccountType) {
+    public void setiAccountType(Long iAccountType) {
         this.iAccountType = iAccountType;
     }
-    public void setiGameId(int iGameId) {
+    public void setiGameId(Long iGameId) {
         this.iGameId = iGameId;
     }
-    public void setiWorldId(int iWorldId) {
+    public void setiWorldId(Long iWorldId) {
         this.iWorldId = iWorldId;
     }
     private Timestamp dtEventTime;
@@ -288,9 +288,9 @@ public class MarketTrade extends BaseBean implements Serializable {
     }
 
     public MarketTrade(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vBuyerUin,String iBuyerRoleId,String vBuyerName,String iBuyerJobId,String iBuyerGender,String iBuyerLevel,String iBuyerVipLevel,String iBuyerReputationLevel,String vBuyerRoleElse1,String vBuyerRoleElse2,String iMoneyBeforeTrade,String iMoneyAfterTrade,String iSellerType,String vSellerUin,String iSellerRoleId,String vSellerName,String iSellerJobId,String iSellerGender,String iSellerLevel,String iSellerVipLevel,String iSellerReputationLevel,String vBuyerClientIp,String vSellerClientIp,String iPayment,String iGoodsCount,String iItemId,String iItemType,String iItemNum,String iItemGuid){
-        this.iGameId = Integer.valueOf(GameId);
-        this.iAccountType = Integer.valueOf(AccountType);
-        this.iWorldId = Integer.valueOf(WorldId);
+        this.iGameId = Long.valueOf(GameId);
+        this.iAccountType = Long.valueOf(AccountType);
+        this.iWorldId = Long.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);

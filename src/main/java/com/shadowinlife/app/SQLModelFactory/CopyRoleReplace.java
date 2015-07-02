@@ -6,25 +6,25 @@ public class CopyRoleReplace extends BaseBean implements Serializable {
     public CopyRoleReplace() {
         super();
     }
-    private int iAccountType;
-    private int iGameId;
-    private int iWorldId;
-    public int getiAccountType() {
+    private Long iAccountType;
+    private Long iGameId;
+    private Long iWorldId;
+    public Long getiAccountType() {
         return iAccountType;
     }
-    public int getiGameId() {
+    public Long getiGameId() {
         return iGameId;
     }
-    public int getiWorldId() {
+    public Long getiWorldId() {
         return iWorldId;
     }
-    public void setiAccountType(int iAccountType) {
+    public void setiAccountType(Long iAccountType) {
         this.iAccountType = iAccountType;
     }
-    public void setiGameId(int iGameId) {
+    public void setiGameId(Long iGameId) {
         this.iGameId = iGameId;
     }
-    public void setiWorldId(int iWorldId) {
+    public void setiWorldId(Long iWorldId) {
         this.iWorldId = iWorldId;
     }
     private Timestamp dtEventTime;
@@ -147,7 +147,6 @@ public class CopyRoleReplace extends BaseBean implements Serializable {
         return iRoleSword;
     }
 
-
     private Long iCopyType;
     public void setiCopyType(Long iCopyType){
         this.iCopyType=iCopyType;
@@ -240,10 +239,10 @@ public class CopyRoleReplace extends BaseBean implements Serializable {
         return new CopyRoleReplace(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26]);
     }
 
-    public CopyRoleReplace(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword, String iCopyType,String iCopyId,String vCopyName,String iTeamId,String iCopyLevel,String iCopystar,String iCopyLevelId,String iTrunkId,String iReplacedId,String iPetId,String iReason){
-        this.iGameId = Integer.valueOf(GameId);
-        this.iAccountType = Integer.valueOf(AccountType);
-        this.iWorldId = Integer.valueOf(WorldId);
+    public CopyRoleReplace(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iCopyType,String iCopyId,String vCopyName,String iTeamId,String iCopyLevel,String iCopystar,String iCopyLevelId,String iTrunkId,String iReplacedId,String iPetId,String iReason){
+        this.iGameId = Long.valueOf(GameId);
+        this.iAccountType = Long.valueOf(AccountType);
+        this.iWorldId = Long.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
@@ -259,7 +258,6 @@ public class CopyRoleReplace extends BaseBean implements Serializable {
         this.vRoleElse2 = String.valueOf(vRoleElse2);
         this.iRoleExperience = Long.valueOf(iRoleExperience);
         this.iRoleSword = Long.valueOf(iRoleSword);
-        
         this.iCopyType = Long.valueOf(iCopyType);
         this.iCopyId = Long.valueOf(iCopyId);
         this.vCopyName = String.valueOf(vCopyName);

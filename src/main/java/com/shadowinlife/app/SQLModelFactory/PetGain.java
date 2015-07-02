@@ -6,25 +6,25 @@ public class PetGain extends BaseBean implements Serializable {
     public PetGain() {
         super();
     }
-    private int iAccountType;
-    private int iGameId;
-    private int iWorldId;
-    public int getiAccountType() {
+    private Long iAccountType;
+    private Long iGameId;
+    private Long iWorldId;
+    public Long getiAccountType() {
         return iAccountType;
     }
-    public int getiGameId() {
+    public Long getiGameId() {
         return iGameId;
     }
-    public int getiWorldId() {
+    public Long getiWorldId() {
         return iWorldId;
     }
-    public void setiAccountType(int iAccountType) {
+    public void setiAccountType(Long iAccountType) {
         this.iAccountType = iAccountType;
     }
-    public void setiGameId(int iGameId) {
+    public void setiGameId(Long iGameId) {
         this.iGameId = iGameId;
     }
-    public void setiWorldId(int iWorldId) {
+    public void setiWorldId(Long iWorldId) {
         this.iWorldId = iWorldId;
     }
     private Timestamp dtEventTime;
@@ -248,9 +248,9 @@ public class PetGain extends BaseBean implements Serializable {
     }
 
     public PetGain(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iPetType,String iPetID,String vPetName,String iPetStar,String iPetlevel,String jPetAttribute,String iPetWay,String jItemCost,String iMoneyType,String iPayBefore,String iPayDelta,String iPayAfter){
-        this.iGameId = Integer.valueOf(GameId);
-        this.iAccountType = Integer.valueOf(AccountType);
-        this.iWorldId = Integer.valueOf(WorldId);
+        this.iGameId = Long.valueOf(GameId);
+        this.iAccountType = Long.valueOf(AccountType);
+        this.iWorldId = Long.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);

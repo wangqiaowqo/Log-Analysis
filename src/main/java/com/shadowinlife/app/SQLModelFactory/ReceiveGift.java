@@ -6,25 +6,25 @@ public class ReceiveGift extends BaseBean implements Serializable {
     public ReceiveGift() {
         super();
     }
-    private int iAccountType;
-    private int iGameId;
-    private int iWorldId;
-    public int getiAccountType() {
+    private Long iAccountType;
+    private Long iGameId;
+    private Long iWorldId;
+    public Long getiAccountType() {
         return iAccountType;
     }
-    public int getiGameId() {
+    public Long getiGameId() {
         return iGameId;
     }
-    public int getiWorldId() {
+    public Long getiWorldId() {
         return iWorldId;
     }
-    public void setiAccountType(int iAccountType) {
+    public void setiAccountType(Long iAccountType) {
         this.iAccountType = iAccountType;
     }
-    public void setiGameId(int iGameId) {
+    public void setiGameId(Long iGameId) {
         this.iGameId = iGameId;
     }
-    public void setiWorldId(int iWorldId) {
+    public void setiWorldId(Long iWorldId) {
         this.iWorldId = iWorldId;
     }
     private Timestamp dtEventTime;
@@ -256,9 +256,9 @@ public class ReceiveGift extends BaseBean implements Serializable {
     }
 
     public ReceiveGift(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String vClientIp,String iItemType,String iItemId,String iItemNum,String iCanReceiveTimes,String iItemRemain,String iItemStor,String vOtherUin,String iOtherRoleId,String vOtherRoleName,String iOtherRoleJob,String iOtherRoleGender,String iOtherRoleLevel,String iOtherRoleVipLevel,String iOtherRoleReputationLevel){
-        this.iGameId = Integer.valueOf(GameId);
-        this.iAccountType = Integer.valueOf(AccountType);
-        this.iWorldId = Integer.valueOf(WorldId);
+        this.iGameId = Long.valueOf(GameId);
+        this.iAccountType = Long.valueOf(AccountType);
+        this.iWorldId = Long.valueOf(WorldId);
         this.dtEventTime = Timestamp.valueOf(dtEventTime);
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
