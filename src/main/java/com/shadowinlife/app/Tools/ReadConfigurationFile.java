@@ -75,11 +75,17 @@ public class ReadConfigurationFile {
                 tmp_name.add(name);
                 m.put("Name", tmp_name);
                 
-                // Date Time [begin, end)
-                List<String[]> tmp = new ArrayList<String[]>();
-                String[] date = { eElement.getAttribute("Begin").trim(), eElement.getAttribute("End").trim() };
-                tmp.add(date);
-                m.put("Date", tmp);
+                //Period
+                String[] Period = eElement.getElementsByTagName("Period").item(0).getTextContent().split(",");
+                List<String[]> tmp_Period = new ArrayList<String[]>();
+                tmp_Period.add(Period);
+                m.put("Period", tmp_Period);
+                
+                //Step
+                String[] Step = eElement.getElementsByTagName("Step").item(0).getTextContent().split(",");
+                List<String[]> tmp_Step = new ArrayList<String[]>();
+                tmp_Step.add(Step);
+                m.put("Step", tmp_Step);
 
                 // GameId comma separate
                 String[] GameId = eElement.getElementsByTagName("GameId").item(0).getTextContent()

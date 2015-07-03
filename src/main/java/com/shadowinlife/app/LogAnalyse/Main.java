@@ -101,15 +101,15 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
         
         HiveContext sqlContext = new HiveContext(sc.sc());
-        sqlContext.udf().register("ConvertNull", new UDF1<Integer, Integer>() {
+        sqlContext.udf().register("ConvertNull", new UDF1<Long, Long>() {
             @Override
-            public Integer call(Integer value) throws Exception {
+            public Long call(Long value) throws Exception {
                 if (value == null)
-                    return -1;
+                    return -1l;
                 return value;
             }
 
-        }, DataTypes.IntegerType);
+        }, DataTypes.LongType);
         
         // 读取配置文件
         if (ConfiguationFile != null) {
