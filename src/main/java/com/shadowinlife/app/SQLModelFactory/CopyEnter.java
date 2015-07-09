@@ -1,6 +1,11 @@
 package com.shadowinlife.app.SQLModelFactory;
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.StructType;
+import org.apache.spark.sql.types.StructField;
 
 public class CopyEnter extends BaseBean implements Serializable {
     public CopyEnter() {
@@ -227,12 +232,12 @@ public class CopyEnter extends BaseBean implements Serializable {
         return jPetProperty;
     }
 
-    private String jRoleSkills;
-    public void setjRoleSkills(String jRoleSkills){
-        this.jRoleSkills=jRoleSkills;
+    private List alRoleSkills;
+    public void setjRoleSkills(ArrayList alRoleSkills){
+        this.alRoleSkills=alRoleSkills;
     }
-   public String getjRoleSkills() {
-        return jRoleSkills;
+   public List getjRoleSkills() {
+        return alRoleSkills;
     }
 
     private String jRoleRunes;
@@ -263,7 +268,7 @@ public class CopyEnter extends BaseBean implements Serializable {
         return new CopyEnter(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24],args[25],args[26],args[27],args[28],args[29]);
     }
 
-    public CopyEnter(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iLogType,String iCopyType,String iCopyId,String vCopyName,String iTeamId,String iCopyLevel,String iCopystar,String iCopyLevelId,String iTrunkId,String jPetProperty,String jRoleSkills,String jRoleRunes,String jMoney,String jItem){
+    public CopyEnter(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iLogType,String iCopyType,String iCopyId,String vCopyName,String iTeamId,String iCopyLevel,String iCopystar,String iCopyLevelId,String iTrunkId,String jPetProperty,String alRoleSkills,String jRoleRunes,String jMoney,String jItem){
         this.iGameId = Long.valueOf(GameId);
         this.iAccountType = Long.valueOf(AccountType);
         this.iWorldId = Long.valueOf(WorldId);
@@ -292,7 +297,7 @@ public class CopyEnter extends BaseBean implements Serializable {
         this.iCopyLevelId = Long.valueOf(iCopyLevelId);
         this.iTrunkId = Long.valueOf(iTrunkId);
         this.jPetProperty = String.valueOf(jPetProperty);
-        this.jRoleSkills = String.valueOf(jRoleSkills);
+        this.alRoleSkills = this.getArrayFromJson(alRoleSkills);
         this.jRoleRunes = String.valueOf(jRoleRunes);
         this.jMoney = String.valueOf(jMoney);
         this.jItem = String.valueOf(jItem);

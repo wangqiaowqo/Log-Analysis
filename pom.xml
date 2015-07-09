@@ -19,6 +19,11 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<dependency>
+   		    <groupId>com.codesnippets4all</groupId>
+    		<artifactId>quick-json</artifactId>
+    		<version>1.0.4</version>
+		</dependency>
 		<dependency><!-- LOG SERVICE -->
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -65,5 +70,5 @@
 	</build>
 
 
-	<version>0.6</version>
+	<version>0.7</version>
 </project>

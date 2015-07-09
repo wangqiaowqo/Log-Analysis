@@ -53,12 +53,12 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
                 public T call(String[] line) {
                    
                     return (T) t.parseFromLogFile(line, GameId, AccountType, WorldId);
-
                 }
 
             });
-
+            
             DataFrame schemaRDD = sqlContext.createDataFrame(tempLogs, t.getClass());
+            schemaRDD.printSchema();
             schemaRDD.saveAsParquetFile(dst + "/" + tableName + ".parquet");
             schemaRDD.unpersist();
             tempLogs.unpersist();
