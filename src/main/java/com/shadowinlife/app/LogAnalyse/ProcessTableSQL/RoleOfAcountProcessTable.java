@@ -44,7 +44,7 @@ import com.shadowinlife.app.SQLModelFactory.RoleLogout;
 +---------------+-----------------------------------+----------+--+
  */
 
-public class AcountProcessTable {
+public class RoleOfAcountProcessTable {
     // create daily user act table
     private static String tbUser_process_table_sql = 
             "SELECT "
@@ -62,7 +62,7 @@ public class AcountProcessTable {
             + "FROM tbLogin FULL JOIN tbLogout ON tbLogin.login_id=tbLogout.logout_id";
     
     // USER NOT ACTIVITY
-    private static String tbUser_unact_account_table = "INSERT OVERWRITE TABLE fat_login_user "
+    private static String tbUser_unact_account_table = "INSERT OVERWRITE TABLE fat_login_roleid_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s', "
             + "T1.iaccounttype,"
@@ -85,13 +85,13 @@ public class AcountProcessTable {
             + "DATE2LONG('%s') AS index_dtstatdate,"
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
-            + "FROM (SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
+            + "FROM (SELECT * FROM fat_login_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
             + "LEFT JOIN "
             + "loginProcessTable T2 ON T1.suin = T2.id "
             + "WHERE T2.id IS NULL";
 
     // USER ACTIVITY 
-    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_login_user "
+    private static String tbUser_act_account_table = "INSERT INTO TABLE fat_login_roleid_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
             + "1," //acounttype
@@ -115,10 +115,10 @@ public class AcountProcessTable {
             + "1 AS index_igameid,"
             + "%s AS index_iworldid "
             + "FROM loginProcessTable T2 LEFT JOIN "
-            + "(SELECT * FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
+            + "(SELECT * FROM fat_login_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
             + "ON T2.id=T1.suin";
     
-    private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_login_user "
+    private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_login_roleid_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT T1.dtstatdate, "
             + "T1.iaccounttype,"
@@ -140,18 +140,18 @@ public class AcountProcessTable {
             + "T1.index_iaccounttype,"
             + "T1.index_dtstatdate,"
             + "T1.index_igameid,"
-            + "T1.index_iworldid FROM fat_login_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
+            + "T1.index_iworldid FROM fat_login_roleid_user T1 WHERE index_dtstatdate=date2long('%s') AND iworldid=%s";
 
     public static boolean process(HiveContext sqlContext, String date, String iworldid) {
         
         try {
-            String RoleLoginSQL = "SELECT `vUin` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
-                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(vUin) AS in_times, MAX(`dtEventTime`) AS login_dtEventTime,"
-                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY vUin";
+            String RoleLoginSQL = "SELECT `iRoleId` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
+                    + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(iRoleId) AS in_times, MAX(`dtEventTime`) AS login_dtEventTime,"
+                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY iRoleId";
             
-            String RoleLogoutSQL = "SELECT `vUin` AS logout_id,SUM(`lOnlineTotalTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
-                    + "MAX(`vClientIp`) AS tbLogout_vClientIp, COUNT(vUin) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
-                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY vUin";
+            String RoleLogoutSQL = "SELECT `iRoleId` AS logout_id,SUM(`lOnlineTotalTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
+                    + "MAX(`vClientIp`) AS tbLogout_vClientIp, COUNT(iRoleId) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
+                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY iRoleId";
             
             // Dump out the group data of user login and logout
             DataFrame userLogin = sqlContext.sql(RoleLoginSQL);
@@ -204,8 +204,8 @@ public class AcountProcessTable {
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("loginProcessTable");
-            //sqlContext.dropTempTable("tbLogin");
-            //sqlContext.dropTempTable("tbLogout");
+            sqlContext.dropTempTable("tbLogin");
+            sqlContext.dropTempTable("tbLogout");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -215,7 +215,7 @@ public class AcountProcessTable {
     }
     
     public static void ModifyProcessTableWithoutLogFile(HiveContext sqlContext, String date, String iworldid){
-        String hql = "INSERT OVERWRITE TABLE fat_login_user "
+        String hql = "INSERT OVERWRITE TABLE fat_login_roleid_user "
                 + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
                 + "SELECT '%s', "
                 + "iaccounttype,"
@@ -238,7 +238,7 @@ public class AcountProcessTable {
                 + "DATE2LONG('%s') AS index_dtstatdate,"
                 + "igameid AS index_igameid,"
                 + "iworldid AS index_iworldid "
-                + "FROM fat_login_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s";
+                + "FROM fat_login_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s";
         
         Calendar c = Calendar.getInstance();
         c.setTime(Date.valueOf(date));

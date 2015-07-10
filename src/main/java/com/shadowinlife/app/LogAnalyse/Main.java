@@ -157,10 +157,13 @@ public class Main {
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay", date);
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit", date);
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login", date);
+                
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "pay_roleid", date);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "deposit_roleid", date);
+                UserAccountAnalysis.create_tbRegisterUser(sqlContext, "login_roleid", date);
             } else if ((Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("OSS"))
                     && mode != null) {
                 UserAccountAnalysis.create_tbRegisterUser(sqlContext, mode, date);
-
             }
 
         } catch (NullPointerException e) {

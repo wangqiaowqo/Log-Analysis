@@ -178,7 +178,7 @@ public class MoneyFlowProcessTable {
             sqlContext.sql(String.format(shift_fatTable, iWeekActi, iMonthActi, date, iworldid));
             
             sqlContext.dropTempTable("PayProcessTable");
-            sqlContext.dropTempTable("MoneyFlow");
+            //sqlContext.dropTempTable("MoneyFlow");
             
             return true;
         } catch (Exception e) {

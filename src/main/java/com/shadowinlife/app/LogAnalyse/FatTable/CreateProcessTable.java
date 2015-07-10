@@ -10,6 +10,9 @@ import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.AcountProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.ChongzhiProcessTable;
 import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.MoneyFlowProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.RoleOfAcountProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.RoleOfChongzhiProcessTable;
+import com.shadowinlife.app.LogAnalyse.ProcessTableSQL.RoleOfMoneyFlowProcessTable;
 
 
 public class CreateProcessTable {
@@ -37,18 +40,21 @@ public class CreateProcessTable {
             rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "RoleLogout", strWhere);
             AcountProcessTable.process(sqlContext, date, iworldid);
+            RoleOfAcountProcessTable.process(sqlContext, date, iworldid);
             break;
 
         case "Deposit":
             rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "Deposit", strWhere);
             ChongzhiProcessTable.process(sqlContext, date, iworldid);
+            RoleOfChongzhiProcessTable.process(sqlContext, date, iworldid);
             break;
 
         case "MoneyFlow":
             rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "MoneyFlow", strWhere);
             MoneyFlowProcessTable.process(sqlContext, date, iworldid);
+            RoleOfMoneyFlowProcessTable.process(sqlContext, date, iworldid);
             break;
         
         }
@@ -59,14 +65,17 @@ public class CreateProcessTable {
         switch (tableName) {
         case "RoleLogin":
             AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
+            RoleOfAcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
             break;
 
         case "Deposit":
             ChongzhiProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
+            RoleOfChongzhiProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
             break;
 
         case "MoneyFlow":
             MoneyFlowProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
+            RoleOfMoneyFlowProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
             break;
 
         }
