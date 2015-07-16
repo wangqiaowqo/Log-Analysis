@@ -51,8 +51,8 @@ public class RoleOfMoneyFlowProcessTable {
     
  // create daily user Pay table
     private static String tbPay_process_table_sql = 
-            "SELECT `iRoleId` AS id,"
-            + "MAX(`iRoleId`) AS iRoleId,"
+            "SELECT FIRST(`vUin`) AS id,"
+            + "`iRoleId` AS iRoleId,"
             + "MIN(`dtEventTime`) AS FirstTime,"
             + "MAX(`dtEventTime`) AS ActTime,"
             + "COUNT(`iRoleId`) AS iTimes,"
@@ -84,8 +84,8 @@ public class RoleOfMoneyFlowProcessTable {
             + "T1.igameid AS index_igameid,"
             + "T1.iworldid AS index_iworldid "
             + "FROM (SELECT * FROM fat_pay_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 LEFT JOIN "
-            + "PayProcessTable T2 ON T1.suin = T2.id "
-            + "WHERE T2.id IS NULL";
+            + "PayProcessTable T2 ON T1.iroleid = T2.iRoleId "
+            + "WHERE T2.iRoleId IS NULL";
 
     // USER ACTIVITY 
     private static String tbPay_act_account_table = "INSERT INTO TABLE fat_pay_roleid_user "
@@ -112,7 +112,7 @@ public class RoleOfMoneyFlowProcessTable {
             + "%s AS index_iworldid "
             + "FROM PayProcessTable T2 LEFT JOIN "
             + "(SELECT * FROM fat_pay_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND iworldid=%s) T1 "
-            + "ON T2.id=T1.suin";
+            + "ON T2.iRoleId=T1.iroleid";
     //Shift iweek in sunday, shift imonth in last day of month
     private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_pay_roleid_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
