@@ -48,6 +48,7 @@ public class RoleOfAcountProcessTable {
     // create daily user act table
     private static String tbUser_process_table_sql = 
             "SELECT "
+            + "IF(logoutUin is null, loginUin, logoutUin) AS Uin,"
             + "IF(logout_id is null, login_id, logout_id) AS id, "
             + "IF(tbLogout_iOnlineTime is null, 0, tbLogout_iOnlineTime) AS iOnlineTime,"
             + "IF(tbLogout_iRoleLevel is null,tbLogin_iRoleLevel, tbLogout_iRoleLevel) AS iRoleLevel, "
@@ -95,11 +96,11 @@ public class RoleOfAcountProcessTable {
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
             + "SELECT '%s',"
             + "1," //acounttype
-            + "T2.id,"
+            + "T2.Uin,"
             + "IF(T1.iregtime IS NULL, T2.regTime, T1.iregtime),"
             + "1," //gameid
             + "%s," //worldid
-            + "1," //roleid
+            + "T2.id," //roleid
             + "null, " //roleregtime
             + "T2.acttime,"
             + "shiftact(T1.idayacti),"
@@ -145,13 +146,13 @@ public class RoleOfAcountProcessTable {
     public static boolean process(HiveContext sqlContext, String date, String iworldid) {
         
         try {
-            String RoleLoginSQL = "SELECT `iRoleId` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
+            String RoleLoginSQL = "SELECT `vUin` AS loginUin, `iRoleId` AS login_id, MAX(`iRoleLevel`) AS tbLogin_iRoleLevel,"
                     + "MAX(`vClientIp`) AS tbLogin_vClientIp, COUNT(iRoleId) AS in_times, MAX(`dtEventTime`) AS login_dtEventTime,"
-                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY iRoleId";
+                    + "MIN(`dtEventTime`) AS login_regTime FROM RoleLogin GROUP BY iRoleId, vUin";
             
-            String RoleLogoutSQL = "SELECT `iRoleId` AS logout_id,SUM(`lOnlineTotalTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
+            String RoleLogoutSQL = "SELECT `vUin` AS logoutUin, `iRoleId` AS logout_id,SUM(`lOnlineTotalTime`) AS tbLogout_iOnlineTime, MAX(`iRoleLevel`) AS tbLogout_iRoleLevel,"
                     + "MAX(`vClientIp`) AS tbLogout_vClientIp, COUNT(iRoleId) AS out_times, MAX(`dtEventTime`) AS logout_dtEventTime,"
-                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY iRoleId";
+                    + "MIN(`dtLoginTime`) AS logout_regTime FROM RoleLogout GROUP BY iRoleId, vUin";
             
             // Dump out the group data of user login and logout
             DataFrame userLogin = sqlContext.sql(RoleLoginSQL);

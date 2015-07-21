@@ -23,7 +23,7 @@ import com.shadowinlife.app.Tools.ReadConfigurationFile;
 public class Main {
 
     public static void main(String[] args) {
-
+     
         String mode = null;
         String date = null;
         String Flag = null;

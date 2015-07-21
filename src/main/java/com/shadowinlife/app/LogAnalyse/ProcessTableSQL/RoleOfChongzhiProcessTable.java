@@ -47,7 +47,7 @@ public class RoleOfChongzhiProcessTable {
 	
  // create daily user chongzhi table
     private static String tbChongZhi_process_table_sql = 
-            "SELECT FIRST(`vUin`) AS id,"
+            "SELECT `vUin` AS id,"
             + "`iRoleId` AS iRoleId,"
             + "MIN(`dtEventTime`) AS FirstTime,"
             + "MAX(`dtEventTime`) AS ActTime,"
@@ -55,7 +55,7 @@ public class RoleOfChongzhiProcessTable {
             + "SUM(`iPayDelta`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
-            + "FROM Deposit GROUP BY `iRoleId`";
+            + "FROM Deposit GROUP BY `iRoleId`, `vUin`";
     
     // USER NOT ACTIVITY 
     private static String tbChongZhi_unact_account_table = "INSERT OVERWRITE TABLE fat_deposit_roleid_user "
