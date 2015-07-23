@@ -2,8 +2,8 @@ package com.shadowinlife.app.SQLModelFactory;
 import java.io.*;
 import java.sql.*;
 
-public class Deposit extends BaseBean implements Serializable {
-    public Deposit() {
+public class PartyBankBuy extends BaseBean implements Serializable {
+    public PartyBankBuy() {
         super();
     }
     private Long iAccountType;
@@ -131,99 +131,59 @@ public class Deposit extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Integer iArea;
-    public void setiArea(Integer iArea){
-        this.iArea=iArea;
+    private Integer iRoleExperience;
+    public void setiRoleExperience(Integer iRoleExperience){
+        this.iRoleExperience=iRoleExperience;
     }
-   public Integer getiArea() {
-        return iArea;
-    }
-
-    private String vDstUin;
-    public void setvDstUin(String vDstUin){
-        this.vDstUin=vDstUin;
-    }
-   public String getvDstUin() {
-        return vDstUin;
+   public Integer getiRoleExperience() {
+        return iRoleExperience;
     }
 
-    private Integer iSourceWay;
-    public void setiSourceWay(Integer iSourceWay){
-        this.iSourceWay=iSourceWay;
+    private Integer iRoleSword;
+    public void setiRoleSword(Integer iRoleSword){
+        this.iRoleSword=iRoleSword;
     }
-   public Integer getiSourceWay() {
-        return iSourceWay;
-    }
-
-    private String vClientIp;
-    public void setvClientIp(String vClientIp){
-        this.vClientIp=vClientIp;
-    }
-   public String getvClientIp() {
-        return vClientIp;
+   public Integer getiRoleSword() {
+        return iRoleSword;
     }
 
-    private String vReMarks;
-    public void setvReMarks(String vReMarks){
-        this.vReMarks=vReMarks;
+    private Long iPartyId;
+    public void setiPartyId(Long iPartyId){
+        this.iPartyId=iPartyId;
     }
-   public String getvReMarks() {
-        return vReMarks;
-    }
-
-    private Integer iPayBefore;
-    public void setiPayBefore(Integer iPayBefore){
-        this.iPayBefore=iPayBefore;
-    }
-   public Integer getiPayBefore() {
-        return iPayBefore;
+   public Long getiPartyId() {
+        return iPartyId;
     }
 
-    private String iPayDelta;
-    public void setiPayDelta(String iPayDelta){
-        this.iPayDelta=iPayDelta;
+    private String vPartyName;
+    public void setvPartyName(String vPartyName){
+        this.vPartyName=vPartyName;
     }
-   public String getiPayDelta() {
-        return iPayDelta;
-    }
-
-    private Integer iPayAfter;
-    public void setiPayAfter(Integer iPayAfter){
-        this.iPayAfter=iPayAfter;
-    }
-   public Integer getiPayAfter() {
-        return iPayAfter;
+   public String getvPartyName() {
+        return vPartyName;
     }
 
-    private String vDesc;
-    public void setvDesc(String vDesc){
-        this.vDesc=vDesc;
+    private Integer iPartyLevel;
+    public void setiPartyLevel(Integer iPartyLevel){
+        this.iPartyLevel=iPartyLevel;
     }
-   public String getvDesc() {
-        return vDesc;
-    }
-
-    private String vLoginWay;
-    public void setvLoginWay(String vLoginWay){
-        this.vLoginWay=vLoginWay;
-    }
-   public String getvLoginWay() {
-        return vLoginWay;
+   public Integer getiPartyLevel() {
+        return iPartyLevel;
     }
 
-    private Long iOnlineTime;
-    public void setiOnlineTime(Long iOnlineTime){
-        this.iOnlineTime=iOnlineTime;
+    private String jCost;
+    public void setjCost(String jCost){
+        this.jCost=jCost;
     }
-   public Long getiOnlineTime() {
-        return iOnlineTime;
-    }
-
-    public Deposit parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new Deposit(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19],args[20],args[21],args[22],args[23],args[24]);
+   public String getjCost() {
+        return jCost;
     }
 
-    public Deposit(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iArea,String vDstUin,String iSourceWay,String vClientIp,String vReMarks,String iPayBefore,String iPayDelta,String iPayAfter,String vDesc,String vLoginWay,String iOnlineTime){
+    public PartyBankBuy parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new PartyBankBuy(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19]);
+    }
+
+    public PartyBankBuy(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iRoleExperience,String iRoleSword,String iPartyId,String vPartyName,String iPartyLevel,String jCost){
         this.iGameId = Long.valueOf(GameId);
         this.iAccountType = Long.valueOf(AccountType);
         this.iWorldId = Long.valueOf(WorldId);
@@ -240,16 +200,11 @@ public class Deposit extends BaseBean implements Serializable {
         this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iArea = Integer.valueOf(iArea);
-        this.vDstUin = String.valueOf(vDstUin);
-        this.iSourceWay = Integer.valueOf(iSourceWay);
-        this.vClientIp = String.valueOf(vClientIp);
-        this.vReMarks = String.valueOf(vReMarks);
-        this.iPayBefore = Integer.valueOf(iPayBefore);
-        this.iPayDelta = String.valueOf(iPayDelta);
-        this.iPayAfter = Integer.valueOf(iPayAfter);
-        this.vDesc = String.valueOf(vDesc);
-        this.vLoginWay = String.valueOf(vLoginWay);
-        this.iOnlineTime = Long.valueOf(iOnlineTime);
+        this.iRoleExperience = Integer.valueOf(iRoleExperience);
+        this.iRoleSword = Integer.valueOf(iRoleSword);
+        this.iPartyId = Long.valueOf(iPartyId);
+        this.vPartyName = String.valueOf(vPartyName);
+        this.iPartyLevel = Integer.valueOf(iPartyLevel);
+        this.jCost = String.valueOf(jCost);
     }
 }

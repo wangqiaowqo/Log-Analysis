@@ -165,9 +165,7 @@ public class ChongzhiProcessTable {
 
             sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date, iworldid));
             DataFrame tmp=sqlContext.sql("select * from fat_deposit_user where dtstatdate='"+date+"' and iworldid="+iworldid);
-            for(Row r:tmp.collect()){
-                System.out.println("log2:"+r.mkString());
-            }
+            
             sqlContext.sql(String.format(tbChongZhi_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
             if(dayOfWeek == 1) {

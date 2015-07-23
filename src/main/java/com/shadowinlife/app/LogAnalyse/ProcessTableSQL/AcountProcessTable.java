@@ -190,7 +190,7 @@ public class AcountProcessTable {
             sqlContext.sql(String.format(tbUser_unact_account_table, date, date, date, iworldid));
             sqlContext.sql(String.format(tbUser_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
-            System.out.println(String.format(tbUser_act_account_table, date, iworldid, date, iworldid, date, iworldid));
+            //System.out.println(String.format(tbUser_act_account_table, date, iworldid, date, iworldid, date, iworldid));
            
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";

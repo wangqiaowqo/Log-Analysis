@@ -136,6 +136,8 @@ public class ActionDriver {
             String[] Tables = m.get("Table").get(0);
             List<String> talbename = new ArrayList<String>();
             for (String Table : Tables) {
+                if(Table.equalsIgnoreCase(""))
+                    continue;
                 String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                         + "' AND `dtEventTime`<'" + EndFilterTime + "'";
                 talbename.add(Table);
