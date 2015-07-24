@@ -49,5 +49,8 @@ public class ReadParquetToDF {
         logger.debug(Table + "Struct: \n" + dfFilted.schema().mkString(" | "));
         sc.registerDataFrameAsTable(dfFilted, Table.trim());
         sc.dropTempTable("temp");
+        
+        df.printSchema();
+        System.out.println(Table + " count : " + df.count());
     }
 }

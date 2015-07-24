@@ -14,6 +14,11 @@ public class DFTableToTempTable {
             logger.debug(Temp_Table_Name + " " + sql);
             DataFrame Temp_Table_DF = sqlContext.sql(sql);
             sqlContext.registerDataFrameAsTable(Temp_Table_DF, Temp_Table_Name);
+            
+            Temp_Table_DF.printSchema();
+            for(Row r : Temp_Table_DF.collect()) {
+                System.out.println(Temp_Table_Name + " : " + r.mkString(" | "));
+            }
         } catch(Exception e) {
             logger.catching(e);
             e.printStackTrace();
