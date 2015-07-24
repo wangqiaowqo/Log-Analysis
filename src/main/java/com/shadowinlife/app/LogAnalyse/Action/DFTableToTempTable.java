@@ -13,7 +13,10 @@ public class DFTableToTempTable {
             //System.out.println("TEMP:" + Temp_Table_Name +" "+ sql);
             logger.debug(Temp_Table_Name + " " + sql);
             DataFrame Temp_Table_DF = sqlContext.sql(sql);
-            sqlContext.registerDataFrameAsTable(Temp_Table_DF, Temp_Table_Name);
+            if(Temp_Table_Name.equalsIgnoreCase(""))
+                Temp_Table_DF.unpersist();
+            else
+                sqlContext.registerDataFrameAsTable(Temp_Table_DF, Temp_Table_Name);
         } catch(Exception e) {
             logger.catching(e);
             e.printStackTrace();
