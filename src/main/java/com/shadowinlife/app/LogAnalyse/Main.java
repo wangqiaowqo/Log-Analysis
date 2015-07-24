@@ -33,6 +33,7 @@ public class Main {
         String ConfiguationFile = null;
         List<Map<String, List<String[]>>> l = null;
         String Action = null;
+        boolean debug = false;
         for (int i = 0; i < args.length; i = i + 2) {
 
             // 入参格式监测
@@ -51,7 +52,8 @@ public class Main {
                         + "--TAG   ALL 即计算fat表，也计算结果表， mode为空则所有模式都计算\n"
                         + "        OSS  只计算结果表，mode为空计算所有种类的结果表\n"
                         + "        FAT 只计算Fat表，Mode为空则计算所有种类的中间表\n"
-                        + "--ACTION 所希望运行的Action的名字，使用逗号隔开");
+                        + "--ACTION 所希望运行的Action的名字，使用逗号隔开\n"
+                        + "--DEBUG 是否开启DEBUG模式");
                 return;
             }
 
@@ -93,6 +95,9 @@ public class Main {
                 break;
             case "--ACTION":
                 Action = args[i+1];
+                break;
+            case "--DEBUG":
+                debug = Boolean.valueOf(args[i+1]);
                 break;
             }
         }

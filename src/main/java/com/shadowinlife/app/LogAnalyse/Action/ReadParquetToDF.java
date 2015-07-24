@@ -4,10 +4,14 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.hive.HiveContext;
 
 public class ReadParquetToDF {
+    private static final Logger logger = LogManager.getLogger();
+    
     public void ReadParquet(HiveContext sc, String BeginTime, String EndTime,
             String[] GameId, String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
 
@@ -27,7 +31,7 @@ public class ReadParquetToDF {
                                 + format.format(calendar.getTime()) + "/" + Table.trim()
                                 + ".parquet";
                         try {
-                            DataFrame tmp = sc.parquetFile(ParquetFilePath);
+                            DataFrame tmp = sc.parquetFile(ParquetFilePath);                          
                             df = df.unionAll(tmp);
                             tmp.unpersist();
                         } catch (Exception e) {
@@ -41,6 +45,8 @@ public class ReadParquetToDF {
         }
         df.registerTempTable("temp");
         DataFrame dfFilted = sc.sql(WhereSQL);
+        logger.debug(Table + " Count: " + dfFilted.count());
+        logger.debug(Table + "Struct: \n" + dfFilted.schema().mkString(" | "));
         sc.registerDataFrameAsTable(dfFilted, Table.trim());
         sc.dropTempTable("temp");
     }

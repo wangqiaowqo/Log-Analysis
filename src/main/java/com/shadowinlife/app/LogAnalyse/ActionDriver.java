@@ -135,7 +135,7 @@ public class ActionDriver {
             String[] Tables = m.get("Table").get(0);
             List<String> talbename = new ArrayList<String>();
             for (String Table : Tables) {
-                if(Table.equalsIgnoreCase(""))
+                if(Table.equalsIgnoreCase("")||Table==null)
                     continue;
                 String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                         + "' AND `dtEventTime`<'" + EndFilterTime + "'";
@@ -149,6 +149,8 @@ public class ActionDriver {
             // index_0放置的是中间表名称, index_1位置是生成这个中间表使用的SQL语句
             List<String[]> SQLlist = m.get("Sql");
             for (String[] sql : SQLlist) {
+                if(sql.length==0||sql==null)
+                    continue;
                 talbename.add(sql[0]);
                 DFTableToTempTable.ExcuteSQL(sc, sql[0], TranslateSQL(sql[1], CurseTime));
             }
