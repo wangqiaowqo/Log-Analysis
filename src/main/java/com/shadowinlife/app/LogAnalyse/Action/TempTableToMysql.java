@@ -16,7 +16,7 @@ public class TempTableToMysql {
                 System.out.println(table + " : " + r.mkString(" | "));
             }
             
-            dfFinal.insertIntoJDBC(url, table, false);
+            //dfFinal.insertIntoJDBC(url, table, false);
             dfFinal.unpersist();
         } catch (Exception e) {
             logger.catching(e);

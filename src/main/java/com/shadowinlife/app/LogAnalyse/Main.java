@@ -106,6 +106,8 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
         
         HiveContext sqlContext = new HiveContext(sc.sc());
+        //使用HIVE数据库表
+        sqlContext.sql("USE dbprocess");
         sqlContext.udf().register("ConvertNull", new UDF1<Long, Long>() {
             @Override
             public Long call(Long value) throws Exception {
