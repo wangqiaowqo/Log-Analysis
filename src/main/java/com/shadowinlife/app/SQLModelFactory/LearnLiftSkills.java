@@ -59,11 +59,11 @@ public class LearnLiftSkills extends BaseBean implements Serializable {
         return vUin;
     }
 
-    private Long iRoleId;
-    public void setiRoleId(Long iRoleId){
+    private Integer iRoleId;
+    public void setiRoleId(Integer iRoleId){
         this.iRoleId=iRoleId;
     }
-   public Long getiRoleId() {
+   public Integer getiRoleId() {
         return iRoleId;
     }
 
@@ -75,43 +75,43 @@ public class LearnLiftSkills extends BaseBean implements Serializable {
         return vRoleName;
     }
 
-    private Long iRoleJob;
-    public void setiRoleJob(Long iRoleJob){
+    private Integer iRoleJob;
+    public void setiRoleJob(Integer iRoleJob){
         this.iRoleJob=iRoleJob;
     }
-   public Long getiRoleJob() {
+   public Integer getiRoleJob() {
         return iRoleJob;
     }
 
-    private Long iRoleGender;
-    public void setiRoleGender(Long iRoleGender){
+    private Integer iRoleGender;
+    public void setiRoleGender(Integer iRoleGender){
         this.iRoleGender=iRoleGender;
     }
-   public Long getiRoleGender() {
+   public Integer getiRoleGender() {
         return iRoleGender;
     }
 
-    private Long iRoleLevel;
-    public void setiRoleLevel(Long iRoleLevel){
+    private Integer iRoleLevel;
+    public void setiRoleLevel(Integer iRoleLevel){
         this.iRoleLevel=iRoleLevel;
     }
-   public Long getiRoleLevel() {
+   public Integer getiRoleLevel() {
         return iRoleLevel;
     }
 
-    private Long iRoleVipLevel;
-    public void setiRoleVipLevel(Long iRoleVipLevel){
+    private Integer iRoleVipLevel;
+    public void setiRoleVipLevel(Integer iRoleVipLevel){
         this.iRoleVipLevel=iRoleVipLevel;
     }
-   public Long getiRoleVipLevel() {
+   public Integer getiRoleVipLevel() {
         return iRoleVipLevel;
     }
 
-    private Long iRoleReputationLevel;
-    public void setiRoleReputationLevel(Long iRoleReputationLevel){
+    private Integer iRoleReputationLevel;
+    public void setiRoleReputationLevel(Integer iRoleReputationLevel){
         this.iRoleReputationLevel=iRoleReputationLevel;
     }
-   public Long getiRoleReputationLevel() {
+   public Integer getiRoleReputationLevel() {
         return iRoleReputationLevel;
     }
 
@@ -131,51 +131,59 @@ public class LearnLiftSkills extends BaseBean implements Serializable {
         return vRoleElse2;
     }
 
-    private Long iSkillId;
-    public void setiSkillId(Long iSkillId){
+    private Integer iSkillId;
+    public void setiSkillId(Integer iSkillId){
         this.iSkillId=iSkillId;
     }
-   public Long getiSkillId() {
+   public Integer getiSkillId() {
         return iSkillId;
     }
 
-    private Long iAfterSkillLevel;
-    public void setiAfterSkillLevel(Long iAfterSkillLevel){
+    private Integer iAfterSkillLevel;
+    public void setiAfterSkillLevel(Integer iAfterSkillLevel){
         this.iAfterSkillLevel=iAfterSkillLevel;
     }
-   public Long getiAfterSkillLevel() {
+   public Integer getiAfterSkillLevel() {
         return iAfterSkillLevel;
     }
 
-    private Long iConsumeId;
-    public void setiConsumeId(Long iConsumeId){
+    private Integer iConsumeId;
+    public void setiConsumeId(Integer iConsumeId){
         this.iConsumeId=iConsumeId;
     }
-   public Long getiConsumeId() {
+   public Integer getiConsumeId() {
         return iConsumeId;
     }
 
-    private Long iConsume;
-    public void setiConsume(Long iConsume){
+    private Integer iConsume;
+    public void setiConsume(Integer iConsume){
         this.iConsume=iConsume;
     }
-   public Long getiConsume() {
+   public Integer getiConsume() {
         return iConsume;
     }
 
-    private Long iAfterRemain;
-    public void setiAfterRemain(Long iAfterRemain){
+    private Integer iAfterRemain;
+    public void setiAfterRemain(Integer iAfterRemain){
         this.iAfterRemain=iAfterRemain;
     }
-   public Long getiAfterRemain() {
+   public Integer getiAfterRemain() {
         return iAfterRemain;
     }
 
-    public LearnLiftSkills parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
-        return new LearnLiftSkills(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18]);
+    private Integer iSillType;
+    public void setiSillType(Integer iSillType){
+        this.iSillType=iSillType;
+    }
+   public Integer getiSillType() {
+        return iSillType;
     }
 
-    public LearnLiftSkills(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iSkillId,String iAfterSkillLevel,String iConsumeId,String iConsume,String iAfterRemain){
+    public LearnLiftSkills parseFromLogFile(String[] args, String GameId, String AccountType, String WorldId){
+        return new LearnLiftSkills(GameId, AccountType, WorldId, args[1],args[2],args[3],args[4],args[5],args[6],args[7],args[8],args[9],args[10],args[11],args[12],args[13],args[14],args[15],args[16],args[17],args[18],args[19]);
+    }
+
+    public LearnLiftSkills(String GameId, String AccountType, String WorldId, String dtEventTime,String iEventId,String vVersionId,String vUin,String iRoleId,String vRoleName,String iRoleJob,String iRoleGender,String iRoleLevel,String iRoleVipLevel,String iRoleReputationLevel,String vRoleElse1,String vRoleElse2,String iSkillId,String iAfterSkillLevel,String iConsumeId,String iConsume,String iAfterRemain,String iSillType){
         this.iGameId = Long.valueOf(GameId);
         this.iAccountType = Long.valueOf(AccountType);
         this.iWorldId = Long.valueOf(WorldId);
@@ -183,19 +191,20 @@ public class LearnLiftSkills extends BaseBean implements Serializable {
         this.iEventId = Long.valueOf(iEventId);
         this.vVersionId = String.valueOf(vVersionId);
         this.vUin = String.valueOf(vUin);
-        this.iRoleId = Long.valueOf(iRoleId);
+        this.iRoleId = Integer.valueOf(iRoleId);
         this.vRoleName = String.valueOf(vRoleName);
-        this.iRoleJob = Long.valueOf(iRoleJob);
-        this.iRoleGender = Long.valueOf(iRoleGender);
-        this.iRoleLevel = Long.valueOf(iRoleLevel);
-        this.iRoleVipLevel = Long.valueOf(iRoleVipLevel);
-        this.iRoleReputationLevel = Long.valueOf(iRoleReputationLevel);
+        this.iRoleJob = Integer.valueOf(iRoleJob);
+        this.iRoleGender = Integer.valueOf(iRoleGender);
+        this.iRoleLevel = Integer.valueOf(iRoleLevel);
+        this.iRoleVipLevel = Integer.valueOf(iRoleVipLevel);
+        this.iRoleReputationLevel = Integer.valueOf(iRoleReputationLevel);
         this.vRoleElse1 = String.valueOf(vRoleElse1);
         this.vRoleElse2 = String.valueOf(vRoleElse2);
-        this.iSkillId = Long.valueOf(iSkillId);
-        this.iAfterSkillLevel = Long.valueOf(iAfterSkillLevel);
-        this.iConsumeId = Long.valueOf(iConsumeId);
-        this.iConsume = Long.valueOf(iConsume);
-        this.iAfterRemain = Long.valueOf(iAfterRemain);
+        this.iSkillId = Integer.valueOf(iSkillId);
+        this.iAfterSkillLevel = Integer.valueOf(iAfterSkillLevel);
+        this.iConsumeId = Integer.valueOf(iConsumeId);
+        this.iConsume = Integer.valueOf(iConsume);
+        this.iAfterRemain = Integer.valueOf(iAfterRemain);
+        this.iSillType = Integer.valueOf(iSillType);
     }
 }

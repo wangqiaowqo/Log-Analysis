@@ -40,7 +40,6 @@ public class ActionDriver {
             e.printStackTrace();
         }
         return result;
-
     }
     //用于解析%DATE%+/-Num来标记某些需要写入的时间
     private static String TranslateSQL(String inputSQL, String CurseTime) {
