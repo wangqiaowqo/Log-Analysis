@@ -106,6 +106,9 @@ public class Main {
         JavaSparkContext sc = new JavaSparkContext(conf);
         
         HiveContext sqlContext = new HiveContext(sc.sc());
+        //切换到FAT表使用的HIVE数据库,这个hard code要被优化掉
+        sqlContext.sql("use dbprocess");
+        
         sqlContext.udf().register("ConvertNull", new UDF1<Long, Long>() {
             @Override
             public Long call(Long value) throws Exception {
