@@ -108,6 +108,8 @@ public class Main {
         HiveContext sqlContext = new HiveContext(sc.sc());
         //切换到FAT表使用的HIVE数据库,这个hard code要被优化掉
         sqlContext.sql("use dbprocess");
+        //添加自定义function
+        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         
         sqlContext.udf().register("ConvertNull", new UDF1<Long, Long>() {
             @Override

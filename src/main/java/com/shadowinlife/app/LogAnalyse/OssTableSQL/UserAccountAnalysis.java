@@ -516,10 +516,6 @@ public class UserAccountAnalysis {
 
     public static void create_tbRegisterUser(HiveContext sqlContext, String strMode, String strDate) {
 
-        // Initialization hive UDF
-        sqlContext.sql("use dbprocess");
-        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         try {

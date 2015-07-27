@@ -230,9 +230,6 @@ public class RoleOfMoneyFlowProcessTable {
                     "IF(useractivity(iDayActi,%s)=1,shiftact(imonthacti),shiftleft(imonthacti))",
                     dayOfMonth-1);
         }
-        // Initialization hive UDF
-        sqlContext.sql("use dbprocess");
-        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         
         sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date, iworldid));
     }

@@ -168,10 +168,6 @@ public class AcountProcessTable {
             // Register the result RDD into hive
             sqlContext.registerDataFrameAsTable(temp_RDD, "loginProcessTable");
 
-            // Initialization hive UDF
-            sqlContext.sql("use dbprocess");
-            sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-
             //create a temp table with every hour data
             // sqlContext.sql("INSERT INTO TABLE account_daily_fat(suin,ionlinetime,ilevel,sip,) SELECT * FROM loginProcessTable");
 
@@ -259,9 +255,6 @@ public class AcountProcessTable {
                     "IF(useractivity(iDayActi,%s)=1,shiftact(imonthacti),shiftleft(imonthacti))",
                     dayOfMonth-1);
         }
-        // Initialization hive UDF
-        sqlContext.sql("use dbprocess");
-        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         
         sqlContext.sql(String.format(hql, date, iWeekActi, iMonthActi, date, date, iworldid));
     }
