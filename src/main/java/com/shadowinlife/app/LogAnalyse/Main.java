@@ -108,6 +108,7 @@ public class Main {
         HiveContext sqlContext = new HiveContext(sc.sc());
         //使用HIVE数据库表
         sqlContext.sql("USE dbprocess");
+        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
         sqlContext.udf().register("ConvertNull", new UDF1<Long, Long>() {
             @Override
             public Long call(Long value) throws Exception {
