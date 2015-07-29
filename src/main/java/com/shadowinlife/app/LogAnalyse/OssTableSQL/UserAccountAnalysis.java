@@ -215,7 +215,7 @@ public class UserAccountAnalysis {
             + "groupuseracti(iweekacti) AS iweekacti,"
             + "groupuseracti(imonthacti) AS imonthacti "
             + "from fat_%s_user "
-            + "WHERE index_dtstatdate=DATE2LONG('%s') and ilastacttime >= '%s' "
+            + "WHERE index_dtstatdate=DATE2LONG('%s') " //and ilastacttime >= '%s' "
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
 
             + "group by index_igameid,index_iaccounttype,index_iworldid,maxlevel with cube";
@@ -516,6 +516,10 @@ public class UserAccountAnalysis {
 
     public static void create_tbRegisterUser(HiveContext sqlContext, String strMode, String strDate) {
 
+        // Initialization hive UDF
+        sqlContext.sql("use dbprocess");
+        sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         try {
@@ -554,7 +558,7 @@ public class UserAccountAnalysis {
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, "Level", iPeriod, strTableField, strTableField,
-                    strTableField, strDate, strMode, strDate, strBeforeWeekDate);
+                    strTableField, strDate, strMode, strDate/*, strBeforeWeekDate*/);
             sqlContext.sql(strSql);
 
             // stat tbActivityScaleDis
@@ -622,7 +626,7 @@ public class UserAccountAnalysis {
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
-                    strDate, strMode, strDate, strMothFirstDay);
+                    strDate, strMode, strDate/*, strMothFirstDay*/);
             sqlContext.sql(strSql);
 
             // stat tbActivityScaleDis
@@ -687,7 +691,7 @@ public class UserAccountAnalysis {
            // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
-                    strDate, strMode, strDate, strDate);
+                    strDate, strMode, strDate/*, strDate*/);
             sqlContext.sql(strSql);
             
             // stat tbDayUserActivityTypeDis
