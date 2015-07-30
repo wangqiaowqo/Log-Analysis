@@ -94,7 +94,7 @@ public class Main {
             List<String[]> list = ReadConfigurationFile.ReadSplitConfiguration(path);
             for (String[] l : list) {
                 System.out.println("gongmeng: " + l[0] + " " + l[1]);
-                Class c = Class
+                Class<?> c = Class
                         .forName(l[0]);
                 SaveParquet<BaseBean> sq = new SaveParquet<BaseBean>();
                 sq.set((BaseBean) c.newInstance());

@@ -132,12 +132,16 @@ public class Main {
         if (ConfiguationFile == null) {
             if (date == null || Flag == null) {
                 System.out.println("Parameter is illegal, see --help");
+                sc.stop();
+                sc.close();
                 return;
             }
         }
         if (Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) {
             if (iWorldId == null) {
                 System.out.println("iworldid can not be null");
+                sc.stop();
+                sc.close();
                 return;
             }
         }

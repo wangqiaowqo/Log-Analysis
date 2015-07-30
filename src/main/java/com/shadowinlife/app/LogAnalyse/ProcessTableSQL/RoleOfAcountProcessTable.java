@@ -12,9 +12,6 @@ import org.apache.spark.sql.hive.HiveContext;
 
 import static org.apache.spark.sql.functions.*;
 
-import com.shadowinlife.app.SQLModelFactory.RoleLogin;
-import com.shadowinlife.app.SQLModelFactory.RoleLogout;
-
 /**
  * 
  * @author shadowinlife
