@@ -36,13 +36,13 @@ public class ReadParquetToDF {
                             tmp.unpersist();
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }
-
-                        calendar.add(Calendar.HOUR_OF_DAY, 1);
+                        }                  
                     }
                 }
             }
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
         }
+        
         df.registerTempTable("temp");
         DataFrame dfFilted = sc.sql(WhereSQL);
         logger.debug(Table + " Count: " + dfFilted.count());
