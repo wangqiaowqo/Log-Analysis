@@ -7,13 +7,14 @@ import java.util.Calendar;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.spark.sql.DataFrame;
+import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 public class ReadParquetToDF {
     private static final Logger logger = LogManager.getLogger();
-    
-    public void ReadParquet(HiveContext sc, String BeginTime, String EndTime,
-            String[] GameId, String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
+
+    public void ReadParquet(HiveContext sc, String BeginTime, String EndTime, String[] GameId,
+            String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
 
         DataFrame df = sc.parquetFile("/LOG/BASE/" + Table.trim() + ".parquet");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd/HH");
@@ -31,7 +32,10 @@ public class ReadParquetToDF {
                                 + format.format(calendar.getTime()) + "/" + Table.trim()
                                 + ".parquet";
                         try {
-                            DataFrame tmp = sc.parquetFile(ParquetFilePath);                          
+                            DataFrame tmp = sc.parquetFile(ParquetFilePath);
+                            for (Row r : tmp.collect()) {
+                                System.out.println(ParquetFilePath + " : " + r.mkString(" | "));
+                            }
                             df = df.unionAll(tmp);
                             tmp.unpersist();
                         } catch (Exception e) {
@@ -45,11 +49,14 @@ public class ReadParquetToDF {
         }
         df.registerTempTable("temp");
         DataFrame dfFilted = sc.sql(WhereSQL);
+        for (Row r : dfFilted.collect()) {
+            System.out.println(Table + " : " + r.mkString(" | "));
+        }
         logger.debug(Table + " Count: " + dfFilted.count());
         logger.debug(Table + "Struct: \n" + dfFilted.schema().mkString(" | "));
         sc.registerDataFrameAsTable(dfFilted, Table.trim());
         sc.dropTempTable("temp");
-        
+
         df.printSchema();
         System.out.println(Table + " count : " + df.count());
     }
