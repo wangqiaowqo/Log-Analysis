@@ -116,7 +116,7 @@ public class Main {
             public Long call(Long value) throws Exception {
                 if (value == null)
                     return -1l;
-                return value;
+                return Long.valueOf(value.toString());
             }
 
         }, DataTypes.LongType);

@@ -165,7 +165,8 @@ public class ActionDriver {
 
             // 清理临时表
             for (String t : talbename) {
-                sc.dropTempTable(t);
+                if(t!=null && !t.equalsIgnoreCase(""))
+                    sc.dropTempTable(t);
             }
 
         }
