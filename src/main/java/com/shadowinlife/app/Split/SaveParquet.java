@@ -51,9 +51,7 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
                 
                 @Override
                 public T call(String[] line) {
-                   
                     return (T) t.parseFromLogFile(line, GameId, AccountType, WorldId);
-
                 }
 
             });

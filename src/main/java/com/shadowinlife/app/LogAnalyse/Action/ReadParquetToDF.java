@@ -33,6 +33,8 @@ public class ReadParquetToDF {
                                 + ".parquet";
                         try {
                             DataFrame tmp = sc.parquetFile(ParquetFilePath);
+                            System.out.println("Begin to Load: " + ParquetFilePath);
+                            tmp.printSchema();
                             for (Row r : tmp.collect()) {
                                 System.out.println(ParquetFilePath + " : " + r.mkString(" | "));
                             }
@@ -42,11 +44,12 @@ public class ReadParquetToDF {
                             e.printStackTrace();
                         }
 
-                        calendar.add(Calendar.HOUR_OF_DAY, 1);
                     }
                 }
             }
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
         }
+        
         df.registerTempTable("temp");
         DataFrame dfFilted = sc.sql(WhereSQL);
         for (Row r : dfFilted.collect()) {
