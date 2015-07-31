@@ -1,5 +1,6 @@
 package com.shadowinlife.app.LogAnalyse;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -110,16 +111,6 @@ public class Main {
         sqlContext.sql("use dbprocess");
         //添加自定义function
         sqlContext.sql("ADD JAR hdfs://10-4-28-24:8020//udf.jar");
-        
-        sqlContext.udf().register("ConvertNull", new UDF1<Long, Long>() {
-            @Override
-            public Long call(Long value) throws Exception {
-                if (value == null)
-                    return -1l;
-                return Long.valueOf(value.toString());
-            }
-
-        }, DataTypes.LongType);
         
         // 读取配置文件
         if (ConfiguationFile != null) {
