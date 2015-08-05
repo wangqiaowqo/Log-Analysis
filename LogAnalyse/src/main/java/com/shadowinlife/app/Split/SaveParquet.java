@@ -59,7 +59,7 @@ public class SaveParquet<T extends BaseBean> implements Serializable{
             });
 
             DataFrame schemaRDD = sqlContext.createDataFrame(tempLogs, t.getClass());
-            schemaRDD.saveAsParquetFile(dst + "/" + tableName + ".parquet");
+            schemaRDD.write().parquet(dst + "/" + tableName + ".parquet");
             schemaRDD.unpersist();
             tempLogs.unpersist();
             tempRDD.unpersist();
