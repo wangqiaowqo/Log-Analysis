@@ -67,6 +67,7 @@ public class RoleOfChongzhiProcessTable {
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
+            + "T1.iroleregtime,"
             + "T1.ilastacttime,"
             + "shiftleft(T1.idayacti),"
             + "T1.iWeekActi," // iWeekacti
@@ -94,7 +95,8 @@ public class RoleOfChongzhiProcessTable {
             + "IF(T1.iregtime is null, T2.FirstTime, T1.iregtime),"
             + "1," //gameid
             + "%s," //worldid
-            + "T2.iRoleId," //roleid
+            + "T2.iRoleId,"
+            + "T3.iroleregtime," 
             + "T2.ActTime,"
             + "shiftact(T1.idayacti),"
             + "T1.iWeekActi," //iWeekacti
@@ -110,7 +112,9 @@ public class RoleOfChongzhiProcessTable {
             + "%s AS index_iworldid "
             + "FROM ChongZhiProcessTable T2  LEFT JOIN "
             + "(SELECT * FROM fat_deposit_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND index_iworldid=%s) T1 "
-            + "ON T2.iRoleId=T1.iroleid";
+            + "ON T2.iRoleId=T1.iroleid "
+            + "LEFT JOIN (SELECT iroleregtime, iroleid FROM fat_login_roleid_user WHERE index_dtStatDate=(DATE2LONG('%s')-1) AND index_iworldid=%s) T3 "
+            + "ON T3.iroleid=T2.iRoleId";
     //Shift iweek in sunday, shift imonth in last day of month
     private static String shift_fatTable = "INSERT OVERWRITE TABLE fat_deposit_roleid_user "
             + "PARTITION(index_iaccounttype,index_dtstatdate,index_igameid,index_iworldid) "
@@ -121,6 +125,7 @@ public class RoleOfChongzhiProcessTable {
             + "T1.igameid,"
             + "T1.iworldid,"
             + "T1.iroleid,"
+            + "T1.iroleregtime,"
             + "T1.ilastacttime,"
             + "T1.idayacti,"
             + "%s," // iWeekacti
@@ -164,7 +169,7 @@ public class RoleOfChongzhiProcessTable {
             sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date, iworldid));
             DataFrame tmp=sqlContext.sql("select * from fat_deposit_roleid_user where dtstatdate='"+date+"' and iworldid="+iworldid);
             
-            sqlContext.sql(String.format(tbChongZhi_act_account_table, date, iworldid, date, iworldid, date, iworldid));
+            sqlContext.sql(String.format(tbChongZhi_act_account_table, date, iworldid, date, iworldid, date, iworldid, date, iworldid));
             
             if(dayOfWeek == 1) {
                 iWeekActi = "IF(useractivity(T1.iDayActi,7)=1,shiftact(T1.iweekacti),shiftleft(T1.iweekacti))";
@@ -198,6 +203,7 @@ public class RoleOfChongzhiProcessTable {
                 + "igameid,"
                 + "iworldid,"
                 + "iroleid,"
+                + "iroleregtime,"
                 + "ilastacttime,"	
                 + "shiftleft(idayacti),"
                 + "%s,"
