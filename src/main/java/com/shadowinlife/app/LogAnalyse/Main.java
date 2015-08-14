@@ -114,7 +114,7 @@ public class Main {
         
         // 读取配置文件
         if (ConfiguationFile != null) {
-            l = ReadConfigurationFile.ReadLogAnalyseConfiguration(ConfiguationFile);
+            l = ReadConfigurationFile.ReadLogAnalyseConfigurationByDb(ConfiguationFile);
             ActionDriver.Scheduler(sqlContext, l, date, Action, iWorldId);
             return;
         }

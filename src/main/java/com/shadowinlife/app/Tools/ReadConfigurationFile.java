@@ -1,10 +1,17 @@
 package com.shadowinlife.app.Tools;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -148,5 +155,204 @@ public class ReadConfigurationFile {
             e.printStackTrace();
         }
         return l;
+    }
+    
+    public static List<Map<String, List<String[]>>> ReadLogAnalyseConfigurationByDb(String ConfiguationFile){
+    	List<Map<String, List<String[]>>> l = new ArrayList<Map<String, List<String[]>>>();
+		Connection conn = null;
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			// read jdbc Properties
+			InputStream fileInputStream = new FileInputStream(ConfiguationFile);
+			Properties properties = new Properties();
+			properties.load(fileInputStream);
+			fileInputStream.close();
+			
+			Class.forName(properties.getProperty("database.driver"));
+			conn = DriverManager.getConnection(properties.getProperty("database.url"), properties.getProperty("database.user"), properties.getProperty("database.pwd"));
+			st = conn.createStatement();
+			rs = st.executeQuery("SELECT * FROM t_action_info");
+			while (rs.next()) {
+
+				Map<String, List<String[]>> m = new HashMap<String, List<String[]>>();
+				String actionName = rs.getString("vActionName");
+				String[] name = { actionName };
+				List<String[]> tmp_name = new ArrayList<String[]>();
+				tmp_name.add(name);
+				m.put("Name", tmp_name);
+
+				// Period
+				String[] Period = rs.getString("iPeriod").split(",");
+				List<String[]> tmp_Period = new ArrayList<String[]>();
+				tmp_Period.add(Period);
+				m.put("Period", tmp_Period);
+
+				// Step
+				String[] Step = rs.getString("iStep").split(",");
+				List<String[]> tmp_Step = new ArrayList<String[]>();
+				tmp_Step.add(Step);
+				m.put("Step", tmp_Step);
+
+				// GameId comma separate
+				String[] GameId = rs.getString("iGameId").split(",");
+				List<String[]> tmp_GameId = new ArrayList<String[]>();
+				tmp_GameId.add(GameId);
+				m.put("GameId", tmp_GameId);
+
+				// WorldId comma separate
+				String[] WorldId = rs.getString("iWorldId").split(",");
+				List<String[]> tmp_WorldId = new ArrayList<String[]>();
+				tmp_WorldId.add(WorldId);
+				m.put("WorldId", tmp_WorldId);
+
+				// AccountType comma separate
+				String[] AccountType = rs.getString("iAccountType").split(",");
+				List<String[]> tmp_AccountType = new ArrayList<String[]>();
+				tmp_AccountType.add(AccountType);
+				m.put("AccountType", tmp_AccountType);
+
+				putFinalIntoMap(conn, m, actionName);
+
+				putTableIntoMap(conn, m, actionName);
+
+				putSqlIntoMap(conn, m, actionName);
+
+				l.add(m);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+		return l;
+    }
+    
+    private static void putFinalIntoMap(Connection connection,
+			Map<String, List<String[]>> map, String actionName){
+		Statement st = null;
+		ResultSet fianlResultSet = null;
+		try {
+			st = connection.createStatement();
+			fianlResultSet = st
+					.executeQuery("SELECT * FROM t_action_final WHERE vActionName = '"
+							+ actionName + "'" + " ORDER BY iExeOrder asc");
+			List<String[]> tmp_Final = new ArrayList<String[]>();
+			while (fianlResultSet.next()) {
+				String[] s = { fianlResultSet.getString("vURL"),
+						fianlResultSet.getString("vFinalTable"),
+						fianlResultSet.getString("vFinalSql") };
+				tmp_Final.add(s);
+			}
+			map.put("Final", tmp_Final);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (fianlResultSet != null) {
+				try {
+					fianlResultSet.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+    }
+    
+    private static void putTableIntoMap(Connection connection,
+			Map<String, List<String[]>> map, String actionName){
+		Statement st = null;
+		ResultSet tableResultSet = null;
+		try {
+			st = connection.createStatement();
+			tableResultSet = st
+					.executeQuery("SELECT * FROM t_action_table WHERE vActionName = '"
+							+ actionName + "'" + " ORDER BY iExeOrder asc");
+			List<String[]> tmp_Table = new ArrayList<String[]>();
+			tableResultSet.last();
+			String[] tableName = new String[tableResultSet.getRow()];
+			tableResultSet.first();
+			tableResultSet.beforeFirst();
+				
+			int index=0;
+			while (tableResultSet.next()) {
+				tableName[index] = tableResultSet.getString("vActionTable");
+				index = index + 1;
+			}
+			tmp_Table.add(tableName);
+			map.put("Table", tmp_Table);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (tableResultSet != null) {
+				try {
+					tableResultSet.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+    }
+    
+    private static void putSqlIntoMap(Connection connection,
+			Map<String, List<String[]>> map, String actionName){
+		Statement st = null;
+		ResultSet sqlResultSet = null;
+		try {
+			st = connection.createStatement();
+			sqlResultSet = st
+					.executeQuery("SELECT * FROM t_action_sql WHERE vActionName = '"
+							+ actionName + "'" + " ORDER BY iExeOrder asc");
+			List<String[]> tmp_Sql = new ArrayList<String[]>();
+			while (sqlResultSet.next()) {
+				String[] s = { sqlResultSet.getString("vTempTable"),
+						sqlResultSet.getString("vActionSql") };
+				tmp_Sql.add(s);
+			}
+			map.put("Sql", tmp_Sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (sqlResultSet != null) {
+				try {
+					sqlResultSet.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+			if (st != null) {
+				try {
+					st.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
     }
 }
