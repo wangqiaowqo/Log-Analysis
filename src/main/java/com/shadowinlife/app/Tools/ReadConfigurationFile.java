@@ -141,7 +141,6 @@ public class ReadConfigurationFile {
                 m.put("Sql", tmp_SQL);
                 
                 List<String[]> tmp_Hive = new ArrayList<String[]>();
-                NodeList HiveList = eElement.getElementsByTagName("Hive");
                 for (int z = 0; z < SqlList.getLength(); z++) {
                     Element e = (Element) SqlList.item(z);
                     String[] SQL = { e.getAttribute("HiveTalbe").trim(), e.getTextContent() };

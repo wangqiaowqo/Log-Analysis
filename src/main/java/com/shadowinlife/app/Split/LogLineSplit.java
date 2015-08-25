@@ -1,8 +1,12 @@
 package com.shadowinlife.app.Split;
+
+import java.util.List;
+import java.util.Map;
+
+import com.codesnippets4all.json.parsers.JSONParser;
+import com.codesnippets4all.json.parsers.JsonParserFactory;
+
 /**
- * FileSplit is used as the Map Class split log into different Files Based on
- * the eventTAG Login/Logout/Levelup
- * 
  * @author shadowinlife
  * @since 2015-04-05
  */
@@ -58,6 +62,24 @@ public class LogLineSplit {
         } else {
             return new LogLineSplit("null", logline);
         }
+    }
+
+    public static List<Long> getArrayFromJson(String inputJson) {
+        JsonParserFactory factory = JsonParserFactory.getInstance();
+        JSONParser parser = factory.newJsonParser();
+        @SuppressWarnings("rawtypes")
+        Map jsonData = parser.parseJson(inputJson);
+        @SuppressWarnings("unchecked")
+        List<Long> value = (List<Long>) jsonData.get("root");
+        return value;
+    }
+
+    public static Map<String, Long> getMapFromJson(String inputJson) {
+        JsonParserFactory factory = JsonParserFactory.getInstance();
+        JSONParser parser = factory.newJsonParser();
+        @SuppressWarnings("unchecked")
+        Map<String, Long> jsonData = (Map<String, Long>) parser.parseJson(inputJson);
+        return jsonData;
     }
 
     public String getFileValue() {

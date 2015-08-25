@@ -12,10 +12,10 @@ import org.apache.spark.sql.hive.HiveContext;
 public class ReadParquetToDF {
     private static final Logger logger = LogManager.getLogger();
     
-    public void ReadParquet(HiveContext sc, String BeginTime, String EndTime,
+    public void ReadParquet(HiveContext sqlContext, String BeginTime, String EndTime,
             String[] GameId, String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
 
-        DataFrame df = sc.parquetFile("/LOG/BASE/" + Table.trim() + ".parquet");
+        DataFrame df = sqlContext.parquetFile("/LOG/BASE/" + Table.trim() + ".parquet");
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd/HH");
         Timestamp bTime = Timestamp.valueOf(BeginTime);
         Timestamp eTime = Timestamp.valueOf(EndTime);
@@ -31,7 +31,7 @@ public class ReadParquetToDF {
                                 + format.format(calendar.getTime()) + "/" + Table.trim()
                                 + ".parquet";
                         try {
-                            DataFrame tmp = sc.parquetFile(ParquetFilePath);                          
+                            DataFrame tmp = sqlContext.parquetFile(ParquetFilePath);                          
                             df = df.unionAll(tmp);
                             tmp.unpersist();
                         } catch (Exception e) {
@@ -44,10 +44,10 @@ public class ReadParquetToDF {
         }
         
         df.registerTempTable("temp");
-        DataFrame dfFilted = sc.sql(WhereSQL);
+        DataFrame dfFilted = sqlContext.sql(WhereSQL);
         logger.debug(Table + " Count: " + dfFilted.count());
         logger.debug(Table + "Struct: \n" + dfFilted.schema().mkString(" | "));
-        sc.registerDataFrameAsTable(dfFilted, Table.trim());
-        sc.dropTempTable("temp");
+        sqlContext.registerDataFrameAsTable(dfFilted, Table.trim());
+        sqlContext.dropTempTable("temp");
     }
 }

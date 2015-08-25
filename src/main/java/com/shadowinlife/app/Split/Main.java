@@ -7,11 +7,8 @@ import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.PairFunction;
-import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 
-import com.shadowinlife.app.SQLModelFactory.*;
 import com.shadowinlife.app.Tools.ReadConfigurationFile;
 
 import scala.Tuple2;
@@ -26,7 +23,7 @@ public class Main {
         String iAccountType = null;
         String NameNode = null;
         String time = "";
-        
+
         for (int i = 0; i < args.length; i = i + 2) {
             if (!args[i].contains("--")) {
                 System.out.println("Wrong Parameter\n --help for all parameters");
@@ -36,8 +33,7 @@ public class Main {
                 System.out.println("--HDFS   Name Node  NOT NULL\n"
                         + "--DATE Index Field Date  NOT NULL\n" + "--GAMEID Index Filed Gameid\n"
                         + "--WORLDID Index Filed WORLDID\n"
-                        + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n"
-                        + "--TIME Hours of the Field\n"
+                        + "--ACCOUNTTYPE Index Filed ACCOUNTTYPE\n" + "--TIME Hours of the Field\n"
                         + "--CONF configuration files for javabean class");
                 return;
             }
@@ -70,15 +66,19 @@ public class Main {
         String dstPath = "/LOG/" + iGameId + "/" + iAccountType + "/" + iWorldId + "/" + date + "/"
                 + time + "/";
 
-        SparkConf conf = new SparkConf().setAppName("Log Filter");
-        JavaSparkContext sc = new JavaSparkContext(conf);
+        SparkConf sparkConf = new SparkConf().setAppName("Log Filter");
+        JavaSparkContext sc = new JavaSparkContext(sparkConf);
         SQLContext sqlContext = new SQLContext(sc);
-        
-        try {
-            // Read origin log file
-            JavaRDD<String> logLines = sc.textFile(targetFile);
 
-            // Split origin file into key-value model
+        try {
+            
+            //RoleLogin|2015-07-24 14:14:11|1437656813793|37wan-ShenZhen-201505061100|55b1d7b1e4b0a2808feb2007|1048634||1|1|1|0|0| | |192.168.1.51|1|0|0|0|{"gold":0,"crystal":0,"bindCrystal":0}|2015-07-24 14:14:11|0| 
+
+            
+            // 读取原始日志文件
+            JavaRDD<String> logLines = sc.textFile("test");
+
+            // 根据每一行日志的头切分成key value形式
             JavaPairRDD<String, String[]> hadoopFile = logLines
                     .mapToPair(new PairFunction<String, String, String[]>() {
                         private static final long serialVersionUID = 1L;
@@ -91,14 +91,60 @@ public class Main {
                         }
                     });
 
-            List<String[]> list = ReadConfigurationFile.ReadSplitConfiguration(path);
-            for (String[] l : list) {
-                System.out.println("gongmeng: " + l[0] + " " + l[1]);
-                Class c = Class
-                        .forName(l[0]);
-                SaveParquet<BaseBean> sq = new SaveParquet<BaseBean>();
-                sq.set((BaseBean) c.newInstance());
-                sq.LogToParquet(sqlContext, hadoopFile, l[1], dstPath, iGameId, iAccountType, iWorldId);
+            // 读取每种日志的表结构
+            String[] TableNames = {"RoleLogin"} ;
+            
+            // 根据表结构把value部分装配成parquet并持久化, schemaStruct[0] 是表明, 后面是表结构
+            for (String TableName : TableNames) {
+                System.out.println("gongmeng Table Name: " + TableName);
+                String[] SchemaTypes = {
+                        "datetime" ,
+                        "bigint"   ,
+                        "varchar"  ,
+                        "varchar"  ,
+                        "bigint"      ,
+                        "varchar"  ,
+                        "bigint"      ,
+                        "bigint"      ,
+                        "bigint"      ,
+                        "bigint"      ,
+                        "bigint"      ,
+                        "varchar"  ,
+                        "varchar"  ,
+                        "varchar"  ,
+                        "varchar"  ,
+                        "bigint"      ,
+                        "bigint"      ,
+                        "bigint"      ,
+                        "Map"     ,
+                        "datetime" ,
+                        "bigint"      ,};
+                String[] SchemaNames = {
+                        "dtEventTime"          ,          
+                        "iEventId"             ,
+                        "vVersionId"           ,
+                        "vUin"                 ,
+                        "iRoleId"              ,
+                        "vRoleName"            ,
+                        "iRoleJob"             ,
+                        "iRoleGender"          ,
+                        "iRoleLevel"           ,
+                        "iRoleVipLevel"        ,
+                        "iRoleReputationLevel" ,
+                        "vRoleElse1"           ,
+                        "vRoleElse2"           ,
+                        "vClientIp"            ,
+                        "vZoneId"              ,
+                        "iExp"                 ,
+                        "iReputation"          ,
+                        "iEnergy"              ,
+                        "jMoney"               ,
+                        "dtCreateTime"         ,
+                        "lOnlineTotalTime"     };
+                
+
+                SaveParquet.LogToParquet(sqlContext, hadoopFile, TableName, SchemaNames,
+                        SchemaTypes, dstPath, iGameId, iAccountType, iWorldId);
             }
             sc.stop();
             sc.close();

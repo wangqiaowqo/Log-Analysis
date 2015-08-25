@@ -19,6 +19,11 @@
 		</repository>
 	</repositories>
 	<dependencies>
+		<dependency>
+   		    <groupId>com.codesnippets4all</groupId>
+    		<artifactId>quick-json</artifactId>
+    		<version>1.0.4</version>
+		</dependency>
 		<dependency> <!-- Spark -->
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-core_2.10</artifactId>

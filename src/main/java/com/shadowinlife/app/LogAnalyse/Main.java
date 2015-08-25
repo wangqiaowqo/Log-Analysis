@@ -1,14 +1,11 @@
 package com.shadowinlife.app.LogAnalyse;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.hive.HiveContext;
-import org.apache.spark.sql.types.DataTypes;
 
 import com.shadowinlife.app.LogAnalyse.FatTable.CreateProcessTable;
 import com.shadowinlife.app.LogAnalyse.OssTableSQL.UserAccountAnalysis;
@@ -34,7 +31,7 @@ public class Main {
         String ConfiguationFile = null;
         List<Map<String, List<String[]>>> l = null;
         String Action = null;
-        boolean debug = false;
+        
         for (int i = 0; i < args.length; i = i + 2) {
 
             // 入参格式监测
@@ -98,7 +95,6 @@ public class Main {
                 Action = args[i+1];
                 break;
             case "--DEBUG":
-                debug = Boolean.valueOf(args[i+1]);
                 break;
             }
         }
@@ -116,6 +112,7 @@ public class Main {
         if (ConfiguationFile != null) {
             l = ReadConfigurationFile.ReadLogAnalyseConfigurationByDb(ConfiguationFile);
             ActionDriver.Scheduler(sqlContext, l, date, Action, iWorldId);
+            sc.close();
             return;
         }
 
@@ -123,12 +120,14 @@ public class Main {
         if (ConfiguationFile == null) {
             if (date == null || Flag == null) {
                 System.out.println("Parameter is illegal, see --help");
+                sc.close();
                 return;
             }
         }
         if (Flag.equalsIgnoreCase("ALL") || Flag.equalsIgnoreCase("FAT")) {
             if (iWorldId == null) {
                 System.out.println("iworldid can not be null");
+                sc.close();
                 return;
             }
         }

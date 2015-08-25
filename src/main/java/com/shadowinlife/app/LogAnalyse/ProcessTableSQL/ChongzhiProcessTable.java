@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.Calendar;
 
 import org.apache.spark.sql.DataFrame;
-import org.apache.spark.sql.Row;
 import org.apache.spark.sql.hive.HiveContext;
 
 /**
@@ -164,7 +163,6 @@ public class ChongzhiProcessTable {
             String iMonthActi = "T1.imonthacti";
 
             sqlContext.sql(String.format(tbChongZhi_unact_account_table, date, date, date, iworldid));
-            DataFrame tmp=sqlContext.sql("select * from fat_deposit_user where dtstatdate='"+date+"' and iworldid="+iworldid);
             
             sqlContext.sql(String.format(tbChongZhi_act_account_table, date, iworldid, date, iworldid, date, iworldid));
             
