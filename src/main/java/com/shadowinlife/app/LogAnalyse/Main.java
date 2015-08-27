@@ -25,7 +25,7 @@ public class Main {
         String mode = null;
         String date = null;
         String Flag = null;
-        String iWorldId = null, iGameId = null, iAccountType = null;
+        String iWorldId = null;
         String tableName = null;
         String FilePath = null;
         String ConfiguationFile = null;
@@ -83,13 +83,11 @@ public class Main {
                 date = args[i + 1];
                 break;
             case "--GAMEID":
-                iGameId = args[i + 1];
                 break;
             case "--WORLDID":
                 iWorldId = args[i + 1];
                 break;
             case "--ACCOUNTTYPE":
-                iAccountType = args[i + 1];
                 break;
             case "--ACTION":
                 Action = args[i+1];
