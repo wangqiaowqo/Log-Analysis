@@ -11,11 +11,11 @@ import org.apache.spark.sql.hive.HiveContext;
 
 public class ReadParquetToDF {
     private static final Logger logger = LogManager.getLogger();
-    
+
     public void ReadParquet(HiveContext sqlContext, String BeginTime, String EndTime,
             String[] GameId, String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
 
-        DataFrame df = sqlContext.parquetFile("/LOG/BASE/" + Table.trim() + ".parquet");
+        DataFrame df = null;
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd/HH");
         Timestamp bTime = Timestamp.valueOf(BeginTime);
         Timestamp eTime = Timestamp.valueOf(EndTime);
@@ -31,18 +31,21 @@ public class ReadParquetToDF {
                                 + format.format(calendar.getTime()) + "/" + Table.trim()
                                 + ".parquet";
                         try {
-                            DataFrame tmp = sqlContext.parquetFile(ParquetFilePath);                          
-                            df = df.unionAll(tmp);
-                            tmp.unpersist();
+                            DataFrame tmp = sqlContext.parquetFile(ParquetFilePath);
+                            if (df == null) {
+                                df = tmp;
+                            } else {
+                                df = df.unionAll(tmp);
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
-                        }                  
+                        }
                     }
                 }
             }
             calendar.add(Calendar.HOUR_OF_DAY, 1);
         }
-        
+
         df.registerTempTable("temp");
         DataFrame dfFilted = sqlContext.sql(WhereSQL);
         logger.debug(Table + " Count: " + dfFilted.count());
