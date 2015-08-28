@@ -14,9 +14,6 @@ public class DFTableToTempTable {
             logger.debug(Temp_Table_Name + " " + sql);
             DataFrame Temp_Table_DF = sqlContext.sql(sql);
             
-            for(Row r:Temp_Table_DF.collect()) {
-                System.out.println(r.mkString(" | "));
-            }
             if(Temp_Table_Name.equalsIgnoreCase(""))
                 Temp_Table_DF.unpersist();
             else

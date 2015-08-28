@@ -33,9 +33,7 @@ public class ReadParquetToDF {
                                 + ".parquet";
                         try {
                             DataFrame tmp = sqlContext.parquetFile(ParquetFilePath);
-                            for(Row r:tmp.collect()) {
-                                System.out.println("gongmeng" + r.mkString(" | "));
-                            }
+                            
                             if (df == null) {
                                 df = tmp;
                             } else {
@@ -51,14 +49,11 @@ public class ReadParquetToDF {
         }
 
         df.registerTempTable("temp");
-        System.out.println("gongmeng" + df.count());
-        /*
+   
+        
         DataFrame dfFilted = sqlContext.sql(WhereSQL); 
-        for(Row r:dfFilted.collect()) {
-            System.out.println(r.mkString(" | "));
-        }
-        */
-        sqlContext.registerDataFrameAsTable(df, Table.trim());
+       
+        sqlContext.registerDataFrameAsTable(dfFilted, Table.trim());
         sqlContext.dropTempTable("temp");
     }
 }
