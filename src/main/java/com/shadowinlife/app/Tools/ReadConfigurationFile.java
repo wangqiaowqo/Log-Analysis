@@ -207,7 +207,7 @@ public class ReadConfigurationFile {
 					tmp_WorldId.add(WorldId);
 					m.put("WorldId", tmp_WorldId);
 				}else{
-					continue;
+					continue;    
 				}
 
 				// AccountType comma separate
