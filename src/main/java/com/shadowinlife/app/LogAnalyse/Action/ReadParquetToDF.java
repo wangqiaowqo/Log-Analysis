@@ -49,8 +49,6 @@ public class ReadParquetToDF {
         }
 
         df.registerTempTable("temp");
-   
-        
         DataFrame dfFilted = sqlContext.sql(WhereSQL); 
        
         sqlContext.registerDataFrameAsTable(dfFilted, Table.trim());

@@ -2,12 +2,16 @@ package com.shadowinlife.app.LogAnalyse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;
@@ -20,10 +24,10 @@ import com.shadowinlife.app.LogAnalyse.Action.DFTableToTempTable;
 import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
 
 public class ActionDriver {
-    //初始化Log4j
+    // 初始化Log4j
     private static final Logger logger = LogManager.getLogger();
-    
-    //用于解析不长, 把步长转化为时间
+
+    // 用于解析不长, 把步长转化为时间
     private static Integer[] TranslateStep(String[] inputStep) {
         Integer[] result = new Integer[2];
         // 利用javascript引擎来针对一个表达式进行计算,结果是从标记时间移动的小时数
@@ -41,7 +45,8 @@ public class ActionDriver {
         }
         return result;
     }
-    //用于解析%DATE%+/-Num来标记某些需要写入的时间
+
+    // 用于解析%DATE%+/-Num来标记某些需要写入的时间
     private static String TranslateSQL(String inputSQL, String CurseTime) {
 
         int index = inputSQL.indexOf("%DATE%");
@@ -52,7 +57,7 @@ public class ActionDriver {
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(Timestamp.valueOf(CurseTime).getTime());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            // 判断是否是%DATE+/-NUM这个格式
+            // 判断是否是%DATE+/-N-UM这个格式
             if (index < end_Index) {
                 day = inputSQL.substring(index, end_Index);
                 c.add(Calendar.DAY_OF_MONTH, Integer.valueOf(day));
@@ -74,7 +79,7 @@ public class ActionDriver {
             // 根据ActionName判断是否执行这个Action
             String ActionName = m.get("Name").get(0)[0];
             logger.debug("Configuration Action Name: " + ActionName);
-         
+
             if (Action != null && !Action.contains(ActionName)) {
                 continue;
             }
@@ -96,6 +101,7 @@ public class ActionDriver {
             // 判断所指示的日期是否是周日
             String[] Period = m.get("Period").get(0);
             String CurseTime = date + " 00:00:00";
+            TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(Timestamp.valueOf(CurseTime).getTime());
             if (Period[0].equalsIgnoreCase("Week") && c.get(Calendar.DAY_OF_WEEK) != 0) {
@@ -112,21 +118,27 @@ public class ActionDriver {
             String BeginTime, EndTime, EndFilterTime;
             if (date != null) {
                 Timestamp bTime = Timestamp.valueOf(CurseTime);
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:MM:SS");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                format.setTimeZone(TimeZone.getTimeZone("GMT+8"));
                 Calendar calendar = Calendar.getInstance();
 
                 // 时间区间的开始
                 calendar.setTimeInMillis(bTime.getTime());
+
                 Integer[] StepHours = TranslateStep(Step);
                 calendar.add(Calendar.HOUR_OF_DAY, StepHours[0]);
+                System.out.println(calendar.getTime());
                 BeginTime = format.format(calendar.getTime());
 
                 // 时间区间的结束
                 calendar.setTimeInMillis(bTime.getTime());
                 calendar.add(Calendar.HOUR_OF_DAY, StepHours[1]);
-                EndFilterTime = format.format(calendar.getTime());
+
+                EndFilterTime = format.format(new Date(calendar.getTimeInMillis()));
+
                 calendar.add(Calendar.HOUR_OF_DAY, 2);
-                EndTime = format.format(calendar.getTime());
+                EndTime = format.format(new Date(calendar.getTimeInMillis()));
+                System.out.println("gongmeng " + BeginTime + " " + EndFilterTime + " " + EndTime);
             } else {
                 return;
             }
@@ -135,7 +147,7 @@ public class ActionDriver {
             String[] Tables = m.get("Table").get(0);
             List<String> talbename = new ArrayList<String>();
             for (String Table : Tables) {
-                if(Table.equalsIgnoreCase("")||Table==null)
+                if (Table.equalsIgnoreCase("") || Table == null)
                     continue;
                 String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                         + "' AND `dtEventTime`<'" + EndFilterTime + "'";
@@ -149,7 +161,7 @@ public class ActionDriver {
             // index_0放置的是中间表名称, index_1位置是生成这个中间表使用的SQL语句
             List<String[]> SQLlist = m.get("Sql");
             for (String[] sql : SQLlist) {
-                if(sql.length==0||sql==null)
+                if (sql.length == 0 || sql == null)
                     continue;
                 talbename.add(sql[0]);
                 DFTableToTempTable.ExcuteSQL(sc, sql[0], TranslateSQL(sql[1], CurseTime));
@@ -165,7 +177,7 @@ public class ActionDriver {
 
             // 清理临时表
             for (String t : talbename) {
-                if(t!=null && !t.equalsIgnoreCase(""))
+                if (t != null && !t.equalsIgnoreCase(""))
                     sc.dropTempTable(t);
             }
 
