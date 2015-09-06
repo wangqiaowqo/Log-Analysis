@@ -200,10 +200,15 @@ public class ReadConfigurationFile {
 				m.put("GameId", tmp_GameId);
 
 				// WorldId comma separate
-				String[] WorldId = rs.getString("iWorldId").split(",");
-				List<String[]> tmp_WorldId = new ArrayList<String[]>();
-				tmp_WorldId.add(WorldId);
-				m.put("WorldId", tmp_WorldId);
+				boolean b = "false".equals(getIWorldId(actionName,rs.getString("iWorldId")))?true:false;
+				if(!b){
+					String[] WorldId = getIWorldId(actionName,rs.getString("iWorldId")).split(",");
+					List<String[]> tmp_WorldId = new ArrayList<String[]>();
+					tmp_WorldId.add(WorldId);
+					m.put("WorldId", tmp_WorldId);
+				}else{
+					continue;
+				}
 
 				// AccountType comma separate
 				String[] AccountType = rs.getString("iAccountType").split(",");
@@ -354,4 +359,85 @@ public class ReadConfigurationFile {
 			}
 		}
     }
+    
+   private static String getIWorldId(String actionName,String arg) {
+    	StringBuffer sb = new StringBuffer();
+		//String[] worlds = "1-10:3-5|6|7,14-19,21".split(",");//1,2,8,9,10,14,15,16,17,18,19,21
+		String[] worlds = arg.split(",");
+		for(int i=0;i<worlds.length;i++){
+			if(worlds[i].contains(":")){
+				//1-10:3-5|6|7
+				String[] values = worlds[i].split(":");
+				if(values.length<2){
+					System.out.println("Action :" + actionName + " iWorldId  error expression ! ':' values length less than 2");
+					return "false";
+				}
+				if(!values[0].contains("-")){
+					System.out.println("Action :" + actionName + " iWorldId error expression ! key error");
+					return "false";
+				}
+				StringBuffer resultSB = new StringBuffer();
+				//先拆冒号后面 3-5|6|7 -> 3,4,5,6,7
+				String[] value = values[1].split("\\|");
+				StringBuffer excludeSB = new StringBuffer();
+				for(String v:value){
+					if(v.contains("-")){
+						String[] sToE = v.split("-");//3-5
+						int s = Integer.parseInt(sToE[0]);//3
+						int e = Integer.parseInt(sToE[1]);//5
+						for(int j=s;j<=e;j++){
+							excludeSB.append(String.valueOf(j)).append(",");
+						}
+					}else{
+						excludeSB.append(v).append(",");
+					}
+				}
+				//去掉末尾 分号
+				excludeSB =  excludeSB.deleteCharAt(excludeSB.length()-1);
+				String[] excludes = excludeSB.toString().split(",");
+				
+				//后处理冒号前1-10
+				String[] key = values[0].split("-");
+				int ss = Integer.parseInt(key[0]);
+				int ee = Integer.parseInt(key[1]);
+				for(int k=ss;k<=ee;k++){
+					boolean match = false;
+					for(String exclude:excludes){
+						if(k==Integer.parseInt(exclude)){
+							match = true;
+						}
+					}
+					if(!match){
+						resultSB.append(k).append(",");
+					}
+				}
+				resultSB = resultSB.deleteCharAt(resultSB.length()-1);
+				sb.append(",").append(resultSB);
+			}else{
+				//没有冒号
+				if(worlds[i].contains("-")){
+					//14-19
+					String[] aa = worlds[i].split("-");
+					if(aa.length<2){
+						System.out.println("Action :" + actionName + " iWorldId error expression ! ':' values length less than 2");
+						return "false";
+					}
+					StringBuffer resultSB = new StringBuffer();
+					int s = Integer.parseInt(aa[0]);
+					int e = Integer.parseInt(aa[1]);
+					for(int j=s;j<=e;j++){
+						resultSB.append(String.valueOf(j)).append(",");
+					}
+					resultSB = resultSB.deleteCharAt(resultSB.length()-1);
+					sb.append(",").append(resultSB);
+				}else{
+					//21
+					sb.append(",").append(worlds[i]);
+				}
+			}
+		}
+		String r = sb.toString().substring(1);
+		return r;
+	}
+   
 }
