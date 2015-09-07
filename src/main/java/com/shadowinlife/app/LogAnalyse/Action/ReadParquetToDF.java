@@ -13,7 +13,7 @@ import org.apache.spark.sql.hive.HiveContext;
 public class ReadParquetToDF {
     private static final Logger logger = LogManager.getLogger();
 
-    public void ReadParquet(HiveContext sqlContext, String BeginTime, String EndTime,
+    public static boolean ReadParquet(HiveContext sqlContext, String BeginTime, String EndTime,
             String[] GameId, String[] AccountType, String[] WorldId, String Table, String WhereSQL) {
 
         DataFrame df = null;
@@ -47,11 +47,13 @@ public class ReadParquetToDF {
             }
             calendar.add(Calendar.HOUR_OF_DAY, 1);
         }
-
+        if(df == null)
+            return false;
         df.registerTempTable("temp");
         DataFrame dfFilted = sqlContext.sql(WhereSQL); 
        
         sqlContext.registerDataFrameAsTable(dfFilted, Table.trim());
         sqlContext.dropTempTable("temp");
+        return true;
     }
 }

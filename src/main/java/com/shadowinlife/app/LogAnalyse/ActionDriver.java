@@ -146,15 +146,17 @@ public class ActionDriver {
             // 读取配置表中要求使用的Table到内存
             String[] Tables = m.get("Table").get(0);
             List<String> talbename = new ArrayList<String>();
+            boolean FileExisted;
             for (String Table : Tables) {
                 if (Table.equalsIgnoreCase("") || Table == null)
                     continue;
                 String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
                         + "' AND `dtEventTime`<'" + EndFilterTime + "'";
                 talbename.add(Table);
-                ReadParquetToDF rptd = new ReadParquetToDF();
-                rptd.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table,
+                
+                ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table,
                         strWhere);
+                
             }
 
             // 依次执行配置表中要求执行的SQL生成内存中中间表
