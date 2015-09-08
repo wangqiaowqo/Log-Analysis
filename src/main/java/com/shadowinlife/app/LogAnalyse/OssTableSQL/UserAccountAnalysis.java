@@ -700,13 +700,13 @@ public class UserAccountAnalysis {
             sqlContext.sql(strSql);
             
             String strRange = new String();
-            if(strMode.equalsIgnoreCase("login")){
+            if(strMode.equalsIgnoreCase("login") || strMode.equalsIgnoreCase("login_roleid")){
             	strRange = "case when sum(ionlinetime) < 30 then 0 when sum(ionlinetime) < 60 then 30 when sum(ionlinetime) < 300 then floor(sum(ionlinetime)/60)*60 else floor(sum(ionlinetime)/300)*300 end ionlinetimedis";
             }
-            else if(strMode.equalsIgnoreCase("deposit")){
+            else if(strMode.equalsIgnoreCase("deposit") || strMode.equalsIgnoreCase("deposit_roleid")){
             	strRange = "floor(sum(ionlinetime)/500)*500 ionlinetimedis";
             }
-            else if(strMode.equalsIgnoreCase("pay")){
+            else if(strMode.equalsIgnoreCase("pay") || strMode.equalsIgnoreCase("pay_roleid")){
             	strRange = "floor(sum(ionlinetime)/100)*100 ionlinetimedis";
             }
             else{

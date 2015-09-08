@@ -47,8 +47,10 @@ public class ReadParquetToDF {
             }
             calendar.add(Calendar.HOUR_OF_DAY, 1);
         }
-        if(df == null)
+        if(df == null){
+            //TODO 当某张表不存在一条数据的时候应该构造一个全空的表
             return false;
+        }
         df.registerTempTable("temp");
         DataFrame dfFilted = sqlContext.sql(WhereSQL); 
        
