@@ -203,6 +203,8 @@ public class UserAccountAnalysis {
             + "sum(useractivity(%s, 1))," //period
             + "sum(userlost(%s, 1))," //period
             + "sum(usercomeback(%s, 1))," //period
+            + "sum(itimes),"
+            + "sum(ionlinetime),"
             + "DATE2LONG('%s') "
             + "from "
             
@@ -213,7 +215,9 @@ public class UserAccountAnalysis {
             + "max(ilevel) maxlevel,"
             + "groupuseracti(idayacti) AS idayacti,"
             + "groupuseracti(iweekacti) AS iweekacti,"
-            + "groupuseracti(imonthacti) AS imonthacti "
+            + "groupuseracti(imonthacti) AS imonthacti,"
+            + "itimes,"
+            + "ionlinetime "
             + "from fat_%s_user "
             + "WHERE index_dtstatdate=DATE2LONG('%s') " //and ilastacttime >= '%s' "
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
