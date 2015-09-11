@@ -115,7 +115,7 @@ public class ActionDriver {
             }
 
             String[] Step = m.get("Step").get(0);
-            String BeginTime, EndTime, EndFilterTime;
+            String BeginTime, EndTime;
             if (date != null) {
                 Timestamp bTime = Timestamp.valueOf(CurseTime);
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -134,11 +134,10 @@ public class ActionDriver {
                 calendar.setTimeInMillis(bTime.getTime());
                 calendar.add(Calendar.HOUR_OF_DAY, StepHours[1]);
 
-                EndFilterTime = format.format(new Date(calendar.getTimeInMillis()));
-
+               
                 calendar.add(Calendar.HOUR_OF_DAY, 2);
                 EndTime = format.format(new Date(calendar.getTimeInMillis()));
-                System.out.println("gongmeng " + BeginTime + " " + EndFilterTime + " " + EndTime);
+                
             } else {
                 return;
             }
@@ -146,16 +145,14 @@ public class ActionDriver {
             // 读取配置表中要求使用的Table到内存
             String[] Tables = m.get("Table").get(0);
             List<String> talbename = new ArrayList<String>();
-            boolean FileExisted;
+            
             for (String Table : Tables) {
                 if (Table.equalsIgnoreCase("") || Table == null)
                     continue;
-                String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
-                        + "' AND `dtEventTime`<'" + EndFilterTime + "'";
+      
                 talbename.add(Table);
                 
-                ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table,
-                        strWhere);
+                ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table);
                 
             }
 
@@ -178,10 +175,11 @@ public class ActionDriver {
             }
 
             // 清理临时表
+            /*
             for (String t : talbename) {
                 if (t != null && !t.equalsIgnoreCase(""))
-                    sc.dropTempTable(t);
-            }
+                   sc.dropTempTable(t);
+            }*/
 
         }
 

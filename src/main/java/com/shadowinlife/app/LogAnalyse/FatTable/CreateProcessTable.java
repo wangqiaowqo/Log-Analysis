@@ -26,33 +26,32 @@ public class CreateProcessTable {
         calendar.setTimeInMillis(bTime.getTime());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
         String EndTime = format.format(calendar.getTime()) + " 02:00:00";
-        String strWhere = "SELECT * FROM temp WHERE `dtEventTime`>='" + BeginTime
-                + "' AND `dtEventTime`<'" + format.format(calendar.getTime()) + "'";
+       
         String[] AccountType = { "1" };
         String[] GameId = { "1" };
         String[] WorldId = { iworldid };
-        ReadParquetToDF rptd = new ReadParquetToDF();
+       
         switch (tableName) {
         case "RoleLogin":
             // Filter origin file into different RDD
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "RoleLogin", strWhere);
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "RoleLogout", strWhere);
+            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+                    WorldId, "RoleLogin");
+            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+                    WorldId, "RoleLogout");
             AcountProcessTable.process(sqlContext, date, iworldid);
             RoleOfAcountProcessTable.process(sqlContext, date, iworldid);
             break;
 
         case "Deposit":
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "Deposit", strWhere);
+            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+                    WorldId, "Deposit");
             ChongzhiProcessTable.process(sqlContext, date, iworldid);
             RoleOfChongzhiProcessTable.process(sqlContext, date, iworldid);
             break;
 
         case "MoneyFlow":
-            rptd.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
-                    WorldId, "MoneyFlow", strWhere);
+            ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
+                    WorldId, "MoneyFlow");
             MoneyFlowProcessTable.process(sqlContext, date, iworldid);
             RoleOfMoneyFlowProcessTable.process(sqlContext, date, iworldid);
             break;
