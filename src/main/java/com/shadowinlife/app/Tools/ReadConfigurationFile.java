@@ -171,6 +171,24 @@ public class ReadConfigurationFile {
 			Class.forName(properties.getProperty("database.driver"));
 			conn = DriverManager.getConnection(properties.getProperty("database.url"), properties.getProperty("database.user"), properties.getProperty("database.pwd"));
 			st = conn.createStatement();
+			
+			String templateIPeriod = "";
+			String templateIStep = "";
+			String templateIGameId = "";
+			String templateIWorldId = "";
+			String templateIAccountType ="";
+			
+			rs = st.executeQuery("SELECT * FROM t_template_info");
+			if (rs.next()) {
+				templateIPeriod = rs.getString("iPeriod");
+				templateIStep = rs.getString("iStep");
+				templateIGameId = rs.getString("iGameId");
+				templateIWorldId = rs.getString("iWorldId");
+				templateIAccountType = rs.getString("iAccountType");
+			}else{
+				System.out.println("t_template_info null");
+			}
+			
 			rs = st.executeQuery("SELECT * FROM t_action_info");
 			while (rs.next()) {
 
@@ -182,38 +200,61 @@ public class ReadConfigurationFile {
 				m.put("Name", tmp_name);
 
 				// Period
-				String[] Period = rs.getString("iPeriod").split(",");
 				List<String[]> tmp_Period = new ArrayList<String[]>();
-				tmp_Period.add(Period);
+				if(rs.getString("iPeriod")==null||"".equals(rs.getString("iPeriod"))){
+					tmp_Period.add(templateIPeriod.split(","));
+				}else{
+					tmp_Period.add(rs.getString("iPeriod").split(","));
+				}
 				m.put("Period", tmp_Period);
+				
 
 				// Step
-				String[] Step = rs.getString("iStep").split(",");
 				List<String[]> tmp_Step = new ArrayList<String[]>();
-				tmp_Step.add(Step);
+				if(rs.getString("iStep")==null||"".equals(rs.getString("iStep"))){
+					tmp_Step.add(templateIStep.split(","));
+				}else{
+					tmp_Step.add(rs.getString("iStep").split(","));
+				}
 				m.put("Step", tmp_Step);
 
 				// GameId comma separate
-				String[] GameId = rs.getString("iGameId").split(",");
 				List<String[]> tmp_GameId = new ArrayList<String[]>();
-				tmp_GameId.add(GameId);
+				if(rs.getString("iGameId")==null||"".equals(rs.getString("iGameId"))){
+					tmp_GameId.add(templateIGameId.split(","));
+				}else{
+					tmp_GameId.add(rs.getString("iGameId").split(","));
+				}
 				m.put("GameId", tmp_GameId);
 
 				// WorldId comma separate
-				boolean b = "false".equals(getIWorldId(actionName,rs.getString("iWorldId")))?true:false;
-				if(!b){
-					String[] WorldId = getIWorldId(actionName,rs.getString("iWorldId")).split(",");
+				if(rs.getString("iWorldId")==null||"".equals(rs.getString("iWorldId"))){
+					String[] WorldId = getIWorldId("templateIWorldId",templateIWorldId).split(",");
 					List<String[]> tmp_WorldId = new ArrayList<String[]>();
 					tmp_WorldId.add(WorldId);
 					m.put("WorldId", tmp_WorldId);
 				}else{
-					continue;    
+					boolean b = "false".equals(getIWorldId(actionName,rs.getString("iWorldId")))?true:false;
+					if(!b){
+						String[] WorldId = getIWorldId(actionName,rs.getString("iWorldId")).split(",");
+						List<String[]> tmp_WorldId = new ArrayList<String[]>();
+						tmp_WorldId.add(WorldId);
+						m.put("WorldId", tmp_WorldId);
+					}else{
+						String[] WorldId = getIWorldId("templateIWorldId",templateIWorldId).split(",");
+						List<String[]> tmp_WorldId = new ArrayList<String[]>();
+						tmp_WorldId.add(WorldId);
+						m.put("WorldId", tmp_WorldId);
+					}
 				}
 
 				// AccountType comma separate
-				String[] AccountType = rs.getString("iAccountType").split(",");
 				List<String[]> tmp_AccountType = new ArrayList<String[]>();
-				tmp_AccountType.add(AccountType);
+				if(rs.getString("iAccountType")==null||"".equals(rs.getString("iAccountType"))){
+					tmp_AccountType.add(templateIAccountType.split(","));
+				}else{
+					tmp_AccountType.add(rs.getString("iAccountType").split(","));
+				}
 				m.put("AccountType", tmp_AccountType);
 
 				putFinalIntoMap(conn, m, actionName);
