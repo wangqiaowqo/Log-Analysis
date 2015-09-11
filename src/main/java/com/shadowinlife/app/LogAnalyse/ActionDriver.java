@@ -133,9 +133,6 @@ public class ActionDriver {
                 // 时间区间的结束
                 calendar.setTimeInMillis(bTime.getTime());
                 calendar.add(Calendar.HOUR_OF_DAY, StepHours[1]);
-
-               
-                calendar.add(Calendar.HOUR_OF_DAY, 2);
                 EndTime = format.format(new Date(calendar.getTimeInMillis()));
                 
             } else {
@@ -175,11 +172,11 @@ public class ActionDriver {
             }
 
             // 清理临时表
-            /*
+            
             for (String t : talbename) {
                 if (t != null && !t.equalsIgnoreCase(""))
                    sc.dropTempTable(t);
-            }*/
+            }
 
         }
 

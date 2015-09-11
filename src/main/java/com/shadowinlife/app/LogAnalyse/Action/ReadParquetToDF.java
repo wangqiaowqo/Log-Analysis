@@ -37,7 +37,6 @@ public class ReadParquetToDF {
                                 + format.format(calendar.getTime()) + "/" + Table.trim()
                                 + ".parquet";
                         try {
-
                             FileSystem fs = FileSystem.get(sqlContext.sparkContext()
                                     .hadoopConfiguration());
                             if (!fs.exists(new Path(ParquetFilePath))) {
@@ -46,7 +45,7 @@ public class ReadParquetToDF {
                             }
 
                             DataFrame tmp = sqlContext.parquetFile(ParquetFilePath);
-
+                           
                             if (df == null) {
                                 df = tmp;
                             } else {
@@ -60,12 +59,12 @@ public class ReadParquetToDF {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
             }
         }
-
+        
         if (df == null) {
-            // TODO 当某张表不存在一条数据的时候应该构造一个全空的表
+            System.out.println(Table + " File Pointer is NULL");
             return false;
         }
-
+       
         sqlContext.registerDataFrameAsTable(df, Table.trim());
 
         return true;
