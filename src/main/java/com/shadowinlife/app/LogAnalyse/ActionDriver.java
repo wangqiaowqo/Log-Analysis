@@ -17,6 +17,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
+import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.hive.HiveContext;
 
 import com.shadowinlife.app.LogAnalyse.Action.TempTableToMysql;
@@ -156,11 +157,14 @@ public class ActionDriver {
             // 依次执行配置表中要求执行的SQL生成内存中中间表
             // index_0放置的是中间表名称, index_1位置是生成这个中间表使用的SQL语句
             List<String[]> SQLlist = m.get("Sql");
+            List<DataFrame> DFList = new ArrayList<DataFrame>();
             for (String[] sql : SQLlist) {
                 if (sql.length == 0 || sql == null)
                     continue;
                 talbename.add(sql[0]);
-                DFTableToTempTable.ExcuteSQL(sc, sql[0], TranslateSQL(sql[1], CurseTime));
+                DataFrame dfSQL = DFTableToTempTable.ExcuteSQL(sc, sql[0], TranslateSQL(sql[1], CurseTime));
+                if(dfSQL!=null)
+                    DFList.add(dfSQL);
             }
 
             // 依次执行配置表中的出库的语句
@@ -170,7 +174,10 @@ public class ActionDriver {
                 TempTableToMysql
                         .ExcuteFinalSQL(sc, sql[0], sql[1], TranslateSQL(sql[2], CurseTime));
             }
-
+            //清理DataFrame
+            for(DataFrame df:DFList){
+                df.unpersist();
+            }
             // 清理临时表
             
             for (String t : talbename) {
