@@ -64,7 +64,7 @@ public class ReadParquetToDF {
             System.out.println(Table + " File Pointer is NULL");
             return false;
         }
-       
+        df.show();
         sqlContext.registerDataFrameAsTable(df, Table.trim());
 
         return true;
