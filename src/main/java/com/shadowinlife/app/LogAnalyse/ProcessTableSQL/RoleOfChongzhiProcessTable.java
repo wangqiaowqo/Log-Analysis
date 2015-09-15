@@ -51,7 +51,7 @@ public class RoleOfChongzhiProcessTable {
             + "MIN(`dtEventTime`) AS FirstTime,"
             + "MAX(`dtEventTime`) AS ActTime,"
             + "COUNT(`iRoleId`) AS iTimes,"
-            + "SUM(`iPayDelta`) AS TotalPay,"
+            + "SUM(`iPayMoney`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
             + "FROM Deposit GROUP BY `iRoleId`, `vUin`";

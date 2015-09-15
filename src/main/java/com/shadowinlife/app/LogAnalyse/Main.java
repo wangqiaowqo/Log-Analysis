@@ -1,8 +1,13 @@
 package com.shadowinlife.app.LogAnalyse;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.hive.HiveContext;
@@ -21,7 +26,20 @@ import com.shadowinlife.app.Tools.ReadConfigurationFile;
 public class Main {
 
     public static void main(String[] args) {
-     
+        //初始化LOG4J的配置文件
+        ConfigurationSource source;
+        try {
+            source = new ConfigurationSource(new FileInputStream("/etc/spark-action-log4j.xml"));
+            Configurator.initialize(null, source);
+        } catch (FileNotFoundException e1) {
+            
+            e1.printStackTrace();
+        } catch (IOException e1) {
+            
+            e1.printStackTrace();
+        }  
+        
+          
         String mode = null;
         String date = null;
         String Flag = null;

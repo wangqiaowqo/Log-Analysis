@@ -24,7 +24,7 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbRegisterUser";
+            strTableName = "oss_dm_" + mode + "_tbRegisterUser";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
 
@@ -39,7 +39,7 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbRegisterUserTypeDis";
+            strTableName = "oss_dm_" + mode + "_tbRegisterUserTypeDis";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
             DataFrame oss_dm_mode_tbRegisterUserTypeDis = sqlContext
@@ -51,13 +51,13 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbDayNewRegTypeDis";
+            strTableName = "oss_dm_" + mode + "_tbDayNewRegTypeDis";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
             DataFrame oss_dm_mode_tbDayNewRegTypeDis = sqlContext
                     .sql("select dtstatdate,stype,igameid,iaccounttype,iworld,stypevalue,iregnum "
                             + "from oss_dm_" + mode + "_tbdaynewregtypedis" + strWhere);
-            oss_dm_mode_tbDayNewRegTypeDis.insertIntoJDBC(mySqlURL, "oss_dm_dajian_" + mode
+            oss_dm_mode_tbDayNewRegTypeDis.insertIntoJDBC(mySqlURL, "oss_dm_" + mode
                     + "_tbDayNewRegTypeDis", false);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -65,14 +65,14 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbActivityScaleDis";
+            strTableName = "oss_dm_" + mode + "_tbActivityScaleDis";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
             DataFrame oss_dm_mode_tbactivityscaledis = sqlContext
                     .sql("select dtstatdate,ssourceuser,iperiod,igameid,"
                             + "iaccounttype,iworld,ilevel,iactivityday,iactivitynum "
                             + "from oss_dm_" + mode + "_tbactivityscaledis" + strWhere);
-            oss_dm_mode_tbactivityscaledis.insertIntoJDBC(mySqlURL, "oss_dm_dajian_" + mode
+            oss_dm_mode_tbactivityscaledis.insertIntoJDBC(mySqlURL, "oss_dm_" + mode
                     + "_tbActivityScaleDis ", false);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -80,13 +80,13 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbDayUserActivityTypeDis";
+            strTableName = "oss_dm_" + mode + "_tbDayUserActivityTypeDis";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
             DataFrame oss_dm_mode_tbdayuseractivitytypedis = sqlContext
                     .sql("select dtstatdate,stype,igameid,iaccounttype,iworld,stypevalue,idayactivitynum "
                             + "from oss_dm_" + mode + "_tbdayuseractivitytypedis" + strWhere);
-            oss_dm_mode_tbdayuseractivitytypedis.insertIntoJDBC(mySqlURL, "oss_dm_dajian_" + mode
+            oss_dm_mode_tbdayuseractivitytypedis.insertIntoJDBC(mySqlURL, "oss_dm_" + mode
                     + "_tbDayUserActivityTypeDis", false);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -94,14 +94,14 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbStayScaleDis";
+            strTableName = "oss_dm_" + mode + "_tbStayScaleDis";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
             DataFrame oss_dm_mode_tbstayscaledis = sqlContext
                     .sql("select dtstatdate,ssourceuser,iperiod,igameid,"
                             + "iaccounttype,iworld,ilevel,ilookday,iactivitynum from oss_dm_"
                             + mode + "_tbstayscaledis" + strWhere);
-            oss_dm_mode_tbstayscaledis.insertIntoJDBC(mySqlURL, "oss_dm_dajian_" + mode
+            oss_dm_mode_tbstayscaledis.insertIntoJDBC(mySqlURL, "oss_dm_" + mode
                     + "_tbStayScaleDis", false);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -109,14 +109,14 @@ public class DeliveryTableByMode {
         }
 
         try {
-            strTableName = "oss_dm_dajian_" + mode + "_tbUserActivityTypeDis";
+            strTableName = "oss_dm_" + mode + "_tbUserActivityTypeDis";
             sql = "delete from " + strTableName + " " + strWhere;
             stmt.executeUpdate(sql);
             DataFrame oss_dm_mode_tbuseractivitytypedis = sqlContext
                     .sql("select dtstatdate,stype,stypevalue,iperiod,igameid,iaccounttype,iworld,"
                             + "iactivitynum,ilostnum,ibacknum from oss_dm_" + mode
                             + "_tbuseractivitytypedis" + strWhere);
-            oss_dm_mode_tbuseractivitytypedis.insertIntoJDBC(mySqlURL, "oss_dm_dajian_" + mode
+            oss_dm_mode_tbuseractivitytypedis.insertIntoJDBC(mySqlURL, "oss_dm_" + mode
                     + "_tbUserActivityTypeDis", false);
         } catch (Exception e) {
             // TODO Auto-generated catch block

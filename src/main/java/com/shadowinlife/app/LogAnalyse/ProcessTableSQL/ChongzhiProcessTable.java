@@ -53,7 +53,7 @@ public class ChongzhiProcessTable {
             + "MIN(`dtEventTime`) AS FirstTime,"
             + "MAX(`dtEventTime`) AS ActTime,"
             + "COUNT(`vUin`) AS iTimes,"
-            + "SUM(`iPayDelta`) AS TotalPay,"
+            + "SUM(`iPayMoney`) AS TotalPay,"
             + "MAX(`iRoleLevel`) AS iRoleLevel,"
             + "MAX(`iRoleVipLevel`) AS iRoleVipLevel "
             + "FROM Deposit GROUP BY `vUin`";

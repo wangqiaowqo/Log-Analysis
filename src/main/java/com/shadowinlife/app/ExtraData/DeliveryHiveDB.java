@@ -17,7 +17,6 @@ public class DeliveryHiveDB {
             if (r.getString(0).contains("oss_dm_"))
                 DeliveryByTableName(sqlContext, r.getString(0), url, strWhere, mySQLWhere, map);
         }
-
     }
 
     public void DeliveryByTableName(HiveContext sqlContext, String tableName, String url,
