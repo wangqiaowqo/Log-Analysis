@@ -14,10 +14,13 @@ public class DFTableToTempTable {
             logger.debug(Temp_Table_Name + " " + sql);
             DataFrame Temp_Table_DF = sqlContext.sql(sql);
             Temp_Table_DF.show();
-            if(Temp_Table_Name.equalsIgnoreCase(""))
-                Temp_Table_DF.unpersist();
-            else
+            if(Temp_Table_Name.trim().equalsIgnoreCase("")) {
+                return;
+            }
+            else{
+                Temp_Table_DF.persist();
                 sqlContext.registerDataFrameAsTable(Temp_Table_DF, Temp_Table_Name);
+                }
         } catch(Exception e) {
             logger.catching(e);
             e.printStackTrace();

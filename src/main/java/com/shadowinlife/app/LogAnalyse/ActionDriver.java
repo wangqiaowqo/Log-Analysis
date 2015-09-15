@@ -176,6 +176,7 @@ public class ActionDriver {
             for (String t : talbename) {
                 if (t != null && !t.equalsIgnoreCase(""))
                    sc.dropTempTable(t);
+                   
             }
 
         }
