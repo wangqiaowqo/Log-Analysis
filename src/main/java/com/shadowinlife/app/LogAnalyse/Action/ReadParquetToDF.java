@@ -56,8 +56,9 @@ public class ReadParquetToDF {
                         }
                     }
                 }
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                
             }
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         
         if (df == null) {

@@ -11,7 +11,6 @@ public class TempTableToMysql {
     public static void ExcuteFinalSQL(HiveContext sqlContext, String url, String table, String sql) {
         try {
             DataFrame dfFinal = sqlContext.sql(sql);   
-            dfFinal.show();
             dfFinal.insertIntoJDBC(url, table, false);
             dfFinal.unpersist();
         } catch (Exception e) {

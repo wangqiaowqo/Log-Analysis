@@ -81,7 +81,7 @@ public class ActionDriver {
             String ActionName = m.get("Name").get(0)[0];
             logger.debug("Configuration Action Name: " + ActionName);
 
-            if (Action != null && !Action.contains(ActionName)) {
+            if (Action != null && !ActionName.contains(Action)) {
                 continue;
             }
 
