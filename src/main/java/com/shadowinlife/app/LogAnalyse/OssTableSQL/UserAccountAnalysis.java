@@ -818,6 +818,31 @@ public class UserAccountAnalysis {
             strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
+            
+            if (strMode.equalsIgnoreCase("deposit") || strMode.equalsIgnoreCase("deposit_roleid")) { //只有充值需要计算全部
+            	// stat tbPeriodUserActivityTypeDis
+                strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimesDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                        strDate, "ActivityTimesDis", iPeriod, strMode, "1970-01-01", strDate, "1970-01-01", strDate);
+                sqlContext.sql(strSql);
+                
+                String strRange = new String();
+                if(strMode.equalsIgnoreCase("login") || strMode.equalsIgnoreCase("login_roleid")){
+                	strRange = "case when sum(ionlinetime) < 30 then 0 when sum(ionlinetime) < 60 then 30 when sum(ionlinetime) < 300 then floor(sum(ionlinetime)/60)*60 else floor(sum(ionlinetime)/300)*300 end ionlinetimedis";
+                }
+                else if(strMode.equalsIgnoreCase("deposit") || strMode.equalsIgnoreCase("deposit_roleid")){
+                	strRange = "floor(sum(ionlinetime)/500)*500 ionlinetimedis";
+                }
+                else if(strMode.equalsIgnoreCase("pay") || strMode.equalsIgnoreCase("pay_roleid")){
+                	strRange = "floor(sum(ionlinetime)/100)*100 ionlinetimedis";
+                }
+                else{
+                	
+                }
+                
+                strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                        strDate, "ActivityTimeDis", iPeriod, strRange, strMode, "1970-01-01", strDate, "1970-01-01", strDate);
+                sqlContext.sql(strSql);
+            }
         }
     }
 }
