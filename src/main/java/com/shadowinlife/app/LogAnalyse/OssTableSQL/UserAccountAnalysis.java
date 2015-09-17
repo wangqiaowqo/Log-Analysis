@@ -135,12 +135,13 @@ public class UserAccountAnalysis {
             + "group by index_igameid,index_iaccounttype,index_iworldid,maxlevel with cube";
    
     /*
-     * tbDayNewRegTypeDis
+     * tbNewRegTypeDis
      +---------------+------------+----------+--+
      |   col_name    | data_type  | comment  |
      +---------------+------------+----------+--+
      | dtstatdate    | date       |          |
      | stype         | string     |          |
+     | iperiod       | bigint     |          |
      | igameid       | int        |          |
      | iaccounttype  | int        |          |
      | iworld        | int        |          |
@@ -148,9 +149,11 @@ public class UserAccountAnalysis {
      | iregnum       | bigint     |          |
      +---------------+------------+----------+--+
      */
-    private static String tbDayNewRegTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayNewRegTypeDis PARTITION(index_dtstatdate=%s) "
-	    + "SELECT '%s'," //date
+    private static String tbNewRegTypeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbNewRegTypeDis "
+    		+ "PARTITION(index_dtstatdate=%s,index_stype='%s',index_iperiod='%s') "
+	        + "SELECT '%s'," //date
             + "'%s'," //sType:ActivityTimesDis
+            + "'%s'," //iPeroid
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
@@ -168,7 +171,7 @@ public class UserAccountAnalysis {
             + "from "
             + "fat_%s_user "
             + "WHERE "
-            + "index_dtstatdate=DATE2LONG('%s') "
+            + "index_dtstatdate>=DATE2LONG('%s') and index_dtstatdate<=DATE2LONG('%s') " //index_dtstatdate=DATE2LONG('%s')
             + "%s " //"and iregtime >= '%s' and iregtime < date_add('%s',1) "
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
@@ -231,6 +234,7 @@ public class UserAccountAnalysis {
      +------------------+------------+----------+--+
      | dtstatdate       | date       |          |
      | stype            | string     |          |
+     | iperiod          | int        |          |
      | igameid          | int        |          |
      | iaccounttype     | int        |          |
      | iworld           | int        |          |
@@ -238,7 +242,8 @@ public class UserAccountAnalysis {
      | idayactivitynum  | bigint     |          |
      +------------------+------------+----------+--+
      */
-    private static String tbDayUserActivityTypeDis_ActivityTimesDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s,index_sType='ActivityTimesDis') "
+    private static String tbDayUserActivityTypeDis_ActivityTimesDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis "
+    		+ "PARTITION(index_dtstatdate=%s,index_sType='ActivityTimesDis') "
             + "SELECT '%s'," //date
             + "'%s'," //sType:ActivityTimesDis
             + "if(index_igameid is null,-1,index_igameid),"
@@ -262,7 +267,8 @@ public class UserAccountAnalysis {
             
             + "group by index_igameid,index_iaccounttype,index_iworldid,itimesdis with cube";
     
-    private static String tbDayUserActivityTypeDis_ActivityTimeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis PARTITION(index_dtstatdate=%s,index_sType='ActivityTimeDis') "
+    private static String tbDayUserActivityTypeDis_ActivityTimeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis "
+    		+ "PARTITION(index_dtstatdate=%s,index_sType='ActivityTimeDis') "
             + "SELECT '%s'," //date
             + "'%s'," //sType:ActivityTimeDis
             + "if(index_igameid is null,-1,index_igameid),"
@@ -558,6 +564,12 @@ public class UserAccountAnalysis {
             strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
+            
+            // stat tbNewRegTypeDis
+            str = "and iregtime >= '" + strBeforeWeekDate + "' and iregtime < date_add('" + strDate + "',1) ";
+            strSql = String.format(tbNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),"ActivityTimesDis",iPeriod,
+                    strDate, "ActivityTimesDis",iPeriod, strDate, strMode, strBeforeWeekDate, strDate, str);
+            sqlContext.sql(strSql);
 
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
@@ -626,6 +638,12 @@ public class UserAccountAnalysis {
             strSql = String.format(tbRegisterUserTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
+            
+            // stat tbNewRegTypeDis
+            str = "and iregtime >= '" + strMothFirstDay + "' and iregtime < date_add('" + strDate + "',1) ";
+            strSql = String.format(tbNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),"ActivityTimesDis",iPeriod,
+                    strDate, "ActivityTimesDis",iPeriod, strDate, strMode, strMothFirstDay, strDate, str);
+            sqlContext.sql(strSql);
 
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
@@ -686,10 +704,10 @@ public class UserAccountAnalysis {
                     strDate, iPeriod, strMode, strDate, str);
             sqlContext.sql(strSql);
 
-            // stat tbDayNewRegTypeDis
+            // stat tbNewRegTypeDis
             str = "and iregtime >= '" + strDate + "' and iregtime < date_add('" + strDate + "',1) ";
-            strSql = String.format(tbDayNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "ActivityTimesDis", strDate, strMode, strDate, str);
+            strSql = String.format(tbNewRegTypeDis, strMode, CONSTANT.date2Long(strDate),"ActivityTimesDis",iPeriod,
+                    strDate, "ActivityTimesDis",iPeriod, strDate, strMode, strDate, strDate, str);
             sqlContext.sql(strSql);
 
            // stat tbUserActivityTypeDis
