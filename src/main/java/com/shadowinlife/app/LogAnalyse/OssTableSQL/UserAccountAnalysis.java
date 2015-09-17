@@ -228,7 +228,7 @@ public class UserAccountAnalysis {
             + "group by index_igameid,index_iaccounttype,index_iworldid,maxlevel with cube";
     
     /*
-     * tbDayUserActivityTypeDis
+     * tbPeriodUserActivityTypeDis
      +------------------+------------+----------+--+
      |     col_name     | data_type  | comment  |
      +------------------+------------+----------+--+
@@ -242,10 +242,11 @@ public class UserAccountAnalysis {
      | idayactivitynum  | bigint     |          |
      +------------------+------------+----------+--+
      */
-    private static String tbDayUserActivityTypeDis_ActivityTimesDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis "
-    		+ "PARTITION(index_dtstatdate=%s,index_sType='ActivityTimesDis') "
+    private static String tbPeriodUserActivityTypeDis_ActivityTimesDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbPeriodUserActivityTypeDis "
+    		+ "PARTITION(index_dtstatdate=%s,index_sType='ActivityTimesDis',index_iperiod='%s') "
             + "SELECT '%s'," //date
             + "'%s'," //sType:ActivityTimesDis
+            + "'%s'," //iPeroid
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
@@ -262,15 +263,17 @@ public class UserAccountAnalysis {
             + "(case when sum(itimes) < 100 then sum(itimes) else floor(sum(itimes)/100)*100 END) itimesdis "
             + "from fat_%s_user "
             + "WHERE "
-            + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
+            + "index_dtstatdate>=DATE2LONG('%s') and index_dtstatdate<=DATE2LONG('%s') " //index_dtstatdate=DATE2LONG('%s')
+            + "and ilastacttime >= '%s' and ilastacttime < date_add('%s',1) " //useractivity(idayacti,1) = 1
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
             + "group by index_igameid,index_iaccounttype,index_iworldid,itimesdis with cube";
     
-    private static String tbDayUserActivityTypeDis_ActivityTimeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbDayUserActivityTypeDis "
-    		+ "PARTITION(index_dtstatdate=%s,index_sType='ActivityTimeDis') "
+    private static String tbPeriodUserActivityTypeDis_ActivityTimeDis = "INSERT OVERWRITE TABLE oss_dm_%s_tbPeriodUserActivityTypeDis "
+    		+ "PARTITION(index_dtstatdate=%s,index_sType='ActivityTimeDis',index_iperiod='%s') "
             + "SELECT '%s'," //date
             + "'%s'," //sType:ActivityTimeDis
+            + "'%s'," //iPeroid
             + "if(index_igameid is null,-1,index_igameid),"
             + "if(index_iaccounttype is null,-1,index_iaccounttype),"
             + "if(index_iworldid is null,-1,index_iworldid),"
@@ -287,7 +290,8 @@ public class UserAccountAnalysis {
             + "%s "
             + "from fat_%s_user "
             + "WHERE "
-            + "index_dtstatdate=DATE2LONG('%s') and useractivity(idayacti,1) = 1 "
+            + "index_dtstatdate>=DATE2LONG('%s') and index_dtstatdate<=DATE2LONG('%s') " //index_dtstatdate=DATE2LONG('%s')
+            + "and ilastacttime >= '%s' and ilastacttime < date_add('%s',1) " //useractivity(idayacti,1) = 1
             + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
             
             + "group by index_igameid,index_iaccounttype,index_iworldid,ionlinetimedis with cube";
@@ -577,6 +581,29 @@ public class UserAccountAnalysis {
                     strTableField, strDate, strMode, strDate/*, strBeforeWeekDate*/);
             sqlContext.sql(strSql);
 
+            // stat tbPeriodUserActivityTypeDis
+            strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimesDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "ActivityTimesDis", iPeriod, strMode, strBeforeWeekDate, strDate, strBeforeWeekDate, strDate);
+            sqlContext.sql(strSql);
+            
+            String strRange = new String();
+            if(strMode.equalsIgnoreCase("login") || strMode.equalsIgnoreCase("login_roleid")){
+            	strRange = "case when sum(ionlinetime) < 30 then 0 when sum(ionlinetime) < 60 then 30 when sum(ionlinetime) < 300 then floor(sum(ionlinetime)/60)*60 else floor(sum(ionlinetime)/300)*300 end ionlinetimedis";
+            }
+            else if(strMode.equalsIgnoreCase("deposit") || strMode.equalsIgnoreCase("deposit_roleid")){
+            	strRange = "floor(sum(ionlinetime)/500)*500 ionlinetimedis";
+            }
+            else if(strMode.equalsIgnoreCase("pay") || strMode.equalsIgnoreCase("pay_roleid")){
+            	strRange = "floor(sum(ionlinetime)/100)*100 ionlinetimedis";
+            }
+            else{
+            	
+            }
+            
+            strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "ActivityTimeDis", iPeriod, strRange, strMode, strBeforeWeekDate, strDate, strBeforeWeekDate, strDate);
+            sqlContext.sql(strSql);
+            
             // stat tbActivityScaleDis
             // 1.active user in this week
             int iMask = 7;
@@ -650,6 +677,29 @@ public class UserAccountAnalysis {
                     strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
                     strDate, strMode, strDate/*, strMothFirstDay*/);
             sqlContext.sql(strSql);
+            
+            // stat tbPeriodUserActivityTypeDis
+            strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimesDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "ActivityTimesDis", iPeriod, strMode, strMothFirstDay, strDate, strMothFirstDay, strDate);
+            sqlContext.sql(strSql);
+            
+            String strRange = new String();
+            if(strMode.equalsIgnoreCase("login") || strMode.equalsIgnoreCase("login_roleid")){
+            	strRange = "case when sum(ionlinetime) < 30 then 0 when sum(ionlinetime) < 60 then 30 when sum(ionlinetime) < 300 then floor(sum(ionlinetime)/60)*60 else floor(sum(ionlinetime)/300)*300 end ionlinetimedis";
+            }
+            else if(strMode.equalsIgnoreCase("deposit") || strMode.equalsIgnoreCase("deposit_roleid")){
+            	strRange = "floor(sum(ionlinetime)/500)*500 ionlinetimedis";
+            }
+            else if(strMode.equalsIgnoreCase("pay") || strMode.equalsIgnoreCase("pay_roleid")){
+            	strRange = "floor(sum(ionlinetime)/100)*100 ionlinetimedis";
+            }
+            else{
+            	
+            }
+            
+            strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "ActivityTimeDis", iPeriod, strRange, strMode, strMothFirstDay, strDate, strMothFirstDay, strDate);
+            sqlContext.sql(strSql);
 
             // stat tbActivityScaleDis
             // 1. active user in this month
@@ -716,9 +766,9 @@ public class UserAccountAnalysis {
                     strDate, strMode, strDate/*, strDate*/);
             sqlContext.sql(strSql);
             
-            // stat tbDayUserActivityTypeDis
-            strSql = String.format(tbDayUserActivityTypeDis_ActivityTimesDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "ActivityTimesDis", strMode, strDate);
+            // stat tbPeriodUserActivityTypeDis
+            strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimesDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "ActivityTimesDis", iPeriod, strMode, strDate, strDate, strDate, strDate);
             sqlContext.sql(strSql);
             
             String strRange = new String();
@@ -735,8 +785,8 @@ public class UserAccountAnalysis {
             	
             }
             
-            strSql = String.format(tbDayUserActivityTypeDis_ActivityTimeDis, strMode, CONSTANT.date2Long(strDate),
-                    strDate, "ActivityTimeDis", strRange, strMode, strDate);
+            strSql = String.format(tbPeriodUserActivityTypeDis_ActivityTimeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
+                    strDate, "ActivityTimeDis", iPeriod, strRange, strMode, strDate, strDate, strDate, strDate);
             sqlContext.sql(strSql);
 
             // stat tbStayScaleDis
