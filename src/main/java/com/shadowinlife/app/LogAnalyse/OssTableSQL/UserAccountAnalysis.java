@@ -200,15 +200,15 @@ public class UserAccountAnalysis {
             + "'%s'," //sType:level
             + "if(maxlevel is null,-1,maxlevel)," //sTypeValue : levelvalue
             + "'%s'," //iPeroid
-            + "if(index_igameid is null,-1,index_igameid),"
-            + "if(index_iaccounttype is null,-1,index_iaccounttype),"
-            + "if(index_iworldid is null,-1,index_iworldid),"
+            + "if(t1.index_igameid is null,-1,t1.index_igameid),"
+            + "if(t1.index_iaccounttype is null,-1,t1.index_iaccounttype),"
+            + "if(t1.index_iworldid is null,-1,t1.index_iworldid),"
             + "sum(useractivity(%s, 1))," //period
             + "sum(userlost(%s, 1))," //period
             + "sum(usercomeback(%s, 1))," //period
             + "sum(itimes),"
-            + "sum(ionlinetime),"
-            + "DATE2LONG('%s') "
+            + "sum(ionlinetime) "
+            //+ "DATE2LONG('%s') "
             + "from "
             
             + "(select index_iaccounttype,"
@@ -218,14 +218,23 @@ public class UserAccountAnalysis {
             + "max(ilevel) maxlevel,"
             + "groupuseracti(idayacti) AS idayacti,"
             + "groupuseracti(iweekacti) AS iweekacti,"
-            + "groupuseracti(imonthacti) AS imonthacti,"
+            + "groupuseracti(imonthacti) AS imonthacti "
+            + "from fat_%s_user "
+            + "WHERE index_dtstatdate=DATE2LONG('%s') " //and ilastacttime >= '%s' "
+            + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t1 "
+            + "left join "
+            + "(select index_iaccounttype,"
+            + "index_igameid,"
+            + "index_iworldid,"
+            + "suin,"
             + "sum(itimes) AS itimes,"
             + "sum(ionlinetime) AS ionlinetime "
             + "from fat_%s_user "
-            + "WHERE index_dtstatdate=DATE2LONG('%s') " //and ilastacttime >= '%s' "
-            + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t "
+            + "WHERE index_dtstatdate>=DATE2LONG('%s') and index_dtstatdate<=DATE2LONG('%s') and ilastacttime >= '%s' " //and ilastacttime >= '%s' "
+            + "group by index_iaccounttype,index_igameid,index_iworldid,suin) t2 "
+            + "on t1.index_iaccounttype = t2.index_iaccounttype and t1.index_igameid = t2.index_igameid and t1.index_iworldid = t2.index_iworldid and t1.suin = t2.suin "
 
-            + "group by index_igameid,index_iaccounttype,index_iworldid,maxlevel with cube";
+            + "group by t1.index_igameid,t1.index_iaccounttype,t1.index_iworldid,t1.maxlevel with cube";
     
     /*
      * tbPeriodUserActivityTypeDis
@@ -578,7 +587,7 @@ public class UserAccountAnalysis {
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, "Level", iPeriod, strTableField, strTableField,
-                    strTableField, strDate, strMode, strDate/*, strBeforeWeekDate*/);
+                    strTableField, strMode, strDate, strMode, strBeforeWeekDate, strDate, strBeforeWeekDate);
             sqlContext.sql(strSql);
 
             // stat tbPeriodUserActivityTypeDis
@@ -675,7 +684,7 @@ public class UserAccountAnalysis {
             // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
-                    strDate, strMode, strDate/*, strMothFirstDay*/);
+                    strMode, strDate, strMode, strMothFirstDay, strDate, strMothFirstDay/*, strMothFirstDay*/);
             sqlContext.sql(strSql);
             
             // stat tbPeriodUserActivityTypeDis
@@ -763,7 +772,7 @@ public class UserAccountAnalysis {
            // stat tbUserActivityTypeDis
             strSql = String.format(tbUserActivityTypeDis, strMode, CONSTANT.date2Long(strDate), iPeriod,
                     strDate, "Level", iPeriod, strTableField, strTableField, strTableField,
-                    strDate, strMode, strDate/*, strDate*/);
+                    strMode, strDate, strMode, strDate, strDate, strDate/*, strDate*/);
             sqlContext.sql(strSql);
             
             // stat tbPeriodUserActivityTypeDis
