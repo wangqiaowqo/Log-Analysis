@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -20,6 +19,7 @@ import javax.script.ScriptException;
 import org.apache.spark.sql.DataFrame;
 import org.apache.spark.sql.hive.HiveContext;
 
+import com.shadowinlife.app.LogAnalyse.Action.MysqlAction;
 import com.shadowinlife.app.LogAnalyse.Action.TempTableToMysql;
 import com.shadowinlife.app.LogAnalyse.Action.DFTableToTempTable;
 import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
@@ -27,9 +27,9 @@ import com.shadowinlife.app.LogAnalyse.Action.ReadParquetToDF;
 public class ActionDriver {
     // 初始化Log4j
     private static final Logger logger = LogManager.getLogger();
-
+    
     // 用于解析不长, 把步长转化为时间
-    private static Integer[] TranslateStep(String[] inputStep) {
+    private static Integer[] TranslateStep(String[] inputStep) { 
         Integer[] result = new Integer[2];
         // 利用javascript引擎来针对一个表达式进行计算,结果是从标记时间移动的小时数
         ScriptEngineManager mgr = new ScriptEngineManager();
@@ -46,7 +46,7 @@ public class ActionDriver {
         }
         return result;
     }
-
+    
     // 用于解析%DATE%+/-Num来标记某些需要写入的时间
     private static String TranslateSQL(String inputSQL, String CurseTime) {
 
@@ -75,13 +75,15 @@ public class ActionDriver {
     public static void Scheduler(HiveContext sc, List<Map<String, List<String[]>>> l, String date,
             String Action, String intWorldId) {
         logger.debug("Action Name:" + Action);
+        
         for (Map<String, List<String[]>> m : l) {
-
+            
             // 根据ActionName判断是否执行这个Action
             String ActionName = m.get("Name").get(0)[0];
             logger.debug("Configuration Action Name: " + ActionName);
 
             if (Action != null && !ActionName.contains(Action)) {
+            
                 continue;
             }
 
@@ -105,7 +107,7 @@ public class ActionDriver {
             TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(Timestamp.valueOf(CurseTime).getTime());
-            if (Period[0].equalsIgnoreCase("Week") && c.get(Calendar.DAY_OF_WEEK) != 0) {
+            if (Period[0].equalsIgnoreCase("Week") && c.get(Calendar.DAY_OF_WEEK) != 1) {
                 continue;
             }
 
@@ -148,10 +150,8 @@ public class ActionDriver {
                 if (Table.equalsIgnoreCase("") || Table == null)
                     continue;
       
-                talbename.add(Table);
-                
-                ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table);
-                
+                talbename.add(Table);              
+                ReadParquetToDF.ReadParquet(sc, BeginTime, EndTime, GameId, AccountType, WorldId, Table);   
             }
 
             // 依次执行配置表中要求执行的SQL生成内存中中间表
@@ -161,12 +161,20 @@ public class ActionDriver {
             for (String[] sql : SQLlist) {
                 if (sql.length == 0 || sql == null)
                     continue;
-                talbename.add(sql[0]);
+                
                 DataFrame dfSQL = DFTableToTempTable.ExcuteSQL(sc, sql[0], TranslateSQL(sql[1], CurseTime));
                 if(dfSQL!=null)
                     DFList.add(dfSQL);
             }
-
+            
+            // 依次执行配置表中的出库的语句
+            // Index_0位置放的是目标出库名, Index_1位置放的是spark结果表的表名 Index_2放的是产生这个结果表的语句
+            List<String[]> Mysqllist = m.get("Mysql");
+            for (String[] sql : Mysqllist) {
+                if(sql!=null&&!sql[0].equalsIgnoreCase(""))
+                    MysqlAction.ExcuteMysqlSQL(sql[0], sql[1]);
+            }
+            
             // 依次执行配置表中的出库的语句
             // Index_0位置放的是目标出库名, Index_1位置放的是spark结果表的表名 Index_2放的是产生这个结果表的语句
             List<String[]> Finallist = m.get("Final");

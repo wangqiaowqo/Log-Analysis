@@ -33,7 +33,7 @@ public class CreateProcessTable {
        
         switch (tableName) {
         case "RoleLogin":
-            // Filter origin file into different RDD
+            //Filter origin file into different RDD
             ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
                     WorldId, "RoleLogin");
             ReadParquetToDF.ReadParquet(sqlContext, BeginTime, EndTime, GameId, AccountType,
@@ -56,27 +56,6 @@ public class CreateProcessTable {
             RoleOfMoneyFlowProcessTable.process(sqlContext, date, iworldid);
             break;
         
-        }
-    }
-
-    public static void FatTableWithoutFile(HiveContext sqlContext, String tableName, String date,
-            String iworldid) {
-        switch (tableName) {
-        case "RoleLogin":
-            AcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
-            RoleOfAcountProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
-            break;
-
-        case "Deposit":
-            ChongzhiProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
-            RoleOfChongzhiProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
-            break;
-
-        case "MoneyFlow":
-            MoneyFlowProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
-            RoleOfMoneyFlowProcessTable.ModifyProcessTableWithoutLogFile(sqlContext, date, iworldid);
-            break;
-
         }
     }
 

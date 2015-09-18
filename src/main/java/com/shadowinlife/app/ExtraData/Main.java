@@ -1,9 +1,5 @@
 package com.shadowinlife.app.ExtraData;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,8 +21,6 @@ public class Main {
     public static void main(String args[]) {
 
         String databaseName = null, url = null, date = null, gameid = null, accounttype = null, worldid = null, mode = null, table = null;
-        String line;
-        FileReader fileReader;
 
         String strWhere = " WHERE 1=1";
         String mySQLWhere = " WHERE 1=1";
