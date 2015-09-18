@@ -105,7 +105,7 @@ public class ActionDriver {
             TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
             Calendar c = Calendar.getInstance();
             c.setTimeInMillis(Timestamp.valueOf(CurseTime).getTime());
-            if (Period[0].equalsIgnoreCase("Week") && c.get(Calendar.DAY_OF_WEEK) != 0) {
+            if (Period[0].equalsIgnoreCase("Week") && c.get(Calendar.DAY_OF_WEEK) != 1) {
                 continue;
             }
 
