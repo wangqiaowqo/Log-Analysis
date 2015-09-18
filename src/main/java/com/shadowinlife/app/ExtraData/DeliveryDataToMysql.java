@@ -29,7 +29,6 @@ public class DeliveryDataToMysql {
         }
 
         try {
-            
             sql = "DELETE FROM " + mTable + mySQLWhere;
             System.out.println(sql);
             int RowDelCount = stmt.executeUpdate(sql);
